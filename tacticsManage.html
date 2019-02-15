@@ -1,0 +1,1267 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>火绒终端安全控制中心</title>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" />
+		<link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.css" />
+<link href="css/common.css" rel="stylesheet">
+<link rel="stylesheet" href="css/eventLog.css" />
+<link href="css/defendTactics.css" rel="stylesheet">
+<link href="css/checkTactics.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/json3.js"></script>
+<script type="text/javascript" src="js/zUI.js"></script>
+<script src="js/lc_switch.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/zUI.js"></script>
+<link rel="stylesheet" href="css/lc_switch.css">
+<style>
+/*.mainBlock .left .zUIpanelScrollBox,.groupsPage .zUIpanelScrollBar{
+            width:10px;
+            top:4px;
+            border-radius:5px;
+        }
+.mainBlock .left .zUIpanelScrollBox{
+    background:black;
+    opacity:0;
+    filter:alpha(opacity=0);
+}
+.mainBlock .left .zUIpanelScrollBar{
+    background:#fff;
+    opacity:0;
+    filter:alpha(opacity=0);
+}*/
+.mainBlock .leftScroll{
+	overflow-y: scroll !important; 
+	width:172px;
+	height: 444px;
+	padding-top: 14px;
+	padding-bottom: 14px;
+	float: left;
+	position: relative;
+	background-color: rgb(249,249,249);
+}
+.mainBlock .leftScroll .container1{
+	width: 100%;
+}
+.mainBlock .leftScroll .title{cursor: default;line-height: 32px;font-size: 12px;position: relative;font-weight: 700}
+.mainBlock .leftScroll a{cursor: pointer;display: block;padding-left: 54px;line-height: 26px;color: #6c6c6c;font-size: 12px}
+.mainBlock .leftScroll img{position: absolute;top:10px;left: 24px}
+.mainBlock .leftScroll a:hover{background-color: #ffffff;color: #5fc47f}
+.mainBlock .leftScroll .title:hover{background-color: rgb(249,249,249);color: #6c6c6c}
+.mainBlock .leftScroll .current{color: #5fc47f;background-color: #ffffff}
+.th-ordery img{top:22px}
+.tacticsManageTable thead{background: rgb(249,249,249);border-top: 1px solid rgb(231,234,236);}
+</style>
+</head>
+	<body>
+        <div class="main">
+            <div class="topHint">
+                <img src="images/SFSF.png">
+                <p>您可以在此设置各个分组对应的防护策略，或者编辑新增自定义策略包。</p>
+                <p>若不进行设置，分组将自动使用火绒为您准备的默认防护策略。
+            </p>
+            </div>
+            <!-- <div class="commonCon">
+                <div class="tab">
+                    <a class="" name="tacticsArrange.html" href="tacticsArrange.html">策略部署<a class="current" name="tacticsManage.html" href="tacticsManage.html">策略管理<a class="" href="trustZone.html">信任区</a>
+                </div>
+            </div> -->
+            <div class="tabSel">
+                <a href="tacticsArrange.html">策略部署</a><a href="tacticsManage.html" class="current colorGreen">策略管理</a><a href="trustZone.html">信任区</a>
+            </div>
+            <div class="bgContainer">
+                <div class="tacticsDescribeTxt floatL">所有的分组都需要一个防护策略，您可以在此新增自定义策略包或者编辑策略来为分组进行针对的策略防护。</div>
+                <a class='newTacticsB cursor' onclick='newTacticsPop()'>新建策略</a>
+                <div class="clear"></div>
+                <div class='table tacticsManageTable'>
+                    <table>
+                        <thead>
+                            <tr class='th'>
+                                <th style="width: 60%" class='th-ordery' type='policy_name'>策略名称<img src="images/th-ordery.png"/></th>
+                                <th style="width: 20%" class='th-ordery' type='refernce'>使用该策略分组<img src="images/th-ordery.png"/></th>
+                                <th style="width: 20%">策略管理</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- 新建策略弹层 -->
+        <div class="newTacticsPop pop">
+            <div class="title">新建策略<span class="closeW"></span></div>
+            <div class="left"><img src="images/newTac.png"></div>
+            <div class="right">
+                <p class="input">请选择策略模板&nbsp;<select id="tacticsTem"><option>策略模板</option></select></p>
+                <p class="input">请输入策略名称&nbsp;<input type="text" id="newTNText"></p>
+                <p class="unusualTxt">名称重复，请更改后重试<img src="images/unusual.png"></p>
+                <div class="clear"></div> 
+            </div>
+            <div class="clear"></div>
+            <div class="buttons"><a onclick="hideButton(this)">取消</a><a onclick="submitTN(this)">确定</a></div>
+        </div>
+        <!-- 新建完成策略后的弹层 -->
+        <div class="newTacticsAPop pop">
+            <div class="title relative">新建策略成功<span class="closeW"></span></div>
+            <div class="left"><img src="images/SFSF.png"></div>
+            <div class="right">
+                <p>建立策略成功</p>
+                <p class="tacticsNameText"><span></span></p>
+            </div>
+            <div class="clear"></div>
+            <div class="buttons"><a onclick="hideButton(this)">完成</a><a onclick="editTacticsPop(this)" id="judgePolicyid">编辑策略</a></div>
+        </div>
+        <!-- 删除策略 -->
+        <div class="deletePPop pop">
+            <div class="title">删除策略<span class="closeW"></span></div>
+            <div class="left"><img src="images/delete.png"></div>
+            <div class="right">
+                <p class="describe"><span class="verticalMiddle">确定需要删除 </span><font class="name"></font><span class="verticalMiddle"> 吗？</span></p>
+                <p class="describe">删除后使用该策略的终端将自动切换为"默认防护策略"。</p>
+
+            </div>
+            <div class="clear"></div>
+            <div class="buttons"><a onclick="hideButton(this)">取消</a><a onclick="sureDeleteButton(this)" class="sure">确定</a></div>
+        </div>
+        <!-- 查看策略弹层 -->
+        <div class="checkTacticsPop pop relative">
+            <div class="windowShade absolute"></div>
+            <div class="title"><font></font><span class="closeW"></span></div>
+                    <div class="mainBlock">
+                        <div class="left1 leftScroll">
+                            <div class="container1">
+                                <!-- <a class="title"><img src="images/basicC.png">基本配置</a> -->
+                                <!-- <a class="pageTab current">基本设置</a> -->
+                                <a class="title"><img src="images/viC.png">病毒防御</a>
+                                <a class="pageTab">病毒查杀</a>
+                                <a class="pageTab">文件实时监控</a>
+                                <a class="pageTab">恶意行为监控</a>
+                                <a class="pageTab">U盘保护</a>
+                                <a class="pageTab">下载保护</a>
+                                <a class="pageTab">邮件监控</a>
+                                <a class="title"><img src="images/syC.png">系统防御</a>
+                                <a class="pageTab">系统加固</a>
+                                <a class="pageTab">软件安装拦截</a>
+                                <a class="pageTab">浏览器保护</a>
+                                <a class="title"><img src="images/neC.png">网络防御</a>
+                                <a class="pageTab">黑客入侵拦截</a>
+                                <a class="pageTab">对外攻击检测</a>
+                                <a class="pageTab">IP协议控制</a>
+                                <a class="pageTab">恶意网址拦截</a>
+                                <a class="pageTab">IP黑名单</a>
+                                <a class="title"><img src="images/devC.png">访问控制</a>
+                                <a class="pageTab">设备控制</a>
+                            </div>
+
+                        </div>
+                        <div class="right relative">
+                            <!-- 基本设置 -->
+                            <!-- <div class="page">
+                                <div class="onOrOff">
+                                    基本设置
+                                </div>
+                                <div class="setBlock lastSetBlock">
+                                    <h4>策略基本信息</h4>
+                                    <p>
+                                        <span>策略名称 : </span><input type="text" name="policyName">
+                                    </p>
+                                    <p>
+                                        <span>策略备注 : </span><input type="text" name="policyRemarks">
+                                    </p>
+
+
+                                </div>
+                            </div> -->
+                                    
+                                    <!-- 病毒查杀 -->
+                                    <div class="page">
+                                        <div class="onOrOff">
+                                            病毒查杀设置
+                                        </div>
+                                        <div class="setBlock">
+                                                <h4>开机查杀</h4>
+                                                <p>
+                                                    <input type="checkbox" name="startAuto">
+                                                    <span>开机自动病毒查杀</span>
+                                                </p>
+                                                <p class="leftP">
+                                                    <input type="radio" name="startAutoType" value="0">
+                                                    <span>快速查杀</span>
+                                                </p>
+                                                <p class="leftP">
+                                                    <input type="radio" name="startAutoType" value="1">
+                                                    <span>全盘查杀</span>
+                                                </p>
+                                                
+                                                <div class="clear"></div>             
+                                        </div>
+                                        <div class="setBlock">
+                                                <h4>全盘查杀设置</h4>
+                                                <p>
+                                                    <input type="checkbox" name="overallSet1">
+                                                    <span>深度查杀压缩包中的病毒木马，并自动跳过大于</span><input type="text" maxlength="4" value="" name="overallPara1" onkeyup="value=value.replace(/[^\d]/g,'') " onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">MB的压缩包(20M~9999M)
+                                                </p>
+                                                <p>
+                                                    <span>提示：自定义扫描将自动扫描压缩包，并不受以上大小限制</span>
+                                                </p>
+                                                <p class="programPath">
+                                                    <input type="checkbox" name="overallSet2">
+                                                    <span>不扫描指定扩展名文件</span>
+                                                    <input type="text" value="" name="overallPara2" class="placeholderInput">
+                                                    <span class="placeholder" style="left:172px;">例如：.tmp;.txt;.log;.db</span>
+                                                </p>
+
+                                        </div>
+                                        <div class="setBlock">
+                                                <h4>查杀速度</h4>
+                                                <p>
+                                                        <input type="radio" name="sKSpeed" value="0">
+                                                        <span>常规扫描，不影响计算机性能</span>
+                                                </p>
+                                                <p>
+                                                    <input type="radio" name="sKSpeed" value="1">
+                                                        <span>高速扫描，速度快但影响计算机性能</span>
+                                                </p>
+
+                                        </div>
+                                        <div class="setBlock">
+                                                <h4>系统修复设置</h4>
+                                                <p>
+                                                        <input type="checkbox" name="systemRep">
+                                                        <span>快速查杀或全盘查杀的同时扫描系统可修复项目</span>
+                                                </p>
+                                        </div>
+                                        <div class="setBlock">
+                                                <h4>发现病毒时</h4>
+                                                <p class="leftP">
+                                                    <input type="radio" name="actionV" value="1">
+                                                        <span>终端自主选择</span>
+                                                </p>
+                                                <p class="leftP">
+                                                        <input type="radio" name="actionV" value="0">
+                                                        <span>自动处理病毒</span>
+                                                </p>
+                                                
+                                                <div class="clear"></div>
+                                        </div>
+                                        <div class="setBlock lastSetBlock">
+                                                <h4>清除病毒时</h4>
+                                                <p>
+                                                        <input type="checkbox" name="backup">
+                                                        <span>将病毒文件备份至终端隔离区</span>
+                                                </p>
+
+                                        </div>
+                                            
+                                    </div>
+                                    <!-- 文件实时监控 -->
+                                    <div class="page">
+                                            <div class="onOrOff">
+                                            是否开启文件实时监控
+                                            <input type="checkbox" name="fMSwitch" value="" class="lcs_check" autocomplete="off"/>
+                                            <div class="switchShade absolute">
+                                            </div>
+
+                                            </div>
+                                            <div class="setBlock">
+                                                    <h4>扫描时机</h4>
+                                                    <p>
+                                                            <input type="radio" name="scanOp" value="0">
+                                                            <span>在文件执行时进行扫描,不影响性能（推荐）</span>
+                                                    </p>
+                                                    <p>
+                                                        <input type="radio" name="scanOp" value="1">
+                                                            <span>在文件发生变化时进行扫描,将占用少量系统资源</span>
+                                                    </p>
+                                                    <p>
+                                                        <input type="radio" name="scanOp" value="2">
+                                                            <span>在文件发生所有类型操作时进行扫描，将占用较多系统资源</span>
+                                                    </p>
+
+                                            </div>
+                                            <div class="setBlock">
+                                                    <h4>排除设置</h4>
+                                                    <p class="programPath">
+                                                            <input type="checkbox" name="debar">
+                                                            <span>不扫描指定的程序的动作</span>
+                                                            <input type="text" class="programPathTxt placeholderInput" name="debarV">
+                                                            <span class="placeholder">例如：C:\Program Files\Test\*.exe;*\test.exe</span>
+                                                    </p>
+
+                                            </div>
+                                            <div class="setBlock">
+                                                    <h4>发现病毒时</h4>
+                                                    <p class="leftP">
+                                                        <input type="radio" name="virusFind" value="1">
+                                                            <span>弹窗提示终端自主选择</span>
+                                                    </p>
+                                                    <p class="leftP">
+                                                            <input type="radio" name="virusFind" value="0">
+                                                            <span>自动处理</span>
+                                                    </p>
+                                                    
+                                                    <div class="clear"></div>             
+                                            </div>
+                                            <div class="setBlock lastSetBlock">
+                                                    <h4>清除病毒时</h4>
+                                                    <p>
+                                                            <input type="checkbox" name="backupF">
+                                                            <span>将病毒文件备份至终端本地隔离区</span>
+                                                    </p>
+
+                                            </div>
+                                    </div>
+                                    <!-- 恶意行为监控 -->
+                                    <div class="page">
+                                            <div class="onOrOff">
+                                                    是否开启恶意行为监控
+                                                    <input type="checkbox" name="bAMSwitch" value="" class="lcs_check" autocomplete="off"/>
+                                                    <div class="switchShade absolute">
+                                                    </div>
+                                            </div>
+                                            
+                                            <div class="setBlock">
+                                                    <h4>发现病毒时</h4>
+                                                    <p class="leftP">
+                                                        <input type="radio" name="virusFindBAM" value="1">
+                                                            <span>弹窗提示终端自主选择</span>
+                                                    </p>
+                                                    <p class="leftP">
+                                                            <input type="radio" name="virusFindBAM" value="0">
+                                                            <span>自动处理</span>
+                                                    </p>
+                                                    
+                                                    <div class="clear"></div>             
+                                            </div>
+                                            <div class="setBlock">
+                                                    <h4>清除病毒时</h4>
+                                                    <p>
+                                                            <input type="checkbox" name="backupBAM">
+                                                            <span>将病毒文件备份至终端本地隔离区</span>
+                                                    </p>
+
+                                            </div>
+                                            <div class="setBlock lastSetBlock">
+                                                    <h4>增强勒索病毒防护</h4>
+                                                    <p>
+                                                            <input type="checkbox" name="blackMailBAM">
+                                                            <span>开启勒索病毒诱捕</span>
+                                                    </p>
+
+                                            </div>
+                                    </div>
+                                    <!-- U盘保护 -->
+                                    <div class="page">
+                                        <div class="onOrOff">
+                                            是否开启U盘保护
+                                            <input type="checkbox" name="uPSwitch" value="" class="lcs_check" autocomplete="off"/>
+                                            <div class="switchShade absolute">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="setBlock">
+                                            <h4>当U盘接入电脑时</h4>
+                                            <p>
+                                                <input type="checkbox" name="cutIn1" >
+                                                <span>自动扫描被病毒修改的项目</span>
+                                            </p>
+                                            <p>
+                                                <input type="checkbox" name="cutIn2" >
+                                                <span>自动扫描根目录下的文件</span>
+                                            </p>
+
+                                        </div>
+                                        <div class="setBlock">
+                                            <h4>发现病毒时</h4>
+                                            
+                                            <p class="leftP">
+                                                <input type="radio" name="virusFindUP" value="1">
+                                                <span>弹窗提示终端自主选择</span>
+                                            </p>
+                                            <p class="leftP">
+                                                <input type="radio" name="virusFindUP" value="0">
+                                                <span>自动处理</span>
+                                            </p>
+                                            <div class="clear"></div>             
+                                        </div>
+                                        <div class="setBlock">
+                                            <h4>清除病毒时</h4>
+                                            <p>
+                                                <input type="checkbox" name="backupUP">
+                                                <span>将病毒文件备份至终端本地隔离区</span>
+                                            </p>
+
+                                        </div>
+                                    <div class="setBlock lastSetBlock">
+                                            <h4>压缩包扫描设置</h4>
+                                            <p>
+                                                    <input type="checkbox" name="zipSet">
+                                                    <span>深度查杀压缩包中的病毒木马，并自动跳过大于 
+                                                            <input type="text" maxlength="4" name="zipSetV" style="width:50px" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">MB的压缩包(20M~9999M)
+                                                    </span>
+                                            </p>
+
+                                    </div>
+                                    </div>
+                                    <!-- 下载保护 -->
+                                    <div class="page">
+                                        <div class="onOrOff">
+                                            是否开启下载保护
+                                                <input type="checkbox" name="dPSwitch" value="" class="lcs_check" autocomplete="off"/>
+                                                <div class="switchShade absolute">
+                                                </div>
+                                            
+
+                                        </div>
+                                        <div class="setBlock">
+                                            <h4>发现病毒时</h4>
+                                            
+                                            <p class="leftP">
+                                                <input type="radio" name="virusFindDP" value="1">
+                                                <span>弹窗提示终端自主选择</span>
+                                            </p>
+                                            <p class="leftP">
+                                                <input type="radio" name="virusFindDP" value="0">
+                                                <span>自动处理</span>
+                                            </p>
+                                            <div class="clear"></div>             
+                                        </div>
+                                        <div class="setBlock">
+                                            <h4>清除病毒时</h4>
+                                            <p>
+                                                <input type="checkbox" name="backupDP">
+                                                <span>将病毒文件备份至终端本地隔离区</span>
+                                            </p>
+
+                                        </div>
+                                        <div class="setBlock">
+                                            <h4>压缩包扫描设置</h4>
+                                            <p>
+                                                <input type="checkbox" name="zipSetDP">
+                                                <span>
+                                                        深度查杀压缩包中的病毒木马，并自动跳过大于 <input type="text" maxlength="4" name="zipSetDPV" onkeyup="value=value.replace(/[^\d]/g,'')" style="width:50px" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">MB的压缩包(20M~9999M)
+                                                </span>
+                                            </p>
+
+                                        </div>
+                                        <div class="setBlock lastSetBlock">
+                                                <h4>排除设置</h4>
+                                                <p class="programPath">
+                                                        <input type="checkbox" name="debarDP">
+                                                        <span>不扫描指定扩展名文件</span>
+                                                        <input type="text" class="programPathTxt placeholderInput" onfocus='fadeOut(this)' onblur='fadeIn(this)' name="debarDPV">
+                                                        <span class="placeholder" style="left:172px;" onclick='spanFocus(this)'>例如：.tmp;.txt;.log;.db</span>
+                                                </p>
+
+                                        </div>
+                                    </div>
+                                    <!-- 邮件监控 -->
+                                    <div class="page">
+                                        <div class="onOrOff">
+                                            是否开启邮件监控
+                                                <input type="checkbox" name="mMSwitch" value="" class="lcs_check" autocomplete="off"/>
+                                                <div class="switchShade absolute">
+                                                </div>
+                                            
+
+                                        </div>
+                                        <div class="mailSetText">邮件设置</div>
+                                        <div class="setBlock">
+                                            <h4>清除病毒时</h4>
+                                            <p>
+                                                <input type="checkbox" name="backupMM">
+                                                <span>将病毒文件备份至隔离区</span>
+                                            </p>
+
+                                        </div>
+                                        <div class="setBlock">
+                                            <h4>邮件扫描</h4>
+                                            <p>
+                                                <input type="checkbox" name="zipSetMM">
+                                                <span>
+                                                        查杀邮件中的病毒木马，并自动跳过大于 <input type="text" maxlength="2" name="zipSetMMV" onkeyup="value=value.replace(/[^\d]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))">MB的邮件(1M~20M)
+                                                </span>
+                                            </p>
+
+                                        </div>
+                                        <div class="mMTableTitle">
+                                            <div class="floatL">邮件规则</div>
+                                            <div class="floatR"><a class="deleteMRB underline" onclick="deleteSMRB(this)">删除所选</a><a class="underline greenfont cursor" onclick="addMRB()">添加规则</a></div>
+                                            <div class="clear"></div>
+                                        </div>
+                                        <div class="mailMTable">
+                                            <table>
+
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                    <!-- 系统加固 -->
+                                    <div class="page">
+                                        <div class="onOrOff">
+                                            是否开启系统加固
+                                            <input type="checkbox" name="sRSwitch" value="" class="lcs_check" autocomplete="off"/>
+                                            <div class="switchShade absolute">
+                                            </div>
+
+                                        </div>
+                                        <div class="setBlock">
+                                            <h4>自动处理</h4>
+                                            <p>
+                                                <input type="checkbox" name="autoHandle">
+                                                <span>启用火绒自动处理规则</span>
+                                            </p>
+
+                                        </div>
+                                        <div class="systemRooting">
+                                            <div class="tr">
+                                                <div class="td td1 relative">
+                                                    <img src="images/file.png" class="verticalMiddle">
+                                                    <div class="absolute">
+                                                        <p>文件保护</p>
+                                                        <p>防止指定文件项目被篡改，破坏或恶意创建</p>
+                                                    </div>
+                                                </div>
+                                                <div class="td td2">已开启9项</div>
+                                                <div class="td td3"><a class="cursor deploypng"></a></div>
+                                                <div class="clear"></div>
+
+                                            </div>
+                                            <table id="filePTable">
+                                                
+                                            </table>
+                                            <div class="tr">
+                                                <div class="td td1 relative">
+                                                    <img src="images/reg.png" class="verticalMiddle">
+                                                    <div class="absolute">
+                                                        <p>注册表保护</p>
+                                                        <p>防止指定文件项目被篡改，破坏或恶意创建</p>
+                                                    </div>
+                                                </div>
+                                                <div class="td td2">已开启9项</div>
+                                                <div class="td td3"><a class="cursor deploypng"></a></div>
+                                                <div class="clear"></div>
+
+                                            </div>
+                                            <table id="registryPTable">
+                                                
+                                            </table>
+                                            <div class="tr">
+                                                <div class="td td1 relative">
+                                                    <img src="images/move.png" class="verticalMiddle">
+                                                    <div class="absolute">
+                                                        <p>危险动作拦截</p>
+                                                        <p>监控针对系统的敏感动作，拦截高风险动作</p>
+                                                    </div>
+                                                </div>
+                                                <div class="td td2">已开启9项</div>
+                                                <div class="td td3"><a class="cursor deploypng"></a></div>
+                                                <div class="clear"></div>
+
+                                            </div>
+                                            <table id="actionITable">
+                                                
+                                            </table>
+                                            <div class="tr">
+                                                <div class="td td1 relative">
+                                                    <img src="images/exe.png" class="verticalMiddle">
+                                                    <div class="absolute">
+                                                        <p>执行防护</p>
+                                                        <p>防止指定文件项目被篡改，破坏或恶意创建</p>
+                                                    </div>
+                                                </div>
+                                                <div class="td td2">已开启9项</div>
+                                                <div class="td td3"><a class="cursor deploypng"></a></div>
+                                                <div class="clear"></div>
+
+                                            </div>
+                                            <table id="executeDTable">
+                                                
+                                            </table>
+                                            <div class="tr">
+                                                <div class="td td1 relative">
+                                                    <img src="images/Process.png" class="verticalMiddle">
+                                                    <div class="absolute">
+                                                        <p>进程保护</p>
+                                                        <p>实时保护系统重要进程，使其不被攻击利用</p>
+                                                    </div>
+                                                </div>
+                                                <div class="td td2">已开启9项</div>
+                                                <div class="td td3"><a class="cursor deploypng"></a></div>
+                                                <div class="clear"></div>
+
+                                            </div>
+                                            <table id="processPTable">
+                                                
+                                            </table>
+                                            <div class="tr">
+                                                <div class="td td1 relative">
+                                                    <img src="images/ant.png" class="verticalMiddle">
+                                                    <div class="absolute">
+                                                        <p>病毒免疫</p>
+                                                        <p>防止指定文件项目被篡改，破坏或恶意创建</p>
+                                                    </div>
+                                                </div>
+                                                <div class="td td2">已开启9项</div>
+                                                <div class="td td3"><a class="cursor deploypng"></a></div>
+                                                <div class="clear"></div>
+
+                                            </div>
+                                            <table id="virusITable">
+                                                
+                                            </table>
+                                        </div>
+                                    </div>
+                                   
+                                    <!-- 软件安装拦截 -->
+                                    <div class="page">
+                                        <div class="onOrOff">
+                                            是否开启软件安装拦截
+                                            <input type="checkbox" name="sISwitch" value="" class="lcs_check" autocomplete="off"/>
+                                            <div class="switchShade absolute">
+                                            </div>
+                                        
+
+                                        </div>
+                                        <div class="title">
+                                            软件安装拦截模式
+                                        </div>
+                                        <div class="actionSelect lastActionSelect">
+                                            <ul>
+                                                    <li>
+                                                            <input type="radio" name="actionII" value="0">常规模式 : 弹窗提示终端自助选择(推荐)
+                                                            
+                                                    </li>
+                                                    <li> 
+                                                            <input type="radio" name="actionII" value="1">严格模式 : 自动阻止所有推广软件安装行为
+
+                                                    </li>   
+                                            </ul>
+
+                                        </div> 
+                                        <!-- <div class="setBlock lastSetBlock">
+                                                <h4>排除设置</h4>
+                                                <p class="programPath">
+                                                        <input type="checkbox" name="debarII">
+                                                        <span>不扫描指定的程序的动作</span>
+                                                        <input type="text" class="programPathTxt placeholderInput" name="debarIIV">
+                                                        <span class="placeholder">例如：C:\Program Files\Test\*.exe;*\test.exe</span>
+                                                </p>
+
+                                        </div> -->                                           
+                                    </div>
+                                    <!-- 浏览器保护 -->
+                                    <div class="page">
+                                        <div class="onOrOff">
+                                            是否开启浏览器主页保护
+                                            <input type="checkbox" name="bPSwitch" value="" class="lcs_check" autocomplete="off"/>
+                                            <div class="switchShade absolute">
+                                            </div>
+                                
+
+                                        </div>
+                                        <div class="title">
+                                                锁定浏览器主页
+                                        </div>
+                                        <div class="actionSelect lastActionSelect">
+                                            <ul>
+                                                    <li>
+                                                            <input type="radio" name="startpage" value="0">空白页
+                                                            
+                                                    </li>
+                                                    <li> 
+                                                            <input type="radio" name="startpage" value="1">自定义:<input type="text" class="path" name="webpage">
+
+                                                    </li>   
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                    <!-- 黑客入侵拦截 -->
+                                    <div class="page">
+                                        <div class="onOrOff">
+                                            是否开启黑客入侵拦截
+                                            <input type="checkbox" name="hISwitch" value="" class="lcs_check" autocomplete="off"/>
+                                            <div class="switchShade absolute">
+                                            </div>
+                              
+
+                                        </div>
+                                        <div class="title">
+                                            黑客入侵拦截
+                                        </div>
+                                        <div class="actionSelect lastActionSelect">
+                                            <ul>
+                                                    <li>
+                                                            <input type="radio" name="actionHI" value="0">自动阻止入侵行为
+                                                            
+                                                    </li>
+                                                    <li> 
+                                                            <input type="radio" name="actionHI" value="1">仅记录入侵行为
+
+                                                    </li>   
+                                            </ul>
+
+                                        </div>
+
+                                    </div>
+                                    <!-- 对外攻击检测 -->
+                                    <div class="page">
+                                        <div class="onOrOff">
+                                            是否开启对外攻击检测
+                                            <input type="checkbox" name="aCSwitch" value="" class="lcs_check" autocomplete="off"/>
+                                            <div class="switchShade absolute">
+                                            </div>
+                                            
+
+                                        </div>
+                                        <div class="title">
+                                                对外攻击检测
+                                        </div>
+                                        <div class="actionSelect lastActionSelect">
+                                            <ul>
+                                                    <li>
+                                                            <input type="radio" name="actionAC" value="0">自动阻止攻击行为
+                                                            
+                                                    </li>
+                                                    <li> 
+                                                            <input type="radio" name="actionAC" value="1">仅记录攻击行为
+
+                                                    </li>   
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- IP控制协议 -->
+                                    <div class="page">
+                                        <div class="onOrOff">
+                                            是否开启IP协议控制
+                                                <input type="checkbox" name="pCSwitch" value="" class="lcs_check" autocomplete="off"/>
+                                                <div class="switchShade absolute">
+                                                </div>
+                                            
+
+                                        </div>
+                                        
+                                        <div class="bLTableTitle">
+                                            <div class="floatL"><a class="deleteMRB underline" onclick="deleteSMRB(this)">删除所选</a></div>
+                                            <div class="floatR">
+                                            	<!-- <input type="checkbox" name="" value="" class="verticalMiddle"><span class="verticalMiddle">&nbsp;显示内置规则</span> -->
+                                            	<a class="underline greenfont cursor" onclick="addPCB()">添加规则</a>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div>
+                                        <div class="protocolCTable">
+                                            <table>
+                                                <tr>
+                                                    <th width='10%'><input type='checkbox' onclick='selectAllFP(this)' class='verticalMiddle'></th>
+                                                    <th width='15%'>规则名</th>
+                                                    <th width='50%'>说明</th>
+                                                    <th width='10%'>启用</th>
+                                                    <th width='15%'>操作</th>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                    <!-- 恶意网址拦截 -->
+                                    <div class="page">
+                                        <div class="onOrOff">
+                                            是否开启恶意网站拦截
+                                            <input type="checkbox" name="wISwitch" value="" class="lcs_check" autocomplete="off"/>
+                                            <div class="switchShade absolute">
+                                            </div>
+
+                                        </div>
+                                        <div class="describe">
+                                                <p>恶意网址拦截</p>
+                                                <p>将自动识别存在恶意风险的网站，阻止终端访问这些恶意网站</p>
+                                        </div>
+                                        <div class="webRule">
+                                            <ul>
+                                                    <p class="li titlee">恶意网址规则
+                                                    </p>
+                                                    <p class="li relative">木马、盗号
+                                                            <input type="checkbox" name="spy"  value="" class="lcs_check" autocomplete="off"/>
+                                                            <div class="switchShade absolute">
+                                                            </div>
+  
+                                                    </p>
+                                                    <p class="li relative">虚假、欺诈
+                                                            <input type="checkbox" name="fraud" value="" class="lcs_check" autocomplete="off"/>
+                                                            <div class="switchShade absolute">
+                                                            </div>
+         
+                                                    </p>
+                                                    <p class="li relative">钓鱼、仿冒
+                                                            <input type="checkbox" name="phising" value="" class="lcs_check" autocomplete="off"/>
+                                                            <span class="switchShade absolute">
+                                                            </span>
+
+                                                    </p>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                    <!-- IP黑名单 -->
+                                    <div class="page">
+                                        <div class="onOrOff">
+                                            是否开启IP黑名单功能
+                                                <input type="checkbox" name="bLSwitch" value="" class="lcs_check" autocomplete="off"/>
+                                                <div class="switchShade absolute">
+                                                </div>
+                                            
+
+                                        </div>
+                                        
+                                        <div class="bLTableTitle">
+                                            <div class="floatL"><a class="deleteMRB underline" onclick="deleteSMRB(this)">删除所选</a></div>
+                                            <div class="floatR"><a class="underline greenfont cursor addBLB" onclick="addBLB()">添加规则</a></div>
+                                            <div class="clear"></div>
+                                        </div>
+                                        <div class="blackLTable">
+                                            <table>
+
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                    <!-- 设备控制 -->
+                                    <div class="page">
+                                        <div class="onOrOff">
+                                            是否开启设备控制
+                                            <input type="checkbox" name="devSwitch" value="" class="lcs_check" autocomplete="off"/>
+                                            <div class="switchShade absolute">
+                                            </div>
+
+                                        </div>
+                                         <div class="setBlock lastSetBlock" style="padding: 0;padding-left: 20px;">
+                                                <p style="height: 40px;line-height: 40px;">
+                                                        <input type="checkbox" name="tipsHide">
+                                                        <span>设备禁用时弹窗提示</span>
+                                                </p>
+
+                                        </div>
+                                        <div class="webRule" style="height: auto;border: 0;">
+                                            <ul>
+                                                    <p class="li titlee" style="height: 40px;line-height: 40px;">设备
+                                                    	<span style="display: inline-block;position: absolute;right: 58px;line-height: 40px;height: 40px;vertical-align: middle;">状态</span>
+                                                    </p>
+                                                    
+                                                    <p class="li relative">U盘设备
+                                                    		<input type="checkbox" name="udisk"  value="" class="lcs_check" autocomplete="off"/>
+                                                            <span class="switchShade absolute">
+                                                            </span>
+  
+                                                    </p>
+                                                    <p class="li relative">便携设备
+                                                            <input type="checkbox" name="portable" value="" class="lcs_check" autocomplete="off"/>
+                                                            <span class="switchShade absolute">
+                                                            </span>
+         
+                                                    </p>
+                                                    <p class="li relative">USB无线网卡
+                                                            <input type="checkbox" name="usb-wifi" value="" class="lcs_check" autocomplete="off"/>
+                                                            <span class="switchShade absolute">
+                                                            </span>
+
+                                                    </p>
+                                                    <p class="li relative">USB有线网卡
+                                                            <input type="checkbox" name="usb-netcard" value="" class="lcs_check" autocomplete="off"/>
+                                                            <span class="switchShade absolute">
+                                                            </span>
+
+                                                    </p>
+                                                    <p class="li relative">打印机
+                                                            <input type="checkbox" name="printer" value="" class="lcs_check" autocomplete="off"/>
+                                                            <span class="switchShade absolute">
+                                                            </span>
+
+                                                    </p>
+                                                    <p class="li relative">光驱
+                                                            <input type="checkbox" name="cdrom" value="" class="lcs_check" autocomplete="off"/>
+                                                            <span class="switchShade absolute">
+                                                            </span>
+
+                                                    </p>
+                                                    <p class="li relative">蓝牙
+                                                            <input type="checkbox" name="bluetooth" value="" class="lcs_check" autocomplete="off"/>
+                                                            <span class="switchShade absolute">
+                                                            </span>
+
+                                                    </p>
+                                            </ul>
+
+                                        </div>
+                                       
+                                    </div>
+                            <!-- <a class="defaultButton">恢复默认设置</a>
+                    <a class="saveButton">保存</a><a class="cancellButton">取消</a> -->
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="addBLPop absolute hidden windowPop">
+                        <div class="title">
+                            <font>IP黑名单</font>
+                            <span class="closeWW"></span>
+                        </div>
+                        <div class="content">
+                            <p>
+                                <label>远程IP : </label>
+                                <select>
+                                    <option value="0">单个IP</option>
+                                    <option value="1">多个IP</option>
+                                </select>
+                            </p>
+                            <p>
+                                <label></label>
+                                <input type="text" name="" class="ip">
+                                <span class="hidden">
+                                     - 
+                                    <input type="text" name="" class="ip">
+                                </span>
+                            </p>
+                            <p>
+                                <label>备注 : </label>
+                                <input type="text" name="" class="remark">
+                            </p>
+
+                        </div>
+                        <div class="buttons">
+                            <a onclick="hideButtonn(this)">取消</a>
+                            <a onclick="sureAddBLB(this)">保存</a>
+                            
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="editBLPop absolute hidden windowPop">
+                        <div class="title">
+                            <font>IP黑名单</font>
+                            <span class="closeWW"></span>
+                        </div>
+                        <div class="content">
+                            <p>
+                                <label>远程IP : </label>
+                                <select>
+                                    <option value="0">单个IP</option>
+                                    <option value="1">多个IP</option>
+                                </select>
+                            </p>
+                            <p>
+                                <label></label>
+                                <input type="text" name="" class="ip">
+                                <span class="hidden">
+                                     - 
+                                    <input type="text" name="" class="ip">
+                                </span>
+                            </p>
+                            <p>
+                                <label>备注 : </label>
+                                <input type="text" name="" class="remark">
+                            </p>
+
+                        </div>
+                        <div class="buttons">
+                            <a onclick="hideButtonn(this)">取消</a>
+                            <a onclick="sureEditBLB(this)">保存</a>
+                            
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="addPCPop absolute hidden windowPop">
+                        <div class="title">
+                            <font>网络协议控制</font>
+                            <span class="closeWW"></span>
+                        </div>
+                        <div class="content">
+                        	<p>
+                                <label>规则名 : </label>
+                                <input type="text" name="ruleName" value="" placeholder="" maxlength="10">
+                            </p>
+                            <p>
+                                <label>操作 : </label>
+                                <select class="ope">
+                                    <option value="0">放行</option>
+                                    <option value="1">阻止</option>}
+                                </select>
+                            </p>
+                            <p>
+                                <label>方向 : </label>
+                                <select class="dir">
+                                    <option value="0">所有</option>
+                                    <option value="1">入站</option>
+                                    <option value="2">出站</option>
+                                </select>
+
+                            </p>
+                            <p>
+                                <label>协议 : </label>
+                                <select class="pro">
+                                    <option value="1">ICMP</option>
+                                    <option value="2">IGMP</option>
+                                    <option value="3">GGP</option>
+                                    <option value="260">TCP/UDP</option>
+                                    <option value="6" selected>TCP</option>
+                                    <option value="17">UDP</option>
+                                    <option value="12">PUP</option>
+                                    <option value="22">IDP</option>
+                                    <option value="77">ND</option>
+                                    <option value="50">ESP</option>
+                                    <option value="51">AH</option>
+                                    <option value="47">GRE</option>
+                                    <option value="27">RDP</option>
+                                    <option value="57">SKIP</option>
+                                    <option value="255">RAW</option>
+
+                                </select>
+                                <select class="ICMP hidden">
+                                    <option value="0">0-回显响应</option>
+                                    <option value="3">3-目标无法到达</option>
+                                    <option value="4">4-源抑制</option>
+                                    <option value="5">5-重定向</option>
+                                    <option value="8">8-回显请求（PING请求）</option>
+                                    <option value="9">9-路由器通知</option>
+                                    <option value="10">10-路由器请求</option>
+                                    <option value="11">11-数据包超时</option>
+                                    <option value="12">12-数据包参数存在问题</option>
+                                    <option value="13">13-时间戳请求</option>
+                                    <option value="14">14-时间戳应答</option>
+                                    <option value="15">15-信息请求</option>
+                                    <option value="16">16-信息回复</option>
+                                    <option value="17">17-地址掩码请求</option>
+                                    <option value="18">18-地址掩码应答</option>
+
+                                </select>
+
+                                
+                            </p>
+                            <p class="relative">
+                                <label>本地IP : </label>
+                                <select class="ipports localip">
+                                    <option value="0">任意IP</option>
+                                    <option value="1">自定义</option>}
+                                </select>
+                                <input type="text" name="" value="" placeholder="" class="hidden localipv">
+                                <img src="images/unusual.png" alt="" class="verticalMiddle hintIco cursor hidden">
+                                <span class="absolute floatHint hidden">
+                                	<font>IP地址或子网的列表:</font><br>
+                                	多个条目必须以英文逗号分隔<br>
+                                	例如:192.168.1.5,10.1.0.25-10.1.0.99
+                                </span>
+                            </p>
+                            <p class="relative">
+                                <label>本地端口 : </label>
+                                <select class="ipports localport">
+                                    <option value="0">任意端口</option>
+                                    <option value="1">自定义</option>
+                                    <option value="3" class="hidden">无</option>
+                                </select>
+                                <input type="text" name="" value="" placeholder="" class="hidden localportv">
+                                <img src="images/unusual.png" alt="" class="verticalMiddle hintIco cursor hidden">
+                                <span class="absolute floatHint hidden">
+                                	<font>端口活动范围列表</font><br>
+                                	多个条目必须以英文逗号分隔 <br>
+                                	例如80,443,1000-2000,40000-65535
+                                </span>
+                            </p>
+                            <p class="relative">
+                                <label>远程IP : </label>
+                                <select class="ipports remoteip">
+                                    <option value="0">任意IP</option>
+                                    <option value="1">自定义</option>
+                                    
+                                </select>
+                                <input type="text" name="" value="" placeholder="" class="hidden remoteipv">
+                                <img src="images/unusual.png" alt="" class="verticalMiddle hintIco cursor hidden">
+                                <span class="absolute floatHint hidden">
+                                	<font>IP地址或子网的列表:</font><br>
+                                	多个条目必须以英文逗号分隔<br>
+                                	例如:192.168.1.5,10.1.0.25-10.1.0.99
+                                </span>
+                            </p>
+                            <p class="relative">
+                                <label>远程端口 : </label>
+                                <select class="ipports remoteport">
+                                    <option value="0">任意端口</option>
+                                    <option value="1">自定义</option>
+                                    <option value="3" class="hidden">无</option>
+                                </select>
+                                <input type="text" name="" value="" placeholder="" class="hidden remoteportv">
+                                <img src="images/unusual.png" alt="" class="verticalMiddle hintIco cursor hidden">
+                                <span class="absolute floatHint hidden">
+                                	<font>端口活动范围列表</font><br>
+                                	多个条目必须以英文逗号分隔 <br>
+                                	例如80,443,1000-2000,40000-65535
+                                </span>
+                            </p>
+        
+                        </div>
+                        <div class="buttons">
+                            <a onclick="hideButtonn(this)">取消</a>
+                            <a onclick="sureAddPCB(this)">保存</a>
+                            
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="editPCPop absolute hidden windowPop">
+                        <div class="title">
+                            <font>网络协议控制</font>
+                            <span class="closeWW"></span>
+                        </div>
+                        <div class="content">
+                            <p>
+                                <label>规则名 : </label>
+                                <input type="text" name="ruleName" value="" placeholder="" maxlength="10">
+                            </p>
+                            <p>
+                                <label>操作 : </label>
+                                <select class="ope">
+                                    <option value="0">放行</option>
+                                    <option value="1">阻止</option>}
+                                </select>
+                            </p>
+                            <p>
+                                <label>方向 : </label>
+                                <select class="dir">
+                                    <option value="0">所有</option>
+                                    <option value="1">入站</option>
+                                    <option value="2">出站</option>
+                                </select>
+
+                            </p>
+                            <p>
+                                <label>协议 : </label>
+                                <select class="pro">
+                                    <option value="1">ICMP</option>
+                                    <option value="2">IGMP</option>
+                                    <option value="3">GGP</option>
+                                    <option value="260">TCP/UDP</option>
+                                    <option value="6" selected>TCP</option>
+                                    <option value="17">UDP</option>
+                                    <option value="12">PUP</option>
+                                    <option value="22">IDP</option>
+                                    <option value="77">ND</option>
+                                    <option value="50">ESP</option>
+                                    <option value="51">AH</option>
+                                    <option value="47">GRE</option>
+                                    <option value="27">RDP</option>
+                                    <option value="57">SKIP</option>
+                                    <option value="255">RAW</option>
+
+                                </select>
+                                <select class="ICMP hidden">
+                                    <option value="0">0-回显响应</option>
+                                    <option value="3">3-目标无法到达</option>
+                                    <option value="4">4-源抑制</option>
+                                    <option value="5">5-重定向</option>
+                                    <option value="8">8-回显请求（PING请求）</option>
+                                    <option value="9">9-路由器通知</option>
+                                    <option value="10">10-路由器请求</option>
+                                    <option value="11">11-数据包超时</option>
+                                    <option value="12">12-数据包参数存在问题</option>
+                                    <option value="13">13-时间戳请求</option>
+                                    <option value="14">14-时间戳应答</option>
+                                    <option value="15">15-信息请求</option>
+                                    <option value="16">16-信息回复</option>
+                                    <option value="17">17-地址掩码请求</option>
+                                    <option value="18">18-地址掩码应答</option>
+
+                                </select>
+
+                                
+                            </p>
+                            <p class="relative">
+                                <label>本地IP : </label>
+                                <select class="ipports localip">
+                                    <option value="0">任意IP</option>
+                                    <option value="1">自定义</option>
+                                    
+                                </select>
+                                <input type="text" name="" value="" placeholder="" class="hidden localipv">
+                                <img src="images/unusual.png" alt="" class="verticalMiddle hintIco cursor hidden">
+                                <span class="absolute floatHint hidden">
+                                    <font>IP地址或子网的列表:</font><br>
+                                    多个条目必须以英文逗号分隔<br>
+                                    例如:192.168.1.5,10.1.0.25-10.1.0.99
+                                </span>
+                            </p>
+                            <p class="relative">
+                                <label>本地端口 : </label>
+                                <select class="ipports localport">
+                                    <option value="0">任意端口</option>
+                                    <option value="1">自定义</option>
+                                    <option value="3" class="hidden">无</option>
+                                </select>
+                                <input type="text" name="" value="" placeholder="" class="hidden localportv">
+                                <img src="images/unusual.png" alt="" class="verticalMiddle hintIco cursor hidden">
+                                <span class="absolute floatHint hidden">
+                                    <font>端口活动范围列表</font><br>
+                                    多个条目必须以英文逗号分隔 <br>
+                                    例如80,443,1000-2000,40000-65535
+                                </span>
+                            </p>
+                            <p class="relative">
+                                <label>远程IP : </label>
+                                <select class="ipports remoteip">
+                                    <option value="0">任意IP</option>
+                                    <option value="1">自定义</option>
+                                </select>
+                                <input type="text" name="" value="" placeholder="" class="hidden remoteipv">
+                                <img src="images/unusual.png" alt="" class="verticalMiddle hintIco cursor hidden">
+                                <span class="absolute floatHint hidden">
+                                    <font>IP地址或子网的列表:</font><br>
+                                    多个条目必须以英文逗号分隔<br>
+                                    例如:192.168.1.5,10.1.0.25-10.1.0.99
+                                </span>
+                            </p>
+                            <p class="relative">
+                                <label>远程端口 : </label>
+                                <select class="ipports remoteport">
+                                    <option value="0">任意端口</option>
+                                    <option value="1">自定义</option>
+                                    <option value="3" class="hidden">无</option>
+                                </select>
+                                <input type="text" name="" value="" placeholder="" class="hidden remoteportv">
+                                <img src="images/unusual.png" alt="" class="verticalMiddle hintIco cursor hidden">
+                                <span class="absolute floatHint hidden">
+                                    <font>端口活动范围列表</font><br>
+                                    多个条目必须以英文逗号分隔 <br>
+                                    例如80,443,1000-2000,40000-65535
+                                </span>
+                            </p>
+        
+                        </div>
+                        <div class="buttons">
+                            <a onclick="hideButtonn(this)">取消</a>
+                            <a onclick="sureEditPCB(this)">保存</a>
+                            
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <a onclick="hideButton(this)">取消</a>
+                        <a onclick="sureEditButton(this)">保存</a>
+                        
+                        <div class="clear"></div>
+                    </div>
+        </div>
+        <div class="shade"></div>
+        <div class="shadee"></div>
+        <div class="delayHide">
+            <p class="p1"><img src="images/unusualw.png">请选择终端!</p>
+            <!-- <p class="p2">(<font>3秒后</font>本窗口消失，任务将在后台继续完成下发)</p> -->
+        </div>
+        <div class="delayHideS">
+            <p class="p1"></p>
+        </div>
+        <script src="js/tacticsManage.js" type="text/javascript"></script>
+        <script>
+        //隐藏左边滚动条   
+            $(function(){
+                $(".mainBlock .left").panel({iWheelStep:32});
+            });
+        </script>
+	</body>
+</html>

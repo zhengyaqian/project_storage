@@ -1,0 +1,44 @@
+﻿<!doctype html>
+<html>
+    <head>
+    	<title>火绒终端安全控制中心</title>
+    	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" />
+		<link href="css/common.css" rel="stylesheet">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/json3.js"></script>
+		<style>
+		.block{width: 723px;height:343px;background: url(images/terminalA.png);margin:0 auto;margin-top: 160px;padding: 80px 90px;font-size: 12px;color: #6c6c6c}
+		.block .title{border-bottom: 1px solid rgb(231,234,236);padding-bottom: 20px;padding-left: 20px}
+		.block .title img{vertical-align: middle;}
+		.block .title span{vertical-align: middle;font-size: 16px;margin-left: 10px;}
+		.block .content{padding:0 20px; }
+		.textindent{text-indent: 2em;line-height: 20px}
+		.h{padding: 24px 0;}
+		.link{margin-top: 30px;color: #1295ca;}
+		</style>
+	</head>
+	<body>
+		<div class="block">
+			<div class="title"><img src="images/ll.png"> <span>火绒企业安全</span></div>
+			<div class="content">
+				<p class="h">各位同事</p>
+				<p class="textindent">为了更好的保障企业内网安全，公司决定从即日起全面安装部署火绒安全企业版。您可以通过打开后面的链接下载并安装，安装后无需任何设置可以立即使用。</p>
+				
+				<p class="textindent link cursor">http://192.168.45.128/install/huorong(192.168.45.128_80).exe</p>
+			</div>
+
+		</div>
+		<script>
+		$.ajax({
+            url:'/mgr/deploy/_info',
+            data:{},
+            type:'GET',
+            contentType:'text/plain',
+            success:function(data){
+                $(".content p").eq(1).html(data.data.content)
+            }
+        });
+		</script>
+	</body>
+</html>

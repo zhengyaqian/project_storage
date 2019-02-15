@@ -1,0 +1,196 @@
+/*列表*/
+.hostnameTd{
+	cursor: pointer;
+}
+.hostnameInp{
+	height: 20px;
+	text-indent: 5px;
+	font-size: 12px;
+}
+.hostnameTd .fa-pencil{
+	display: none;
+	margin-left: 5px;
+}
+.hostnameTd:hover i{
+	display: inline-block;
+}
+
+
+.topTips{
+	margin: 0 20px;
+	padding-left: 22px;
+}
+.nodesPop{
+	width: 540px;
+    height: 370px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -331px;
+    margin-top: -270px;
+    z-index: 999;
+    background: rgb(255, 255, 255);
+    display: none;
+}
+.nodesPop .title{
+	position: relative;
+    font-size: 14px;
+    color: rgb(103, 106, 108);
+    padding-left: 20px;
+    border-bottom: 1px solid rgb(231,234,236);
+    line-height: 50px;
+}
+.nodesPop .title .closeW {
+    cursor: pointer;
+    position: absolute;
+    top: 16px;
+    right: 26px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: url(../images/closeW.png);
+}
+
+.nodesPop .content {
+    height: 270px;
+}
+.nodesPop .setBlock {
+    padding: 0 20px;
+    padding-bottom: 10px;
+    color: rgb(108, 108, 108);
+}
+.nodesPop .setBlock p{
+	height: 40px;
+	line-height: 40px;
+	position: relative;
+}
+.nodesPop .setBlock p input[type=text]{
+	border-radius: 3px;
+    width: 50%;
+    height: 24px;
+    text-indent: 5px;
+}
+.nodesPop .setBlock p input{
+	margin-right: 0;
+}
+.nodesPop .setBlock p .placeholder{
+	position: absolute;
+	left: 116px;
+	top: 0;
+	color: rgb(204, 204, 204);
+}
+
+.nodesPop .buttons {
+    margin: 0 22px;
+    padding-top: 12px;
+}
+.nodesPop .buttons a {
+    cursor: pointer;
+    margin-left: 4px;
+    display: inline-block;
+    width: 100px;
+    line-height: 22px;
+    background: rgb(101,197,129);
+    color: rgb(255, 255, 255);
+    border-radius: 3px;
+    float: right;
+    text-align: center;
+    font-size: 12px;
+}
+.nodesPop .onOrOff {
+    font-size: 14px;
+    position: relative;
+    line-height: 50px;
+    height: 50px;
+    font-weight: bold;
+    border-bottom: 1px solid rgb(231,234,236);
+    margin-bottom: 10px;
+}
+.nodesPop .lcs_switch{
+	position: absolute;
+	right: 0;
+}
+.table table tr td.orange{
+	color: rgb(253,168,56);
+}
+.nodesPop .tips{
+	color: rgb(204, 204, 204);
+}
+
+/*分配授权*/
+
+.lic_quota_type_inp,.lic_quota_type_span{
+	width: 90%;
+	height: 20px;
+	text-indent: 5px;
+	cursor: pointer;
+	border:1px solid rgb(229,230,231);
+	display: inline-block;
+	line-height: 20px;
+	vertical-align: middle;
+}
+.lic_quota_type_inp{
+	display: none;
+}
+input.lic_quota_type_inp::-webkit-input-placeholder{
+	color: rgb(161, 161, 161);
+}
+.lic_quota_type{
+	/*display: none;*/
+	border: 1px solid rgb(229,230,231);
+	background: #fff;
+	position: absolute;
+	top: 29px;
+	width: 73%;
+	z-index: 111;
+}
+.lic_quota_type li{
+	height: 20px;
+	line-height: 20px;
+	text-indent: 5px;
+	cursor: pointer;
+	list-style: none;
+}
+.lic_quota_type li:hover{
+	background: #1e90ff;
+	color: #FFFFFF;
+	font-size: 12px;
+}
+.select-desc{
+	position: absolute;
+	top: 12px;
+    right: 12px;
+    cursor: pointer;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+input[type="number"]{
+    -moz-appearance: textfield;
+}
+
+
+/*配置上级中心弹窗提示*/
+
+.switchTipPop .right{
+	float: none;
+	padding-left: 115px;
+    font-size: 14px;
+    color: rgb(103, 106, 108);
+    padding-top: 35px;
+    padding-right: 16px;
+}
+/*placeholder颜色*/
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:rgb(204, 204, 204);
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:rgb(204, 204, 204);
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:rgb(204, 204, 204);
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:rgb(204, 204, 204);
+}

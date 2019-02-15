@@ -1,0 +1,180 @@
+
+/**/
+
+
+.checkTacticsPop{display: none;width:845px;height:572px;background: #ffffff;z-index: 999;position: fixed;top: 50%;left:50%;margin-left: -422px;margin-top: -306px}
+.checkTacticsPop>.title{position: relative;line-height: 50px;height:50px;font-size: 14px;color: #676a6c;padding-left: 20px}
+.checkTacticsPop>.title .closeW{cursor: pointer;position: absolute;top:20px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png)}
+.checkTacticsPop>.title .closeW:hover{background-position: -20px}
+.checkTacticsPop .input{padding:12px;background-color: rgb(249,249,249);margin-top: 20px }
+.checkTacticsPop .input input{width:1132px;height: 32px;border: 1px solid rgb(231,234,236)}
+.checkTacticsPop .mainBlock{height: 472px;border: 1px solid rgb(231,234,236);padding:0 20px;}
+.checkTacticsPop .switchShade{height: 100%;width: 100%;left: 0;top:0;z-index: 99;display: block;display: none;background: #ffffff;opacity: 0;filter:alpha(opacity:0);}
+.checkTacticsPop .txtWidth{vertical-align: middle;width: 170px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;}
+.mainBlock .left{height:440px;float: left;width: 172px;background-color: rgb(249,249,249);padding-top: 16px;padding-bottom: 16px;}
+.mainBlock .left .container{width: 172px;background-color: rgb(249,249,249);padding-top: 16px;padding-bottom: 16px;}
+.mainBlock .left a{cursor: pointer;display: block;padding-left: 54px;line-height: 26px;color: #6c6c6c;font-size: 12px}
+.mainBlock .left a:hover{background-color: #ffffff;color: #5fc47f}
+.mainBlock .left .title:hover{background-color: rgb(249,249,249);color: #6c6c6c}
+.mainBlock .left .title{cursor: default;line-height: 32px;font-size: 12px;position: relative;font-weight: 700}
+.mainBlock .left .title img{position: absolute;top:10px;left: 24px}
+.mainBlock .left .current{color: #5fc47f;background-color: #ffffff}
+.mainBlock .right{float: right;padding:14px 10px;width:620px;color: #6c6c6c;padding-right: 0;overflow-y: scroll;height:444px;}
+
+.checkTacticsPop .buttons{margin:0 22px;padding-top: 12px;padding-bottom: 12px;}
+.checkTacticsPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 84px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.checkTacticsPop .buttons a:hover{background: rgb(71,172,117)}
+/*病毒查杀*/
+input[name=overallPara1],input[name=overallPara2]{margin: 0 10px;padding-left: 10px;width: 100px;border: 1px solid rgb(231,234,236);color: #6c6c6c;font-size: 12px;}
+/*u盘保护*/
+input[name=zipSetV],input[name=zipSetDPV]{margin: 0 10px;padding-left: 10px;width: 100px;border: 1px solid rgb(231,234,236);color: #6c6c6c;font-size: 12px;}
+/*文件实时监控*/
+/*基本设置*/
+
+input[name=policyName],input[name=policyRemarks]{margin: 0 10px;padding-left: 10px;width: 150px;border: 1px solid rgb(231,234,236);color: #6c6c6c;font-size: 12px;}
+/*邮件监控*/
+input[name=zipSetMMV]{margin: 0 10px;padding-left: 10px;width: 100px;border: 1px solid rgb(231,234,236);color: #6c6c6c;font-size: 12px;}
+.mMTableTitle{line-height: 37px;padding: 0 20px}
+.mMTableTitle .floatL{font-size: 14px;}
+.mMTableTitle .floatR{font-size: 12px;}
+.mMTableTitle .floatR a{margin-left: 14px;}
+.mailMTable{font-size: 12px;padding-top: 4px;}
+.mailMTable table{border-collapse: collapse;}
+.mailMTable table tr{border-bottom: 1px solid rgb(231,234,236)}
+.mailMTable table th{background: rgb(240,240,240)}
+.mailMTable table th,.mailMTable table td{text-align: left;padding-left: 20px;line-height: 30px}
+.mailMTable .opButton{margin-right: 10px;}
+.mailMTable .portInput{width: 120px;padding-left: 12px;border: 1px solid rgb(231,234,236);font-size: 12px;color: #6c6c6c;height: 22px;line-height: 22px;}
+.mailMTable select{width: 120px;font-size: 12px;color: #6c6c6c}
+/*IP黑名单*/
+.bLTableTitle{line-height: 37px;padding: 0 20px}
+.bLTableTitle .floatL{font-size: 12px;}
+.bLTableTitle .floatR{font-size: 12px;}
+.bLTableTitle .floatR a{margin-left: 14px;}
+.blackLTable{font-size: 12px;padding-top: 4px;}
+.blackLTable table{border-collapse: collapse;}
+.blackLTable table tr{border-bottom: 1px solid rgb(231,234,236)}
+.blackLTable table th{background: rgb(240,240,240)}
+.blackLTable table th,.blackLTable table td{text-align: left;padding-left: 20px;line-height: 30px}
+.blackLTable .opButton{margin-right: 10px;}
+.windowShade{z-index: 99;}
+.addBLPop{z-index: 99;background: #ffffff;width:484px;height:294px;top:50%;left: 50%;margin-left: -242px;margin-top: -147px;}
+.addBLPop>.title{border-bottom: 1px solid rgb(231,234,236);position: relative;line-height: 50px;height:50px;font-size: 14px;color: #676a6c;padding-left: 20px}
+.addBLPop>.title .closeWW{cursor: pointer;position: absolute;top:20px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png)}
+.addBLPop>.title .closeWW:hover{background-position: -20px}
+.addBLPop .content{padding-top: 26px;height: 168px;margin:0 20px;border-bottom: 1px solid rgb(231,234,236)}
+.addBLPop .content p{line-height: 40px;}
+.addBLPop .content input{font-size: 12px;color: #6c6c6c;height: 22px;line-height: 22px;padding-left: 12px;}
+.addBLPop .remark{width:350px;}
+.addBLPop .ip{width:160px;}
+.addBLPop .content select{font-size: 12px;color: #6c6c6c;height: 22px;line-height: 22px;width:104px;padding-left: 12px}
+.addBLPop .content select option{padding-left: 12px;font-size: 12px;color: #6c6c6c;}
+.addBLPop .content label{width:64px;text-align: right;display: inline-block;font-size: 12px;color: #6c6c6c}
+.editBLPop{z-index: 99;background: #ffffff;width:484px;height:294px;top:50%;left: 50%;margin-left: -242px;margin-top: -147px;}
+.editBLPop>.title{border-bottom: 1px solid rgb(231,234,236);position: relative;line-height: 50px;height:50px;font-size: 14px;color: #676a6c;padding-left: 20px}
+.editBLPop>.title .closeWW{cursor: pointer;position: absolute;top:20px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png)}
+.editBLPop>.title .closeWW:hover{background-position: -20px}
+.editBLPop .content{padding-top: 26px;height: 168px;margin:0 20px;border-bottom: 1px solid rgb(231,234,236)}
+.editBLPop .content p{line-height: 40px;}
+.editBLPop .content input{font-size: 12px;color: #6c6c6c;height: 22px;line-height: 22px;padding-left: 12px;}
+.editBLPop .remark{width:350px;}
+.editBLPop .ip{width:160px;}
+.editBLPop .content select{font-size: 12px;color: #6c6c6c;height: 22px;line-height: 22px;width:104px;padding-left: 12px}
+.editBLPop .content select option{padding-left: 12px;font-size: 12px;color: #6c6c6c;}
+.editBLPop .content label{width:64px;text-align: right;display: inline-block;font-size: 12px;color: #6c6c6c}
+/*IP协议控制*/
+.protocolCTable{font-size: 12px;padding-top: 4px;}
+.protocolCTable table{border-collapse: collapse;}
+.protocolCTable table tr{border-bottom: 1px solid rgb(231,234,236)}
+.protocolCTable table th{background: rgb(240,240,240)}
+.protocolCTable table th,.protocolCTable table td{text-align: left;padding-left: 20px;line-height: 30px}
+.protocolCTable .opButton{margin-right: 10px;}
+.addPCPop{z-index: 99;background: #ffffff;width:550px;height:466px;top:50%;left: 50%;margin-left: -275px;margin-top: -233px;}
+.addPCPop>.title{border-bottom: 1px solid rgb(231,234,236);position: relative;line-height: 50px;height:50px;font-size: 14px;color: #676a6c;padding-left: 20px}
+.addPCPop>.title .closeWW{cursor: pointer;position: absolute;top:20px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png)}
+.addPCPop>.title .closeWW:hover{background-position: -20px}
+.addPCPop .content{padding-top: 6px;height: 360px;margin:0 20px;border-bottom: 1px solid rgb(231,234,236)}
+.addPCPop .content p{line-height: 40px;}
+.addPCPop .content input{font-size: 12px;color: #6c6c6c;height: 22px;line-height: 22px;padding-left: 12px;width: 208px;}
+.addPCPop .content input[name="ruleName"]{width: 104px;}
+.addPCPop .remark{width:350px;}
+.addPCPop .ip{width:160px;}
+.addPCPop .content select{font-size: 12px;color: #6c6c6c;height: 22px;line-height: 22px;width:116px;padding-left: 12px}
+.addPCPop .content select option{padding-left: 12px;font-size: 12px;color: #6c6c6c;}
+.addPCPop .content .ICMP{width:200px;}
+.addPCPop .content label{width:64px;text-align: right;display: inline-block;font-size: 12px;color: #6c6c6c}
+.addPCPop .floatHint{line-height: 20px;font-size: 12px;color: #6c6c6c;background: #ffffff;padding: 10px;border-radius: 2px;width: 250px;right: -200px;bottom: 14px;border: 1px solid rgb(231,234,236)}
+.editPCPop{z-index: 99;background: #ffffff;width:550px;height:466px;top:50%;left: 50%;margin-left: -275px;margin-top: -233px;}
+.editPCPop>.title{border-bottom: 1px solid rgb(231,234,236);position: relative;line-height: 50px;height:50px;font-size: 14px;color: #676a6c;padding-left: 20px}
+.editPCPop>.title .closeWW{cursor: pointer;position: absolute;top:20px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png)}
+.editPCPop>.title .closeWW:hover{background-position: -20px}
+.editPCPop .content{padding-top: 6px;height: 360px;margin:0 20px;border-bottom: 1px solid rgb(231,234,236)}
+.editPCPop .content p{line-height: 40px;}
+.editPCPop .content input{font-size: 12px;color: #6c6c6c;height: 22px;line-height: 22px;padding-left: 12px;width: 208px;}
+.editPCPop .content input[name="ruleName"]{width: 104px;}
+.editPCPop .remark{width:350px;}
+.editPCPop .ip{width:160px;}
+.editPCPop .content select{font-size: 12px;color: #6c6c6c;height: 22px;line-height: 22px;width:116px;padding-left: 12px}
+.editPCPop .content select option{padding-left: 12px;font-size: 12px;color: #6c6c6c;}
+.editPCPop .content .ICMP{width:200px;}
+.editPCPop .content label{width:64px;text-align: right;display: inline-block;font-size: 12px;color: #6c6c6c}
+.editPCPop .floatHint{line-height: 20px;font-size: 12px;color: #6c6c6c;background: #ffffff;padding: 10px;border-radius: 2px;width: 250px;right: -200px;bottom: 14px;border: 1px solid rgb(231,234,236)}
+
+/**/
+.mainBlock .right .onOrOff{font-size: 14px;position: relative;line-height: 50px;background-color: rgb(249,249,249);padding: 0 20px;height:50px;}
+.lcs_wrap{position: absolute;top:8px;right: 20px;#top:14px;}
+.setBlock{padding: 0 20px;border-bottom: 1px solid rgb(231,234,236);padding-bottom: 12px}
+.lastSetBlock{border-bottom: 0px;}
+.setBlock h4{line-height: 54px;font-size: 12px;font-weight: normal;}
+
+.setBlock p{font-size: 12px;line-height: 26px;}
+.setBlock .programPath{position: relative;}
+.setBlock .programPath .placeholder{position: absolute;left: 190px;top:2px;*left:226px;*top:0px;}
+.setBlock .programPathTxt{height: 22px;margin-left: 10px;border:1px solid rgb(229,230,231);width: 290px;line-height: 22px;outline: none;padding-left: 10px;color: #6c6c6c;font-size: 12px}
+.setBlock .leftP{float: left;margin-right: 104px}
+.setBlock p span{vertical-align: middle;}
+.setBlock p input{vertical-align: middle;margin-right: 16px;line-height: 22px;height: 22px;}
+.defaultButton{cursor: pointer;position: absolute;bottom:18px;left:38px;color: #6c6c6c;font-size: 12px;}
+.saveButton{cursor: pointer;bottom:18px;border-radius: 3px;color: #ffffff;text-align: center;position: absolute;right: 130px;width:86px;line-height: 20px;display: block;font-size: 12px;background-color: rgb(101,197,129)} 
+.cancellButton{cursor: pointer;bottom:18px;border-radius: 3px;color: #ffffff;text-align: center;position: absolute;right: 40px;width:86px;line-height: 20px;display: block;font-size: 12px;background-color: rgb(101,197,129)} 
+.mailSetText{font-size: 14px;padding-left: 20px;padding-top: 10px;}
+/*恶意网站拦截*/
+.mainBlock .right .webRule{}
+.mainBlock .right .describe{font-size: 12px;padding-top: 26px;padding-bottom: 14px;padding-left: 18px;}
+.webRule{border: 1px solid rgb(231,234,236);height: 227px}
+.webRule .li{line-height: 56px;font-size: 12px;padding-left: 16px;position: relative;border-bottom: 1px solid rgb(231,234,236);height: 56px;}
+.webRule .titlee{background:rgb(240,240,240)}
+
+/*对外攻击检测*/
+.mainBlock .right .title{line-height: 40px;color: #6c6c6c;padding-left: 18px;margin:10px 0;font-size: 12px;}
+.mainBlock .actionSelect{border-bottom: 1px solid rgb(231,234,236)}
+.mainBlock .lastActionSelect{border-bottom:0px }
+.mainBlock .actionSelect ul li{padding-left: 18px;font-size: 12px;color: #6c6c6c;line-height: 28px}
+.actionSelect ul li input{vertical-align: middle;margin-right: 20px}
+
+/*浏览器保护*/
+.actionSelect ul li .path{width: 390px;margin-left: 14px;border:1px solid rgb(229,230,231);padding-left: 10px;font-size: 12px;line-height: 22px;height: 22px;}
+/*自定义防护*/
+.tacticsTab{color: #676a6c;font-size: 12px;z-index: 9;position: absolute;left: -1px;top:-40px;}
+.tacticsTab a{border-radius: 3px;cursor: pointer;line-height: 38px;width: 100px;text-align: center;height: 38px;display: inline-block;border-bottom: 1px solid rgb(231,234,236)}
+.tacticsTab .current{border: 1px solid rgb(231,234,236);border-bottom: 1px solid #ffffff;}
+.selfPBlock{height: 526px;position: relative;margin-top: 10px;border: 1px solid rgb(231,234,236);margin-top: 48px}
+
+/*系统加固*/
+.systemRooting{font-size: 12px;}
+.systemRooting .deploypng{width: 18px;height: 18px;background: url(../images/task1.png);display: inline-block;vertical-align: middle;#margin-top: 24px;}
+
+.systemRooting .tr .td1{width:440px;height: 64px;}
+.systemRooting .tr .td1 .absolute{top:14px;left:66px;}
+.systemRooting .tr .td1 p{line-height: 18px}
+.systemRooting .tr .td2{width:64px;}
+.systemRooting .tr{height:64px;line-height: 64px;border-bottom:1px solid rgb(231,234,236);cursor: pointer;}
+.systemRooting .tr .td{padding-left: 20px;float: left;}
+.systemRooting table{border-collapse: collapse;}
+.systemRooting table th,.systemRooting table td{text-align: left;padding-left: 20px;vertical-align: middle;}
+.systemRooting table th input,.systemRooting table td input{vertical-align:middle;margin-right: 10px;}
+.systemRooting table th{background-color: rgb(240,240,240);line-height: 36px;height: 36px;}
+.systemRooting table td{padding-top: 6px;padding-bottom: 6px;}
+.systemRooting table td .defendI{color:#989898}
+.systemRooting table td select{width:100px;border:1px solid rgb(231,234,236);font-size: 12px;color: #6c6c6c;}
+#filePTable,#registryPTable,#executeDTable,#virusITable,#actionITable,#processPTable{display: none;}

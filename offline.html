@@ -1,0 +1,71 @@
+﻿<!doctype html>
+<html>
+    <head>
+    	<title>火绒终端安全控制中心</title>
+		<link href="css/common.css" rel="stylesheet">
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" />
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/json3.js"></script>
+		<style>
+		.block{width: 800px;height:424px;background: #ffffff;margin:0 auto;margin-top: 160px;padding: 38px 50px;font-size: 12px;color: #6c6c6c;background: url(images/offlineBg.png);background-position: bottom;}
+		.block .title{border-bottom: 1px dashed rgb(231,234,236);padding-bottom: 20px;padding-left: 20px}
+		.block .title img{vertical-align: middle;}
+		.block .title span{vertical-align: middle;font-size: 16px;margin-left: 10px;}
+		.block .content{padding:0 20px; font-size: 12px;}
+		.floatL{padding-top: 66px;padding-left: 70px;}
+		.floatLR{padding-left: 100px;}
+		h4{font-size: 16px;font-weight: normal;}
+		h5{font-weight: normal;font-size: 12px;}
+		.version{margin-top: 20px;}
+		.button{padding:26px 0px;}
+		.button a{width:130px;height: 38px;line-height: 38px;display: block;background: rgb(251,169,36);color: #ffffff;text-align: center;border-radius: 5px}
+		.updateIContent{margin-top: 10px;width:300px;overflow-y:scroll;height: 100px; }
+		</style>
+	</head>
+	<body>
+		<div class="block">
+			<div class="title"><img src="images/ll.png"> <span>火绒安全企业版</span></div>
+			<div class="content">
+				<div class="floatL"><img src="images/offline.png"></div>
+				<div class="floatL floatLR">
+					<h4>离线升级工具</h4>
+					<div class="version">
+						<p>企业中心版本 : <font>2017-08-18</font></p>
+						<p>企业中心版本 : <font>2017-08-18</font></p>
+				    </div>
+				    <div class="button">
+				    	<a class="cursor">下载升级</a>
+				    </div>
+				    <h5>更新说明：</h5>
+				    <div class="updateIContent">
+				    	<p>1. 增强软件以及管理中心的稳</p>
+				    	<p>1. 增强软件以及管理中心的稳</p>
+				    	<p>1. 增强软件以及管理中心的稳</p>
+				    	<p>1. 增强软件以及管理中心的稳</p>
+				    	<p>1. 增强软件以及管理中心的稳</p>
+				    	<p>1. 增强软件以及管理中心的稳</p>
+				    	<p>1. 增强软件以及管理中心的稳</p>
+				    	<p>1. 增强软件以及管理中心的稳</p>
+				    	<p>1. 增强软件以及管理中心的稳</p>
+				    	<p>1. 增强软件以及管理中心的稳</p>
+				    	<p>1. 增强软件以及管理中心的稳</p>
+				    	<p>1. 增强软件以及管理中心的稳</p>
+				    </div>
+				</div>
+				<div class="clear"></div>
+			</div>
+
+		</div>
+		<script>
+		$.ajax({
+            url:'/mgr/deploy/_info',
+            data:{},
+            type:'GET',
+            contentType:'text/plain',
+            success:function(data){
+                
+            }
+        });
+		</script>
+	</body>
+</html>

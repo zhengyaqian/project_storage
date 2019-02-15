@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+    <head></head>
+    <body>
+        <script>
+            function inIframe() {
+                try {
+                    return (window.self !== window.top);
+                } catch (e) {
+                    return true;
+                }
+            }
+            if (inIframe()) {
+                window.location.href = "firstPage.html";
+            } else {
+                window.location.href = "/";
+            }
+        </script>
+    </body>
+</html>

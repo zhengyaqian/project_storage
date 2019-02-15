@@ -1,0 +1,149 @@
+﻿<!doctype html>
+<html>
+    <head>
+        <title>火绒终端安全控制中心</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" />
+		<link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.css" />
+        <link href="css/common.css" rel="stylesheet">
+        <link href="css/eventLog.css" rel="stylesheet">
+        <link href="css/lyz.calendar.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="js/json3.js"></script>
+    </head>
+    <body>
+        <div class="main">
+                <div class="tabSel">
+ 							<a href="virusDefense.html">病毒防御</a>
+                            <a href="systemDefense.html">系统防御</a>
+                            <a href="netDefense.html" class="current colorGreen">网络防御</a>
+                            <a id="historyTaskB" href="historyTask.html">历史任务</a>
+                   		    <a href="remoteLog.html">远程日志</a>
+                            <a href="updateLog.html">升级日志</a>
+                            <a href="adminOperate.html">管理员操作</a>
+                            <a href="bugRepair.html">漏洞修复</a>
+                </div>
+                <div class="filterBlock">
+                        <p id="functionBlock" class="floatL">
+                                <span class="conditionN">功能 : </span>
+                                <a class="bu current">黑客入侵拦截<a class="bu">对外攻击检测<a class="bu">恶意网址拦截<a class="bu">IP黑名单<a class="bu">IP协议控制</a>
+                        </p>
+                        <p class="left" id="specialTime">
+                                <span class="conditionN">时间 :</span>
+                                <select>
+                                    <option value="0">最近7天</option>
+                                    <option value="1">最近30天</option>
+                                    <option value="2">最近90天</option>
+                                    <option value="3">最近1年</option>
+                                    <option value="4">自定义</option>
+                                </select>
+                        </p>
+                        <p class="middle">
+                                <!-- <span class="conditionN">指定日期 :</span> -->
+                                <input id="txtBeginDate"/><span class="zhi">至</span><input id="txtEndDate"/>
+                                
+                        </p>
+                        <p class="right">
+                                <span class="conditionN">分组 :</span>
+                                <select id="groupSelect">
+                                        <option>全部分组</option>
+                                        <option>全部分组</option>
+                                        <option>全部分组</option>
+                                        <option>全部分组</option>
+                                        <option>全部分组</option>
+                                </select>
+                        </p>
+                        <p>
+                            <span class="conditionN">统计 :</span>
+                            <select id="" class="tabButton">
+                            		<option value="0">按详情</option>
+                                    <option value="1">按终端</option>
+                                    
+                            </select>
+                        </p>
+                        <div class="clear"></div>
+                </div>
+                
+                <div class="search">
+                    <div class="searchBlock floatL">
+                        <span class='condition'></span>
+
+                        <select id='selectVT' class="hidden">
+                            <option>按终端名称</option>
+                        </select>
+
+                        <select id='selectVD1'>
+                            <option value='0'>按终端名称</option>
+                            <option value='1'>按入侵类型</option>
+                        </select>
+                        <select id='selectVD2' class="hidden">
+                            <option value='0'>按终端名称</option>
+                            <option value='1'>按攻击类型</option>
+                        </select>
+                        <select id='selectVD3' class="hidden">
+                            <option value='0'>按终端名称</option>
+                            <option value='1'>按恶意网址</option>
+                        </select>
+                        <select id='selectVD4' class="hidden">
+                            <option value='0'>按终端名称</option>
+                            <option value='1'>按远程IP</option>
+                        </select>
+                        <select id='selectVD5' class="hidden">
+                            <option value='0'>按终端名称</option>
+                            <option value='1'>按规则名称</option>
+                        </select>
+                        
+                        <span class='textbox'>
+                            <input type='text' class='placeholderInput' onfocus='fadeOut(this)' onblur='fadeIn(this)' id='searchKey'><span class='placeholder' onclick='spanFocus(this)'>请输入搜索关键词</span><img src='images/search.png' onclick='accEvent()'>
+                        </span>
+                            
+                    </div>
+                    <div class='floatR tabButton'>
+                        <a class='textAlignC cursor exportLog'>导出</a>
+                    </div>
+                    <div class='clear'></div>
+                </div>
+                
+                <div class="tableContainer">
+                    <div class="table">
+                    </div>
+                </div> 
+
+                
+        </div>
+          
+        <div class="shade"></div>
+        <div class="taskDetailPop pop" style="width: 780px;">
+            <div class="title"><font></font><span class="closeW"></span></div>
+            <div class="describe"></div>
+            <div class="taskDetailTable">
+              
+               
+            </div>
+        </div>     
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script src="js/dataTable/jquery-datatable.js"></script>
+        <script type="text/javascript" src="js/common.js"></script>
+        <script src="js/lyz.calendar.min.js" type="text/javascript"></script>
+        <script src="js/jquery.page.js" type="text/javascript"></script>
+        <script src="js/netDefense.js" type="text/javascript"></script>
+        <script>
+        //placeholder属性兼容
+        function fadeOut(a){
+            $(a).siblings(".placeholder").fadeOut();
+            $(a).css({border:"1px solid #b3b3b3",transition:0.5})
+        };
+        function spanFocus(a){
+            $(a).fadeOut();
+            $(a).siblings(".placeholderInput").focus();
+        };
+        function fadeIn(a){
+            var value=$(a).val();
+            $(a).css({border:"1px solid #e5e6e7",transition:0.5});
+            if(value==""){
+            $(a).siblings(".placeholder").fadeIn();
+        }
+        };
+        
+        
+        </script>
+    </body>
+</html>

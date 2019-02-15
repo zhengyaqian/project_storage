@@ -1,0 +1,348 @@
+<!doctype html>
+<html>
+<head>
+<link href="css/common.css" rel="stylesheet">
+<title>火绒终端安全控制中心</title>
+		<link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.css" />
+<link href="css/firstPage.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/dataTable/jquery-datatable.js"></script>
+
+<script type="text/javascript" src="js/highcharts.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/zUI.js"></script>
+<script type="text/javascript" src="js/jquery.page.js"></script>
+<script type="text/javascript" src="js/json3.js"></script>
+<style>
+	.whole .zUIpanelScrollBox,.whole .zUIpanelScrollBar{
+				width:10px;
+				top:4px;
+				border-radius:5px;
+			}
+	.whole .zUIpanelScrollBox{
+		background:black;
+		opacity:0;
+		filter:alpha(opacity=0);
+	}
+	.whole .zUIpanelScrollBar{
+		background:#fff;
+		opacity:0;
+		filter:alpha(opacity=0);
+	}
+
+	.whole .wcontainer{width: 100%}
+</style>
+	</head>
+	<body>
+		<div class="whole">
+			<div class="wcontainer">
+				<div class="main">
+					<div class="safeOverview">
+						<div class="up">
+							<div class="floatL">
+								<span class="text">安全概览</span>
+								<span>累计保护 <a class="colorGreen cursor" id="addUpDays"></a> 天</span>
+							</div>
+							{{if or .PrivSystem .PrivMgrClient}}
+							<div class="floatR">
+								<!-- <a class="terminalAB greenfont cursor underline">终端部署</a> -->
+								<a class="onekeySKB greenfont cursor underline">一键查杀</a>
+							</div>
+							{{end}}
+							<div class="clear"></div>
+						</div>
+						<div class="down">
+							<div class="overviewBlock relative">
+								<img src="images/1.png" class="verticalMiddle">
+								<div class="absolute text">
+									<p>正在监控终端</p>
+									{{if or .PrivSystem .PrivMgrClient}}
+									<p class="number terminalColor terminalHtmlB cursor">0</p>
+									{{else}}
+									<p class="number terminalColor">0</p>
+									{{end}}
+
+							    </div>
+							</div>
+							<div class="overviewBlock relative">
+								<img src="images/2.png" class="verticalMiddle">
+								<div class="absolute text">
+									<p>今日病毒防御</p>
+									{{if or .PrivSystem .PrivLog }}
+									<p class="number virusColor virusHtmlB cursor">0次</p>
+									{{else}}
+									<p class="number virusColor">0次</p>
+									{{end}}
+							    </div>
+							</div>
+							<div class="overviewBlock relative">
+								<img src="images/3.png" class="verticalMiddle">
+								<div class="absolute text">
+									<p>今日系统防御</p>
+									{{if or .PrivSystem .PrivLog }}
+									<p class="number systemColor systemHtmlB cursor">0次</p>
+									{{else}}
+									<p class="number systemColor">0次</p>
+									{{end}}
+							    </div>
+							</div>
+							<div class="overviewBlock relative noneborderright">
+								<img src="images/4.png" class="verticalMiddle">
+								<div class="absolute text">
+									<p>今日网络防御</p>
+									{{if or .PrivSystem .PrivLog }}
+									<p class="number netColor netHtmlB cursor">0次</p>
+									{{else}}
+									<p class="number netColor">0次</p>
+									{{end}}
+							    </div>
+							</div>
+							<div class="clear"></div>
+
+						</div>
+					</div>
+					<div class="chartATable">
+						<div class="chartATLine">
+							<div class="chartBlock floatL">
+								<div class="bigTitle">
+									<span class="titleText floatL">威胁数量趋势</span>
+									<div class="floatR">
+										7天
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="chart" id="threatchart">
+
+								</div>
+							</div>
+							<div class="tableBlock floatR">
+								<div class="bigTitle">
+									<span class="titleText floatL verticalMiddle">最新任务动态</span>
+									{{if or .PrivSystem .PrivLog }}
+									<div class="floatR">
+										<a class="blackfont cursor taskMore relative"><span class="verticalMiddle">更多</span><span class="absolute moreSign verticalMiddle">》</span></a>
+									</div>
+									{{end}}
+									<div class="clear"></div>
+								</div>
+								<div class="table taskTable">
+									
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<div class="chartATLine">
+							<div class="chartBlock floatL">
+								<div class="bigTitle">
+									<span class="titleText floatL">威胁终端Top10</span>
+									<div class="floatR">
+										7天
+
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="buttons">
+									<a class="textAlignC virusB cursor">病毒</a><a class="systemB textAlignC cursor">系统</a><a class="netB textAlignC cursor">网络</a>
+								</div>
+								<div class="clear"></div>
+								<div class="chart" id="column">
+
+								</div>
+								
+
+							</div>
+							<div class="tableBlock floatR">
+								<div class="bigTitle">
+									<span class="titleText floatL verticalMiddle">最新安全动态</span>
+									{{if or .PrivSystem .PrivLog }}
+									<div class="floatR">
+										<a class="blackfont cursor logMore relative"><span class="verticalMiddle">更多</span><span class="absolute moreSign verticalMiddle">》</span></a>
+									</div>
+									{{end}}
+									<div class="clear"></div>
+								</div>
+								<div class="table eventTable">
+									<table>
+										
+									</table>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+			    </div>
+			    <div class="footerFP">
+					<div class="container"><a onclick="javascript:parent.window.open('http://www.huorong.cn/')" class="cursor">Copyright 2017-2018 北京火绒网络科技有限公司</a></div>
+				</div>
+				<div class="taskDetailPop pop">
+		            <div class="title">任务详情<span class="closeW"></span></div>
+		            <div class="describe describebg"></div>
+		             <div class="softInf">
+	                
+	                </div>
+	                <div class="messageTxt">
+	                
+	                </div>
+		            <div class="tableth">
+		                <table width="100%">
+		                    <tr>
+		                        <th width="25%">终端分组</th>
+		                        <th width="25%">终端名称</th>
+		                        <th width="25%">任务状态</th>
+		                        <th width="25%">备注</th>
+		                    </tr>
+		                </table>
+
+		            </div>
+		            <div class="taskDetailTable">
+		                <table>
+		                    
+		                </table>
+		            </div>
+		           
+		        </div>
+		        <div class="fastSKCPop pop">
+		            <div class="title">查杀设置<span class="closeWW"></span></div>
+		            <div class="content">
+		                <div class="setBlock">
+		                    <h4>查杀速度</h4>
+		                    <p>
+		                        <input type="radio" name="scanOp" value="0">
+		                        <span>常规扫描，不影响计算机性能</span>
+		                    </p>
+		                    <p>
+		                        <input type="radio" name="scanOp" value="1">
+		                        <span>高速扫描，速度快但影响计算机性能</span>
+		                    </p>
+		                </div>
+		                <div class="setBlock">
+		                    <h4>系统修复设置</h4>
+		                    <p>
+		                        <input type="checkbox" name="repairSet">
+		                        <span>扫描系统可修复项目</span>
+		                    </p>
+
+		                </div>
+		                <div class="setBlock">
+		                    <h4>发现病毒时</h4>
+		                    <p>
+		                        <input type="radio" name="isHandle" value="0">
+		                        <span>自动处理病毒</span>
+		                    </p>
+		                    <p>
+		                        <input type="radio" name="isHandle" value="1">
+		                        <span>暂不处理，仅计入查杀日志</span>
+		                    </p>
+
+		                </div>
+		                <div class="setBlock setBlockLast">
+		                    <h4>清除病毒后</h4>
+		                    <p>
+		                        <input type="checkbox" name="afterClear">
+		                        <span>将病毒文件备份至终端隔离区</span>
+		                    </p>
+		                </div>
+		            </div>
+		        </div>
+		        <div class="overallSKCPop pop">
+		            <div class="title">查杀设置<span class="closeWW"></span></div>
+		            <div class="content">
+		                <div class="setBlock">
+		                    <h4>全盘查杀设置</h4>
+		                    <p>
+		                        <input type="checkbox" name="overallSet1">
+		                        <span>深度查杀压缩包中的病毒木马，并自动跳过大于<input type="text" name="overallPara1">MB的压缩包</span>
+		                    </p>
+		                    <p>
+		                        <span>提示：自定义扫描将自动扫描压缩包，并不受以上大小限制</span>
+		                    </p>
+		                    <p>
+		                        <input type="checkbox" name="overallSet2">
+		                        <span>不扫描指定扩展名文件<input type="text" name="overallPara2"></span>
+		                    </p>
+		                </div>
+		                <div class="setBlock">
+		                    <h4>查杀速度</h4>
+		                    <p>
+		                        <input type="radio" name="scanOp" value="0">
+		                        <span>常规扫描，不影响计算机性能</span>
+		                    </p>
+		                    <p>
+		                        <input type="radio" name="scanOp" value="1">
+		                        <span>高速扫描，速度快但影响计算机性能</span>
+		                    </p>
+		                </div>
+		                <div class="setBlock">
+		                    <h4>系统修复设置</h4>
+		                    <p>
+		                        <input type="checkbox" name="repairSet">
+		                        <span>扫描系统可修复项目</span>
+		                    </p>
+
+		                </div>
+		                <div class="setBlock">
+		                    <h4>发现病毒时</h4>
+		                    <p>
+		                        <input type="radio" name="isHandle" value="0">
+		                        <span>自动处理病毒</span>
+		                    </p>
+		                    <p>
+		                        <input type="radio" name="isHandle" value="1">
+		                        <span>暂不处理，仅计入查杀日志</span>
+		                    </p>
+
+		                </div>
+		                <div class="setBlock setBlockLast">
+		                    <h4>清除病毒后</h4>
+		                    <p>
+		                        <input type="checkbox" name="afterClear">
+		                        <span>将病毒文件备份至终端隔离区</span>
+		                    </p>
+		                </div>
+		            </div>
+		        </div>
+		        <!-- 一键查杀 -->
+		        <div class="onekeySKPop pop">
+		        	<div class="title">一键查杀<span class="closeW"></span></div>
+		        	<div class="describe">请选择你要查杀的分组。</div>
+		        	<div class="ul">
+		        		<ul>
+		        			<li><input type="checkbox" name="groupN"><span>未分组终端</span></li>
+		        		</ul>
+		        	</div>
+		        	<div class="buttons">
+		        		<a class="sureSKButton">全盘查杀</a>
+		        		<a class="sureSKButton">快速查杀</a>
+		        		
+		        	</div>       	
+
+		        </div>
+		        <div class="delayHide">
+		        	<p class="p1"><img src="images/unusualw.png">请选择终端!</p>
+		        </div>
+		        <div class="delayHideS">
+		        	<p class="p1"><img src="images/success.png">请选择终端!</p>
+		        </div>
+		        <div class="shade"></div>
+		    </div>
+	    </div>
+	    
+	    <script type="text/javascript" src="js/firstPage.js"></script>
+	    
+		<script>
+		//调整页面内元素高度
+        var wholeh=parent.$("#iframe").height();
+        $(".whole").css({height:wholeh});
+        window.onresize = function(){
+            var wholeh=parent.$("#iframe #mainFrame").height();
+
+            $(".whole").css({height:wholeh});
+        }
+
+        //隐藏左边滚动条	
+		$(function(){
+			$(".whole").panel({iWheelStep:32});
+		}); 
+		</script>
+	</body>
+</html>

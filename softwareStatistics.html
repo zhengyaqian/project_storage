@@ -1,0 +1,236 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>火绒终端安全控制中心</title>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" />
+		<link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.css" />
+<link href="css/common.css" rel="stylesheet">
+<link href="css/eventLog.css" rel="stylesheet">
+<script src="js/json3.js" type="text/javascript"></script>
+
+</head>
+        <body>
+            <div class="main">
+                    <div class="tabSel">
+                            <a class="current colorGreen" href="softwareStatistics.html">软件统计<a href="fileDistribute.html">文件分发</a>
+                    </div>
+                    <div class="filterBlock">
+                            <p id="functionBlock" class="floatL">
+                                    <span class="conditionN">功能 : </span>
+                                    <a class="bu current">按软件统计<a class="bu">按终端统计</a>
+                            </p>
+                            
+                            <div class="clear"></div>
+                    </div>
+                    
+                    <div class="search">
+                        <div class="searchBlock floatL">
+                            <span class='textbox'>
+                                <input type='text' class='placeholderInput'  onfocus='fadeOut(this)' onblur='fadeIn(this)' id='searchKey'><span class='placeholder' onclick='spanFocus(this)'>请输入搜索关键词</span><img src='images/search.png' onclick='searchList()'>
+                            </span>    
+                        </div>
+                        <div class='floatR tabButton'>
+                            <a class='uninstallMB textAlignC cursor'>最新卸载任务</a>
+                        </div>
+                        <div class='clear'></div>
+                    </div>
+                    <div class="tableContainer">
+                        <div class="table softwareSTable">
+                              
+                        </div>
+                        <!-- <a style='font-size:12px;color:#6a6c6e;line-height:54px;padding-left:20px;float:left' class='totalPages'>总共 0 页</a>
+                        <div class='tcdPageCode' style='font-size:12px;float:right;padding-top:14px;padding-bottom:14px;padding-right:20px;'></div>
+                        <div class='clear clearfloat'></div> -->
+                    </div>        
+            </div>
+            <div class="shade"></div>
+            <div class="taskDetailPop pop softSDetailPop">
+                <div class="title"><font></font><span class="closeW"></span></div>
+                <div class="describe"></div>
+                <div class="taskDetailTable taskDetailTableSS" style="height:279px;">
+                   
+                </div>
+            </div>
+
+            <!-- 卸载软件弹层 start -->
+            <div class="uninstallSPop pop">
+                <div class="title">卸载软件<span class="closeW"></span></div>
+                <div class="searchTerminal">
+                    <span class='textbox'>
+                        <input type='text' class='placeholderInput'  onfocus='fadeOut(this)' onblur='fadeIn(this)' id='searchKeyT'><span class='placeholder' onclick='spanFocus(this)'>搜索您所需要卸载"<font>软件</font>"的终端</span><img src='images/search.png' onclick='uninstallSTAjax()'>
+                    </span> 
+                </div>
+                <div class="gTerminalList">
+                    <div class="grouplist floatL" style="width:36%;">
+                        <a class='th block'>终端分组</a></p>
+                        <div class="container">
+                            <a class="td block cursor">分组名称xxxxxx</a>
+                        </div>
+                    </div>
+                    <div class="terminallist floatR" style="width:60%;">
+                        <p class="th-ordery" type="hostname"><a class='th block'><input type='checkbox' class='verticalMiddle' onclick='selectAll(this)'> <span class='verticalMiddle'>终端名称</span><i class="fa fa-sort" style="margin-left: 20px;"></i></a></p>
+                        <div class="container">
+                            <a class="td block"><input type='checkbox' class='verticalMiddle'> <span class='verticalMiddle'>分组名称</span></a>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="textarea">
+                    <textarea class="placeholderInput" maxlength="120">通知：你的电脑存在不符合公司安全规范的软件，请尽快卸载</textarea>
+                    <span class="placeholder">请输入消息内容......</span>
+                </div>
+                <div class="buttons">
+                    <!-- <a onclick="hideButton(this)">取消</a> -->
+                    <a onclick="sureUSButton(this)" class="greenBgButton">卸载</a>
+                    
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <!-- <div class="uninstallSCPop pop">
+                <div class="title">通知内容<span class="closeWW"></span></div>
+                <div class="content">
+                    <p class="describe">卸载软件通知内容</p>
+                    <p class="titleText"><input id="noticeTitle" type="text" maxlength="20"></p>
+                    <p>
+                        <textarea id="noticeContent" maxlength="120">
+
+                        </textarea>
+                    </p>
+                </div>
+                <div class="buttons">
+                    <a onclick="saveUSC(this)" class="greenBgButton">保存</a>
+                    <div class="clear"></div>
+                </div>
+            </div> -->
+            <!-- 卸载软件弹层 end -->
+            <!-- 卸载管理弹层 start -->
+            <div class="uninstallMPop pop">
+                <div class="title">卸载软件<span class="closeW"></span></div>
+                <div class="uMtableth">
+                    <table>
+                        <tr>
+                            <th width='40%'>通知标题</th>
+                            <th width='40%'>通知时间</th>
+                            <th width='20%'>状态</th>
+                        </tr>
+                    </table>
+
+                </div>
+                <div class="uMtable">
+                    <table>
+                        <tr id='tableAlign'>
+                            <td width='40%'>通知标题</td>
+                            <td width='40%'>通知时间</td>
+                            <td width='20%'>状态</td>
+                        </tr>
+                        <tr>
+                            <td>小绒绒软件卸载通知</td>
+                            <td>2017-11-08 19:29:30</td>
+                            <td>正在分发</td>
+                        </tr>
+                        <tr>
+                            <td>小绒绒软件卸载通知</td>
+                            <td>2017-11-08 19:29:30</td>
+                            <td>正在分发</td>
+                        </tr>
+                        <tr>
+                            <td>小绒绒软件卸载通知</td>
+                            <td>2017-11-08 19:29:30</td>
+                            <td>正在分发</td>
+                        </tr>
+                        <tr>
+                            <td>小绒绒软件卸载通知</td>
+                            <td>2017-11-08 19:29:30</td>
+                            <td>正在分发</td>
+                        </tr>
+                        <tr>
+                            <td>小绒绒软件卸载通知</td>
+                            <td>2017-11-08 19:29:30</td>
+                            <td>正在分发</td>
+                        </tr>
+                        <tr>
+                            <td>小绒绒软件卸载通知</td>
+                            <td>2017-11-08 19:29:30</td>
+                            <td>正在分发</td>
+                        </tr>
+                        <tr>
+                            <td>小绒绒软件卸载通知</td>
+                            <td>2017-11-08 19:29:30</td>
+                            <td>正在分发</td>
+                        </tr>
+                        <tr>
+                            <td>小绒绒软件卸载通知</td>
+                            <td>2017-11-08 19:29:30</td>
+                            <td>正在分发</td>
+                        </tr>
+                        <tr>
+                            <td>小绒绒软件卸载通知</td>
+                            <td>2017-11-08 19:29:30</td>
+                            <td>正在分发</td>
+                        </tr>
+                        <tr>
+                            <td>小绒绒软件卸载通知</td>
+                            <td>2017-11-08 19:29:30</td>
+                            <td>正在分发</td>
+                        </tr>
+                        <tr>
+                            <td>小绒绒软件卸载通知</td>
+                            <td>2017-11-08 19:29:30</td>
+                            <td>正在分发</td>
+                        </tr>
+                        
+                    </table>
+                </div>
+            </div>
+            <!-- 近期任务弹层 start -->
+
+            <div class="recentTaskPop pop">
+                <div class="title">最新卸载任务<span class="closeW"></span></div>
+                <div class="content">
+                    <div class="containerTh">
+                        <span class="firstth">任务时间</span><span>执行/分发</span><span>状态</span><span class="lastth">详情</span>
+                    </div>
+                    <div class="container">
+                        
+                    </div>
+
+                </div>
+                <div class="bottom">
+                        <span>更多历史任务请在"事件日志"中查询</span><a onclick="hideButton(this)">关闭</a>
+                </div>
+
+            </div>
+
+            <!-- 近期任务弹层 end -->
+            <div class="delayHide">
+                <p class="p1"><img src="images/unusualw.png">请选择终端!</p>
+            </div>
+            <div class="delayHideS">
+                <p class="p1"><img src="images/unusualw.png">请选择终端!</p>
+            </div>
+            <!-- 卸载管理弹层 end -->
+            <script type="text/javascript" src="js/jquery.min.js"></script>
+		    <script src="js/dataTable/jquery-datatable.js"></script>
+            <script type="text/javascript" src="js/common.js"></script>
+            <script src="js/jquery.page.js" type="text/javascript"></script>
+            <script src="js/softwareStatistics.js" type="text/javascript"></script>
+            <script>
+            //placeholder属性兼容
+            function fadeOut(a){
+                $(a).siblings(".placeholder").hide();
+            };
+            function spanFocus(a){
+                $(a).hide();
+                $(a).siblings(".placeholderInput").focus();
+            };
+            function fadeIn(a){
+                var value=$(a).val();
+                if(value==""){
+                    $(a).siblings(".placeholder").show();
+                }
+            };
+            
+            
+            </script>
+        </body>
+</html>

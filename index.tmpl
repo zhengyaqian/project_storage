@@ -1,0 +1,2562 @@
+﻿<!doctype html>
+<html>
+<head>
+	<title>火绒终端安全控制中心</title>
+<link href="css/common.css" rel="stylesheet">
+<link href="css/systemSet.css" rel="stylesheet">
+<meta content="IE=EmulateIE11" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.form.js"></script>
+<script type="text/javascript" src="js/sha1.js"></script>
+<script type="text/javascript" src="js/json3.js"></script>
+	</head>
+	<body>
+		<div class="top">
+			<div class="container">
+			<div class="logo relative">
+				<img src="images/logo.png"><span> 火绒终端安全管理系统</span>
+				{{if .License }}
+					{{if .Expired}}
+					<span class="empng2 absolute cursor"></span><span class="emmsg2 absolute cursor">正版授权（已到期）</span>
+				    {{else}}
+					<span class="empng1 absolute cursor"></span><span class="emmsg1 absolute cursor">正版授权</span>
+					{{end}}
+				{{else}}
+				<span class="empng0 absolute cursor"></span><span class="emmsg0 absolute cursor">未授权</span>
+				{{end}}
+			</div>
+			<div class="right relative">
+				{{if .PrivSystem }}<a class="updateIcon verticalMiddle cursor" onclick="updatePop()"></a>{{end}}<a class="versionInformation cursor">中心版本 : <b class="centerVersion">{{.VerCenter}}<span class="versionPng verticalMiddle"></span></b>  </a>
+				<!-- <a class="versionInformation">终端版本 : <b class="terminalVersion">{{.VerClient}}</b>  </a> -->
+				<font>|</font>{{if .PrivSystem }}<a class="systemSB cursor">系统设置</a><font>|</font>{{end}}
+				<span class="personButton relative">
+					<div class='absolute personFloat cursor'>
+						<div class="cc">
+							<div class="li"><p class="username"><img src="images/username.png"><b class="verticalMiddle">{{.Username}}</b></p></div>
+							<div class="li"><p class="pwModifyB"><img src="images/lock.png"><b class="verticalMiddle">密码修改</b></p></div>
+							<div class="li"><p class="loginOutB"><img src="images/power.png"><b class="verticalMiddle">退出登录</b></p></div>
+						</div>
+				    </div>
+				</span>
+				<div class="absolute versionFloat cursor">
+					<p>终端版本&nbsp;:&nbsp;{{.VerClient}}</p>
+					<p>病毒库&nbsp;:&nbsp;<font></font></p>
+				</div>
+			</div>
+			<div class="clear"></div>
+
+		    </div>
+		</div>
+		<div class="nav">
+		    	<div class="container">
+				    <a name="firstPage.html">首页</a>
+				    {{if or .PrivSystem .PrivMgrClient}}
+				    <a name="terminalManage.html">终端管理</a>
+				    {{end}}
+				    {{if or .PrivSystem .PrivMgrPolicy }}
+				    <a name="tacticsArrange.html">防护策略</a>
+				    {{end}}
+				    {{if or .PrivSystem .PrivMgrDistr }}
+				    <a name="softwareStatistics.html">文件管理</a>
+				    {{end}}
+				    {{if or .PrivSystem .PrivLeakRepair }}
+                    <a name="leakrepair.html">漏洞修复</a> 
+                    {{end}}
+				    {{if or .PrivSystem .PrivLog }}
+				    <a name="virusDefense.html">事件日志</a>
+				    {{end}}
+				    {{if or .PrivSystem .PrivTools }}
+				    <a name="terminalArrange.html">管理工具</a>
+				    {{end}}
+				    {{if or .PrivSystem }}
+				    <a name="accountManage.html">账号管理</a>
+				    {{end}}
+				    {{if or .PrivSystem .PrivNodes }}
+				    <a name="nodes.html">多级中心</a>
+				    {{end}}
+				    <div class="clear"></div>
+			    </div>
+		</div>
+        <div id="iframe">
+        	<iframe src='' width='100%' scrolling='no' id='mainFrame' name='mainFrame'></iframe>
+        </div>
+
+		<div class="footer">
+			<div class="container"><a href="http://www.huorong.cn/" target="_blank">Copyright 2017-2018 北京火绒网络科技有限公司</a></div>
+		</div>
+		<div class="modifyPwPop pop">
+			<div class="title">修改密码<span class="closeW"></span></div>
+			<div class="mainBlock vali_pass relative">
+				<p class="relative">
+					<span>原始密码:</span>
+					<input type="password" name="originalP">
+					<font class="absolute"><img src="images/unusual.png" alt="" class="verticalMiddle">&nbsp;原始密码错误</font>
+				</p>
+				<p class="newP relative">
+					<span>新密码:</span>
+					<input type="password" name="newP" id="newP">
+					<font class="absolute"><img src="images/unusual.png" alt="" class="verticalMiddle">&nbsp;输入新密码</font>
+					<font class="absolute"><img src="images/unusual.png" alt="" class="verticalMiddle">&nbsp;密码不能含有空格</font>
+				</p>
+                <div class="vali_pass_progress vali_pass_progressw absolute">
+                    <span class="vali_pass_inner_progress"></span>
+                </div>
+                <div class="vali_pass_progress vali_pass_progressm absolute">
+                    <span class="vali_pass_inner_progress"></span>
+                </div>
+                <div class="vali_pass_progress vali_pass_progresss absolute">
+                    <span class="vali_pass_inner_progress"></span>
+                </div>
+                <div class="absolute vali_pass_txt"></div>
+
+				<p class="relative">
+					<span>确认密码:</span>
+					<input type="password" name="sureP" id="sureP">
+					<font class="absolute"><img src="images/unusual.png" alt="" class="verticalMiddle">&nbsp;两次密码不一致</font>
+					<font class="absolute"><img src="images/unusual.png" alt="" class="verticalMiddle">&nbsp;密码不能含有空格</font>
+				</p>
+			</div>
+
+			
+			<div class="buttons">
+				<a class="hideButton">取消</a>
+				<a onclick="sureMPButton(this)">确定</a>
+				
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="shade"></div>
+		<div class="topshade"></div>
+		<!-- 系统设置弹层 start  -->
+		<div class="systemSPop pop relative">
+			<div class="title">系统设置<span class="closeW"></span></div>
+	        <div class="mainBlock">
+	        	<div class="left">
+	                    <a class="title"><img src="images/set1.png">终端相关设置</a>
+	                    <a class="pageTab current">终端管理员设置</a>
+	                    <a class="pageTab">终端密码保护设置</a>
+	                    <a class="title"><img src="images/set.png">控制中心相关设置</a>
+	                    <a class="pageTab">中心日志设置</a>
+	                    <a class="pageTab">Syslog数据导出</a>
+	                    <a class="pageTab">中心升级设置</a>
+	                    <a class="pageTab">中心数据备份</a>
+	                    <a class="pageTab">中心迁移</a>
+	            </div>
+	        	<div class="right">
+                    <div class="page">
+	                    <div class="onOrOff">管理员设置</div>
+	            		<div class="setBlock lastSetBlock">
+	            			<h3>管理员信息</h3>
+	            			<p>当客户端出现问题需要求助管理员时，会在终端显示以下联系信息。</p>
+	            			<p>
+	            				<span>管理员名称</span>
+	                            <input type="text" id="adminName" maxlength="10">
+	            			</p>
+	            			<p>
+	                            <span>联系方式</span>
+	                            <input type="text" id="contactMethod" maxlength="20">
+	            			</p>
+
+	            		</div>
+                    </div>
+                    <div class="page">
+                    	<div class="onOrOff">密码保护</div>
+                        <div class="setBlock">
+                                <p>
+                                        <input type="checkbox" name="adminPP">
+                                        <span>启用管理员密码保护</span>
+                                </p>
+                                <p class="pwProtec">
+                                        <span>密码 : </span>
+                                        <input type="password" name="adminP">
+                                </p>
+                        </div>
+                        <div class="setBlock lastSetBlock">
+                                <p>
+                                        <input type="checkbox" name="terminalPP">
+                                        <span>启用防止终端卸载密码保护</span>
+                                </p>
+                                <p class="pwProtec">
+                                        <span>密码 : </span>
+                                        <input type="password" name="terminalP" autocomplete="off">
+                                </p>
+                        </div>
+                    </div>
+
+                    <div class="page">
+                    	<div class="onOrOff">日志设置</div>
+                    	<div class="setBlock lastSetBlock">
+                    		<h3>日志保存期限</h3>
+                                <p>可限制日志保存期限，减少日志文件硬盘占用</p>
+                                <p>
+                                        <input type="radio" name="saveTime" value="0">
+                                        <span>3个月</span>
+                                </p>
+                                <p>
+                                        <input type="radio" name="saveTime" value="1">
+                                        <span>6个月</span>
+                                </p>
+                                <p>
+                                        <input type="radio" name="saveTime" value="2">
+                                        <span>1年</span>
+                                </p>
+                        </div>
+
+                    </div>
+         			<div class="page">
+                    	<div class="onOrOff">Syslog导出</div>
+                    	<div class="setBlock">
+                    		<h3>Syslog数据</h3>
+                            <p>
+                                    <input type="checkbox" name="enable" value="0" class="sysAllBtn">
+                                    <span>启用Syslog数据导出</span>
+                            </p>
+                        </div>
+                        <div class="setBlock">
+                        	<h3>导出数据类型</h3>
+                            <p class="sysInline firstInline">
+                                <input type="checkbox" name="defense" value="1">
+                                <span>安全日志</span>
+                            </p>
+                            <p class="sysInline">
+                                <input type="checkbox" name="update" value="2">
+                                <span>升级日志</span>
+                            </p>
+                            <p class="sysInline">
+                                <input type="checkbox" name="leakrepair" value="3">
+                                <span>漏洞修复日志</span>
+                            </p>
+                        </div>
+                        <div class="setBlock lastSetBlock" style="padding-bottom: 0;">
+                            <h3>导出数据地址</h3>
+                            <div class="sysLogAddOprete programPath">
+                            	<p>
+                            		<input type="text" name="" id="sysIp" class="placeholderInput"><span class="placeholder ipTips">请输入IP</span>:
+                            	</p>
+                                <p>
+                                	<input type="number" min="0" max="65535" name="" id="sysPort"  class="placeholderInput"><span class="placeholder portTips">请输入端口</span>
+                                </p>
+                                <a class="addButton cursor">添加</a>
+                                <p class="addTips">
+                                	<span class="addTips_bg"></span>
+                                	<span class="addTips_text"></span>
+                                </p>
+                            </div>
+                            
+                		</div>
+						<div class="syslogTable">
+	                    	<table>
+                    			<!--<tr>
+                    				<th width="33%">IP</th>
+                    				<th width="33%">端口</th>
+                    				<th width="33%">操作</th>
+                    			</tr>
+                    			<tr>
+                    				<td width="33%">192.168.1.173</td>
+                    				<td width="33%">90</td>
+                    				<td width="33%"><a class="underline cursor deleteSys">删除</a></td>
+                    			</tr>-->
+                    		</table>
+	                    </div>
+                    </div>
+                    <div class="page">
+                    	<div class="onOrOff">升级设置</div>
+                        <div class="setBlock">
+                                <h3>管理中心升级方式设置</h3>
+                                <p>
+                                        <input type="radio" name="updateM" value='0'>
+                                        <span>自动升级<span>
+                                </p>
+                                <p>
+                                    <input type="radio" name="updateM" value='1'>
+                                        <span>手动升级<span>
+                                </p>
+                                <div class="clear"></div>             
+                        </div>
+
+                        <div class="setBlock lastSetBlock">
+                                <h3>升级服务器代理设置</h3>
+                                <div class="content">
+                                        <p>可以为升级服务器设置代理，通过代理服务器下载更新资源。</p>
+                                        <!-- <p><input type="radio" name="agent" class="radioIn" value="0"><span>使用IE浏览器的代理设置</span></p> -->
+                                        <p><input type="checkbox" name="agent" class="radioIn"><span>指定代理服务器</span></p>
+                                        <p>代理地址:<input type="" id="agentaddress">端口:<input type="" id="port" ></p>
+                                        <p>用户账户:<input type="" id="account">密码:<input type="" id="password" ><a class="netTest cursor">网络测试</a>
+                                        </p>
+                                </div>
+                        </div>
+
+                    </div>
+                    <div class="page">
+                    	<div class="onOrOff">数据备份与恢复</div>
+                    	<div class="backupsIns">
+                    		<span class="floatL">备份恢复数据保证中心数据安全</span>
+                    		<a class="floatR underline greenfont cursor" onclick="backupsSetPop()">备份设置</a>
+                    	</div>
+                    	<div class="backupsOperate">
+                    		<input type="text" name="backupsRemark" value="" placeholder="可以在此输入手动备份的备注">
+                    	    <a class="cursor bButton">立即备份</a>
+                    	    <a class="cursor iBButton">导入备份</a>
+                    	    <form action="/mgr/backup/_import" method="post" id="importbackups" enctype="multipart/form-data" class="floatR relative">
+                    	    	<input type="file" name="data" value="" placeholder="" class="absolute cursor">
+                    	    </form>
+                    	</div>
+                    	<div class="backupsTable">
+                    		<table>
+                    			<tr>
+                    				<th>备份时间</th>
+                    				<th>中心版本</th>
+                    				<th>备注</th>
+                    				<th>备注类型</th>
+                    				<th>大小</th>
+                    				<th>操作</th>
+                    			</tr>
+                    			
+                    			<tr>
+                    				<td>2016-11-24 15:35:11</td>
+                    				<td>1.1.11</td>
+                    				<td>记录历史时刻</td>
+                    				<td>正在备份</td>
+                    				<td>1000m</td>
+                    				<td>
+                    					<a class='cursor underline blackfont' onclick='recoverPop(this)'>立即恢复</a>
+                    					<a class='cursor underline blackfont'>下载</a>
+                    					<a class='cursor underline blackfont' onclick="deleteBaPop(this)">删除</a>
+                    				</td>
+                    			</tr>
+                    		</table>
+                    	</div>
+                        
+
+                    </div>
+                    <div class="page">
+                    	<div class="onOrOff">控制中心迁移</div>
+                    	<div class="backupsIns">
+                    		<span class="floatL">本机地址或者端口变更</span>
+                    		
+                    	</div>
+                    	<p class="moveIns">请运行配置工具（开始菜单-所有程序-火绒终端安全管理系统-火绒终端安全软件配置工具），重新绑定IP或域名，更改端口。</p>
+                    	<div class="movePara">
+                    		<h4>迁移到其他新的机器</h4>
+                    		<p>
+                    			<label for="">新控制中心地址&nbsp;:&nbsp;</label>
+                    			<!-- <select name="newAddress">
+                    				<option>IP</option>
+                    				<option>域名</option>
+                    			</select> -->
+                    			<input type="text" name="newAddress" value="" placeholder="">
+                    			<!-- <label for="">&nbsp;&nbsp;新控制中心端口&nbsp;:&nbsp;</label>
+                    			<input type="text" name="newPort" value="" placeholder=""> -->
+                    		</p>
+                    		<p>
+                    			<!-- <label for="">新控制中心地址&nbsp;:&nbsp;</label>
+                    			<select name="newAddress">
+                    				<option>IP</option>
+                    				<option>域名</option>
+                    			</select>
+                    			<input type="text" name="newAddress" value="" placeholder=""> -->
+                    			<label for="">新控制中心端口&nbsp;:&nbsp;</label>
+                    			<input type="text" name="newPort" value=80 placeholder="">
+                    		</p>
+                    		<!-- <p>
+                    			<label for="">新控制中心超级管理员账号&nbsp;:&nbsp;</label>
+                    			<input type="text" name="newAccount" value="" placeholder="">
+                    			<label for="">&nbsp;&nbsp;新控制中心超级管理员密码&nbsp;:&nbsp;</label>
+                    			<input type="text" name="newPwd" value="" placeholder="">
+                    		</p> -->
+                    		<p>
+                    			<label>需要迁移的分组&nbsp;:&nbsp;</label>
+                    			<select name="moveGroups" class="verticalMiddle">
+                    				<option value="0"></option>
+                    			</select>
+                    			
+                    		</p>
+                    		<p class="noticeTxt"><a class="moveButton cursor verticalMiddle">迁移</a>
+                    		<span>&nbsp;&nbsp;为防止数据丢失，强烈建议迁移前先数据备份然后在新中心机器上进行数据恢复</span></p>
+                    	</div>
+                    	<div class="backupsTable moveTable">
+                    		<table>
+                    			<tr>
+                    				<th>新控制中心地址</th>
+                    				<th>迁移终端</th>
+                    				<th>开始迁移时间</th>
+                    				<th>迁移终端</th>
+                    				<th>已迁移</th>
+                    				<th>操作</th>
+                    			</tr>
+                    			<tr>
+                    				<td>www.huorong.cn</td>
+                    				<td>未分组终端</td>
+                    				<td>2017-10-17 16:57:00</td>
+                    				<td>100</td>
+                    				<td>1000</td>
+                    				<td>
+                    					<a class="underline greenfont cursor" onclick="endMovePop(this)">终止</a>
+                    					&&nbsp;
+                    					<a class="underline greenfont cursor">迁移工具</a>
+                    				</td>
+                    			</tr>
+                    			
+                    		</table>
+                    	</div>
+                        
+
+                    </div>
+                    <div class="windowPop backupsSetPop absolute">
+                    	<div class="title">设置<span class="closeWW"></span></div>
+                    	<div class="mainBody">
+                    		<p>
+                    			<label>是否自动备份&nbsp;:&nbsp;</label>
+                    			&nbsp;<input type="checkbox" name="isautoba" value="" class="verticalMiddle">
+                    			<span>自动备份</span>
+                    		</p>
+                    		<p>
+                    			<label>自动备份周期&nbsp;:&nbsp;</label>
+                    			&nbsp;<input type="radio" name="bacyc" value="" placeholder="" class="verticalMiddle">
+                    			<span>&nbsp;&nbsp;每月&nbsp;&nbsp;</span>
+                    			<select name="mday">
+                    				<option value=1>1日</option>
+                    				<option value=2>2日</option>
+                    				<option value=3>3日</option>
+                    				<option value=4>4日</option>
+                    				<option value=5>5日</option>
+                    				<option value=6>6日</option>
+                    				<option value=7>7日</option>
+                    				<option value=8>8日</option>
+                    				<option value=9>9日</option>
+                    				<option value=10>10日</option>
+                    				<option value=11>11日</option>
+                    				<option value=12>12日</option>
+                    				<option value=13>13日</option>
+                    				<option value=14>14日</option>
+                    				<option value=15>15日</option>
+                    				<option value=16>16日</option>
+                    				<option value=17>17日</option>
+                    				<option value=18>18日</option>
+                    				<option value=19>19日</option>
+                    				<option value=20>20日</option>
+                    				<option value=21>21日</option>
+                    				<option value=22>22日</option>
+                    				<option value=23>23日</option>
+                    				<option value=24>24日</option>
+                    				<option value=25>25日</option>
+                    				<option value=26>26日</option>
+                    				<option value=27>27日</option>
+                    				<option value=28>28日</option>
+                    				<option value=29>29日</option>
+                    				<option value=30>30日</option>
+                    				<option value=31>31日</option>
+                    				
+                    			</select>
+                    			&nbsp;&nbsp;&nbsp;<input type="radio" name="bacyc" value="" placeholder="" class="verticalMiddle">
+                    			<span>&nbsp;&nbsp;&nbsp;每周&nbsp;</span>
+                    			<select name="wday">
+                    				<option value=1>周一</option>
+                    				<option value=2>周二</option>
+                    				<option value=3>周三</option>
+                    				<option value=4>周四</option>
+                    				<option value=5>周五</option>
+                    				<option value=6>周六</option>
+                    				<option value=7>周日</option>
+                    			</select>
+                    		</p>
+                    		<p>
+                    			<label>备份时间范围&nbsp;:&nbsp;</label>
+                    			<span>&nbsp;开始时间&nbsp;&nbsp;</span>
+                    			<select name="bastarttime">
+                    				<option value=0>0点</option>
+                    				<option value=1>1点</option>
+                    				<option value=2>2点</option>
+                    				<option value=3>3点</option>
+                    				<option value=4>4点</option>
+                    				<option value=5>5点</option>
+                    				<option value=6>6点</option>
+                    				<option value=7>7点</option>
+                    				<option value=8>8点</option>
+                    				<option value=9>9点</option>
+                    				<option value=10>10点</option>
+                    				<option value=11>11点</option>
+                    				<option value=12>12点</option>
+                    				<option value=13>13点</option>
+                    				<option value=14>14点</option>
+                    				<option value=15>15点</option>
+                    				<option value=16>16点</option>
+                    				<option value=17>17点</option>
+                    				<option value=18>18点</option>
+                    				<option value=19>19点</option>
+                    				<option value=20>20点</option>
+                    				<option value=21>21点</option>
+                    				<option value=22>22点</option>
+                    				<option value=23>23点</option>
+                                    <option value=24>24点</option>
+                    			</select>
+                    			<span>&nbsp;-&nbsp;&nbsp;结束时间&nbsp;</span>
+                    			<select name="baendtime">
+                    				<option value=0>0点</option>
+                    				<option value=1>1点</option>
+                    				<option value=2>2点</option>
+                    				<option value=3>3点</option>
+                    				<option value=4>4点</option>
+                    				<option value=5>5点</option>
+                    				<option value=6>6点</option>
+                    				<option value=7>7点</option>
+                    				<option value=8>8点</option>
+                    				<option value=9>9点</option>
+                    				<option value=10>10点</option>
+                    				<option value=11>11点</option>
+                    				<option value=12>12点</option>
+                    				<option value=13>13点</option>
+                    				<option value=14>14点</option>
+                    				<option value=15>15点</option>
+                    				<option value=16>16点</option>
+                    				<option value=17>17点</option>
+                    				<option value=18>18点</option>
+                    				<option value=19>19点</option>
+                    				<option value=20>20点</option>
+                    				<option value=21>21点</option>
+                    				<option value=22>22点</option>
+                    				<option value=23>23点</option>
+                                    <option value=24>24点</option>
+
+                    			</select>
+                    		</p>
+                    		<p>
+                    			<label>备份目录&nbsp;:&nbsp;&nbsp;</label>
+                    			<input type="text" name="backupscata" value="" placeholder="C:\Program Files (x86)\Huorong" >
+
+                    		</p>
+                    		<p class="noticeTxt">
+	                    		<label>备份内容包括 : </label>
+	                    		<span>终端信息,分组及规则,防护策略,事件日志,管理员信息,系统设置</span>
+	                    	</p>
+                    	</div>
+                    	<div class="buttons">
+			                <a class="hideButtonn">取消</a>
+			                <a onclick="savebasetButton(this)">保存</a>
+			                
+			                <div class="clear"></div>
+			            </div>
+                    </div>
+                    <!-- 立即备份弹层 -->
+			        <div class="backupPop windowPop">
+			            <div class="title">立即备份<span class="closeWW"></span></div>
+			            <div class="left"><img src="images/terTips.png"></div>
+			            <div class="right">
+			                <p class="describe"><span class="verticalMiddle">正在备份数据，请耐心等候 </span><!-- <font class="name"></font><span class="verticalMiddle"> 吗？</span> --></p>
+			                <p class="describe">数据备份期间，控制中心不可用</p>
+
+			            </div>
+			            <div class="clear"></div>
+			            <div class="buttons"><a class="hideButtonn">确定</a></div>
+			        </div>
+                    <!-- 立即恢复弹层 -->
+			        <div class="recoverPop windowPop">
+			            <div class="title">立即恢复<span class="closeWW"></span></div>
+			            <div class="left"><img src="images/recover.png"></div>
+			            <div class="right">
+			                <p class="describe"><span class="verticalMiddle">确定需要立即恢复备份数据吗? </span><!-- <font class="name"></font><span class="verticalMiddle"> 吗？</span> --></p>
+			                <p class="describe">恢复后现有数据将会被备份数据覆盖</p>
+
+			            </div>
+			            <div class="clear"></div>
+			            <div class="buttons"><a class="hideButtonn">取消</a><a onclick="sureRBButton(this)" class="sure">确定</a></div>
+			        </div>
+			        <!-- 正在恢复弹层 -->
+			        <div class="recoverNPop windowPop">
+			            <div class="title">数据恢复<span class="closeWW"></span></div>
+			            <div class="left"><img src="images/terTips.png"></div>
+			            <div class="right">
+			                <p class="describe"><span class="verticalMiddle">正在恢复数据，请耐心等候 </span><!-- <font class="name"></font><span class="verticalMiddle"> 吗？</span> --></p>
+			                <p class="describe">数据恢复期间，控制中心不可用</p>
+
+			            </div>
+			            <div class="clear"></div>
+			            <div class="buttons"><a class="hideButtonn">确定</a></div>
+			        </div>
+			        <!-- 删除备份弹层 -->
+			        <div class="deleteBaPop windowPop">
+			            <div class="title">删除提示<span class="closeWW"></span></div>
+			            <div class="left"><img src="images/delete.png"></div>
+			            <div class="right">
+			                <p class="describe"><span class="verticalMiddle">确定删除该备份吗? </span><!-- <font class="name"></font><span class="verticalMiddle"> 吗？</span> --></p>
+
+			            </div>
+			            <div class="clear"></div>
+			            <div class="buttons"><a class="hideButtonn">取消</a><a onclick="sureDBaButton(this)" class="sure">确定</a></div>
+			        </div>
+			        <!-- 终止迁移弹层 -->
+			        <div class="endMovePop windowPop">
+			            <div class="title">终止迁移<span class="closeWW"></span></div>
+			            <div class="left"><img src="images/terTips.png"></div>
+			            <div class="right">
+			                <p class="describe"><span class="verticalMiddle">确定需要终止迁移任务吗? </span><!-- <font class="name"></font><span class="verticalMiddle"> 吗？</span> --></p>
+			                <p class="describe">迁移任务尚未完成,终止迁移任务后无法继续迁移</p>
+
+			            </div>
+			            <div class="clear"></div>
+			            <div class="buttons"><a class="hideButtonn">取消</a><a onclick="sureDMButton(this)" class="sure">确定</a></div>
+			        </div>
+	        	</div>
+	        	<div class="clear"></div>
+	        	
+	        </div>
+	        <div class="buttons">
+                <a class="hideButton">取消</a>
+                <a onclick="sureSetButton(this)">保存</a>
+                
+                <div class="clear"></div>
+            </div>
+            <div class="windowShade absolute"></div>
+		</div>
+		<div class="updatePop pop relative">
+			<div class="absolute disabledPop"></div>
+			<div class="absolute title"><span class="verticalMiddle">在线升级</span><span class="closeW cursor verticalMiddle  floatR"></span></div>
+			<img src="images/updatebg.png" class="block">
+			
+			<div id="updates1" class="updates">
+				<p class="bigp">正在从服务器获取更新信息...</p>
+				<div class="buttons absolute">
+				    <a class="cursor" onclick="closeupdate(this)">关闭</a>
+				</div>	
+			</div>
+			<div id="updates2" class="updates">
+				<p class="bigp">发现有新版本的更新信息</p>
+				<div class="buttons absolute">
+				    <a class="cursor" onclick="goupdate()">立即更新</a>
+				</div>	
+			</div>
+			<div id="updates3" class="updates">
+				<p class="bigp">正在下载更新......<br/>
+					<img src="images/updating.gif">
+				</p>
+				<div class="buttons absolute">
+				    <a class="cursor updating">更新中</a>
+				</div>	
+			</div>
+			<div id="updates4" class="updates">
+				<p class="bigp">恭喜您! 您的火绒管理中心已升级至最新版</p>
+				<div class="buttons absolute">
+				    <a class="cursor" onclick="closeupdateA(this)">好的</a>
+				</div>	
+			</div>
+			<div id="updates5" class="updates">
+				<p class="smallp"><font>很抱歉！本次升级出现异常</font><br/>很抱歉！本次升级出现异常导致升级失败<br/>建议您尝试重新升级</p>
+				<div class="buttons absolute">
+				    <a class="cursor asmall" onclick="goupdate()">再试一次</a>
+				    <a class="cursor asmall bgw" onclick="closeupdate(this)">取消</a>
+				</div>	
+			</div>
+			<div id="updates6" class="updates">
+				<p class="smallp"><font>恭喜您！您的火绒终端安全管理系统已升级至最新版</font><br/>本次更新的部分核心功能需要重新登录后才能生效。<br/>建议您立即重新登录</p>
+				<div class="buttons absolute">
+				    <a class="cursor asmall">重新登录</a>
+				    <a class="cursor asmall bgw">暂不登录</a>
+				</div>	
+			</div>
+		
+			<div id="updates7" class="updates">
+				<p class="bigp">您的火绒终端安全管理系统已是最新版本，<br/>无需升级</p>
+				<div class="buttons absolute">
+				    <a class="cursor" onclick="closeupdate(this)">关闭</a>
+				</div>	
+			</div>
+			<div id="updates8" class="updates">
+				<p class="bigp">授权已过期</p>
+				<div class="buttons absolute">
+				    <a class="cursor" onclick="closeupdate(this)">关闭</a>
+				</div>	
+			</div>
+			
+		</div>
+		<div class="emPop pop">
+			<div class="title">授权信息<span class="closeW"></span></div>
+			<div class="content relative">
+				<div class="left absolute">
+					<img src="images/em.png">
+					<p>火绒终端安全管理系统</p>
+				</div>
+				<div class="right absolute">
+					<p>授权公司&nbsp;&nbsp;:&nbsp;&nbsp;<span class="emCom">北京火绒科技有限公司</span></p>
+					<p><font class="verticalMiddle">授权状态&nbsp;&nbsp;:&nbsp;&nbsp;</font><a class="emStatus1"><span class="verticalMiddle"></span><font class="verticalMiddle">正版授权</font></a><a class="emStatus0"><span class="verticalMiddle"></span><font class="verticalMiddle">未授权</font></a><a class="emStatus2"><span class="verticalMiddle"></span><font class="verticalMiddle" style="color:#eb6948;">正版授权（已到期）</font></a></p>
+					<p>授权终端&nbsp;&nbsp;:&nbsp;&nbsp;<span class="emTerminal">100</span>台</p>
+					<p>授权期限&nbsp;&nbsp;:&nbsp;&nbsp;剩余&nbsp;<span class="emOver colorOrange"></span>&nbsp;天<span class="specialTxt">,请立即<font class="colorOrange">更新授权</font></span></p>
+					<div >
+						<form id="emFile" method="post" action="/mgr/sysconf/_license" enctype="multipart/form-data">
+							<input type="file" class="verticalMiddle" name="license" onchange="onUploadChange(this)">
+							<a class="updateEm cursor verticalMiddle">更新授权</a>
+						</form>
+						<span class="emhint absolute cursor"></span>
+						<div class="absolute emhintfloat">
+
+						</div>
+                        <img src="images/smalltriangle.png" alt="" class="absolute smalltriangle">
+					</div>
+					<p class="colorOrange">获取授权文件，请联系010-8490-5882</p>
+				</div>
+			</div>
+		</div>
+		<div class="delayHide">
+        	<p class="p1"><img src="images/unusualw.png">手机或电话号码格式不对!</p>
+
+        </div>
+        <div class="delayHideS">
+        	<p class="p1"><img src="images/success.png">手机或电话号码格式不对!</p>
+
+        </div>
+		
+		<script type="text/javascript" src="js/common.js"></script>
+		<script>
+			
+			
+		if(!getCookie('page')){
+    		$("iframe").attr("src",'firstPage.html');
+		}else{
+			// 页面刷新还原
+    		$("iframe").attr("src",getCookie('page'));
+		}
+		
+        //系统设置中密码保护点选或者不点选后面input是否禁用
+        $("input[name=terminalPP],input[name=adminPP]").change(function(){
+ 
+        	if($(this).is(":checked")){
+        		$(this).parent().next().children("input").prop("disabled",false);
+        	}else{
+        		$(this).parent().next().children("input").prop("disabled",true);
+        	}
+        });
+        // 每天显示一次授权弹窗（授权期限小于等于15天时）
+        function isshowemPop(){
+        	if(getCookie('onceeveryday')!=='yes'){
+	        	var tommorow = new Date();
+				tommorow.setHours(23);
+				tommorow.setMinutes(59);
+				tommorow.setSeconds(59);
+	        	var date=new Date(); 
+	        	date.setTime(tommorow.getTime()+8*60*60*1000);
+	        	// console.log(tommorow.getTime());
+	        	// console.log(date);
+	        	$(".emPop").show();
+	        	shade();
+	        	document.cookie='onceeveryday=yes;expires='+date.toGMTString();
+	        }else{
+	        }
+        }
+        // 获取病毒库日期
+        $.ajax({
+			url:'/mgr/sysconf/_version',
+			type:'GET',
+			contentType:'text/plain',
+			error:function(xhr,textStatus,errorThrown){
+	        	if(xhr.status==401){
+	        	    window.location.href='/';
+	        	}else{
+	        		
+	        	}
+	            
+	        },
+			success:function(data){
+				$(".versionFloat font").html(getLocalTime1(data.data.client_dbtime));
+				
+	        }
+	    })
+	    // 移入显示版本信息
+	    $(".versionInformation").mouseenter(function(){
+	    	$(".versionFloat").show();
+	    }).mouseleave(function(event) {
+	    	$(".versionFloat").hide();
+	    });
+        //升级部分
+        function updatePop(){
+        	$(".updatePop").show();
+            shade();
+            $(".topshade").hide();
+            $("#updates1").show();
+            $("#updates1").siblings(".updates").hide();
+        	$.ajax({
+			    url:'/mgr/upgrade/_check',
+			    data:{},
+			    type:'GET',
+			    contentType:'text/plain',
+			    error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+			    success:function(data){
+                    
+			    	if(data.errno==0){
+			    		
+			    		newversion=data.data['center.windows'];
+				        if(JSON.stringify(data.data)=='{}'){
+				        	$("#updates7").show();
+				        	$("#updates7").siblings(".updates").hide();
+				        }else{
+				        	$("#updates2").show();
+				        	$("#updates2").siblings(".updates").hide();
+				        }
+			    	}else if(data.errno==-1){
+			    		if(data.errmsg.indexOf("license")!==-1){
+			    			$("#updates8").show();
+			    			$("#updates8 .bigp").html("<font style='color:#ffbe00'>授权已过期</font>");
+				        	$("#updates8").siblings(".updates").hide();
+			    		}else{
+			    			$("#updates8").show();
+			    			$("#updates8 .bigp").html("<font style='color:#ffbe00'>网络故障</font>");
+				        	$("#updates8").siblings(".updates").hide();
+			    		}
+			    		
+			    	}
+			    }
+			});
+        }
+        
+        function goupdate(){
+        	$("#updates3").show();
+        	$(".updatePop .disabledPop").show();
+			$("#updates3").siblings(".updates").hide();
+        	$.ajax({
+			    url:'/mgr/upgrade/_update',
+			    data:{},
+			    type:'GET',
+			    contentType:'text/plain',
+			    error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+			    success:function(data){
+
+			    }
+			});
+		
+			var updatesloop=setInterval(function(){
+				$.ajax({
+				    url:'/mgr/upgrade/_status',
+				    data:{},
+				    type:'GET',
+				    contentType:'text/plain',
+				    success:function(data){
+				    	if(data.data.status=="succeed"){
+				    		installloop();
+			        	    clearInterval(updatesloop);
+			        	    
+				    	}else if(data.data.status=="failed"){
+				    		$(".updatePop .disabledPop").hide();
+				    		$("#updates5").show();
+			        	    $("#updates5").siblings(".updates").hide();
+			        	    clearInterval(updatesloop);
+				    	}
+				    }
+				});	
+			},500)
+
+        }
+        function installloop(){
+        	var installloop=setInterval(function(){
+				$.ajax({
+	    			url:'/mgr/upgrade/_status',
+	    			data:{},
+	    			type:'GET',
+	    			contentType:'text/plain',
+	    			success:function(data){
+	    				clearInterval(installloop);
+	    				setTimeout(function(){
+	    					$(".updatePop .disabledPop").hide();
+				    		$("#updates4").show();
+			        	    $("#updates4").siblings(".updates").hide();
+	    				},10000)
+	    				
+	    			}
+	    		})
+	        
+			},500)
+        }
+        function closeupdate(a){
+        	$(".shade").hide();
+		    $(a).parents(".pop").hide();
+		    $(".topshade").hide();
+        }
+        function closeupdateA(a){
+        	$(".shade").hide();
+		    $(a).parents(".pop").hide();
+		    $(".topshade").hide();
+		    window.location.href="/";
+        }
+        // 升级部分结束
+        // 点击导航切换页面
+		$(".nav .container a").click(function(){
+			var link=$(this).prop("name");
+			if($("#iframe iframe").prop("src")!==link){
+				$("#iframe iframe").prop("src",link);
+			}
+
+		});
+		
+
+		$(".personButton").mouseenter(function(){
+				$(".personFloat").show();
+		});
+		$(".personButton").mouseleave(function(){
+				$(".personFloat").hide();
+		});
+
+		$(".pwModifyB").click(function(){
+			$(".personFloat").hide();
+			$(".modifyPwPop").show();
+			$(".modifyPwPop input").val("");
+			shade();
+            $(".topshade").hide();
+            $(".vali_pass_progress").children("span").attr("class","vali_pass_inner_progress");
+            $(".vali_pass_txt").hide();
+            $('.vali_pass_progress').hide();
+            $(".modifyPwPop .mainBlock p font").hide();
+
+		})
+		$(".closeW,.hideButton").click(function(){
+			$(".shade").hide();
+		    $(this).parents(".pop").hide();
+		    $(".topshade").hide();
+
+		});
+
+		$(".loginOutB").click(function(){
+			$.ajax({
+		        url:'/auth/_logout',
+		        data:{},
+		        type:'GET',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+		        	if(data.errno==0){
+		        		delCookie('remeber');
+		        		delCookie('page');
+		        		// delCookie('password');
+		        		window.location.href="portal.html";
+		        		
+		        	}else{
+		        		alert("退出失败!");
+		        	}
+		        }
+		    });
+		})
+		// 删除cookie
+	    function delCookie(name){
+	       var date = new Date();
+	       date.setTime(date.getTime() - 10000);
+	       document.cookie = name + "=a; expires=" + date.toGMTString();
+	    }
+		//确认修改密码
+		function sureMPButton(a){
+			if($("input[name=newP]").val()==""){
+				$("input[name=newP]").next().show();
+				$(".vali_pass_progress").hide();
+				$(".vali_pass_txt").hide();
+			}else if($("input[name=newP]").val()!==$("input[name=sureP]").val()){
+				$("input[name=sureP]").next().show();
+				
+			}else if($("input[name=newP]").next().next().css('display') == "block"){
+				
+			
+			}else{
+				var originalp=hex_sha1($("input[name=originalP]").val());
+				var surep=hex_sha1($("input[name=sureP]").val());
+				var dataa={"old_password":originalp,"new_password":surep};
+				$.ajax({
+			        url:'/auth/_reset',
+			        data:JSON.stringify(dataa),
+			        contentType:'text/plain',
+			        type:'POST',
+			        error:function(xhr,textStatus,errorThrown){
+			        	if(xhr.status==401){
+			        	    window.location.href='/';
+			        	}else{
+			        		
+			        	}
+			            
+			        },
+			        success:function(data){ 
+			        	if(data.errno==-1){
+			        		$("input[name=originalP]").next().show();
+			        	}else{
+			        		$(".delayHideS").show();
+			        	    $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'> 修改成功");
+			        	    setTimeout(function(){$(".delayHideS").hide()},2000); 
+			        		$(".shade").hide();
+				        	$(a).parents(".pop").hide();
+				        	$(".topshade").hide();
+		        			window.location.href="portal.html";
+				        	
+			        	}
+			        	
+			        }
+			    });
+			}
+			
+
+		}
+
+        // loading加载
+        $(".mainBlock .right").children(".page").hide();
+        $(".mainBlock .right").children(".page").eq(0).show();
+
+        //点击左边切换显示右边内容
+        $(".pageTab").click(function(){
+
+			var index=$(this).index(".pageTab");
+                $(this).siblings(".pageTab").removeClass("current");
+                $(this).addClass("current");
+                $(".mainBlock .right").children(".page").hide();
+                $(".mainBlock .right").children(".page").eq(index).show();
+
+        })
+
+        //指定代理服务器选择屏蔽后面input
+        $("input[name=agent]").change(function(){
+        	if($(this).is(":checked")){
+        		$("#agentaddress").prop("disabled",false);
+        		$("#port").prop("disabled",false);
+        		$("#account").prop("disabled",false);
+        		$("#password").prop("disabled",false);
+        		$(".netTest").css({background:"rgb(255,255,255)"}).addClass("cursor");
+
+        	}else{
+        		$("#agentaddress").prop("disabled",true);
+        		$("#port").prop("disabled",true);
+        		$("#account").prop("disabled",true);
+        		$("#password").prop("disabled",true);
+        		$(".netTest").css({background:"#c6c6c6"}).removeClass("cursor");
+        	}
+        })
+//      syslog数据导出按钮是否启用
+		$(document).on('click','.sysAllBtn',function(){
+			if($(this).is(":checked")){
+				$('.setBlock input[name=defense]').prop("disabled",false);
+				$('.setBlock input[name=update]').prop("disabled",false);
+				$('.setBlock input[name=leakrepair]').prop("disabled",false);
+				$("#sysIp").prop("disabled",false);
+				$("#sysPort").prop("disabled",false);
+				$(".addButton").css({background:"rgb(255,255,255)"}).addClass("cursor");
+				$(".deleteSys").addClass("cursor");
+				
+				
+			}else{
+				$('.setBlock input[name=defense]').prop("disabled",true);
+				$('.setBlock input[name=update]').prop("disabled",true);
+				$('.setBlock input[name=leakrepair]').prop("disabled",true);
+				$("#sysIp").prop("disabled",true);
+				$("#sysPort").prop("disabled",true);
+				$(".addButton").css({background:"#c6c6c6"}).removeClass("cursor");
+				$(".deleteSys").removeClass("cursor");
+				
+			}
+			
+		})
+        //syslog添加ip和端口
+        $(document).on('click','.addButton',function(){
+        	if($('.setBlock input[name=enable]').prop("checked") == false){
+        		return false;
+        	}
+        	var sysIp = $('#sysIp').val();
+        	var sysPort = $('#sysPort').val();
+        	if(!sysIp){
+        		$('.addTips').css('display','inline-block');
+        		$('.addTips .addTips_text').html('ip不能为空');
+        		return false;
+        	}
+        	if(!sysPort){
+        		$('.addTips').css('display','inline-block');
+        		$('.addTips .addTips_text').html('端口不能为空');
+        		return false;
+        	}
+        	if(!isValidIP(sysIp)){
+        		$('.addTips').css('display','inline-block');
+        		$('.addTips .addTips_text').html('ip错误');
+        		return false;
+        	}
+        	if(sysPort < 0 || sysPort > 655355){
+        		$('.addTips').css('display','inline-block');
+        		$('.addTips .addTips_text').html('端口错误');
+        		return false;
+        	}
+        	$('.addTips').hide();
+        	var dataa = {"addr":sysIp,"port":parseInt(sysPort)};
+        	$.ajax({
+		        url:'/mgr/syslog/_append',
+		        data:JSON.stringify(dataa),
+		        type:'POST',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+		        	$('#sysIp').val('');
+		        	$('.ipTips').show();
+		        	$('#sysPort').val('');
+		        	$('.portTips').show();
+		        	syslogList();
+		        }
+		    })
+        })
+        //syslog删除ip和端口
+        $(document).on('click','.deleteSys',function(){
+        	if($('.setBlock input[name=enable]').prop("checked") == false){
+        		return false;
+        	}
+        	var id = $(this).parents('tr').attr('sysId');
+        	$.ajax({
+		        url:'/mgr/syslog/_delete?id='+parseInt(id),
+		        data:{},
+		        type:'GET',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+		        	syslogList();
+		        }
+		    })
+        })
+        function syslogList(){
+        	
+        	$('.syslogTable').html('');
+        	var dataa = {'view':{'begin':0,'count':20}}
+		    // 获取syslog相关设置
+            $.ajax({
+		        url:'/mgr/syslog/_list',
+		        data:JSON.stringify(dataa),
+		        type:'post',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+		        	var list = data.data.list;
+		        	var table = '<table>';
+		        	table += '<tr><th width="33%">IP</th><th width="33%">端口</th><th width="33%">操作</th></tr>'
+		        	
+		        	for(var i = 0;i<list.length;i++){
+		        		table +='<tr sysId="'+list[i].id+'">'
+		        		table += '<td width="33%">'+list[i].addr+'</td>';
+		        		table += '<td width="33%">'+list[i].port+'</td>';
+		        		table += '<td width="33%"><a class="underline cursor deleteSys">删除</a></td>';
+		        		table += '</tr>'
+		        	}
+					table += '</table>'
+					$('.syslogTable').append(table);
+		        }
+		    });
+        }
+        
+        //弹出系统设置弹层
+        $(".systemSB").click(function(){
+        	$(".systemSPop").show();
+			shade();
+			// 获取中心升级设置
+			$.ajax({
+		        url:'/mgr/sysconf/_upgrade',
+		        data:{},
+		        type:'GET',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+		        	if(data.data.method==0){
+		        		$("input[name=updateM][value='0']").prop("checked",true);
+		        	}else if(data.data.method==1){
+		        		$("input[name=updateM][value='1']").prop("checked",true);
+		        	}
+		        	if(data.data.proxy.enable==true){
+		        		$("input[name=agent]").prop("checked",true);
+		        		$("#agentaddress").val(data.data.proxy.addr);
+		        		$("#port").val(data.data.proxy.port);
+		        		$("#account").val(data.data.proxy.username);
+		        		$("#password").val(data.data.proxy.password);
+		        		$(".netTest").css({background:"rgb(255,255,255)"}).addClass("cursor");
+		        	}else{
+		        		$("#agentaddress").val(data.data.proxy.addr);
+		        		$("#port").val(data.data.proxy.port);
+		        		$("#account").val(data.data.proxy.username);
+		        		$("#password").val(data.data.proxy.password);
+		        		$("input[name=agent]").prop("checked",false);
+		        		$("#agentaddress").prop("disabled",true);
+		        		$("#port").prop("disabled",true);
+		        		$("#account").prop("disabled",true);
+		        		$("#password").prop("disabled",true);
+		        		$(".netTest").css({background:"#c6c6c6"}).removeClass("cursor");
+		        	}
+
+		        }
+		    });
+		    // 获取日志相关设置
+            $.ajax({
+		        url:'/mgr/sysconf/_log',
+		        data:{},
+		        type:'GET',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+
+		        	if(data.data.expire==7776000){
+		        		$("input[name='saveTime'][value=0]").prop("checked",true);
+		        	}else if(data.data.expire==15552000){
+		        		$("input[name='saveTime'][value=1]").prop("checked",true);
+		        	}else{
+		        		$("input[name='saveTime'][value=2]").prop("checked",true);
+		        	}
+
+		        }
+		    });
+		    //列出syslog服务端
+		    syslogList();
+		     // 获取syslog导出设置
+			
+            $.ajax({
+		        url:'/mgr/sysconf/_syslog',
+		        data:{},
+		        type:'GET',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+					if(data.errno == 0){
+						$("#sysIp").val('');
+					    $('.ipTips').show();
+						$("#sysPort").val('');
+						$('.portTips').show();
+						$('.addTips_text').text('');
+						$('.addTips').hide();
+						
+						if(data.data.enable == false){
+							$('input[name=enable]').prop("checked",false);
+							$('.setBlock input[name=defense]').prop("disabled",true);
+							$('.setBlock input[name=update]').prop("disabled",true);
+							$('.setBlock input[name=leakrepair]').prop("disabled",true);
+							$("#sysIp").prop("disabled",true);
+							$("#sysPort").prop("disabled",true);
+							$(".addButton").css({background:"#c6c6c6"}).removeClass("cursor");
+							$(".deleteSys").removeClass("cursor");
+							
+						}else{
+							$('input[name=enable]').prop("checked",true);
+							$('.setBlock input[name=defense]').prop("disabled",false);
+							$('.setBlock input[name=update]').prop("disabled",false);
+							$('.setBlock input[name=leakrepair]').prop("disabled",false);
+							$("#sysIp").prop("disabled",false);
+							$("#sysPort").prop("disabled",false);
+							$(".addButton").css({background:"rgb(255,255,255)"}).addClass("cursor");
+							$(".deleteSys").addClass("cursor");
+						}
+						if(data.data.category.defense == true){
+							$('input[name=defense]').prop("checked",true);
+						}else{
+							$('input[name=defense]').prop("checked",false);
+						}
+						if(data.data.category.update == true){
+							$('input[name=update]').prop("checked",true);
+						}else{
+							$('input[name=update]').prop("checked",false);
+						}
+						if(data.data.category.leakrepair == true){
+							$('input[name=leakrepair]').prop("checked",true);
+						}else{
+							$('input[name=leakrepair]').prop("checked",false);
+						}
+					}
+		        }
+		    });
+		    
+		    // 获取管理员联系方式
+		    $.ajax({
+		        url:'/mgr/sysconf/_contact',
+		        data:{},
+		        type:'GET',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+		        	$("#adminName").val(data.data.name);
+		        	$("#contactMethod").val(data.data.phone);
+		        }
+		    });
+		    // 获取终端保护设置
+            $.ajax({
+		        url:'/mgr/sysconf/_protect',
+		        data:{},
+		        type:'GET',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+
+		        	if(data.data["password.uninstall"].enable==true){
+		        		$("input[name=terminalPP]").prop("checked",true);
+		        		$("input[name=terminalP]").val(data.data["password.uninstall"].value);
+
+		        	}else{
+		        		$("input[name=terminalPP]").prop("checked",false);
+		        		$("input[name=terminalP]").val(data.data["password.uninstall"].value);
+		        		$("input[name=terminalP]").prop("disabled",true)
+		        	}
+
+		        	if(data.data["password.leave"].enable==true){
+		        		
+		        		$("input[name=adminPP]").prop("checked",true);
+		        		$("input[name=adminP]").val(data.data["password.leave"].value);
+
+		        	}else{
+		        		$("input[name=adminPP]").prop("checked",false);
+		        		$("input[name=adminP]").val(data.data["password.leave"].value);
+		        		$("input[name=adminP]").prop("disabled",true)
+		        	}
+
+		        }
+		    });
+		    // 获取分组列表
+		    $.ajax({
+		        url:'/mgr/group/_dict',
+		        type:'GET',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+		        	var list=data.data.list;
+		        	var select="<option value=0>全网终端</option>";
+
+		        	for (var i = 0; i < list.length; i++) {
+		        		select+="<option value="+list[i].group_id+">"+list[i].group_name+"</option>";
+		        	}
+		        	$("select[name='moveGroups']").html(select);
+		        }
+		    });
+		    // 列出迁移策略
+		    moveTableAjax();
+		    $("input[name=newAddress]").val("");
+    		$("input[name=newPort]").val(80);
+    		$("select[name=moveAddress]").val(0);
+    		$("select[name=moveGroups]").nextAll().remove();
+    		$("input[name=newAddress]").nextAll().remove();
+    		$("input[name=newPort]").nextAll().remove();
+    		// 列出备份列表
+    		backupsTableAjax();
+    		$("#importbackups input[type=file]").wrap('<form></form>');
+		    $("#importbackups input[type=file]").parent()[0].reset();
+		    $("#importbackups input[type=file]").unwrap();
+		})
+
+        //确认保存系统设置
+        function sureSetButton(a){
+        	var name=$("#adminName").val();
+        	var phone=$("#contactMethod").val();
+        	
+
+        	var dataa={"name":name,"phone":phone,"remark":"","password.uninstall":{"enable":ple,"value":plv},"password.leave":{"enable":pue,"value":puv}};
+        	$.ajax({
+		        url:'/mgr/sysconf/_contact',
+		        data:JSON.stringify(dataa),
+		        type:'POST',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+		        	
+		        }
+		    });
+		    if($("input[name=adminPP]").is(":checked")){
+        		var pue=true;
+        		var puv=$("input[name=adminP]").val();
+        	}else{
+                var pue=false;
+        		var puv=$("input[name=adminP]").val();
+        	}
+        	if($("input[name=terminalPP]").is(":checked")){
+        		var ple=true;
+        		var plv=$("input[name=terminalP]").val();
+        	}else{
+        		var ple=false;
+        		var plv=$("input[name=terminalP]").val();
+        	}
+        	var dataa={"password.uninstall":{"enable":ple,"value":plv},"password.leave":{"enable":pue,"value":puv}};
+        	$.ajax({
+		        url:'/mgr/sysconf/_protect',
+		        data:JSON.stringify(dataa),
+		        type:'POST',
+		        contentType:'text/plain',
+		        success:function(data){
+		        	
+		        }
+		    });
+		    if($("input[name=saveTime]:checked").val()==0){
+		    	var expire=7776000;
+
+		    }else if($("input[name=saveTime]:checked").val()==1){
+		    	var expire=15552000;
+		    }else{
+		    	var expire=31104000;
+		    }
+		    var dataa={"expire":expire};
+		    $.ajax({
+		        url:'/mgr/sysconf/_log',
+		        data:JSON.stringify(dataa),
+		        type:'POST',
+		        contentType:'text/plain',
+		        success:function(data){
+		   
+
+		        }
+		    });
+		    var addr=$("#agentaddress").val();
+		    var port=parseInt($("#port").val());
+		    var username=$("#account").val();
+		    var password=$("#password").val();
+
+		    if($("input[name=updateM][value=0]").is(":checked")){
+		    	var method=0;
+		    }else{
+		    	var method=1;
+		    }
+		    
+
+		    if($("input[name=agent]").is(":checked")){
+		    	var dataa={"method":method,"proxy":{"enable":true,"addr":addr,"port":port,"username":username,"password":password}};
+		    }else{
+		    	var dataa={"method":method,"proxy":{"enable":false,"addr":addr,"port":port,"username":username,"password":password}};
+		    }
+		    
+		    $.ajax({
+		        url:'/mgr/sysconf/_upgrade',
+		        data:JSON.stringify(dataa),
+		        type:'POST',
+		        contentType:'text/plain',
+		        success:function(data){
+		        	$(a).parents(".pop").hide();
+		         	$(".shade").hide();
+		         	$(".topshade").hide();
+
+		        }
+		    });
+		    
+		    
+		    //更新syslog导出设置
+		   
+		    var dataa = {};
+		    dataa.category = {};
+		    if($('input[name=enable]').is(':checked')){
+		    	dataa.enable = true;
+		    }else{
+		    	dataa.enable = false;
+		    }
+		    if($('input[name=defense]').is(':checked')){
+		    	dataa.category['defense'] = true;
+		    }else{
+		    	dataa.category['defense'] = false;
+		    }
+		    if($('input[name=update]').is(':checked')){
+		    	dataa.category['update'] = true;
+		    }else{
+		    	dataa.category['update'] = false;
+		    }
+		    if($('input[name=leakrepair]').is(':checked')){
+		    	dataa.category['leakrepair'] = true;
+		    }else{
+		    	dataa.category['leakrepair'] = false;
+		    }
+		    
+		    $.ajax({
+		        url:'/mgr/sysconf/_syslog',
+		        data:JSON.stringify(dataa),
+		        type:'POST',
+		        contentType:'text/plain',
+		        success:function(data){
+					$("#sysIp").val('');
+				    $('.ipTips').show();
+					$("#sysPort").val('');
+					$('.portTips').show();
+		        }
+		    });
+        }
+
+        // 备份设置弹层
+        function backupsSetPop(){
+        	$(".backupsSetPop").show();
+        	$(".windowShade").show();
+        	$.ajax({
+		        url:'/mgr/sysconf/_backup',
+		        type:'GET',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+		        	if(data.data.auto.enabled==false){
+		        		$("input[name=isautoba]").prop('checked', false);
+
+		        	}else{
+		        		$("input[name=isautoba]").prop('checked', true);
+		        	}
+		        	if(('mday' in data.data.auto)==true){
+		        		$("input[name=bacyc]").eq(0).prop('checked', true);
+		        		$("select[name=mday]").val(data.data.auto.mday);
+		        	}else{
+		        		$("input[name=bacyc]").eq(1).prop('checked', true);
+		        		$("select[name=wday]").val(data.data.auto.wday);
+		        	}
+		        	$("select[name=bastarttime]").val(data.data.auto.freetime.begin);
+		        	$("select[name=baendtime]").val(data.data.auto.freetime.end);
+		        	$("input[name=backupscata]").val(data.data.path);
+		        }
+		    });
+        	
+        }
+        // 保存备份设置
+        function savebasetButton(self){
+        	if($("input[name='isautoba']").is(":checked")){
+        		var enabled=true;
+        	}else{
+        		var enabled=false;
+        	}
+        	if($("input[name='bacyc']").eq(0).is(":checked")){
+        		var mday=parseInt($("select[name=mday]").val());
+        	}else{
+        		var wday=parseInt($("select[name=wday]").val())
+        	}
+        	var begin=parseInt($("select[name=bastarttime]").val());
+        	var end=parseInt($("select[name=baendtime]").val());
+        	var path=$("input[name=backupscata]").val();
+        	var dataa={"auto":{"enabled":enabled,"mday":mday,"wday":wday,"freetime":{"begin":begin,"end":end}},"path":path};
+        	$.ajax({
+		        url:'/mgr/sysconf/_backup',
+		        data:JSON.stringify(dataa),
+		        type:'POST',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+		        	if(data.errno==0){
+		        		$(self).parents(".windowPop").hide();
+		        		$(self).parents(".pop").find(".windowShade").hide();
+		        		$(".delayHideS").show();
+		        	    $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'> 操作成功");
+		        	    setTimeout(function(){$(".delayHideS").hide()},2000); 
+                        backupsTableAjax();
+		        	}
+		        }
+		    });
+
+        }
+        // 删除备份弹层
+        function deleteBaPop(self){
+        	$(".deleteBaPop").show().attr("id",$(self).parents("tr").attr("id"));
+        	$(".windowShade").show();
+        }
+        // 确定删除备份
+        function sureDBaButton(self){
+        	var id=parseInt($(self).parents(".windowPop").attr("id"));
+        	$.ajax({
+		        url:'/mgr/backup/_delete?ts='+id,
+		        type:'GET',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+		        	if(data.errno==0){
+		        		backupsTableAjax();
+		        		$(self).parents(".windowPop").hide();
+		        		$(self).parents(".pop").find(".windowShade").hide();
+		        		$(".delayHideS").show();
+		        	    $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'> 操作成功");
+		        	    setTimeout(function(){$(".delayHideS").hide()},2000); 
+		        	}
+		        }
+		    });
+        }
+        // 关闭弹层中的弹层
+        $(".closeWW,.hideButtonn").click(function() {
+        	
+        	$(this).parents(".windowPop").hide();
+        	$(this).parents(".pop").find(".windowShade").hide();
+        	if($(this).parent().parent().attr("class")=="backupPop windowPop"){
+        		window.location.href="/waitingB.html";
+        	}else if($(this).parent().parent().attr("class")=="recoverNPop windowPop"){
+        		window.location.href="/waitingR.html";
+        	}
+        });
+        // 移入导入备份按钮变化
+        $("#importbackups input[type=file]").mouseenter(function(){
+        	$(".iBButton").css('border', '1px solid #77d895');
+        })
+        $("#importbackups input[type=file]").mouseleave(function(){
+        	$(".iBButton").css('border', '1px solid rgb(231,234,236)');
+        })
+        // 立即备份弹层
+        $(".bButton").click(function() {
+        	$(".backupPop").show();
+        	$(".windowShade").show();
+        	var _this=$(this);
+        	_this.addClass("bButtonDis").removeClass("bButton");
+        	var dataa={"remark":$("input[name=backupsRemark]").val()};
+        	$.ajax({
+		        url:'/mgr/backup/_backup',
+		        data:JSON.stringify(dataa),
+		        type:'POST',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+		        	_this.removeClass("bButtonDis").addClass("bButton");
+		        	if(data.errno==0){
+		        		
+                            // 定时访问备份状态
+                            var loop=setInterval(function(){
+                                $.ajax({
+                                    url:'/mgr/backup/_status',
+                                    type:'GET',
+                                    contentType:'text/plain',
+                                    error:function(xhr,textStatus,errorThrown){
+                                        if(xhr.status==401){
+                                            window.location.href='/';
+                                        }else{
+                                            
+                                        }
+                                        
+                                    },
+                                    success:function(data){
+                                        if(data.errno==0){
+                                            if(data.data.status=="none"){
+                                                clearInterval(loop);
+                                                backupsTableAjax();
+                                                $(".backupPop").hide();
+                                                $(".systemSPop").find('.windowShade').hide();
+                                                $(".delayHideS").show();
+                                                $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 备份成功</span>");
+                                                setTimeout(function(){$(".delayHideS").hide()},2000);
+                                            }
+                                        }else if(data.errno==-1){
+                                        	$(".backupPop").hide();
+        									$(".windowShade").hide();
+                                        	clearInterval(loop);
+                                        	backupsTableAjax();
+                                        	$(".delayHideS").show();
+                                            $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 备份出错</span>");
+                                            setTimeout(function(){$(".delayHideS").hide()},2000);
+                                        }
+                                        
+                                    }
+                                })
+                            },500)
+		        			
+		        		
+		        	}
+		        }
+		    });
+
+        });
+        // 导入备份按钮
+        $(".iBButton").click(function(){
+        	$("input[name=data]").click();
+        })
+        // input变化时导入备份
+        $("input[name=data]").change(function(){
+        	$("#importbackups").submit();
+        })
+        //执行提交表单过程
+        $(function(){
+            $('#importbackups').ajaxForm({
+                beforeSerialize:function(){
+
+                },
+                beforeSubmit:function(){
+
+                },
+                beforeSend: function() {
+
+                },
+                uploadProgress: function(event, position, total, percentComplete) {//上传的过程
+
+                },
+                success: function(data) {//成功
+
+            	    $("#importbackups input[type=file]").wrap('<form></form>');
+				    $("#importbackups input[type=file]").parent()[0].reset();
+				    $("#importbackups input[type=file]").unwrap();
+                    //判断浏览器是否为ie7或8
+                    var browser=navigator.appName; 
+                    if(browser=="Microsoft Internet Explorer"){
+                        var b_version=navigator.appVersion; 
+                        var version=b_version.split(";"); 
+                        var trim_Version=version[1].replace(/[ ]/g,"");
+                        if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE7.0") 
+                        { 
+                            data=JSON.parse(data);
+                        }else if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE8.0") 
+                        { 
+                            data=JSON.parse(data);
+                        }else if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE9.0") 
+                        { 
+                            data=JSON.parse(data);
+                        }  
+                    }
+                    
+
+                    if(data.errno==-1){
+                        $(".delayHide").show();
+                        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 文件有误");
+                        setTimeout(function(){$(".delayHide").hide()},2000);
+                    }else if(data.errno==0){
+                        // 添加成功提示
+                        backupsTableAjax();
+                        $(".delayHideS").show();
+                        $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 添加成功</span>");
+                        setTimeout(function(){$(".delayHideS").hide()},2000);
+                        
+                       
+                    }        
+                },
+                error:function(err){//失败
+                    alert("表单提交异常！"+err.msg);
+                },
+                complete: function(xhr) {//完成
+                    
+                }
+            });
+
+        });
+        // 恢复备份弹层
+        function recoverPop(self){
+        	$(".recoverPop").show().attr("id",$(self).parents("tr").attr("id"));
+        	$(".windowShade").show();
+        }
+        // 确定恢复备份
+        function sureRBButton(self){
+        	var id=parseInt($(self).parents(".windowPop").attr("id"));
+        	$.ajax({
+		        url:'/mgr/backup/_restore?ts='+id,
+		        type:'GET',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+		        	if(data.errno==0){
+                        $(self).parents(".windowPop").hide();
+                        $(".recoverNPop").show();
+                        var loop=setInterval(function(){
+                            $.ajax({
+                                url:'/mgr/backup/_status',
+                                type:'GET',
+                                contentType:'text/plain',
+                                error:function(xhr,textStatus,errorThrown){
+                                    if(xhr.status==401){
+                                        window.location.href='/';
+                                    }else{
+                                        
+                                    }
+                                    
+                                },
+                                success:function(data){
+                                    if(data.errno==0){
+                                        if(data.data.status=="none"){
+                                            clearInterval(loop);
+                                            $(self).parents(".pop").find(".windowShade").hide();
+                                            $(".recoverNPop").hide();
+                                            $(".delayHideS").show();
+                                            $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'> 恢复成功");
+                                            setTimeout(function(){$(".delayHideS").hide()},2000);   
+                                        }
+                                    }
+                                    
+                                }
+                            })
+                        },500)
+		        		
+		        	}
+		        }
+		    });
+
+        }
+        // 保留一位小数
+		function round(v,e){
+		    var t=1;
+		    for(;e>0;t*=10,e--);
+		    for(;e<0;t/=10,e++);
+		    return Math.round(v*t)/t;
+		}
+        // 列出备份列表ajax
+        function backupsTableAjax(){
+		    $.ajax({
+		        url:'/mgr/backup/_list?marker=0&max=100',
+		        type:'GET',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+		        	var list=data.data.list;
+		        	if(list!==null){
+		        		var table="<table>";
+	        			table+="<tr>";
+	    				table+="<th>备份时间</th>";
+	    				table+="<th>中心版本</th>";
+	    				table+="<th>备注</th>";
+	    				table+="<th>备注类型</th>";
+	    				table+="<th>大小</th>";
+	    				table+="<th>操作</th>";
+	        			table+="</tr>";
+	        			for (var i = 0; i < list.length; i++) {
+	        				table+="<tr id="+list[i].ts+">";
+		    				table+="<td>"+getLocalTime(list[i].ts)+"</td>";
+		    				table+="<td>"+list[i].center_version+"</td>";
+		    				if(list[i].remark==""){
+		    					table+="<td>-</td>";
+		    				}else{
+		    					table+="<td><span class='nameWidth' title="+safeStr(pathtitle(list[i].remark))+">"+safeStr(list[i].remark)+"</span></td>";
+		    				}
+		    				
+		    				if(list[i].type=="auto"){
+		    					table+="<td>自动备份</td>";
+		    				}else{
+		    					table+="<td>手动备份</td>";
+		    				}
+
+					    	if(list[i].size<1048576){
+			                    table+="<td>"+round(list[i].size/1024,1)+"K</td>";
+			                }else if(list[i].size>=1048576 && list[i].size<1073741824){
+			                    table+="<td>"+round(list[i].size/1048576,1)+"M</td>";
+			                }else if(list[i].size>=1073741824 && list[i].size<1099511627776){
+			                    table+="<td>"+round(list[i].size/1073741824,1)+"G</td>";
+			                }else if(list[i].size>=1099511627776){
+			                    table+="<td>"+round(list[i].size/1073741824,1)+"T</td>";
+			                }
+		    				table+="<td>";
+							table+="<a class='cursor underline blackfont' onclick='recoverPop(this)'>立即恢复</a>&nbsp;";
+        					table+="<a class='cursor underline blackfont' href='/mgr/backup/_download?ts="+list[i].ts+"'>下载</a>&nbsp;";
+        					table+="<a class='cursor underline blackfont' onclick='deleteBaPop(this)'>删除</a>";
+		        			table+="</td>";
+		        			table+="</tr>";
+	        			}
+	            		table+="</table>";
+	            		$(".backupsTable").eq(0).html(table);
+		        	}else{
+		        		$(".backupsTable").eq(0).html("");
+		        	}
+		        }
+		    });
+        }
+        // 列出迁移策略ajax
+        function moveTableAjax(){
+        	var dataa={"view":{"begin":0,"count":10000}}
+		    $.ajax({
+		        url:'/mgr/migrate/_list',
+		        data:JSON.stringify(dataa),
+		        type:'POST',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+		        	
+		        	var list=data.data.list;
+		        	if(list!==null){
+		        		var table="<table>";
+	        			table+="<tr>";
+	    				table+="<th>新控制中心地址</th>";
+	    				table+="<th>迁移终端</th>";
+	    				table+="<th>开始迁移时间</th>";
+	    				table+="<th>已迁移/总迁移数</th>";
+	    				table+="<th>操作</th>";
+	        			table+="</tr>";
+	        			for (var i = 0; i < list.length; i++) {
+	        				table+="<tr id="+list[i].id+">";
+		    				table+="<td>"+safeStr(list[i].addr)+":"+list[i].port+"</td>";
+		    				if(list[i].group_name==""){
+		    					table+="<td><span class='nameWidth'>全网终端</span></td>";
+		    				}else{
+		    					table+="<td><span class='nameWidth' title="+safeStr(pathtitle(list[i].group_name))+">"+safeStr(list[i].group_name)+"</span></td>";
+		    				}
+		    				table+="<td>"+getLocalTime(list[i].create_ts)+"</td>";
+		    				table+="<td>"+list[i].done+"/"+list[i].total+"</td>";
+		    				table+="<td>";
+							table+="<a class='underline greenfont cursor' onclick='endMovePop(this)'>终止</a>&nbsp;";
+							table+="<a class='underline greenfont cursor' href='/mgr/migrate/_tools'>迁移工具</a>";
+		        			table+="</td>";
+		        			table+="</tr>";
+	        			}
+	            		table+="</table>";
+	            		$(".moveTable").html(table);
+		        	}else{
+		        		$(".moveTable").html("");
+		        	}
+		        }
+		    });
+        }
+        // 
+        $("input[name=newAddress],input[name=newPort],select[name=moveGroups]").focus(function(){
+        	$(this).nextAll().remove();
+        })
+        // 创建迁移策略
+        $(".movePara").on("click",".moveButton",function(event) {
+        	var _this=$(this);
+        	_this.addClass("moveButtonDis").removeClass("moveButton");
+        	$("select[name=moveGroups]").nextAll().remove();
+    		$("input[name=newAddress]").nextAll().remove();
+    		$("input[name=newPort]").nextAll().remove();
+        	if(trim($("input[name=newAddress]").val())==""){
+        		$("input[name=newAddress]").after("&nbsp;<font style='color:#f37e00'>请输入新控制中心地址</font>");
+        		_this.removeClass("moveButtonDis").addClass("moveButton");
+        	}else if(trim($("input[name=newPort]").val())==""){
+        		
+        		$("input[name=newPort]").after("&nbsp;<font style='color:#f37e00'>请输入新控制中心端口</font>");
+        		_this.removeClass("moveButtonDis").addClass("moveButton");
+        	}else{
+        		var dataa={"addr":$("input[name=newAddress]").val(),"port":parseInt($("input[name=newPort]").val()),"group_id":parseInt($("select[name=moveGroups]").val())};
+			    $.ajax({
+			        url:'/mgr/migrate/_create',
+			        data:JSON.stringify(dataa),
+			        type:'POST',
+			        contentType:'text/plain',
+			        error:function(xhr,textStatus,errorThrown){
+			        	if(xhr.status==401){
+			        	    window.location.href='/';
+			        	}else{
+			        		
+			        	}
+			            
+			        },
+			        success:function(data){
+			        	_this.removeClass("moveButtonDis").addClass("moveButton");
+			        	if(data.errno==0){
+			        		moveTableAjax();
+			        		$("input[name=newAddress]").val("");
+			        		$("input[name=newPort]").val(80);
+			        		$("select[name=moveAddress]").val(0);
+			        	}else if(data.errno==-1&&data.errmsg.indexOf("Invalid Group")!==-1){
+			        		$("select[name=moveGroups]").after("&nbsp;<font style='color:#f37e00'>已存在同一分组的迁移任务</font>");
+			        	}else if(data.errno==-1&&data.errmsg.indexOf("Invalid Server")!==-1){
+			        		$("input[name=newAddress]").after("&nbsp;<font style='color:#f37e00'>无效的地址或者端口</font>");
+			        	}else if(data.errno==-1&&data.errmsg.indexOf("No Clients")!==-1){
+			        		$("select[name=moveGroups]").after("&nbsp;<font style='color:#f37e00'>此分组没有终端</font>");
+			        	}else{
+			        		$("input[name=newAddress]").after("&nbsp;<font style='color:#f37e00'>无法连接新的控制中心</font>");
+			        	}
+			        }
+			    });
+        	}
+        	
+        });
+        // 删除迁移策略
+        function endMovePop(self){
+        	$(".endMovePop").show().attr("id",$(self).parents("tr").attr("id"));
+        	$(".windowShade").show();      	
+        }
+        function sureDMButton(self){
+        	$.ajax({
+		        url:'/mgr/migrate/_delete?id='+$(".endMovePop").attr("id"),
+		        type:'POST',
+		        contentType:'text/plain',
+		        error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+		        success:function(data){
+		        	if(data.errno==0){
+		        		$(".endMovePop").hide();
+		        		$(self).parents(".pop").find(".windowShade").hide();
+		        		moveTableAjax();
+		        	}else{
+
+		        	}
+		        }
+		    });
+        }
+		//iframe高度随浏览器窗口变化
+		var h=window.innerHeight-110 || document.documentElement.clientHeight-110 || document.body.clientHeight-110;
+		if(h<620){
+			document.getElementById("iframe").style.height = 620+"px";
+		    document.getElementById("mainFrame").style.height = 620+"px";
+		}else{
+			document.getElementById("iframe").style.height = h+"px";
+		    document.getElementById("mainFrame").style.height = h+"px";
+		}
+		
+	    window.onresize = function(){
+			var h=window.innerHeight-110 || document.documentElement.clientHeight-110 || document.body.clientHeight-110;
+	        if(h<620){
+				document.getElementById("iframe").style.height = 620+"px";
+			    document.getElementById("mainFrame").style.height = 620+"px";
+			}else{
+				document.getElementById("iframe").style.height = h+"px";
+			    document.getElementById("mainFrame").style.height = h+"px";
+			}
+			
+		}
+
+
+		//引导层逻辑
+		$(".closeLead").click(function(){
+			$("#leadLayer").hide();
+			$("#leadContentLayer").hide();
+		})
+		$(".next1").click(function(){
+			$(".leadBlock1").hide();
+			$(".leadBlock2").show();
+		})
+		$(".next2").click(function(){
+			$(".nav .container a").removeClass("current");
+			$(".nav .container a").eq(4).addClass("current");
+			$("#mainFrame").attr("src","terminalArrange.html");
+			$(".leadBlock2").hide();
+			$(".leadBlock3").show();
+		})
+		$(".next3").click(function(){
+			$("#leadLayer").hide();
+			$("#leadContentLayer").hide();
+
+			$("#mainFrame").contents().find(".shade").show();
+            $(".topshade").show();
+            $("#mainFrame").contents().find(".terminalASPop").show();
+            var ip="";
+            $.ajax({
+                url:'/mgr/sysconf/_deploy',
+                data:{},
+                type:'GET',
+                contentType:'text/plain',
+                error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+                success:function(data){
+                    $("#mainFrame").contents().find("#noticeTitle").val(data.data.title);
+                    $("#mainFrame").contents().find("#noticeContent").val(data.data.content);
+                    ip=data.data.addr;
+
+                }
+            });
+            $.ajax({
+                url:'/mgr/sysconf/_iplist',
+                data:{},
+                type:'GET',
+                contentType:'text/plain',
+                error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+                success:function(data){
+                    
+                    var list=data.data.list;
+                    var iplist="";
+                    if(isInArray(list,ip)==false){
+                        for (var i = 0; i < list.length; i++) { 
+                            iplist+="<option>"+list[i]+"</option>";       
+                        }
+                        iplist+="<option value=0 selected>自定义域名</option>";
+                        $("#mainFrame").contents().find("#addressContent").next().show();
+                        $("#mainFrame").contents().find("#addressContent").next().next().show();
+                        $("#mainFrame").contents().find("#addressContent").next().next().val(ip);
+                    }else{
+                    	for (var i = 0; i < list.length; i++) {
+	                        if(list[i]==ip){
+	                            iplist+="<option selected>"+list[i]+"</option>";
+	                        }else{
+	                            iplist+="<option>"+list[i]+"</option>";    
+	                        }
+	                        
+	                    }
+	                    iplist+="<option value=0>自定义域名</option>";
+                    }
+                    
+                    $("#mainFrame").contents().find("#addressContent").html(iplist);
+
+
+                }
+            });
+		})
+        
+        // 网络测试
+        $(".netTest").click(function(){
+
+        	if($("input[name=agent]").is(":checked")){
+        		var addr=$("#agentaddress").val();
+			    var port=parseInt($("#port").val());
+			    var username=$("#account").val();
+			    var password=$("#password").val();
+			    if(username==""||password==""){
+			    	var dataa={"addr":addr,"port":port};
+			    }else{
+			    	var dataa={"addr":addr,"port":port,"username":username,"password":password};
+			    }
+			    
+	        	$.ajax({
+	                url:'/mgr/upgrade/_proxycheck',
+	                data:JSON.stringify(dataa),
+	                type:'POST',
+	                contentType:'text/plain',
+	                error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+			        	    window.location.href='/';
+			        	}else{
+			        		
+			        	}
+			            
+			        },
+	                success:function(data){
+	                	if(data.errno==0){
+	                		$(".delayHideS").show();
+			        	    $(".delayHideS .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 测试成功");
+			        	    setTimeout(function(){$(".delayHideS").hide()},2000); 
+	                	}else{
+	                		$(".delayHide").show();
+			        	    $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 测试失败");
+			        	    setTimeout(function(){$(".delayHide").hide()},2000); 
+	                	}
+	                }
+	            });
+        	}
+        	
+        })
+
+        // 获取cookie里的值
+	    function getCookie(name){
+	        var arr=document.cookie.split('; ');  
+	        
+	        for(var i=0;i<arr.length;i++){
+	            /* 将cookie名称和值拆分进行判断 */       
+	            var arr2=arr[i].split('=');               
+	            if(arr2[0]==name){           
+	                return arr2[1];       
+	            }   
+	        }       
+	    }
+	    //授权
+	    // 悬浮变色
+	    {{if .PrivSystem }}
+	    $(".top .container .logo .empng1,.top .container .logo .emmsg1").mouseenter(function(){
+	    	$(".top .container .logo .empng1").css({backgroundPosition:"-20px"});
+	    	$(".top .container .logo .emmsg1").css({color:"#fda838"});
+	    }) 
+	    $(".top .container .logo .empng1,.top .container .logo .emmsg1").mouseleave(function(){
+	    	$(".top .container .logo .empng1").css({backgroundPosition:"0px"});
+	    	$(".top .container .logo .emmsg1").css({color:"#c9933d"});
+	    }) 
+	    $(".top .container .logo .empng0,.top .container .logo .emmsg0").mouseenter(function(){
+	    	$(".top .container .logo .empng0").css({backgroundPosition:"-20px"});
+	    	$(".top .container .logo .emmsg0").css({color:"#ffffff"});
+	    }) 
+	    $(".top .container .logo .empng0,.top .container .logo .emmsg0").mouseleave(function(){
+	    	$(".top .container .logo .empng0").css({backgroundPosition:"0px"});
+	    	$(".top .container .logo .emmsg0").css({color:"#b6b6b6"});
+	    }) 
+	    $(".top .container .logo .empng2,.top .container .logo .emmsg2").mouseenter(function(){
+	    	$(".top .container .logo .empng2").css({backgroundPosition:"-20px"});
+	    	$(".top .container .logo .emmsg2").css({color:"#fd6627"});
+	    }) 
+	    $(".top .container .logo .empng2,.top .container .logo .emmsg2").mouseleave(function(){
+	    	$(".top .container .logo .empng2").css({backgroundPosition:"0px"});
+	    	$(".top .container .logo .emmsg2").css({color:"#e96a4e"});
+	    }) 
+	    // 授权弹层
+	    $(".top .container .logo").on("click",".empng1,.emmsg1,.empng0,.emmsg0,.empng2,.emmsg2",function(){
+	    	$(".emPop").show();
+	    	shade();
+	    	$("input[name=license]").val("");
+	    })
+	    {{end}}
+	    // 获取授权状态
+	    emStatus();
+	    function emStatus(){
+	    	$(".emPop .right p").eq(3).html("<p>授权期限&nbsp;&nbsp;:&nbsp;&nbsp;剩余&nbsp;<span class='emOver colorOrange'>0</span>&nbsp;天<span class='specialTxt'>,请立即<font class='colorOrange'>更新授权</font></span></p>");
+	    	$.ajax({
+	            url:'/mgr/sysconf/_license',
+	            data:{},
+	            type:'GET',
+	            contentType:'text/plain',
+	            error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+	            success:function(data){
+	            	
+	            	var emover=parseInt(data.data.remain_days);
+	            	if(data.data.type==0){
+		            	$(".top .container .logo .emmsg0").show();
+		            	$(".top .container .logo .empng0").css({display:"inline-block"});	
+		            	$(".top .container .logo .emmsg1").hide();
+		            	$(".top .container .logo .empng1").css({display:"none"});
+		            	$(".top .container .logo .emmsg2").hide();
+		            	$(".top .container .logo .empng2").css({display:"none"});
+		            	$(".emPop .emStatus0").show();
+		            	$(".emPop .emStatus1").hide();
+		            	$(".emPop .emStatus2").hide();
+		            	isshowemPop();	
+		            	var emhintfloat="<p>产品未授权</p>";
+		            	emhintfloat+="<p>1,版本无法升级</p>";
+		            	emhintfloat+="<p>2,病毒库无法更新</p>";
+		            	emhintfloat+="<p>3,只可以部署10台终端</p>";
+		            	$(".emPop .emhintfloat").html(emhintfloat);
+		            	$(".emPop .specialTxt").show();
+		            	$(".emPop .emhint").show();
+		            	$(".emCom").html("未授权");
+		            	$(".emPop .right p").eq(3).html("授权期限&nbsp;&nbsp;:&nbsp;&nbsp;未授权<span class='specialTxt'>,请立即<font class='colorOrange'>更新授权</font></span>");
+
+	            	}else if(data.data.type==1){
+		            	$(".top .container .logo .emmsg0").hide();
+		            	$(".top .container .logo .empng0").css({display:"none"});	
+		            	$(".emPop .emStatus0").hide();
+
+		            	$(".emCom").html(data.data.to);
+	            	    $(".emCom").attr("title",pathtitle(data.data.to));
+		            	if(emover<=15){
+		            		$(".emPop .specialTxt").show();
+		            		isshowemPop();
+		            		var emhintfloat="<p>产品授权授权到期后，将有以下限制</p>";
+			            	emhintfloat+="<p>1,版本无法升级</p>";
+			            	emhintfloat+="<p>2,病毒库无法更新</p>";
+			            	$(".emPop .emhintfloat").html(emhintfloat);
+			            	$(".emPop .emhint").show();
+			            	if(emover<=0){
+			            		$(".emPop .emStatus2").show();
+			            		$(".emPop .emStatus1").hide();
+			            		$(".top .container .logo .emmsg2").show();
+		            			$(".top .container .logo .empng2").css({display:"inline-block"});
+		            			$(".top .container .logo .emmsg1").hide();
+		            			$(".top .container .logo .empng1").css({display:"none"});
+			            		$(".emPop .specialTxt").html(",请立即<font class='colorOrange'>更新授权</font>").show();
+			            		$(".emPop .right p").eq(3).html("<p>授权期限&nbsp;&nbsp;:&nbsp;&nbsp;<span  style='color: #eb6948;'>授权到期<span class='specialTxt'>,请立即<font class='colorOrange' style='color: #eb6948;'>更新授权</font></span></span></p>");
+
+			            	}else{
+			            		$(".emPop .emStatus1").show();
+			            		$(".emPop .emStatus2").hide();
+			            		$(".top .container .logo .emmsg1").show();
+		            			$(".top .container .logo .empng1").css({display:"inline-block"});
+		            			$(".top .container .logo .emmsg2").hide();
+		            			$(".top .container .logo .empng2").css({display:"none"});
+			            		$(".emPop .specialTxt").html(",请及时<font class='colorOrange'>更新授权</font>").show();
+			            		$(".emOver").html(emover);
+			            	}
+			            	
+		            	}else{
+		            		$('.emStatus2').hide();
+		            		$(".emPop .specialTxt").hide();
+		            		$(".emPop .emhint").hide();
+		            		$(".emOver").html(emover);
+		            	}
+	            	}
+	            	$(".emTerminal").html(data.data.nodes_num);
+	            }
+	        });
+	    }
+	    $('.emPop .emhint').mouseenter(function(event) {
+	    	$(".emPop .emhintfloat,.emPop .smalltriangle").show();
+
+	    });
+	    $('.emPop .emhint').mouseleave(function(event) {
+	    	$(".emPop .emhintfloat,.emPop .smalltriangle").hide();
+	    });
+	    // 选择完文件后立即上传
+	    // $("input[name=license]").change(function(){
+	    // 	$(".updateEm").click();
+	    // })
+        // 上传授权文件按钮
+        $(".updateEm").click(function(){
+        	if($("#emFile input[type=file]").val()==""){
+				$(".delayHide").show();
+		        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 文件不能为空");
+		        setTimeout(function(){$(".delayHide").hide()},2000);
+			}else{
+				$("#emFile").submit();
+			}
+        })
+        //执行提交表单过程
+        $(function(){
+            $('#emFile').ajaxForm({
+                beforeSerialize:function(){
+
+                },
+                beforeSubmit:function(){
+
+                },
+                beforeSend: function() {
+
+                },
+                uploadProgress: function(event, position, total, percentComplete) {//上传的过程
+
+                },
+                success: function(data) {//成功
+
+                
+
+                    //判断浏览器是否为ie7或8
+                    var browser=navigator.appName; 
+                    if(browser=="Microsoft Internet Explorer"){
+                        var b_version=navigator.appVersion; 
+                        var version=b_version.split(";"); 
+                        var trim_Version=version[1].replace(/[ ]/g,"");
+                        if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE7.0") 
+                        { 
+                            data=JSON.parse(data);
+                        }else if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE8.0") 
+                        { 
+                            data=JSON.parse(data);
+                        }else if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE9.0") 
+                        { 
+                            data=JSON.parse(data);
+                        }  
+                    }
+                    
+
+                    if(data.errno==-1){
+                        $(".delayHide").show();
+                        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 文件有误");
+                        setTimeout(function(){$(".delayHide").hide()},2000);
+                    }else if(data.errno==0){
+                        // 添加成功提示
+                        $(".delayHideS").show();
+                        $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 添加成功</span>");
+                        setTimeout(function(){$(".delayHideS").hide()},2000);
+                        $.ajax({
+				            url:'/mgr/sysconf/_license',
+				            data:{},
+				            type:'GET',
+				            contentType:'text/plain',
+				            success:function(data){
+				                if(data.data.type==1){
+				                	$(".top .container .logo").html("<img src='images/logo.png'><span> 火绒终端安全管理系统</span><span class='empng1 absolute cursor'></span><span class='emmsg1 absolute cursor'>正版授权</span>");
+					            	$(".top .container .logo .emmsg0").hide();
+					            	$(".top .container .logo .empng0").css({display:"none"});	
+					            	$(".emPop .emStatus0").hide();
+					            	$(".emPop .emStatus1").show();
+				                }else{
+				                	$(".top .container .logo").html("<img src='images/logo.png'><span> 火绒终端安全管理系统</span><span class='empng0 absolute cursor'></span><span class='emmsg0 absolute cursor'>未授权</span>");
+					            	$(".top .container .logo .emmsg1").hide();
+					            	$(".top .container .logo .empng1").css({display:"none"});	
+					            	$(".emPop .emStatus1").hide();
+					            	$(".emPop .emStatus0").show();
+				                }
+			            		
+
+				            	$(".emCom").html(data.data.to);
+				            	$(".emCom").attr("title",pathtitle(data.data.to));
+				            	$(".emTerminal").html(data.data.nodes_num);
+				            	var emover=parseInt((data.data.expire_time-(Date.parse(new Date())/1000))/(24*60*60));
+				            	if(emover<0){
+				            		emover=0;
+				            	}else{
+				            		emover=emover;
+				            	}
+				            	$(".emOver").html(emover);
+
+				            }
+				        });
+                    }
+                    emStatus();          
+                },
+                error:function(err){//失败
+                    alert("表单提交异常！"+err.msg);
+                },
+                complete: function(xhr) {//完成
+                    
+                }
+            });
+
+        });
+
+        
+        $(".modifyPwPop .mainBlock p input").focus(function(){
+        	$(this).next().hide();
+        })
+        // $("#newP").blur(function(event) {
+        //     /* Act on the event */
+        //     $(this).css('width', '320px');
+        //     $('.vali_pass_progress').hide();
+        // });
+        // 修改密码密码强度检测
+        var ele_pass = document.getElementById("newP");
+        var sure_pass = document.getElementById("sureP");
+        var ele_progress = $(".vali_pass_inner_progress");
+        var begin_classname = ele_progress.attr("class");
+        var regxs = [];
+        regxs.push(/[^a-zA-Z0-9_]/g);
+        regxs.push(/[a-zA-Z]/g);
+        regxs.push(/[0-9]/g);
+
+        
+        ele_pass.onkeyup = function () {
+          var val = this.value;
+          var len = val.length;
+          var sec = 0;
+          if (len >= 0) { // 至少六个字符
+            for (var i = 0; i < regxs.length; i++) {
+              if (val.match(regxs[i])) {
+                sec++;
+              }
+            }
+          }
+         var regx = /^\S+$/;
+        if(regx.test(val) == false){
+        	$(".vali_pass_progress").hide();
+        	$(".vali_pass_txt").hide();
+            $("input[name=newP]").next().next().show();
+            return false;
+        }else{
+        	$("input[name=newP]").next().next().hide();
+        }
+        
+          var result = (sec / regxs.length) * 100;
+          if(result==0){
+          	ele_progress.css('width', result+"%");
+          	$(".vali_pass_progress").hide();
+          	$(".vali_pass_txt").hide();
+          }else if(result > 0 && result <= 50){
+          	ele_progress.css('width',"100%");
+          	$(".vali_pass_progress").show();
+            $(".vali_pass_progressw .vali_pass_inner_progress").attr("class",begin_classname + " vali_bg");
+            $(".vali_pass_progressm .vali_pass_inner_progress").attr("class","vali_pass_inner_progress");
+            $(".vali_pass_progresss .vali_pass_inner_progress").attr("class","vali_pass_inner_progress");
+            $(".vali_pass_txt").html("密码强度&nbsp;:&nbsp弱");
+            $(".vali_pass_txt").show();
+          }else if (result > 50 && result < 100) {
+          	ele_progress.css('width',"100%");
+          	$(".vali_pass_progress").show();
+          	$(".vali_pass_progressw .vali_pass_inner_progress").attr("class",begin_classname + " vali_bg");
+            $(".vali_pass_progressm .vali_pass_inner_progress").attr("class",begin_classname + " vali_bg");
+            $(".vali_pass_progresss .vali_pass_inner_progress").attr("class","vali_pass_inner_progress");
+            $(".vali_pass_txt").html("密码强度&nbsp;:&nbsp中");
+            $(".vali_pass_txt").show();
+          } else if (result == 100) {
+          	ele_progress.css('width',"100%");
+          	$(".vali_pass_progress").show();
+            $(".vali_pass_progress .vali_pass_inner_progresw").attr("class",begin_classname + " vali_bg");
+            $(".vali_pass_progress .vali_pass_inner_progresm").attr("class",begin_classname + " vali_bg");
+            $(".vali_pass_progress .vali_pass_inner_progress").attr("class",begin_classname + " vali_bg");
+            $(".vali_pass_txt").html("密码强度&nbsp;:&nbsp强");
+            $(".vali_pass_txt").show();
+          }
+        
+        }
+       
+		</script>
+	</body>
+</html>

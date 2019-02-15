@@ -1,0 +1,167 @@
+﻿<!doctype html>
+<html>
+
+	<head>
+		<title>远程桌面</title>
+		<link href="css/common.css" rel="stylesheet">
+		<style>
+			.waiting {
+				width: 374px;
+				height: 200px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-top: -100px;
+				margin-left: -171px;
+				font-size: 14px;
+				color: #6c6c6c;
+				text-align: center;
+			}
+			.waiting a{
+				cursor: pointer;
+			    display: inline-block;
+			    width: 100px;
+			    line-height: 22px;
+			    background: rgb(101,197,129);
+			    color: rgb(255, 255, 255);
+			    border-radius: 3px;
+			    text-align: center;
+			    font-size: 12px;
+			}
+			.waiting a:hover{
+				background: rgb(71,172,117);
+			}
+		</style>
+		<meta content="IE=EmulateIE11" />
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+	</head>
+
+	<body>
+		<div class="waiting">
+			<img src="images/waiting.gif" alt=""><br><br>
+			<span>正在等待终端响应...</span><br><br>
+			<a onclick="hideButton(this)">取消</a>
+		</div>
+
+		<script>
+			var urlWin = window.location.href;
+			var task_id = urlWin.split('&')[0].split('=')[1];
+//			var id = urlWin.split('&')[1].split('=')[1];
+			$.ajax({
+				url: '/mgr/remote/_status?task_id=' + parseInt(task_id),
+				data: {},
+				type: 'GET',
+				async: false,
+				contentType: 'text/plain',
+				error: function(xhr, textStatus, errorThrown) {
+					if(xhr.status == 401) {
+						parent.window.location.href = '/';
+					} else {
+
+					}
+
+				},
+				success: function(dataa) {
+					if(dataa.errno == 0) {
+
+						var data = dataa.data;
+						if(data.status == 0) {
+							var startTime = new Date().getTime();
+	    					looptimeRemoteSK=setInterval("eachRemoteTaskSts("+task_id+","+startTime+")", 500);
+						} else if(data.status == 1) {
+							window.location.href="/mgr/remote/_remote?task_id="+task_id;
+
+						} else if(data.status == 2) {
+							$(".waiting img").attr('src','images/remoteTips.png');
+							$(".waiting span").html("终端已拒绝远程桌面");
+							$('.waiting a').hide();
+							
+						}
+					} else {
+						$(".waiting img").attr('src','images/remoteTips.png');
+						$(".waiting span").html(dataa.errmsg);
+						$('.waiting a').hide();
+						
+					}
+
+				}
+			});
+			/*远程任务状态*/
+   		
+
+   		
+   		function eachRemoteTaskSts(task_id,startTime){
+
+   			if(new Date().getTime() - startTime > 60000){
+   				console.log(new Date().getTime()+'-----'+startTime);
+   				clearInterval(looptimeRemoteSK);
+   				$(".waiting img").attr('src','images/remoteTips.png');
+				$(".waiting span").html("请求超时！");
+				$('.waiting a').hide();
+   			}else{
+	   			$.ajax({
+					url:'/mgr/remote/_status?task_id='+task_id,
+					data:{},
+					type:'GET',
+					async:false,
+					contentType:'text/plain',
+					error:function(xhr,textStatus,errorThrown){
+			        	if(xhr.status==401){
+			        	    parent.window.location.href='/';
+			        	}else{
+			        		
+			        	}
+			            
+			        },
+					success:function(dataa){
+						if(dataa.errno == 0){
+							var data=dataa.data;
+							if(data.status ==0){
+	
+							}else if(data.status ==1){
+								clearInterval(looptimeRemoteSK);
+								window.location.href="/mgr/remote/_remote?task_id="+task_id;
+				        	    
+							}else if(data.status==2){
+								clearInterval(looptimeRemoteSK);
+								$(".waiting img").attr('src','images/remoteTips.png');
+								$(".waiting span").html("终端已拒绝远程桌面");
+								$('.waiting a').hide();
+								
+							}
+						}else{
+							$(".waiting img").attr('src','images/remoteTips.png');
+							$(".waiting span").html(dataa.errmsg);
+							$('.waiting a').hide();
+							
+						}
+	
+					}
+		        });
+   			}
+   		}
+   		/*取消远程任务*/
+   		function hideButton(){
+   			clearInterval(looptimeRemoteSK);
+   			$.ajax({
+				url:'/mgr/task/_ctrl?id='+parseInt(task_id)+'&type=stop',
+				data:{},
+				type:'GET',
+				contentType:'text/plain',
+				error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    parent.window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+				success:function(data){
+					window.close();
+				}
+	        });
+   		}
+		</script>
+	</body>
+
+</html>

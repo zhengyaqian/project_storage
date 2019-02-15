@@ -1,0 +1,76 @@
+﻿<!doctype html>
+<html>
+<head>
+	<title>火绒终端安全控制中心</title>
+<link href="css/common.css" rel="stylesheet">
+<style>
+.waiting{padding-top: 200px;font-size: 14px;color: #6c6c6c}
+</style>
+<meta content="IE=EmulateIE11" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+	</head>
+	<body>
+		<div class="top">
+			<div class="container">
+				<div class="logo relative">
+					<img src="images/logo.png"><span> 火绒终端安全管理系统</span>
+				</div>
+				<div class="clear"></div>
+
+		    </div>
+		</div>
+		<div class="nav">
+		    	<div class="container">
+				    
+			    </div>
+		</div>
+        <div id="iframe" class="textAlignC">
+        	<div class="waiting">
+        		<img src="images/waiting.gif" alt=""><br><br>
+        		<span>超级管理员正在进行数据恢复，请稍等...</span>
+        	</div>
+        	
+
+        </div>
+
+		<div class="footer">
+			<div class="container"><a href="http://www.huorong.cn/">Copyright 2017-2018 北京火绒网络科技有限公司</a></div>
+		</div>	
+		<script>
+		//iframe高度随浏览器窗口变化
+		var h=window.innerHeight-110 || document.documentElement.clientHeight-110 || document.body.clientHeight-110;
+		
+		document.getElementById("iframe").style.height = h+"px";
+	    window.onresize = function(){
+			var h=window.innerHeight-110 || document.documentElement.clientHeight-110 || document.body.clientHeight-110;
+	        document.getElementById("iframe").style.height = h+"px";
+			
+		}
+
+		// 定时访问备份状态
+		setInterval(function(){
+			$.ajax({
+				url:'/mgr/backup/_status',
+				type:'GET',
+				contentType:'text/plain',
+				error:function(xhr,textStatus,errorThrown){
+		        	if(xhr.status==401){
+		        	    window.location.href='/';
+		        	}else{
+		        		
+		        	}
+		            
+		        },
+				success:function(data){
+					if(data.errno==0){
+						if(data.data.status=="none"){
+							window.location.href="/";
+						}
+					}
+					
+		        }
+		    })
+		},500)
+		</script>
+	</body>
+</html>

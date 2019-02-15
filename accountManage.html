@@ -1,0 +1,328 @@
+﻿<!doctype html>
+<html>
+    <head>
+        <title>火绒终端安全控制中心</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" /> 
+         <link href="css/common.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.css" />
+        <link href="css/eventLog.css" rel="stylesheet">
+        <link href="css/lyz.calendar.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/json3.js"></script>
+        <script src="js/jquery.page.js"></script> 
+        <style>
+            .modifyPowerPop table tbody,.powerManagePop table tbody {
+                height: auto;
+                overflow: hidden;
+                border: 0;
+                display: inline;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <div class="functionButtonsBlock adminFBBlock">
+                <p>
+                    <a class="bu cursor uploadB" onclick="newAdminPop()">新建管理员</a>
+                    <a class="bu cursor provideB" onclick="deleteAdminPop()">删除管理员</a>
+                </p>
+            </div>
+            <div class="search">
+                <div class="searchBlock floatL">
+                    <span class='condition'></span>
+                    <select id='selectVT'>
+                        <option value=0>全部</option>
+                        <option value=1>普通管理员</option>
+                        <option value=2>审计员</option>
+                        <option value=3>超级管理员</option>
+                    </select>
+                    <span class='textbox'>
+                        <input type='text' class='placeholderInput' onfocus='fadeOut(this)' onblur='fadeIn(this)' id='searchKey'><span class='placeholder' onclick='spanFocus(this)'>请输入你要搜索的管理员</span><img src='images/search.png' onclick='accEvent()'>
+                    </span>
+                </div>
+                <div class='clear'></div>
+            </div>
+            <div class="tableContainer">
+                <div class="table">
+                        
+                </div>
+            </div>
+        </div>
+        <!-- 新建管理员弹层 start -->
+        <div class="newAdminPop pop relative">
+            <div class="uploadingShade absolute hidden">
+            
+            </div>
+            <div class="absolute uploading hidden">
+                <div class="uploadingText">正在上传...</div>
+                <div class="progress">
+                    <div class="bar"></div >
+                    <div class="percent">0%</div >
+                </div>
+
+                <div id="status"></div>
+            </div>
+            <div class="title">新建管理员<span class="closeW"></span></div>
+            <div class="content">
+                <form  method="post" action="/mgr/distr/_create" enctype="multipart/form-data">
+                    <div class="p marginT4">
+                        <label for="name">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号 :</label><input type="text" name="account" maxlength="16">
+                    </div>
+                    <div class="p">
+                        <label for="name">联系方式 :</label><input type="text" name="contact" maxlength="20">
+                    </div>
+                    <div class="p">
+                        <label for="name">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注 :</label><input type="text" name="remark" maxlength="30">
+                    </div>
+                    <div class="p">
+                        <label for="name">账号类型 :</label><select><option value=0>普通管理员</option><option value=1>审计员</option></select><span class="auditorIn hidden">    权限仅为事件日志相关模块</span>
+                    </div>
+                    <div class="p notice">
+                        <font>注 ：</font> 所有账号的初始密码为"123456"
+                    </div>
+                    
+
+                </form>
+            </div>
+            <div class="buttons">
+                <a onclick="hideButton(this)">取消</a>
+                <a onclick="sureNAButton(this)">确定</a>
+                
+                <div class="clear"></div>
+            </div>
+        </div>
+        
+        <!-- 新建管理员弹层 end -->
+        <!-- 修改信息弹层 start -->
+        <div class="modifyInfPop pop relative">
+            <div class="uploadingShade absolute hidden">
+            
+            </div>
+            <div class="absolute uploading hidden">
+                <div class="uploadingText">正在上传...</div>
+                <div class="progress">
+                    <div class="bar"></div >
+                    <div class="percent">0%</div >
+                </div>
+
+                <div id="status"></div>
+            </div>
+            <div class="title">修改信息<span class="closeW"></span></div>
+            <div class="content">
+                <form  method="post" action="/mgr/distr/_create" enctype="multipart/form-data">
+                    <div class="p marginT4">
+                        <label for="name">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号 :</label><input type="text" name="account" maxlength="16">
+                    </div>
+                    <div class="p">
+                        <label for="name">联系方式 :</label><input type="text" name="contact" maxlength="20">
+                    </div>
+                    <div class="p">
+                        <label for="name">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注 :</label><input type="text" name="remark" maxlength="30">
+                    </div>
+                    <div class="p">
+                        <label for="name">账号类型 :</label><select disabled><option value=0>普通管理员</option><option value=1>审计员</option><option value=2>超级管理员</option></select><span class="auditorIn hidden">    权限仅为事件日志相关模块</span>
+                    </div>
+                    <div class="p notice">
+                        <font>注 ：</font> 所有账号的初始密码为"123456"
+                    </div>
+                    
+
+                </form>
+            </div>
+            <div class="buttons">
+                <a onclick="hideButton(this)">取消</a>
+                <a onclick="sureMIButton(this)">确定</a>
+                
+                <div class="clear"></div>
+            </div>
+        </div>
+        
+        <!-- 修改信息弹层 end -->
+        <!-- 权限管理弹层 start -->
+        <div class="powerManagePop pop">
+            <div class="windowShade absolute hidden">
+            
+            </div>
+            <div class="title">管理员权限<span class="closeW"></span></div>
+            <div class="content">
+                <div class="pMTableth">
+                    <table>
+                        <tr>
+                            <th width="25%"><input type="checkbox" class="verticalMiddle" onclick="selectAll(this)"><span class="verticalMiddle">模块</span></th>
+                            <th width="75%">模块功能简介</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="pMTable">
+                    <table>
+                        <tr>
+                            <td width="25%"><input type="checkbox" class="verticalMiddle" checked disabled name="homepage" id="homepage"><span class="verticalMiddle">首页</span></td>
+                            <td width="75%">企业终端安全信息的汇总，趋势以及最新动态</td>
+                        </tr>
+                        <tr>
+                            <td width="25%"><input type="checkbox" class="verticalMiddle selectPower" name="mgr_client"><span class="verticalMiddle">终端管理</span></td>
+                            <td width="75%">可以下发快速查杀、终端升级等任务保护、管理终端</td>
+                        </tr>
+                        <tr>
+                            <td width="25%"><input type="checkbox" class="verticalMiddle selectPower" name="mgr_policy"><span class="verticalMiddle">防护策略</span></td>
+                            <td width="75%">管理策略并且为分组部署策略</td>
+                        </tr>
+                        <tr>
+                            <td width="25%"><input type="checkbox" class="verticalMiddle selectPower" name="mgr_distr"><span class="verticalMiddle">文件管理</span></td>
+                            <td width="75%">软件统计以及软件卸载，并且可以分发文件</td>
+                        </tr>
+                        <tr>
+                            <td width="25%"><input type="checkbox" class="verticalMiddle selectPower" name="mgr_leakrepair"><span class="verticalMiddle">漏洞修复</span></td>
+                            <td width="75%">漏洞的统一扫描以及修复，并且查看系统补丁</td>
+                        </tr>
+                        <tr>
+                            <td width="25%"><input type="checkbox" class="verticalMiddle selectPower" name="mgr_log"><span class="verticalMiddle">事件日志</span></td>
+                            <td width="75%">查看终端威胁安全情况的整体防御和任务日志</td>
+                        </tr>
+                        <tr>
+                            <td width="25%"><input type="checkbox" class="verticalMiddle selectPower" name="mgr_tools"><span class="verticalMiddle">管理工具</span></td>
+                            <td width="75%">提供日志清理以及域部署工具</td>
+                        </tr>
+                        <!-- <tr>
+                            <td width="25%"><input type="checkbox" class="verticalMiddle selectPower" name="config"><span class="verticalMiddle">系统设置</span></td>
+                            <td width="75%">终端以及管理中心相关设置</td>
+                        </tr> -->
+                    </table>
+                </div>
+            </div>
+            <div class="buttons">
+                <a onclick="hideButton(this)">上一步</a>
+                <a onclick="sureAPButton(this)">确定</a>
+                
+                <div class="clear"></div>
+            </div>
+        </div>
+        <!-- 权限管理弹层 end -->
+        <!-- 修改权限弹层 start -->
+        <div class="modifyPowerPop pop">
+            
+            <div class="title">管理员权限<span class="closeW"></span></div>
+            <div class="content">
+                <div class="pMTableth">
+                    <table>
+                        <tr>
+                            <th width="25%"><input type="checkbox" class="verticalMiddle" onclick="selectAll(this)"><span class="verticalMiddle">模块</span></th>
+                            <th width="75%">模块功能简介</th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="pMTable">
+                    <table>
+                        <tr>
+                            <td width="25%"><input type="checkbox" class="verticalMiddle" checked disabled name="homepage"><span class="verticalMiddle">首页</span></td>
+                            <td width="75%">企业终端安全信息的汇总，趋势以及最新动态</td>
+                        </tr>
+                        <tr>
+                            <td width="25%"><input type="checkbox" class="verticalMiddle selectPower" name="mgr_client"><span class="verticalMiddle">终端管理</span></td>
+                            <td width="75%">可以下发快速查杀、终端升级等任务保护、管理终端</td>
+                        </tr>
+                        <tr>
+                            <td width="25%"><input type="checkbox" class="verticalMiddle selectPower" name="mgr_policy"><span class="verticalMiddle">防护策略</span></td>
+                            <td width="75%">管理策略并且为分组部署策略</td>
+                        </tr>
+                        <tr>
+                            <td width="25%"><input type="checkbox" class="verticalMiddle selectPower" name="mgr_distr"><span class="verticalMiddle">文件管理</span></td>
+                            <td width="75%">软件统计以及软件卸载，并且可以分发文件</td>
+                        </tr>
+                        <tr>
+                            <td width="25%"><input type="checkbox" class="verticalMiddle selectPower" name="mgr_leakrepair"><span class="verticalMiddle">漏洞修复</span></td>
+                            <td width="75%">漏洞的统一扫描以及修复，并且查看系统补丁</td>
+                        </tr>
+                        <tr>
+                            <td width="25%"><input type="checkbox" class="verticalMiddle selectPower" name="mgr_log"><span class="verticalMiddle">事件日志</span></td>
+                            <td width="75%">查看终端威胁安全情况的整体防御和任务日志</td>
+                        </tr>
+                        <tr>
+                            <td width="25%"><input type="checkbox" class="verticalMiddle selectPower" name="mgr_tools"><span class="verticalMiddle">管理工具</span></td>
+                            <td width="75%">提供日志清理以及域部署工具</td>
+                        </tr>
+                        <!-- <tr>
+                            <td width="25%"><input type="checkbox" class="verticalMiddle selectPower" name="config"><span class="verticalMiddle">系统设置</span></td>
+                            <td width="75%">终端以及管理中心相关设置</td>
+                        </tr> -->
+                    </table>
+                </div>
+            </div>
+            <div class="buttons">
+                <a onclick="hideButton(this)">取消</a>
+                <a onclick="sureMPButton(this)">确定</a>
+                
+                <div class="clear"></div>
+            </div>
+        </div>
+        <!-- 修改权限弹层 end -->
+        <!-- 密码重置弹层 start -->
+        <div class="pwResetPop pop">
+            <div class="title">密码重置<span class="closeW"></span></div>
+            <div class="left"><img src="images/pwReset.png"></div>
+            <div class="right">
+                <p class="describe">账号<b class="adminName verticalTop">非admin</b>的密码将重置为初始密码<font class="resetpwd">123456</font></p>
+                <p class="describe">确定要重置密码</p>
+
+            </div>
+            <div class="clear"></div>
+            <div class="buttons"><a onclick="hideButton(this)">取消</a><a onclick="surePwResetButton(this)" class="sure">确定</a></div>
+        </div>
+        <!-- 密码重置弹层 end -->
+        <!-- 停用弹层 start -->
+        <div class="stopPop pop">
+            <div class="title">停用<span class="closeW"></span></div>
+            <div class="left"><img src="images/stop.png"></div>
+            <div class="right">
+                <p class="describe">账号<b class="adminName verticalTop">非admin</b>正在使用</p>
+                <p class="describe">你确定需要强制停用该账号吗？</p>
+
+            </div>
+            <div class="clear"></div>
+            <div class="buttons"><a onclick="hideButton(this)">取消</a><a onclick="sureStopButton(this)" class="sure">确定</a></div>
+        </div>
+        <!-- 停用弹层 end -->
+        <!-- 放弃新建管理员弹层 start -->
+        <div class="abandonNAPop pop">
+            
+            <div class="title">管理员权限<span class="closeW"></span></div>
+            <div class="left"><img src="images/stop.png"></div>
+            <div class="right">
+                <p class="describe">该管理员<font></font>尚未赋予管理权限</p>
+                <p class="describe">退出后无法新建管理员</p>
+
+            </div>
+            <div class="clear"></div>
+            <div class="buttons"><a onclick="cancelAbandonButton()">取消</a><a onclick="sureAbandonButton()" class="sure">确定</a></div>
+        </div>
+        <!-- 放弃新建管理员弹层 end -->
+        <!-- 删除管理员弹层 start -->
+        <div class="deleteAdminPop pop">
+            <div class="title">删除管理员<span class="closeW"></span></div>
+            <div class="left"><img src="images/delete.png"></div>
+            <div class="right">
+                <p class="describe"><span class="verticalMiddle"><font>多个管理员账号</font>将会被删除</span></p>
+                <p class="describe">确认删除？删除后不可恢复</p>
+
+            </div>
+            <div class="clear"></div>
+            <div class="buttons"><a onclick="hideButton(this)">取消</a><a onclick="sureDeleteButton(this)" class="sure">确定</a></div>
+        </div>
+        <!-- 删除管理员弹层 end -->
+        <div class="shade"></div>
+        <div class="delayHide">
+            <p class="p1"><img src="images/unusualw.png">请选择终端!</p>
+            <!-- <p class="p2">(<font>3秒后</font>本窗口消失，任务将在后台继续完成下发)</p> -->
+        </div>
+        <div class="delayHideS">
+            <p class="p1"></p>
+        </div>
+        <script src="js/dataTable/jquery-datatable.js"></script>
+
+        <script type="text/javascript" src="js/common.js"></script>
+        <script src="js/lyz.calendar.min.js" type="text/javascript"></script>
+        
+        <script src="js/accountManage.js" type="text/javascript"></script>
+
+    </body>
+</html>

@@ -1,0 +1,278 @@
+
+/**/
+.systemSPop{display: none;width: 845px;height: 572px;position: absolute;top: 50%;left:50%;margin-left: -422.5px;margin-top: -286px;z-index: 999;background: #ffffff;}
+.systemSPop>.title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.systemSPop>.title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.systemSPop>.title .closeW:hover{background-position: -20px}
+
+.systemSPop .mainBlock{height: 472px;border:1px solid rgb(231,234,236);padding:0px 20px;}
+.mainBlock>.left{height:456px;float: left;width: 172px;background-color: rgb(249,249,249);padding-top: 16px;}
+.mainBlock>.left a{cursor: pointer;display: block;padding-left: 54px;line-height: 26px;color: #6c6c6c;font-size: 12px}
+.mainBlock>.left a:hover{background-color: #ffffff;color: #5fc47f}
+.mainBlock>.left .title:hover{background-color: rgb(249,249,249);color: #6c6c6c}
+.mainBlock>.left .title{cursor: default;line-height: 32px;font-size: 12px;position: relative;font-weight: 700}
+.mainBlock>.left .title img{position: absolute;top:10px;left: 24px}
+.mainBlock>.left .current{color: #5fc47f;background-color: #ffffff}
+.mainBlock>.right{float: right;padding:14px 10px;width:620px;color: #6c6c6c;position: relative;height: 428px;padding-right: 0}
+.mainBlock>.right .onOrOff{font-size: 14px;position: relative;line-height: 50px;background-color: rgb(249,249,249);padding: 0 20px;height:50px;}
+.mainBlock>.right .page{height: 450px;overflow-y:scroll }
+.systemSPop .buttons{margin:0 22px;padding-top: 12px;}
+.systemSPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.systemSPop>.buttons a:hover{background: rgb(71,172,117)}
+
+.lcs_wrap{position: absolute;top:8px;right: 20px;#top:14px;}
+.setBlock{border-bottom: 1px solid rgb(231,234,236);padding-bottom: 20px;padding-left: 20px;}
+.lastSetBlock{border-bottom: 0px;}
+.setBlock .pwProtec input{width:190px;height: 22px;line-height: 22px;border: 1px solid rgb(229,230,231);outline: none;padding-left: 10px;font-size: 12px;color: #6c6c6c}
+.setBlock .pwProtec span{padding-left: 36px;}
+.setBlock h3{line-height: 40px;font-size: 12px;color: #6c6c6c;font-weight: normal;}
+.setBlock .content{color:#6c6c6c;font-size: 12px;margin-top: 8px}
+.setBlock .content p{line-height: 30px;}
+.setBlock .content p input{vertical-align: middle;font-size: 12px;outline: none;}
+.setBlock .content p .radioIn{margin-right: 18px}
+.setBlock .content p span{vertical-align: middle;}
+.setBlock .content .netTest{display: inline-block;width: 80px;line-height: 22px;height: 22px;border: 1px solid rgb(229,230,231);text-align: center;vertical-align: middle;}
+.setBlock .content .netTest:hover{border:1px solid rgb(162,164,166);}
+#contactMethod{border: 1px solid rgb(229,230,231);line-height: 22px;padding-left: 10px;height: 22px;width: 390px;vertical-align: middle;color: #6c6c6c;margin-left: 32px;}
+#adminName{border: 1px solid rgb(229,230,231);line-height: 22px;padding-left: 10px;height: 22px;width: 390px;margin-left: 20px;vertical-align: middle;color: #6c6c6c}
+#cMSelect{margin-left: 32px;line-height: 24px;height: 24px;vertical-align: middle;border: 1px solid rgb(229,230,231);width: 118px;color: #6c6c6c}
+#agentaddress,#port,#account,#password,#sysIp,#sysPort{width: 148px;height: 22px;margin: 0 10px;border: 1px solid rgb(229,230,231);line-height: 22px;padding-left: 10px;color: #6c6c6c}
+#upgradeStorage{border:1px solid rgb(229,230,231);line-height: 24px;height: 24px;width: 390px;padding-left: 10px}
+#sysIp{margin-left:0;}
+/*syslog导出日志类型*/
+.sysInline{display: inline-block;margin-left: 20px;}
+.firstInline{margin: 0;}
+.setBlock .addButton{display: inline-block;width: 80px;line-height: 22px;height: 22px;border: 1px solid rgb(229,230,231);text-align: center;vertical-align: middle;}
+.setBlock .addButton:hover{border:1px solid rgb(162,164,166);}
+.setBlock .programPath .placeholder.portTips{left:195px;top:0;color: rgb(152, 152, 152);}
+.setBlock .programPath .placeholder.ipTips{left:10px;top:0;color: rgb(152, 152, 152);}
+.sysLogAddOprete p{display: inline-block;}
+    /*添加ip和端口*/
+.sysLogAddOprete{height: 30px;line-height: 30px;vertical-align: middle;margin-bottom: 6px;font-size: 12px;}
+.syslogTable table{font-size: 12px;border-collapse: collapse;}
+.syslogTable table tr{border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236)}
+.syslogTable table th{text-align: left;background: rgb(240,240,240)}
+.syslogTable table th,.syslogTable table td{line-height: 34px;height: 34px;padding-left: 20px;font-weight: normal;}
+.sysLogAddOprete p.addTips{display: none;}
+.addTips .addTips_bg{display:inline-block;background:url(../images/emhint.png);width: 14px;height: 14px;}
+
+
+
+.setBlock p{font-size: 12px;line-height: 30px;}
+.setBlock .programPath{position: relative;}
+.setBlock .programPath .placeholder{position: absolute;left: 220px;top:2px;*left:226px;*top:0px;}
+.setBlock .programPathTxt{height: 22px;margin-left: 36px;border:1px solid rgb(229,230,231);width: 400px;line-height: 22px;outline: none;padding-left: 10px;color: #6c6c6c;font-size: 12px}
+.setBlock .leftP{float: left;margin-right: 104px}
+.setBlock p span{vertical-align: middle;}
+.setBlock p input{vertical-align: middle;margin-right: 20px;outline: none;}
+.defaultButton{cursor: pointer;position: absolute;bottom:18px;left:38px;color: #6c6c6c;font-size: 14px;}
+.saveButton{cursor: pointer;bottom:18px;border-radius: 3px;color: #ffffff;text-align: center;position: absolute;right: 130px;width:86px;line-height: 20px;display: block;font-size: 12px;background-color: rgb(101,197,129)} 
+.cancellButton{cursor: pointer;bottom:18px;border-radius: 3px;color: #ffffff;text-align: center;position: absolute;right: 40px;width:86px;line-height: 20px;display: block;font-size: 12px;background-color: rgb(101,197,129)} 
+
+/*数据备份*/
+.backupsIns{line-height: 50px;height: 50px;font-size: 12px;padding-left: 20px;padding-right: 20px;}
+input[name="backupsRemark"]{width: 200px;height: 24px;line-height: 24px;padding-left: 10px;font-size: 12px;}
+.backupsOperate{padding-left: 20px;font-size: 12px;line-height: 40px;height: 40px;background: rgb(249,249,249)}
+.backupsOperate a{display: inline-block;width: 80px;line-height: 24px;height: 24px;border: 1px solid rgb(231,234,236);text-align: center;color: #77d895}
+.backupsOperate a:hover{border: 1px solid #77d895}
+.backupsOperate a:active{background:#eff9f2 }
+.backupsOperate .bButtonDis{border:1px solid rgb(231,234,236);width: 80px;height:24px;display: inline-block;text-align: center;line-height: 24px;color: #6c6c6c;background: rgb(198,198,198);}
+.backupsOperate .bButtonDis:hover{border:1px solid rgb(231,234,236)}
+.backupsOperate .bButtonDis:active{background:rgb(198,198,198)}
+.backupsTable table{font-size: 12px;border-collapse: collapse;}
+.backupsTable table tr{border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236)}
+.backupsTable table th{text-align: left;background: rgb(240,240,240)}
+.backupsTable table th,.backupsTable table td{line-height: 34px;height: 34px;padding-left: 20px;font-weight: normal;}
+/*备份设置弹层*/
+.backupsSetPop{background: #ffffff;top:50%;left:50%;display: none;width: 484px;height: 294px;z-index: 9;margin-left: -326px;margin-top: -147px;}
+.backupsSetPop>.title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.backupsSetPop>.title .closeWW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.backupsSetPop>.title .closeWW:hover{background-position: -20px}
+.backupsSetPop .mainBody{padding-top: 16px;}
+.backupsSetPop p{font-size: 12px;line-height: 38px;}
+.backupsSetPop .noticeTxt{color: #f37e00}
+.backupsSetPop label{width: 116px;display: inline-block;text-align: right;}
+.backupsSetPop select{width:94px;height: 22px;}
+#backupsCata{width: 316px;padding-left: 6px;height: 22px;}
+input[name=backupscata]{width: 310px;padding-left: 12px;line-height: 22px;height: 22px;font-size: 12px;}
+.backupsSetPop .buttons{margin:0 22px;padding-top: 2px;}
+.backupsSetPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.backupsSetPop>.buttons a:hover{background: rgb(71,172,117)}
+/*备份弹层*/
+.backupPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
+.backupPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.backupPop .title .closeWW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.backupPop .title .closeWW:hover{background-position: -20px}
+.backupPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.backupPop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 44px;width: 350px\9}
+.backupPop .right .describe{line-height: 30px}
+.backupPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 34px;}
+.backupPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px;border:1px solid #63c380; }
+.backupPop .buttons .sure{background: #ffffff;color: #63c380}
+.backupPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+/*正在恢复弹层*/
+.recoverNPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
+.recoverNPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.recoverNPop .title .closeWW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.recoverNPop .title .closeWW:hover{background-position: -20px}
+.recoverNPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.recoverNPop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 44px;width: 350px\9}
+.recoverNPop .right .describe{line-height: 30px}
+.recoverNPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 34px;}
+.recoverNPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px;border:1px solid #63c380; }
+.recoverNPop .buttons .sure{background: #ffffff;color: #63c380}
+.recoverNPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+
+/*恢复弹层*/
+.recoverPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
+.recoverPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.recoverPop .title .closeWW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.recoverPop .title .closeWW:hover{background-position: -20px}
+.recoverPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.recoverPop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 44px;width: 350px\9}
+.recoverPop .right .describe{line-height: 30px}
+.recoverPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 34px;}
+.recoverPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px;border:1px solid #63c380; }
+.recoverPop .buttons .sure{background: #ffffff;color: #63c380}
+.recoverPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+/*删除备份弹层*/
+.deleteBaPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
+.deleteBaPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.deleteBaPop .title .closeWW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.deleteBaPop .title .closeWW:hover{background-position: -20px}
+.deleteBaPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.deleteBaPop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 60px;width: 350px\9}
+.deleteBaPop .right .describe{line-height: 30px}
+.deleteBaPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 34px;}
+.deleteBaPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px;border:1px solid #63c380; }
+.deleteBaPop .buttons .sure{background: #ffffff;color: #63c380}
+.deleteBaPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+
+/*中心迁移*/
+.moveIns{font-size: 12px;padding-left: 20px;padding-right: 20px;line-height: 30px;}
+.movePara{font-size: 12px;padding:0 20px;border-top: 1px solid rgb(231,234,236);margin-top: 10px;}
+.movePara h4{font-weight: normal;line-height: 36px;}
+.movePara p{line-height: 30px;}
+.movePara .noticeTxt{color: #f37e00;padding-bottom: 4px;}
+input[name="newAddress"]{font-size: 12px;width: 190px;height: 22px;padding-left: 10px;line-height: 22px}
+select[name="newAddress"]{font-size: 12px;width:50px;height: 22px;line-height: 22px}
+input[name="newPort"]{font-size: 12px;width: 190px;height: 22px;padding-left: 10px;line-height: 22px;width: 138\0}
+input[name="newAccount"]{font-size: 12px;width: 130px;height: 22px;padding-left: 10px;line-height: 22px}
+input[name="newPwd"]{font-size: 12px;width: 80px;height: 22px;padding-left: 10px;line-height: 22px}
+select[name="moveGroups"]{font-size: 12px;width:203px;height: 22px;line-height: 22px;}
+.moveButton{border:1px solid rgb(231,234,236);width: 80px;height:22px;display: inline-block;text-align: center;line-height: 22px;color: #77d895}
+.moveButton:hover{border: 1px solid #77d895}
+.moveButton:active{background:#eff9f2 }
+.moveButtonDis{border:1px solid rgb(231,234,236);width: 80px;height:22px;display: inline-block;text-align: center;line-height: 22px;color: #6c6c6c;background: rgb(198,198,198);}
+.moveButtonDis:hover{border:1px solid rgb(231,234,236)}
+.moveButtonDis:active{background:rgb(198,198,198)}
+#importbackups input[type=file]{width:82px;right: 199px;top: 5px;top:7px\0;opacity: 0;filter:alpha(opacity:60);filter:alpha(opacity:0);line-height: 26px;height: 26px;}
+
+.backupsTable .nameWidth{width: 60px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 12px}
+/*终止迁移弹层*/
+.endMovePop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
+.endMovePop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.endMovePop .title .closeWW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.endMovePop .title .closeWW:hover{background-position: -20px}
+.endMovePop .left{float: left;padding-left: 34px;padding-top: 44px}
+.endMovePop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 44px;width: 350px\9}
+.endMovePop .right .describe{line-height: 30px}
+.endMovePop .buttons{padding-right: 20px;margin:0 22px;padding-top: 34px;}
+.endMovePop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px;border:1px solid #63c380; }
+.endMovePop .buttons .sure{background: #ffffff;color: #63c380}
+.endMovePop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+
+
+/*ip分组弹窗*/
+.IPGPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -126px;z-index: 999;background: #ffffff;}
+.IPGPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.IPGPop .title .closeWW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.IPGPop .title .closeWW:hover{background-position: -20px}
+.IPGPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.IPGPop .right{float: right;padding-right: 34px;font-size: 14px;color: #676a6c;padding-top: 30px}
+.IPGPop .right .describe{line-height: 40px}
+.IPGPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 30px;}
+.IPGPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px;border:1px solid #63c380; }
+.IPGPop .buttons .sure{background: #ffffff;color: #63c380}
+.IPGPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+.IPGPop .ipad{width: 100px;border:1px solid rgb(231,234,236);padding-left: 12px;line-height: 30px;height: 30px;font-size: 12px;color: #6c6c6c;}
+.IPGPop .describe select{width: 100px;line-height: 22px;height: 22px;}
+.IPGPop .describe span{display: inline-block;width: 70px;text-align: right;padding-right: 14px}
+/*修改ip分组弹窗*/
+.IPGEPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -126px;z-index: 999;background: #ffffff;}
+.IPGEPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.IPGEPop .title .closeWW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.IPGEPop .title .closeWW:hover{background-position: -20px}
+.IPGEPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.IPGEPop .right{float: right;padding-right: 34px;font-size: 14px;color: #676a6c;padding-top: 30px}
+.IPGEPop .right .describe{line-height: 40px}
+.IPGEPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 30px;}
+.IPGEPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px;border:1px solid #63c380; }
+.IPGEPop .buttons .sure{background: #ffffff;color: #63c380}
+.IPGEPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+.IPGEPop .ipad{width: 100px;border:1px solid rgb(231,234,236);padding-left: 12px;line-height: 30px;height: 30px;font-size: 12px;color: #6c6c6c;}
+.IPGEPop .describe select{width: 100px;line-height: 22px;height: 22px;}
+.IPGEPop .describe span{display: inline-block;width: 70px;text-align: right;padding-right: 14px}
+/*终端分组弹窗*/
+.terminalGPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -126px;z-index: 999;background: #ffffff;}
+.terminalGPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.terminalGPop .title .closeWW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.terminalGPop .title .closeWW:hover{background-position: -20px}
+.terminalGPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.terminalGPop .right{float: right;padding-right: 34px;font-size: 14px;color: #676a6c;padding-top: 30px}
+.terminalGPop .right .describe{line-height: 40px}
+.terminalGPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 30px;}
+.terminalGPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px;border:1px solid #63c380; }
+.terminalGPop .buttons .sure{background: #ffffff;color: #63c380}
+.terminalGPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+.terminalGPop .describe select{width: 100px;line-height: 22px;height: 22px;}
+.terminalGPop .describe span{display: inline-block;width: 70px;text-align: right;padding-right: 14px;}
+.terminalGPop .terminalName{width: 134px;border:1px solid rgb(231,234,236);padding-left: 12px;line-height: 30px;height: 30px;font-size: 12px;color: #6c6c6c;}
+/*修改终端分组弹窗*/
+.terminalGEPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -126px;z-index: 999;background: #ffffff;}
+.terminalGEPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.terminalGEPop .title .closeWW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.terminalGEPop .title .closeWW:hover{background-position: -20px}
+.terminalGEPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.terminalGEPop .right{float: right;padding-right: 34px;font-size: 14px;color: #676a6c;padding-top: 30px}
+.terminalGEPop .right .describe{line-height: 40px}
+.terminalGEPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 30px;}
+.terminalGEPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px;border:1px solid #63c380; }
+.terminalGEPop .buttons .sure{background: #ffffff;color: #63c380}
+.terminalGEPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+.terminalGEPop .describe select{width: 100px;line-height: 22px;height: 22px;}
+.terminalGEPop .describe span{display: inline-block;width: 70px;text-align: right;padding-right: 14px;}
+.terminalGEPop .terminalName{width: 134px;border:1px solid rgb(231,234,236);padding-left: 12px;line-height: 30px;height: 30px;font-size: 12px;color: #6c6c6c;}
+/*删除规则弹窗*/
+.deleteRPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -126px;z-index: 999;background: #ffffff;}
+.deleteRPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.deleteRPop .title .closeWW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.deleteRPop .title .closeWW:hover{background-position: -20px}
+.deleteRPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.deleteRPop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 44px}
+.deleteRPop .right .describe{line-height: 30px}
+.deleteRPop .right .describe font{display: inline-block;max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;vertical-align: middle;}
+.deleteRPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 34px;}
+
+.deleteRPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px;border: 1px solid #63c380 }
+.deleteRPop .buttons .sure{background: #ffffff;color: #63c380}
+/**/
+.webRule{border: 1px solid rgb(231,234,236);height: 534px}
+.webRule ul li{line-height: 56px;font-size: 12px;padding-left: 16px;position: relative;border-bottom: 1px solid rgb(231,234,236);height: 56px}
+.webRule ul .title{background:rgb(240,240,240) }
+
+/*对外攻击检测*/
+/*.mainBlock .right .title{line-height: 40px;color: #6c6c6c;padding-left: 18px;margin:10px 0;}
+
+.mainBlock .actionSelect ul li{padding-left: 18px;font-size: 12px;color: #6c6c6c;line-height: 28px}
+.actionSelect ul li input{vertical-align: middle;margin-right: 20px}*/
+
+/*浏览器保护*/
+.actionSelect ul li .path{width: 390px;height: 26px;line-height: 26px;margin-left: 14px;border:1px solid rgb(229,230,231);padding-left: 10px;font-size: 12px;}
+/*自定义防护*/
+.tacticsTab{color: #676a6c;font-size: 12px;z-index: 9;position: absolute;left: -1px;top:-40px;}
+.tacticsTab a{border-radius: 3px;cursor: pointer;line-height: 38px;width: 100px;text-align: center;height: 38px;display: inline-block;border-bottom: 1px solid rgb(231,234,236)}
+.tacticsTab .current{border: 1px solid rgb(231,234,236);border-bottom: 1px solid #ffffff;}
+.selfPBlock{height: 526px;position: relative;margin-top: 10px;border: 1px solid rgb(231,234,236);margin-top: 48px}
+
+

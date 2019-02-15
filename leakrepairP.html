@@ -1,0 +1,81 @@
+﻿<!doctype html>
+<html>
+    <head>
+        <title>火绒终端安全控制中心</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" />
+		<link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.css" />
+        <link href="css/common.css" rel="stylesheet">
+        <link href="css/eventLog.css" rel="stylesheet">
+        <link href="css/lyz.calendar.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+		<script src="js/dataTable/jquery-datatable.js"></script>
+
+        <script type="text/javascript" src="js/json3.js"></script>
+        <script src="js/jquery.page.js"></script>  
+  
+    </head>
+    <body>
+        <div class="main">
+                <div class="tabSel">
+                        <a href="leakrepair.html">按终端<a href="leakrepairP.html" class="current">按补丁</a>
+                </div>
+                <div class="functionButtonsBlock">
+                    <p class="relative">
+                        <a class="bu cursor downloadB" target="_blank" onclick="ignoreFun()">忽略</a>
+                        <a class="greenfont underline cursor absolute ignored" onclick="ignoredTPop()">已忽略补丁</a>
+                    </p>    
+                </div>
+                <div class="search">
+                    <div class="searchBlock floatL">
+                        <span class='condition'></span>
+                        <!--<select id='selectVT' class="hidden">
+                            <option>全部类型</option>
+                        </select>-->
+                        <select id='selectVD'>
+                        	<option value="">全部类型</option >                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                            <option value='0'>高危补丁</option>
+                            <option value='1'>功能更新</option>
+                        </select>
+                        
+                        <span class='textbox'>
+                            <input type='text' class='placeholderInput' onfocus='fadeOut(this)' onblur='fadeIn(this)' id='searchKey'><span class='placeholder' onclick='spanFocus(this)'>请输入需要搜索的补丁名称(编号)</span><img src='images/search.png' onclick='searchList()'>
+                        </span>
+                            
+                    </div>
+                    <div class='clear'></div>
+                </div>
+                <div class="tableContainer">
+                    <div class="table">
+                    </div>
+                </div>
+
+                
+        </div>
+        
+      
+        <!-- 已忽略补丁弹层 -->
+        <div class="ignoredTPop pop">
+            <div class="title"><span class="taskInf">已忽略补丁</span><span class="closeW"></span></div>
+            <div class="describe">以下补丁已被忽略，火绒将不再为您修复这些补丁<a class='charaButton floatR greenfont underline cursor' onclick="ignorePopFun()">取消忽略</a></div>
+            <div class="ignoredTTable">
+
+            </div>
+            
+        </div>
+        <div class="delayHide">
+        	<p class="p1"><img src="images/unusualw.png">请选择终端!</p>
+        </div>
+        <div class="delayHideS">
+        	<p class="p1"><img src="images/unusualw.png">请选择终端!</p>
+        </div>
+        <div class="delayHideL">
+        	<p class="p1"><img src="images/unusualw.png">请选择终端!</p>
+        </div>
+        <div class="shade"></div>
+        <script type="text/javascript" src="js/common.js"></script>
+        <script src="js/lyz.calendar.min.js" type="text/javascript"></script>
+        
+        <script src="js/leakrepairP.js" type="text/javascript"></script>
+
+    </body>
+</html>

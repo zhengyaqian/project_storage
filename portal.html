@@ -1,0 +1,276 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>火绒终端安全控制中心</title>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" />
+<script type="text/javascript" src="js/json3.js"></script>
+<script type="text/javascript" src="js/sha1.js"></script>
+
+<link rel="stylesheet" href="css/portal.css" type="text/css" />
+<link rel="stylesheet" media="screen and (max-width:1440px) and (max-height:768px)" href="css/portalS.css" type="text/css" />
+
+<!--[if lt IE 9]>
+<script type="text/javascript" src="js/respond.min.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="top">
+	<div class="container">
+	<div class="logo">
+		<img src="images/logo.png"><span> 火绒终端安全管理系统</span>
+	</div>
+	<div class="clear"></div>
+
+    </div>
+</div>
+<img src="images/lineUp.png" class="lineUp">
+<img src="images/lineDown.png" class="lineDown">
+<div class="downloadBlock">
+    
+    <div class="floatL">
+        <img src="images/login1.png">
+    </div>
+    <div class="floatL">
+        <p class="bigtitle">火绒为终端安全护航</p>
+        <p class="smalltitle">全网部署火绒通知</p>
+        <p class="appe">各位同事:</p>
+        <p class="mainbody textIndent">
+            为了更好的保障内网安全，决定从即日起全面安装部署火绒终端安全管理系统。您可以通过下面的按钮进行下载并安装，安装后无需任何设置可以立即使用
+        </p>
+        <a class="downloadButton cursor" href="/deploy/installer.exe">下载客户端</a>
+    </div>
+    <div class="clear">
+    </div>
+    <p id="lowie"><img src="images/df.png" class="verticalTop">&nbsp;&nbsp;&nbsp;<span class="verticalMiddle">您正在使用的浏览器版本过低，将不能正常浏览和使用管理中心</span></p>
+</div>
+<div class="loginBlock">
+    <div class="bgContainer">
+		<p class="describeW floatL relative paddingLR30">
+            <span class="login2bg verticalTop"></span><input type="text" name="username" value="" class="verticalTop">
+            <!-- <span class="anwserIcon absolute">
+                <span class="absolute">默认账号为admin</span>
+            </span> -->
+        </p>
+
+		<p class="relative describeW floatL">
+            <span class="login3bg verticalTop"></span><input type="password" name="password" class="placeholderInput verticalTop" autocomplete="off">
+            <!-- <span class="anwserIcon absolute anwserIcon1">
+                <span class="absolute">默认密码为admin</span>
+            </span> -->
+            <span class="placeholder"><!-- 默认密码为admin --></span>
+            <span class="absolute errorTips">
+                <img src="images/unusualw.png" class="verticalMiddle"><font class="verticalMiddle">   账户名或密码错误</font>
+            </span>
+        </p>
+        <a class="loginButton floatL marginLR30">登录</a>
+        <div class="clear"></div>
+    </div>
+	<p class="describeW describeWW floatR">
+        <span class="floatL" onclick="forgetPWPop()">忘记密码？</span>
+        <span class="floatR">下次自动登录</span>
+        <input type="checkbox" name="remeber" class="floatR">
+        <div class="clear"></div>
+    </p>
+
+</div>
+<div class="bottom">
+	<div class="container">
+		 <a href="http://www.huorong.cn/" target="_blank">Copyright 2017-2018 北京火绒网络科技有限公司</a>
+    </div>
+</div>
+<div class="delayHide">
+	<p class="p1"><img src="images/unusualw.png">请选择终端!</p>
+	<!-- <p class="p2">(<font>3秒后</font>本窗口消失，任务将在后台继续完成下发)</p> -->
+</div>
+<!-- 忘记密码 -->
+<div class="forgetPWPop pop">
+	<div class="title">找回密码<span class="closeW"></span></div>
+	<div class="left"><img src="images/fpw.png"></div>
+	<div class="right">
+        <p class="stitle">忘记admin账号密码</p>
+		<p class="describe">请运行配置工具（开始菜单-所有程序-火绒企</p>
+		<p class="describe">业安全软件-火绒企业安全软件配置工具），不</p>
+		<p class="describe">改变IP和端口，重新设置密码即可。</p>
+
+        <p class="stitle">忘记其他非admin账号密码</p>
+        <p class="describe">请联系火绒企业管理中心admin账号管理员,请</p>
+        <p class="describe">管理员在【账号管理】中为您重新设置密码。</p>
+	</div>
+	<div class="clear"></div>
+	<div class="buttons"><a onclick="sureFPWButton(this)">确定</a><div class="clear"></div></div>
+</div>
+<!-- 账户锁定提示 -->
+<div class="aLockHintPop pop">
+    <div class="title">账号锁定<span class="closeW"></span></div>
+    <div class="left"><img src="images/alw.png" width="78"></div>
+    <div class="right">
+        <p class="stitle">该账号已被锁定</p>
+        <p class="describe">由于密码错误次数过多,请于15分钟后重试</p>
+    </div>
+    <div class="clear"></div>
+    <div class="buttons"><a onclick="sureFPWButton(this)">好的</a><div class="clear"></div></div>
+</div>
+<div class="modifyPwPop pop">
+    <div class="title">修改密码<span class="closeW"></span></div>
+    <div class="mainBlock">
+        <p><span>管理员账号:</span><font class="adminName">普通管理员</font></p>
+        <p><span>原始密码:</span><input type="password" name="originalP"></p>
+        <p><span>新密码:</span><input type="password" name="newP"></p>
+        <p><span>确认密码:</span><input type="password" name="sureP"></p>
+    </div>
+
+    
+    <div class="buttons">
+        <a class="hideButton">取消</a>
+        <a onclick="sureMPButton(this)">确定</a>
+        
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="shade"></div>
+<script>
+    
+    //判断浏览器是否为ie6或7
+    var browser=navigator.appName; 
+    if(browser=="Microsoft Internet Explorer"){
+        var b_version=navigator.appVersion; 
+        var version=b_version.split(";"); 
+        var trim_Version=version[1].replace(/[ ]/g,"");
+        if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE7.0") { 
+            $(".loginBlock").remove();
+            $("#lowie").show();
+        }else if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE6.0"){
+            $(".loginBlock").remove();
+            $("#lowie").show();
+            $(".lineDown").hide();
+            $(".lineUp").hide();
+            $(".top .logo").html("<img src='images/logoie6.png'><span> 火绒终端安全管理系统</span>");
+            $(".downloadBlock .floatL").eq(0).html("<img src='images/login1ie6.png'>");
+            $("#lowie").html("<img src='images/dfie6.png' class='verticalTop'>&nbsp;&nbsp;&nbsp;<span class='verticalMiddle'>您正在使用的浏览器版本过低，将不能正常浏览和使用控制中心</span>")
+
+        }else if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE5.0"){
+            $(".loginBlock").hide();
+            $("#lowie").show();
+        }
+    }
+    //聚焦密码输入
+    $("input[name=username]").focus();
+    $("input[name=username]").next().hide();
+    function doLogin() {
+			var username=$("input[name=username]").val();
+			var password=$('input[name=password]').val();
+			var remeber=$("input[name=remeber]").is(":checked");
+			if(username == '' && password == ''){
+				$(".errorTips").show();
+				$('.errorTips font').html(' 账户名和密码不能为空');
+				return false;
+			}else if(username == ''){
+				$(".errorTips").show();
+				$('.errorTips font').html(' 账户名不能为空');
+				return false;
+			}else if(password == ''){
+				$(".errorTips").show();
+				$('.errorTips font').html(' 密码不能为空');
+				return false;
+			}
+			$.ajax({
+				url:'/auth/_login',
+				data:JSON.stringify({"username":username,"password":hex_sha1(password),remember:remeber}),
+				type:'POST',
+				success:function(data){
+                    // data.errno=-2;
+					if(data.errno==0){
+						window.location.href="/";
+					}else if(data.errno==-1){
+						if(data.errmsg == 'Account Is Disabled.'){
+							$(".errorTips").show();
+							$('.errorTips font').html(' 此管理员账户已被停用');
+						}else{
+							$(".errorTips").show();
+							$('.errorTips font').html(' 账户名或密码错误');
+						}
+						
+					}else if(data.errno==-2){
+                        $(".aLockHintPop").show();
+                        $(".shade").show();
+                    }
+				}
+			});
+    }
+    //按回车登陆
+    document.onkeydown = function (e) {
+        if (!e) e = window.event;
+        if ((e.keyCode || e.which) == 13) {
+        	doLogin();
+        }
+    }
+    //
+    $(".loginButton").click(function(){
+    	doLogin();
+    })
+
+    function forgetPWPop(){
+    	$(".forgetPWPop").show();
+    	$(".shade").show();
+    }
+
+    $(".closeW,.hideButton").click(function(){
+    	$(this).parents(".pop").hide();
+    	$(".shade").hide();
+    })
+    function sureFPWButton(a){
+    	$(a).parents(".pop").hide();
+    	$(".shade").hide();
+    }
+    // 密码框获得焦点改变其属性
+    $("input[name=password]").focus(function(){
+        $(this).attr("type","password");
+        $(this).next().hide();
+    })
+    // 用户名和密码输入框聚焦时隐藏后面问号图标
+    $("input[name=username]").focus(function(){
+        $(this).next().hide();
+    })
+    $("input[name=username]").blur(function(){
+        $(this).next().show();
+    })
+    $("input[name=password]").blur(function(){
+        $(this).next().show();
+    })
+    //placeholder属性兼容
+    $(".placeholderInput").focus(function(){
+        $(this).siblings(".placeholder").hide();
+
+    });
+    $(".placeholder").click(function(){
+        $(this).hide();
+        $(this).siblings(".placeholderInput").focus();
+    });
+    $(".placeholderInput").blur(function(){
+        var value=$(this).val();
+        if(value==""){
+        $(this).siblings(".placeholder").show();
+    }
+    });
+    
+    //
+    $(".anwserIcon").mouseenter(function(){
+    	$(this).find("span").show();
+    })
+    $(".anwserIcon").mouseleave(function(){
+    	$(this).find("span").hide();
+    })
+
+    //文本框获得焦点时边框颜色
+
+    $("body").on("focus","input[type=text],input[type=password]",function(){
+        $(this).css({border:"1px solid #b3b3b3",transition:0.5});
+    })
+    $("body").on("blur","input[type=text],input[type=password]",function(){
+        $(this).css({border:"1px solid #e5e6e7",transition:0.5})
+    })
+</script>
+</body>
+</html>
