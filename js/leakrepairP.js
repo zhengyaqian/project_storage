@@ -292,11 +292,7 @@ $(document).on('click','.selectAll-repair',function(){
 //忽略补丁操作
 function ignoreFun() {
 	if($(".table td .select-repair:checked").length == 0) {
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择补丁!");
-		setTimeout(function() {
-			$(".delayHide").hide()
-		}, 2000);
+		delayHide("请选择补丁!");
 	} else {
 
 		var dataa = {
@@ -318,11 +314,8 @@ function ignoreFun() {
 			},
 			success: function(data) {
 				if(data.errno == 0) {
-					$(".delayHideS").show();
-					$(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-					setTimeout(function() {
-						$(".delayHideS").hide()
-					}, 2000);
+					delayHideS("操作成功");
+					
 					leakrepairPatch();
 				}
 			}
@@ -545,11 +538,7 @@ $(document).on('click', '.selectAll-repair-pop', function() {
 //已忽略补丁弹窗--取消忽略
 function ignorePopFun() {
 	if($(".pop td .select-repair-pop:checked").length == 0) {
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择补丁!");
-		setTimeout(function() {
-			$(".delayHide").hide()
-		}, 2000);
+		delayHide("请选择补丁!");
 	} else {
 		var dataa = {
 			"id": repairIdarrPop,
@@ -570,11 +559,7 @@ function ignorePopFun() {
 			},
 			success: function(data) {
 				if(data.errno == 0) {
-					$(".delayHideS").show();
-					$(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-					setTimeout(function() {
-						$(".delayHideS").hide()
-					}, 2000);
+					delayHideS("操作成功");
 					ignoredTPop();
 					leakrepairPatch();
 				}

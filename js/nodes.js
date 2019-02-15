@@ -206,11 +206,7 @@ function nodesListFun(start) {
 					})
 						
 				}else{	
-					$(".delayHideS").show();
-					$(".delayHideS .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>获取失败</span>");
-					setTimeout(function() {
-						$(".delayHideS").hide()
-					}, 2000);
+					delayHide("获取失败");
 				}
 			}
 		})
@@ -399,23 +395,13 @@ function licTypeUpdate(type,id,alloc,aliasname){
 			error: function(xhr, textStatus, errorThrown) {
 				if(xhr.status == 401) {
 					parent.window.location.href = '/';
-				} else {
-
 				}
 			},
 			success: function(data) {
 				if(data.errno == 0){
-					$(".delayHideS").show();
-					$(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-					setTimeout(function() {
-						$(".delayHideS").hide()
-					}, 2000);
+					delayHideS("操作成功");
 				}else{
-					$(".delayHide").show();
-					$(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>操作失败</span>");
-					setTimeout(function() {
-						$(".delayHide").hide()
-					}, 2000);
+					delayHide("操作失败");
 				}
 			}
 		})
@@ -482,11 +468,7 @@ $(document).on('click','.topCenter',function(){
 					}
 					
 				}else{
-					$(".delayHide").show();
-					$(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>操作失败</span>");
-					setTimeout(function() {
-						$(".delayHide").hide()
-					}, 2000);
+					delayHide("操作失败");
 				}
 
 			}
@@ -520,30 +502,15 @@ function saveNodes(){
 	var leakrepair = $(".nodesPop input[name=leakrepair]").prop("checked");
 	
 	if(!addr && enabled == true){
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>请输入上级控制中心地址</span>");
-		setTimeout(function() {
-			$(".delayHide").hide()
-		}, 2000);
-		
+		delayHide("请输入上级控制中心地址");		
 		return false;
 	}
 	if(addr.substring(0,4) != 'http' && addr.substring(0,5) != 'https' && enabled == true){
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>中心地址格式输入不正确</span>");
-		setTimeout(function() {
-			$(".delayHide").hide()
-		}, 2000);
-		
+		delayHide("中心地址格式输入不正确");
 		return false;
 	}
 	if(!token && enabled == true){
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>请输入上级控制中心秘钥</span>");
-		setTimeout(function() {
-			$(".delayHide").hide()
-		}, 2000);
-		
+		delayHide("请输入上级控制中心秘钥");
 		return false;
 	}
 
@@ -573,19 +540,12 @@ function saveNodes(){
 			},
 			success: function(data) {
 				if(data.errno == 0){
-					$(".delayHideS").show();
-					$(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-					setTimeout(function() {
-						$(".delayHideS").hide()
-					}, 2000);
+					delayHideS("操作成功");
+					
 					$('.nodesPop').hide();
 					$('.shade').hide();
 				}else{
-					$(".delayHide").show();
-					$(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>操作失败</span>");
-					setTimeout(function() {
-						$(".delayHide").hide()
-					}, 2000);
+					delayHide("操作失败");
 				}
 
 			}

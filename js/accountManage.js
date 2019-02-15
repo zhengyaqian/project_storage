@@ -17,9 +17,6 @@ $("#selectVT").change(function(){
 $(".closeW").click(function(){
     
     if($(this).parent().parent().attr("class")=="powerManagePop pop"){
-        // $(".delayHide").show();
-        // $(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>无法新建管理员</span>");
-        // setTimeout(function(){$(".delayHide").hide()},2000);
         $(".abandonNAPop").show();
         $(".powerManagePop .windowShade").show();
         $(".abandonNAPop .describe font").html(" <b style='max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: top;font-size: 14px'>"+$(".newAdminPop input[name='account']").val()+"</b> ");
@@ -48,10 +45,7 @@ function cancelAbandonButton(){
 function hideButton(a){
     $(a).parent().parent().hide();
     
-    if($(a).parent().parent().attr("class")=="powerManagePop pop"){
-        // $(".delayHide").show();
-        // $(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>无法新建管理员</span>");
-        // setTimeout(function(){$(".delayHide").hide()},2000);
+    if($(a).parent().parent().attr("class")=="powerManagePop pop"){       
         $(".newAdminPop").show();
     }else{
         $(".shade").hide();
@@ -426,9 +420,7 @@ function newAdminPop(){
 }
 function sureNAButton(){
     if(trim($(".newAdminPop input[name=account]").val())==""){
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>账号不能为空</span>");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+        delayHide('账号不能为空');
     }else{
         if($(".newAdminPop select").val()==1){
             var name=$(".newAdminPop input[name=account]").val();
@@ -461,9 +453,7 @@ function sureNAButton(){
                         $(".newAdminPop .closeW").click();
                         accEvent();  
                     }else if(data.errno==-1&&data.errmsg.indexOf("1062")>0){
-                        $(".delayHide").show();
-                        $(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'> 账号已存在</span>");
-                        setTimeout(function(){$(".delayHide").hide()},2000);
+                        delayHide('账号已存在');
                     }
                     
                 }
@@ -554,13 +544,9 @@ function sureAPButton(){
                 $(".shade").hide();
                 parent.$(".topshade").hide();
                 accEvent();
-                $(".delayHideS").show();
-                $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-                setTimeout(function(){$(".delayHideS").hide()},2000);
+                delayHideS('操作成功');
             }else if(data.errno==-1&data.errmsg.indexOf("1062")>0){
-                $(".delayHide").show();
-                $(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'> 账号已存在</span>");
-                setTimeout(function(){$(".delayHide").hide()},2000);
+                delayHide('账号已存在');
             }
             
         }
@@ -604,9 +590,7 @@ function editInfPop(a){
 function sureMIButton(){
 
     if($(".modifyInfPop input[name=account]").val()==""){
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>账号不能为空</span>");
-        setTimeout(function(){$(".delayHide").hide()},2000); 
+        delayHide('账号不能为空');
     }else{
         var name=$(".modifyInfPop input[name=account]").val();
         var phone=$(".modifyInfPop input[name=contact]").val();
@@ -635,9 +619,7 @@ function sureMIButton(){
                     $(".modifyInfPop .closeW").click();
                     accEvent(); 
                 }else{
-                    $(".delayHide").show();
-                    $(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>账号已存在</span>");
-                    setTimeout(function(){$(".delayHide").hide()},2000);
+                    delayHide('账号已存在');
                 }
                 
             }
@@ -676,13 +658,9 @@ function surePwResetButton(){
             if(data.errno==0){
                 $(".pwResetPop .closeW").click();
                 accEvent();
-                $(".delayHideS").show();
-                $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-                setTimeout(function(){$(".delayHideS").hide()},2000);
+                delayHideS('操作成功');
             }else{
-                $(".delayHide").show();
-                $(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'> 失败</span>");
-                setTimeout(function(){$(".delayHide").hide()},2000);
+                delayHide('失败');
             }
             
         }
@@ -743,9 +721,7 @@ function startPop(a){
 // 删除管理员弹层
 function deleteAdminPop(){
     if(selectaccountarr.length==0){
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'> 请选择管理员</span>");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+        delayHide('请选择管理员');
     }else{
 
         if(selectaccountarr.length==1){
@@ -775,9 +751,7 @@ function sureDeleteButton(a){
 	        },
             success:function(data){
                 if(data.errno==0){
-                    $(".delayHideS").show();
-                    $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-                    setTimeout(function(){$(".delayHideS").hide()},2000);
+                    delayHideS('操作成功');
                     $(".tableContainer .table input[type=checkbox]").prop("checked",false);
                     $(".deleteAdminPop .closeW").click();
                     if(index==selectaccountarr.length-1){

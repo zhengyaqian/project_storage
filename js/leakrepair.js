@@ -148,19 +148,12 @@ function saveFastSKC(a) {
 		success: function(data) {
 			if(data.errno == '0') {
 				// 更新成功提示
-				$(".delayHideS").show();
-				$(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-				setTimeout(function() {
-					$(".delayHideS").hide()
-				}, 2000);
+				delayHideS("操作成功");
+			
 				hideButton(a);
 				leakrepairClient();
 			} else {
-				$(".delayHideS").show();
-				$(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'>操作失败</span>");
-				setTimeout(function() {
-					$(".delayHideS").hide()
-				}, 2000);
+				delayHideS("操作失败");
 			}
 		}
 	});
@@ -502,11 +495,7 @@ function ignoredTPop() {
 //已忽略终端弹层--取消忽略
 function cancelIgnorePopFun() {
 	if($(".pop  td .select-repair-pop:checked").length == 0) {
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择终端!");
-		setTimeout(function() {
-			$(".delayHide").hide()
-		}, 2000);
+		delayHide("请选择终端!");
 	} else {
 		var dataa = {
 			"clients": repairIdarrPop,
@@ -527,11 +516,8 @@ function cancelIgnorePopFun() {
 			},
 			success: function(data) {
 				if(data.errno == 0) {
-					$(".delayHideS").show();
-					$(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-					setTimeout(function() {
-						$(".delayHideS").hide()
-					}, 2000);
+					delayHideS("操作成功");
+				
 					ignoredTPop();
 					leakrepairClient();
 				}
@@ -841,11 +827,8 @@ function taskDetailPop(index) {
 //漏洞、已忽略弹层--忽略客户端补丁
 function ignorePopFun(b, a) {
 	if($(".pop td .select-repair-pop:checked").length == 0) {
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择终端!");
-		setTimeout(function() {
-			$(".delayHide").hide()
-		}, 2000);
+		delayHide("请选择终端!");
+		
 	} else {
 		if($(b).text() == '忽略') {
 			var dataa = {
@@ -877,11 +860,7 @@ function ignorePopFun(b, a) {
 			},
 			success: function(data) {
 				if(data.errno == 0) {
-					$(".delayHideS").show();
-					$(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-					setTimeout(function() {
-						$(".delayHideS").hide()
-					}, 2000);
+					delayHideS("操作成功");
 					var index = $(b).attr('index');
 					var indexP = $(b).attr('indexP');
 					$('.tableContainer .table tbody tr').eq(indexP).find('td').eq(index).find('.taskDetailBtn').click();
@@ -1164,11 +1143,7 @@ function columnsRepairLoopFun (){
 //修复漏洞弹窗
 $(document).on('click', '.repairLoop', function() {
 	if($(".table td .select-repair:checked").length == 0) {
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择终端!");
-		setTimeout(function() {
-			$(".delayHide").hide()
-		}, 2000);
+		delayHide("请选择终端!");
 	} else {
 		shade();
 		$(".repairLoopPop").show();
@@ -1257,10 +1232,7 @@ function repairAllbugFun(a) {
 		},
 		success: function(data) {
 			if(data.errno == 0) {
-				$(".delayHideS").show();
-        	    $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-        	    setTimeout(function(){$(".delayHideS").hide()},2000);
-				
+        	   delayHideS("操作成功");
 				taskid = data.data.task_id;
 				dataa = {
 					"taskid": taskid,
@@ -1390,11 +1362,8 @@ function repairLoopPop() {
 //忽略终端
 function ignoreFun() {
 	if($(".table td .select-repair:checked").length == 0) {
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择终端!");
-		setTimeout(function() {
-			$(".delayHide").hide()
-		}, 2000);
+	delayHide("请选择终端!");
+		
 	} else {
 		var dataa = {
 			"clients": repairIdarr,
@@ -1416,11 +1385,8 @@ function ignoreFun() {
 			},
 			success: function(data) {
 				if(data.errno == 0) {
-					$(".delayHideS").show();
-					$(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-					setTimeout(function() {
-						$(".delayHideS").hide()
-					}, 2000);
+					delayHideS("操作成功");
+					
 					leakrepairClient();
 				}
 			}

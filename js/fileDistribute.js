@@ -67,14 +67,8 @@ $(".uploadPop input[type='file']").change(function(){
 $(".downloadB").click(function(){
     if($(".fileDistributeTContainer input[name=filename]:checked").length==0){
         $(this).removeAttr("href");
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择文件");
-        setTimeout(function(){$(".delayHide").hide()},2000);
-    }else{
-        // var filename=$(".fileDistributeTContainer input[name=filename]:checked").next().html();
-        // window.open('/distr/'+filename);
+        delayHide('请选择文件');
     }
-    
 })
 // 确认删除文件
 function sureDeleteButton(a){
@@ -96,9 +90,7 @@ function sureDeleteButton(a){
             $(".deleteFPop .buttons a").eq(0).click();
             softlist();
             // 添加成功提示
-            $(".delayHideS").show();
-            $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-            setTimeout(function(){$(".delayHideS").hide()},2000);
+            delayHideS("操作成功");
         }
     }); 
 }
@@ -479,12 +471,8 @@ $(document).on('click','.uploadB',function(){
 	uploader.on( 'fileQueued', function( file ) {
 		
 		if(file.name.length > 30){
-			$(".delayHide").show();
+            delayHide("文件名称不能超过30个字符！");
             $(".delayHide").css('width','auto');
-            $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 文件名称不能超过30个字符！");
-            setTimeout(function(){$(".delayHide").hide()},2000);
-            
-            return false;
 		}
 	    $list.append( '<div id="' + file.id + '" class="item">' +
 	        '<a class="info">' + file.name + '</a>' +
@@ -500,14 +488,11 @@ $(document).on('click','.uploadB',function(){
      */
 	uploader.on("error", function (type) {
         if (type == "Q_TYPE_DENIED") {
-            $(".delayHide").show();
-            $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 文件不能为空！");
-            setTimeout(function(){$(".delayHide").hide()},2000);
+           delayHide("文件不能为空！");
         }else if (type == "F_EXCEED_SIZE") {
-            $(".delayHide").show();
+            delayHide("文件大小不能超过2G！");
             $(".delayHide").css('width','auto');
-            $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 文件大小不能超过2G！");
-            setTimeout(function(){$(".delayHide").hide()},2000);
+
         }
     });
     
@@ -517,13 +502,9 @@ $(document).on('click','.uploadB',function(){
 
 $("#ctlBtn").on('click', function() { 
 		if(uploader.getFiles().length == 0){
-			$(".delayHide").show();
-            $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'>没有选择文件！");
-            setTimeout(function(){$(".delayHide").hide()},2000);
+           delayHide("没有选择文件！");
 		}else if(trim($(".uploadPop form input[name=name]").val())==""){
-            $(".delayHide").show();
-            $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'>名称不能为空！");
-            setTimeout(function(){$(".delayHide").hide()},2000);
+           delayHide("名称不能为空！");
             
 		}else{
 			uploader.options.formData={"remark":$('.uploadPop .remark').val(),"name1" : $('.uploadPop input[name=name]').val()}; 
@@ -549,24 +530,18 @@ $("#ctlBtn").on('click', function() {
                     $percent.html(percentVal);
                     
 	            // 添加成功提示
-	             $(".delayHideS").show();
-	             $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 添加成功</span>");
-	             setTimeout(function(){$(".delayHideS").hide()},2000);
-	             softlist();
-	             $(".uploadPop .buttons a").eq(0).click();
+	            delayHideS("添加成功");
+	            softlist();
+	            $(".uploadPop .buttons a").eq(0).click();
 	             
 	         });							
 	         
 	         uploader.on( 'uploadError', function( file,reason ) {
-	         	
 	         	if(reason == 'http'){
 	         		parent.window.location.href='/';
 	         	}else{
-	         		$(".delayHideS").show();
-	             	$(".delayHideS .p1").html("<img src='images/unusualw.png' class='verticalMiddle'><span class='verticalMiddle'> 操作失败</span>");
-	             	setTimeout(function(){$(".delayHideS").hide()},2000);
+	             	delayHide("操作失败");
 	         	}
-	             
 	         });
 	        uploader.on("uploadFinished",function() {
 				$('.uploading').fadeOut();
@@ -728,9 +703,7 @@ $(".providePop .terminallist .th").on("change","input[type=checkbox]",function()
 $(".provideB").click(function(){
     if($(".fileDistributeTContainer input[name=filename]:checked").length==0){
         $(this).removeAttr("href");
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择文件");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+        delayHide("请选择文件");
     }else{
         $(".providePop input[type=checkbox]").prop("checked",true);
         $(".provideNPop .textarea textarea").val("管理员正在进行分发任务，请配合管理员完成相关文件的阅读或者文件的下载安装操作。");
@@ -841,9 +814,7 @@ function terminallist(){
 // 分发文件下一步按钮
 function provideNButton(a){
     if(terminalidarr==""){
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择终端");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+        delayHide("请选择终端");
     }else{
         $(a).parents(".pop").hide();
         $(".provideNPop").show();
@@ -907,18 +878,11 @@ function distributeFButton(a){
         },
         success:function(data){
         	if(data.errno == 0){
-        		
-	            $(".delayHideS").show();
-	            $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-	            setTimeout(function(){$(".delayHideS").hide()},2000);
+	           delayHide("操作成功");
         	}else if(data.errno == -1){
-        		$(".delayHideS").show();
-	            $(".delayHideS .p1").html("<img src='images/unusualw.png' class='verticalMiddle'><span class='verticalMiddle'> 操作失败</span>");
-	            setTimeout(function(){$(".delayHideS").hide()},2000);
+	           delayHide("操作失败");
         	}else if(data.errno == -2){
-        		$(".delayHideS").show();
-	            $(".delayHideS .p1").html("<img src='images/unusualw.png' class='verticalMiddle'><span class='verticalMiddle'> 文件不存在</span>");
-	            setTimeout(function(){$(".delayHideS").hide()},2000);
+	           delayHide("文件不存在");
         	}
             $(a).parents(".pop").hide();
             $(".shade").hide();
@@ -930,9 +894,7 @@ function distributeFButton(a){
 // 删除文件按钮
 $(".deleteB").click(function(){
     if($(".fileDistributeTContainer input[name=filename]:checked").length==0){
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择文件");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+        delayHide("请选择文件");
     }else{
         var filename=$(".fileDistributeTContainer input[name=filename]:checked").next().html();
         shade();

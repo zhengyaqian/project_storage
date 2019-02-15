@@ -614,3 +614,18 @@ jQuery.download = function(url, method, param){
 	content +='</form>';
 	jQuery(content).appendTo('body').submit().remove();
 }
+
+
+//提示
+/**失败提示 */
+function delayHide(msg){
+    $(".delayHide").show();
+    $(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>"+msg+"</span>");
+    setTimeout(function(){$(".delayHide").hide()},2000);
+}
+/**成功提示 */
+function delayHideS(msg){
+    $(".delayHideS").show();
+    $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> "+msg+"</span>");
+    setTimeout(function(){$(".delayHideS").hide()},2000);
+}

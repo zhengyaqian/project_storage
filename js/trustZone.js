@@ -256,13 +256,9 @@ $(".newTrustPPop input[type='file']").change(function(){
 function submitTP(a){
     var filename=document.getElementById('file');  
     if($("input[value='path']").is(":checked") && trim($("input[name='data.value'][type=text]").val())==""){
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请填写名称!");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+       delayHide("请填写名称!");
     }else if($("input[value='sha1']").is(":checked") && $("input[name='data.value'][type=file]").val()==""){
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择文件!");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+       delayHide("请选择文件!");
     }else{
     	$("#form").submit();
         $(".uploadingShade").show();

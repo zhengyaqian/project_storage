@@ -266,9 +266,7 @@ function submitTN(a){
                 }else{
                 	var newtacticsid=data.data.policy_id;//新建策略成功后的策略id
                     // 新建策略成功提示
-                    $(".delayHideS").show();
-                    $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 新建成功</span>");
-                    setTimeout(function(){$(".delayHideS").hide()},2000);
+                    delayHideS("新建成功");
                     tacticsManage();
                     $(a).parents(".pop").hide();
                     $(".newTacticsAPop").show();
@@ -2212,9 +2210,7 @@ function sureEditButton(a){
     })
 
     if(emptynum>0){
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 端口不能为空");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+       delayHide("端口不能为空");
     }else{
         $(".mailMTable tr").each(function(index,dom){
             if(index!==0){
@@ -2776,9 +2772,7 @@ function addMRB(){
         $(".mailMTable .portInput").eq(0).focus();
 
     }else{
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 端口不能为空");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+       delayHide("端口不能为空");
         $(".mailMTable .portInput").eq(0).focus();
     }
     
@@ -2825,18 +2819,12 @@ $(".mailMTable").on("blur",".portInput",function(){
     })
     if(trim($(this).val())==""){
         setTimeout(function(){$(".mailMTable .portInput").eq(0).focus()},500);
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 端口不能为空");
-        setTimeout(function(){$(".delayHide").hide()},2000);
-
+        delayHide("端口不能为空");
     }
     if(index>1){
         setTimeout(function(){$(".mailMTable .portInput").eq(0).focus()},500);
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 端口不能重复");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+        delayHide("端口不能重复");
         $(this).val("");
-        
     }
     
 })
@@ -2900,19 +2888,11 @@ function hasBLBIp(ipBLB,ip){
 // 确定添加ip黑名单
 function sureAddBLB(self){
 	if($(".addBLPop select").val()==0 && isValidIP($(".addBLPop .ip").eq(0).val())==false){
-		$(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> ip有误");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+       delayHide("ip有误");
 	}else if($(".addBLPop select").val()==1 && isValidIP($(".addBLPop .ip").eq(0).val())==false){
-		
-		$(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> ip有误");
-        setTimeout(function(){$(".delayHide").hide()},2000);
-		
+       delayHide("ip有误");
 	}else if($(".addBLPop select").val()==1 && isValidIP($(".addBLPop .ip").eq(1).val())==false){
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> ip有误");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+       delayHide("ip有误");
     }else{
         var blackLTable="";
         blackLTable+="<tr>";
@@ -2937,18 +2917,14 @@ function sureAddBLB(self){
         ipBLB = ipBLB ? jQuery.parseJSON(ipBLB) : {};
         if($(".addBLPop .hidden").css('display') == 'none'){
         	if(ip1 &&  hasBLBIp(ipBLB,ip1)){
-	        	$(".delayHide").show();
-		        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'>此ip已存在");
-		        setTimeout(function(){$(".delayHide").hide()},2000);
+		       delayHide("此ip已存在");
 	        	return false;
 	        }
         	ipBLB[ip1] = true;
         
         }else{
         	if(hasBLBIp(ipBLB,ip2)){
-	        	$(".delayHide").show();
-		        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'>此ip已存在");
-		        setTimeout(function(){$(".delayHide").hide()},2000);
+		        delayHide("此ip已存在");
 	        	return false;
 	        }
         	ipBLB[ip2] = true;
@@ -2964,17 +2940,11 @@ function sureAddBLB(self){
 }
 function sureEditBLB(self){
 	if($(".editBLPop select").val()==0 && isValidIP($(".editBLPop .ip").eq(0).val())==false){
-		$(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> ip有误");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+       delayHide("ip有误");
 	}else if($(".editBLPop select").val()==1 && isValidIP($(".editBLPop .ip").eq(0).val())==false){
-		$(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> ip有误");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+       delayHide("ip有误");
 	}else if($(".editBLPop select").val()==1 && isValidIP($(".editBLPop .ip").eq(1).val())==false){
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> ip有误");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+       delayHide("ip有误");
     }else{
         
         var blackLTable="";
@@ -3005,17 +2975,13 @@ function sureEditBLB(self){
         delete ipBLB[preVal2];
         if($(".editBLPop .hidden").css('display') == 'none'){
         	if(ip1 && hasBLBIp(ipBLB,ip1)){
-	        	$(".delayHide").show();
-		        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'>此ip已存在");
-		        setTimeout(function(){$(".delayHide").hide()},2000);
+		        delayHide("此ip已存在");
 	        	return false;
 	        }
         	ipBLB[ip1] = true;
         }else{
         	if(hasBLBIp(ipBLB,ip2)){
-	        	$(".delayHide").show();
-		        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'>此ip已存在");
-		        setTimeout(function(){$(".delayHide").hide()},2000);
+		        delayHide("此ip已存在");
 	        	return false;
 	        }
         	ipBLB[ip2] = true;
@@ -3151,25 +3117,15 @@ $(".addPCPop .pro,.editPCPop .pro").change(function(){
 // 确定添加ip协议控制
 function sureAddPCB(self){
 	if(trim($(".addPCPop input[name=ruleName]").val())==""){
-		$(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 规则名不能为空");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+        delayHide("规则名不能为空");
 	}else if($(".addPCPop .localip").val()==1&& trim($(".addPCPop .localipv").val())==""){
-		$(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 本地ip不能为空");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+        delayHid("本地ip不能为空");
 	}else if($(".addPCPop .remoteip").val()==1&& trim($(".addPCPop .remoteipv").val())==""){
-		$(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 远程ip不能为空");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+        delayHide("远程ip不能为空");
 	}else if($(".addPCPop .localport").val()==1&& trim($(".addPCPop .localportv").val())==""){
-		$(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 本地端口不能为空");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+        delayHide("本地端口不能为空");
 	}else if($(".addPCPop .remoteport").val()==1&& trim($(".addPCPop .remoteportv").val())==""){
-		$(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 远程端口不能为空");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+       delayHide("远程端口不能为空");
 	}else{
 		var protocolCTable="";
 
@@ -3213,9 +3169,7 @@ function sureAddPCB(self){
 		var ipBLB = $('.protocolCTable').parent('.page').attr('ipBLB');
 		ipBLB = ipBLB ? jQuery.parseJSON(ipBLB) : {};
     	if(hasBLBIp(ipBLB,ip1)){
-        	$(".delayHide").show();
-	        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'>此规则名已存在");
-	        setTimeout(function(){$(".delayHide").hide()},2000);
+	        delayHide("此规则名已存在");
         	return false;
         }
 
@@ -3231,25 +3185,15 @@ function sureAddPCB(self){
 // 确定编辑ip协议控制
 function sureEditPCB(self){
 	if(trim($(".editPCPop input[name=ruleName]").val())==""){
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 规则名不能为空");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+        delayHide("规则名不能为空");
     }else if($(".editPCPop .localip").val()==1&& trim($(".editPCPop .localipv").val())==""){
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 本地ip不能为空");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+        delayHide("本地ip不能为空");
     }else if($(".editPCPop .remoteip").val()==1&& trim($(".editPCPop .remoteipv").val())==""){
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 远程ip不能为空");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+        delayHide("远程ip不能为空");
     }else if($(".editPCPop .localport").val()==1&& trim($(".editPCPop .localportv").val())==""){
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 本地端口不能为空");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+        delayHide("本地端口不能为空");
     }else if($(".editPCPop .remoteport").val()==1&& trim($(".editPCPop .remoteportv").val())==""){
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 远程端口不能为空");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+        delayHide("远程端口不能为空");
     }else{
 		var protocolCTable="";
 	    
@@ -3301,9 +3245,7 @@ function sureEditPCB(self){
 		delete ipBLB[ip2];
 		
     	if(hasBLBIp(ipBLB,ip1)){
-        	$(".delayHide").show();
-	        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'>此规则名已存在");
-	        setTimeout(function(){$(".delayHide").hide()},2000);
+	        delayHide("此规则名已存在");
         	return false;
        }
 		

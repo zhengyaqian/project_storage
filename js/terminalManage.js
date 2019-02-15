@@ -626,9 +626,7 @@ function submitGN(a){
 				}else{
 					showGroup();
 					hideButton(a);
-					$(".delayHideS").show();
-					$(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 新建成功</span>");
-					setTimeout(function(){$(".delayHideS").hide()},2000);
+					delayHideS("新建成功");
 
 				}		
 				
@@ -1193,13 +1191,9 @@ function sureIR(a){
 
 		//判断ip格式
 		if(isValidIP(beginip)==false || isValidIP(endip)==false){
-			$(".delayHide").show();
-			$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> IP格式有误");
-			setTimeout(function(){$(".delayHide").hide()},2000); 
+			delayHide("IP格式有误");
 		}else if(beginipnum >= endipnum){
-			$(".delayHide").show();
-			$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> ip范围有误");
-			setTimeout(function(){$(".delayHide").hide()},2000); 
+			delayHide("ip范围有误");
 		}else if(groups!==null){
 			var groupid=$(".IPGPop .grouplist").val();
 			var groupname=$(".IPGPop .grouplist option:selected").html();
@@ -1212,9 +1206,7 @@ function sureIR(a){
 			$(a).parent().parent().hide();
 			$(".windowShade").hide();
 		}else if(groups==null){
-			$(".delayHide").show();
-			$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请先添加分组");
-			setTimeout(function(){$(".delayHide").hide()},2000); 
+			delayHide("请先添加分组");
 		}	
 		
 
@@ -1231,17 +1223,11 @@ function sureIR(a){
 		})
 
 		if(terminalname==""){
-			$(".delayHide").show();
-			$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 无效的终端名称");
-			setTimeout(function(){$(".delayHide").hide()},2000); 
+			delayHide("无效的终端名称");
 		}else if(groups==null){
-			$(".delayHide").show();
-			$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请先添加分组");
-			setTimeout(function(){$(".delayHide").hide()},2000); 
+			delayHide("请先添加分组");
 		}else if(sametername>0){
-			$(".delayHide").show();
-			$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 命名规则重复");
-			setTimeout(function(){$(".delayHide").hide()},2000); 
+			delayHide("命名规则重复");
 		}else{
 			var groupid=$(".IPGPop .grouplist").val();
 			var groupname=$(".IPGPop .grouplist option:selected").html();
@@ -1311,13 +1297,9 @@ function sureEIR(a){
 		
 		//判断ip格式
 		if(isValidIP(beginip)==false || isValidIP(endip)==false){
-			$(".delayHide").show();
-			$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> IP格式有误");
-			setTimeout(function(){$(".delayHide").hide()},2000); 
+			delayHide("IP格式有误");
 		}else if(beginipnum >= endipnum){
-			$(".delayHide").show();
-			$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> ip范围有误");
-			setTimeout(function(){$(".delayHide").hide()},2000); 
+			delayHide("ip范围有误");
 		}else if(groups!==null){
 			var groupname=$(".IPGEPop .grouplist option:selected").html();
 			var groupid=parseInt($(".IPGEPop .grouplist").val());
@@ -1330,9 +1312,7 @@ function sureEIR(a){
 			$('.windowShade').hide();
 			$(".insertRTable tr").not(":first").attr("id","");
 		}else if(groups==null){
-			$(".delayHide").show();
-			$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请先添加分组");
-			setTimeout(function(){$(".delayHide").hide()},2000); 
+			delayHide("请先添加分组");
 		}	
 		
 	}else{
@@ -1347,17 +1327,11 @@ function sureEIR(a){
 			}
 		})
 		if(terminalname==""){
-			$(".delayHide").show();
-			$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 无效的终端名称");
-			setTimeout(function(){$(".delayHide").hide()},2000); 
+			delayHide("无效的终端名称");
 		}else if(groups==null){
-			$(".delayHide").show();
-			$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请先添加分组");
-			setTimeout(function(){$(".delayHide").hide()},2000); 
+			delayHide("请先添加分组");
 		}else if(sametername>0){
-			$(".delayHide").show();
-			$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 命名规则重复");
-			setTimeout(function(){$(".delayHide").hide()},2000); 
+			delayHide("命名规则重复");
 		}else{
 			var groupname=$(".IPGEPop .grouplist option:selected").html();
 			var groupid=parseInt($(".IPGEPop .grouplist").val());
@@ -1410,9 +1384,7 @@ function sureSetButton(a){
 		},
 		success:function(data){
 			if(data.errno==-1){
-				$(".delayHide").show();
-				$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> ip范围交叉重叠");
-				setTimeout(function(){$(".delayHide").hide()},2000); 
+				delayHide("ip范围交叉重叠");
 			}else if(data.errno==0){
 				$(a).parents(".pop").hide();
 				$(".shade").hide();
@@ -1442,10 +1414,7 @@ function createTaskFun(dataa){
 		},
 		success:function(data){
 			// 下发任务成功提示
-			$(".delayHideS").show();
-			$(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-			setTimeout(function(){$(".delayHideS").hide()},2000);
-			
+			delayHideS("操作成功");
 			taskid=data.data.task_id;
 			dataa={"taskid":taskid,"view":{"begin":0,"count":selectterminalarr.length}};
 			taskAjaxHtml = taskAjaxFun(dataa);
@@ -1564,9 +1533,7 @@ function closePop(a){
 
 $(".fastSKB").click(function(){
 	if(selectterminalarr.length==0){
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择终端!");
-		setTimeout(function(){$(".delayHide").hide()},2000);	
+		delayHide("请选择终端!");
 	}else{
 		// 放开更改配置项
 		$(".fastSKCPop input").prop("disabled",false);
@@ -1761,9 +1728,7 @@ function eachFastTable(){
 //弹出全盘查杀
 $(".overallSKB").click(function(){
 	if(selectterminalarr.length==0){
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择终端!");
-		setTimeout(function(){$(".delayHide").hide()},2000);	
+		delayHide("请选择终端!");
 	}else{
 		// 放开更改配置项
 		$(".overallSKCPop input").prop("disabled",false);
@@ -2024,9 +1989,7 @@ function eachOverallTable(){
 //弹出终端升级
 $(".terminalUB").click(function(){
 	if(selectterminalarr.length==0){
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择终端!");
-		setTimeout(function(){$(".delayHide").hide()},2000);	
+		delayHide("请选择终端!");
 	}else{
 		$(".terminalUpPop .buttons").html("<a onclick='sureTUButton(this)'>立即升级</a>");
 		shade();
@@ -2083,9 +2046,7 @@ function sureTUButton(a){
 		},
 		success:function(data){
 			// 下发任务成功提示
-			$(".delayHideS").show();
-			$(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-			setTimeout(function(){$(".delayHideS").hide()},2000);
+			delayHideS("操作成功");
 			taskid=data.data.task_id;
 			dataa={"taskid":taskid,"view":{"begin":0,"count":selectterminalarr.length}};
 			$.ajax({
@@ -2177,9 +2138,7 @@ function eachTerminalTable(){
 //弹出移动分组
 $(".moveGB").click(function(){
 	if(selectterminalarr.length==0){
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择终端!");
-		setTimeout(function(){$(".delayHide").hide()},2000);	
+		delayHide("请选择终端!");
 	}else{
 		$(".moveGPop .describe span").html("当前已选择 "+selectterminalarr.length+" 台在线终端,请需要移动的目标分组:");
 		shade();
@@ -2243,9 +2202,7 @@ function sureMGButton(a){
 			},
 			success:function(data){
 				// 下发任务成功提示
-				$(".delayHideS").show();
-				$(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-				setTimeout(function(){$(".delayHideS").hide()},2000);
+				delayHideS("操作成功");
 				hideButton(a);
 				selectterminalarr = [];
 				filterTerminal();
@@ -2261,9 +2218,7 @@ $(".sendMB").click(function(){
 	$(".sendMPop textarea").val("");
 	$(".sendMPop textarea").next().show();
 	if(selectterminalarr.length==0){
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择终端!");
-		setTimeout(function(){$(".delayHide").hide()},2000);	
+		delayHide("请选择终端!");
 	}else{
 		$(".sendMPop .describe").html("当前已选择 "+selectterminalarr.length+" 台终端，请输入要发送的消息内容：");
 		shade();
@@ -2279,9 +2234,7 @@ function sureSMButton(a){
 
 	var messagetext=trim($(".sendMPop .placeholderInput").val());
 	if(messagetext.length==0){
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请输入内容 !");
-		setTimeout(function(){$(".delayHide").hide()},2000);
+		delayHide("请输入内容 !");
 	}else{
 		var dataa={"type":"message","clients":selectterminalarr,"param":{"text":messagetext}}; 
 		$.ajax({
@@ -2299,9 +2252,7 @@ function sureSMButton(a){
 			},
 			success:function(data){
 				// 下发任务成功提示
-				$(".delayHideS").show();
-				$(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-				setTimeout(function(){$(".delayHideS").hide()},2000);
+				delayHideS("操作成功");
 				hideButton(a);
 				selectterminalarr = [];
 				filterTerminal();
@@ -2314,9 +2265,7 @@ function sureSMButton(a){
 //弹出删除终端关机重启
 $(".DPSB").click(function(){
 	if(selectterminalarr.length==0){
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择终端!");
-		setTimeout(function(){$(".delayHide").hide()},2000);	
+		delayHide("请选择终端!");
 	}else{
 		switch ($(this).index()){
 			case 4:
@@ -2376,13 +2325,9 @@ function sureDTButton(a){
 		},
 		success:function(data){
 			if($(".DPSPop .tableCon tr[online=true]").length>0){
-				$(".delayHideL").show();
-				$(".delayHideL .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 在线终端无法删除");
-				setTimeout(function(){$(".delayHideL").hide()},2000); 
+				delayHide("在线终端无法删除");
 			}else{
-				$(".delayHideS").show();
-				$(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-				setTimeout(function(){$(".delayHideS").hide()},2000);
+				delayHideS("操作成功");
 			}
 			
 			hideButton(a);
@@ -2469,19 +2414,13 @@ $('.remoteDesktop').click(function(){
 	
 	var browser=getBrowserInfo(); 
 	if(!browser){
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'>浏览器版本过低无法远程!");
-		setTimeout(function(){$(".delayHide").hide()},2000);	
+		delayHide("浏览器版本过低无法远程!");
 		return false;
 	}
 	if(selectterminalarr.length==0){
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择终端!");
-		setTimeout(function(){$(".delayHide").hide()},2000);	
+		delayHide("请选择终端!");
 	}else if(selectterminalarr.length>1){
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'>只可以选择一台终端进行远程!");
-		setTimeout(function(){$(".delayHide").hide()},2000);
+		delayHide("只可以选择一台终端进行远程!");
 	}else if(selectterminalarr.length == 1){
 		$(selectterminalarr).each(function(index,value){
 			$.ajax({
@@ -2500,13 +2439,9 @@ $('.remoteDesktop').click(function(){
 				success:function(data){
 					var data=data.data;
 					if(data.online == false){
-						$(".delayHide").show();
-						$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'>离线终端无法进行远程!");
-						setTimeout(function(){$(".delayHide").hide()},2000);	
+						delayHide("离线终端无法进行远程!");
 					}else if(data.prod.ver < '1.0.5.0'){
-						$(".delayHide").show();
-						$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'>客户端版本过低无法远程!");
-						setTimeout(function(){$(".delayHide").hide()},2000);	
+						delayHide("客户端版本过低无法远程!");
 						return false;
 					}else{
 						$(".remoteDeskPop").show();
@@ -2560,9 +2495,7 @@ function sureRDButton(){
 				
 
 			}else{
-				$(".delayHide").show();
-				$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'>"+data.errmsg+"!");
-				setTimeout(function(){$(".delayHide").hide()},2000);
+				delayHide(data.errmsg+"!");
 			}
 
 			
@@ -2576,9 +2509,7 @@ $(".exportTInfB").click(function(){
 	// shade();
 	// $(".exportTIPop").show();
 	if(selectterminalarr.length==0){
-		$(".delayHide").show();
-		$(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择终端!");
-		setTimeout(function(){$(".delayHide").hide()},2000);	
+		delayHide("请选择终端!");
 	}else{
 		$.download('/mgr/clnt/_exportinfo', 'post', selectterminalarr); 
 	}

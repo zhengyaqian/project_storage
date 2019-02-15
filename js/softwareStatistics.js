@@ -180,9 +180,7 @@ $(".uninstallSPop").on("click",".grouplist .td",function(){
 })
 function sureUSButton(a){
     if($(".uninstallSPop .terminallist .container .select:checked").length==0){
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'> 请选择终端</span>");
-        setTimeout(function(){$(".delayHide").hide()},2000);
+       delayHide("请选择终端");
     }else{
         var terminalarr=[];
         $(".uninstallSPop .terminallist .container .select:checked").each(function(){
@@ -207,9 +205,7 @@ function sureUSButton(a){
                 $(a).parents(".pop").hide();
                 $(".shade").hide();
                 parent.$(".topshade").hide();
-                $(".delayHideS").show();
-                $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
-                setTimeout(function(){$(".delayHideS").hide()},2000);
+                delayHideS("操作成功");
             }
         }) 
     }

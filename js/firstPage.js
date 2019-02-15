@@ -1420,9 +1420,7 @@ $(".sureSKButton").click(function(){
         var dataa={"type":"quick_scan","groups":groupsArr,"param":fastskcdefault};  
     }
     if($("input[name=groupN]:checked").length==0){
-        $(".delayHide").show();
-        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'><span class='verticalMiddle'> 请选择分组!</span>");
-        setTimeout(function(){$(".delayHide").hide()},2000); 
+       delayHide("请选择分组!");
     }else{
         $.ajax({
             url:'/mgr/task/_create',
@@ -1441,9 +1439,7 @@ $(".sureSKButton").click(function(){
                 $(".shade").hide();
                 $(".onekeySKPop").hide();
                 parent.$(".topshade").hide();
-                $(".delayHideS").show();
-                $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功!</span>");
-                setTimeout(function(){$(".delayHideS").hide()},2000);
+                delayHideS("操作成功!");
             }           
         });
     }
