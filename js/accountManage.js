@@ -66,19 +66,21 @@ function selectAll1(checkbox){
     $('.selectAdmin').prop('checked', $(checkbox).prop('checked'));
 }
 $(".powerManagePop").on("click",".selectPower",function(){
-    if($(".powerManagePop .selectPower").length==$(".powerManagePop .selectPower:checked").length){
-        $(".powerManagePop .pMTableth input[type=checkbox]").prop("checked",true)
-    }else{
-        $(".powerManagePop .pMTableth input[type=checkbox]").prop("checked",false)
-    }
+    var popCls = 'powerManagePop';
+    selectPower(popCls);
 })
 $(".modifyPowerPop").on("click",".selectPower",function(){
-    if($(".modifyPowerPop .selectPower").length==$(".modifyPowerPop .selectPower:checked").length){
-        $(".modifyPowerPop .pMTableth input[type=checkbox]").prop("checked",true)
-    }else{
-        $(".modifyPowerPop .pMTableth input[type=checkbox]").prop("checked",false)
-    }
+    var popCls = 'modifyPowerPop';
+    selectPower(popCls);
 })
+function selectPower(popCls){
+    if($("."+popCls+" .selectPower").length==$("."+popCls+" .selectPower:checked").length){
+        $("."+popCls+" .pMTableth input[type=checkbox]").prop("checked",true)
+    }else{
+        $("."+popCls+" .pMTableth input[type=checkbox]").prop("checked",false)
+    }
+}
+
 // 新建管理员选择管理员类型时文字
 $(".newAdminPop select").change(function(){
     if($(this).val()==1){
@@ -87,6 +89,26 @@ $(".newAdminPop select").change(function(){
         $(".newAdminPop .auditorIn").hide();
     }
 })
+function user_list_Fun(dataa){
+    var list = '';
+    $.ajax({
+        url:'/mgr/user/_list',
+        data:JSON.stringify(dataa),
+        type:'POST',
+        contentType:'text/plain',
+        async : false,
+        error:function(xhr,textStatus,errorThrown){
+        	if(xhr.status==401){
+        	    parent.window.location.href='/';
+        	}
+        },
+        success:function(data){
+            list=data;
+        }
+    });
+
+    return list;
+}
 // 管理员列表选择时将id推进数组和全选input的变化
 $(".tableContainer").on("click",".selectAdmin",function(){
     if($(this).is(":checked")){
@@ -96,40 +118,32 @@ $(".tableContainer").on("click",".selectAdmin",function(){
     }
     var group="";
     var filter=$("#searchKey").val();
-    if($("#selectVT").val()==1){
+    var selectVTVal = $("#selectVT").val();
+    if(selectVTVal==1){
         group="admin"
-    }else if($("#selectVT").val()==2){
+    }else if(selectVTVal==2){
         group="audit"
-    }else if($("#selectVT").val()==3){
+    }else if(selectVTVal==3){
         group="root"
     }
     var num=parseInt($(".table tbody").attr("num"));
     dataa={"group":group,"filter":{"name":filter},"view":{"begin":0,"count":num}}
-    $.ajax({
-        url:'/mgr/user/_list',
-        data:JSON.stringify(dataa),
-        type:'POST',
-        contentType:'text/plain',
-        error:function(xhr,textStatus,errorThrown){
-        	if(xhr.status==401){
-        	    parent.window.location.href='/';
-        	}
-        },
-        success:function(data){
-            var list=data.data.list;
-            var isinarraynum=0;
-            for (var i = 0; i < list.length; i++) {
-                if(isInArray(selectaccountarr,list[i].id)==true){
-                    isinarraynum+=1;
-                }
-            };
-            if(isinarraynum==data.data.view.total-1){
-                $(".tableContainer .table th input[type=checkbox]").prop("checked",true)
-            }else{
-                $(".tableContainer .table th input[type=checkbox]").prop("checked",false)
-            }
+    var data = user_list_Fun(dataa);
+    var list = data.data.list;
+    var isinarraynum=0;
+    var checked;
+    for (var i = 0; i < list.length; i++) {
+        if(isInArray(selectaccountarr,list[i].id)==true){
+            isinarraynum+=1;
         }
-    });
+    };
+
+    if(isinarraynum==data.data.view.total-1){
+        checked = true;
+    }else{
+        checked = false;
+    }
+    $(".tableContainer .table th input[type=checkbox]").prop("checked",checked);
 })
 // 已经选择的终端数组
 var selectaccountarr=[];
@@ -138,47 +152,33 @@ $(".tableContainer .table").on("click","input[type=checkbox]",function(){
     
     var group="";
     var filter=$("#searchKey").val();
-    if($("#selectVT").val()==1){
+    var selectVTVal = $("#selectVT").val();
+    if(selectVTVal==1){
         group="admin"
-    }else if($("#selectVT").val()==2){
+    }else if(selectVTVal==2){
         group="audit"
-    }else if($("#selectVT").val()==3){
+    }else if(selectVTVal==3){
         group="root"
     }
-    var num=parseInt($(".tableContainer .table tbody").attr("num"));
+    var num=parseInt($(".table tbody").attr("num"));
     dataa={"group":group,"filter":{"name":filter},"view":{"begin":0,"count":num}}
-    $.ajax({
-        url:'/mgr/user/_list',
-        data:JSON.stringify(dataa),
-        type:'POST',
-        contentType:'text/plain',
-        error:function(xhr,textStatus,errorThrown){
-        	if(xhr.status==401){
-        	    parent.window.location.href='/';
-        	}else{
-        		
-        	}
-            
-        },
-        success:function(data){
-            var list=data.data.list;
-            if($(".tableContainer .table input[type=checkbox]").is(":checked")){
-                for (var i = 0; i < list.length; i++) {
-                    if(isInArray(selectaccountarr,list[i].id)==false&&list[i].id!==1){
-                        selectaccountarr.push(list[i].id);  
-                    }
-                    
-                };
-            }else{
-                for (var i = 0; i < list.length; i++) {
-                    if(isInArray(selectaccountarr,list[i].id)==true){
-                        selectaccountarr.splice(jQuery.inArray(list[i].id,selectaccountarr),1);
-                    }
-                    
-                };
+    var data = user_list_Fun(dataa);
+    var list = data.data.list;
+    if($(".tableContainer .table input[type=checkbox]").is(":checked")){
+        for (var i = 0; i < list.length; i++) {
+            if(isInArray(selectaccountarr,list[i].id)==false&&list[i].id!==1){
+                selectaccountarr.push(list[i].id);  
             }
-        }
-    });
+            
+        };
+    }else{
+        for (var i = 0; i < list.length; i++) {
+            if(isInArray(selectaccountarr,list[i].id)==true){
+                selectaccountarr.splice(jQuery.inArray(list[i].id,selectaccountarr),1);
+            }
+            
+        };
+    }
 })
 
 // 改变每页多少数据
@@ -233,7 +233,7 @@ function columnsDataListFun (){
 			}},
 		},{
 			type: "remark",title: "备注",name: "remark",
-			tHead:{style: {width: "17%"},class:"th-ordery",customFunc: function (data, row, i) {return ""}},
+			tHead:{style: {width: "17%"},customFunc: function (data, row, i) {return ""}},
 			tBody:{style: {width: "17%"},customFunc: function (data, row, i) {
                 if(data==""){
                     switch(row.state){
@@ -355,58 +355,32 @@ function accEvent(start){
     dataa = sortingDataFun(dataa,type,orderClass);
     
     $(".table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
-    ajaxtable=
-    $.ajax({
-        url:'/mgr/user/_list',
-        data:JSON.stringify(dataa),
-        type:'POST',
-        contentType:'text/plain',
-        error:function(xhr,textStatus,errorThrown){
-        	if(xhr.status==401){
-        	    parent.window.location.href='/';
-        	}
-        },
-        success:function(data){
-            var list=data.data.list;
-            var total=Math.ceil(data.data.view.total/numperpage);
+    var data = user_list_Fun(dataa);
+    var list = data.data.list;
 
+    var total=Math.ceil(data.data.view.total/numperpage);
+
+    tabListstr.setData(list);
+    $('.table tbody').attr('num',data.data.view.total);
+    tbodyAddHeight();
+    $(".clearfloat").remove();
+    $(".tcdPageCode").remove();
+    $(".totalPages").remove();
+    $(".numperpage").remove();
+    $(".tableContainer").append("<a style='font-size:12px;color:#6a6c6e;line-height:54px;padding-left:20px;float:left;' class='totalPages'>共 "+data.data.view.total+" 条记录</a><div class='tcdPageCode' style='font-size:12px;float:right;padding-top:14px;padding-bottom:14px;padding-right:20px;'></div><a style='font-size:12px;float:right;line-height:54px;padding-right:20px;color:#6a6c6e' class='numperpage'>每页<input type='text' id='numperpageinput' value="+numperpage+" style='font-size:12px;width:40px;height:24px;margin:0 4px;vertical-align:middle;padding:0 10px;'>条</a><div class='clear clearfloat'></div>");
+    var current = (dataa.view.begin/dataa.view.count) + 1;
+    $(".tcdPageCode").createPage({
+        pageCount:total,
+        current:parseInt(current),
+        backFn:function(pageIndex){
+            dataa.view.begin =(pageIndex-1)*numperpage;
+            $(".table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
+            var list = user_list_Fun(dataa);
             tabListstr.setData(list);
-            $('.table tbody').attr('num',data.data.view.total);
             tbodyAddHeight();
-            $(".clearfloat").remove();
-            $(".tcdPageCode").remove();
-            $(".totalPages").remove();
-            $(".numperpage").remove();
-            $(".tableContainer").append("<a style='font-size:12px;color:#6a6c6e;line-height:54px;padding-left:20px;float:left;' class='totalPages'>共 "+data.data.view.total+" 条记录</a><div class='tcdPageCode' style='font-size:12px;float:right;padding-top:14px;padding-bottom:14px;padding-right:20px;'></div><a style='font-size:12px;float:right;line-height:54px;padding-right:20px;color:#6a6c6e' class='numperpage'>每页<input type='text' id='numperpageinput' value="+numperpage+" style='font-size:12px;width:40px;height:24px;margin:0 4px;vertical-align:middle;padding:0 10px;'>条</a><div class='clear clearfloat'></div>");
-            var current = (dataa.view.begin/dataa.view.count) + 1;
-            $(".tcdPageCode").createPage({
-                pageCount:total,
-                current:parseInt(current),
-                backFn:function(pageIndex){
-                    dataa.view.begin =(pageIndex-1)*numperpage;
-                    $(".table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
-                    ajaxtable=
-                    $.ajax({
-                        url:'/mgr/user/_list',
-                        data:JSON.stringify(dataa),
-                        type:'POST',
-                        contentType:'text/plain',
-                        error:function(xhr,textStatus,errorThrown){
-				        	if(xhr.status==401){
-				        	    parent.window.location.href='/';
-				        	}
-				        },
-                        success:function(data){
-                            var list=data.data.list;
-                            tabListstr.setData(list);
-                            tbodyAddHeight();
-                        }
-                    });
-
-                }
-            })  
-            }
-    });
+        }
+    })
+    
 
 }
 
@@ -441,10 +415,7 @@ function sureNAButton(){
                 error:function(xhr,textStatus,errorThrown){
 		        	if(xhr.status==401){
 		        	    parent.window.location.href='/';
-		        	}else{
-		        		
 		        	}
-		            
 		        },
                 success:function(data){
                     if(data.errno==0){
@@ -558,24 +529,24 @@ function editInfPop(a){
     shade();
     $(".modifyInfPop").show();
     adminid=parseInt($(a).attr("pid"));
-
-    $(".modifyInfPop input[name=account]").val($(a).parents("tr").find("td").eq(1).find("span").text());
-    if($(a).parents("tr").find("td").eq(2).html()=="-"){
+    var td = $(a).parents("tr").find("td");
+    $(".modifyInfPop input[name=account]").val(td.eq(1).find("span").text());
+    if(td.eq(2).html()=="-"){
         $(".modifyInfPop input[name=remark]").val("");
     }else{
-        $(".modifyInfPop input[name=remark]").val($(a).parents("tr").find("td").eq(2).find("span").text());
+        $(".modifyInfPop input[name=remark]").val(td.eq(2).find("span").text());
     }
-    if($(a).parents("tr").find("td").eq(3).html()=="-"){
+    if(td.eq(3).html()=="-"){
         $(".modifyInfPop input[name=contact]").val("");
     }else{
-        $(".modifyInfPop input[name=contact]").val($(a).parents("tr").find("td").eq(3).text());
+        $(".modifyInfPop input[name=contact]").val(td.eq(3).text());
     }
-    if($(a).parents("tr").find("td").eq(4).html()=="普通管理员"){
+    if(td.eq(4).html()=="普通管理员"){
         $(".modifyInfPop select").val(0);
         $(".modifyInfPop input[name=account]").prop("disabled",false);
         $(".modifyInfPop .notice").show();
         $(".modifyInfPop .auditorIn").hide();
-    }else if($(a).parents("tr").find("td").eq(4).html()=="审计员"){
+    }else if(td.eq(4).html()=="审计员"){
         $(".modifyInfPop select").val(1);
         $(".modifyInfPop input[name=account]").prop("disabled",false);
         $(".modifyInfPop .notice").show();
@@ -723,9 +694,7 @@ function deleteAdminPop(){
     if(selectaccountarr.length==0){
         delayHide('请选择管理员');
     }else{
-
         if(selectaccountarr.length==1){
-
             $(".deleteAdminPop .describe font").html("账号 <b>"+$(".tableContainer .selectAdmin:checked").parents("tr").find("td").eq(1).children().html()+"</b>  ");
         }else{
             $(".deleteAdminPop .describe font").html("多个管理员账号 ");
