@@ -25,24 +25,32 @@ $("#modules").change(function(){
 //选择时间
 $("#specialTime select").change(function(){
 
-    if($(this).find("option:selected").val()==0){
-        $("#txtBeginDate").val(GetDateStr(-6));
+    var optionVal = $(this).find("option:selected").val();
+    var begintime = 0;
+    var displayVal = 0;
+    switch(parseInt(optionVal)){
+        case 0:
+            begintime = -6;
+            break;
+        case 1:
+            begintime = -29;
+            break;
+        case 2:
+            begintime = -89;
+            break;
+        case 3:
+            begintime = -364;
+            break;
+        default:
+            $(".filterBlock .middle").show(200);
+            break;
+    }
+    if(begintime != 0){
+        $("#txtBeginDate").val(GetDateStr(begintime));
+    }
+    if(optionVal != 4){
         $("#txtEndDate").val(GetDateStr(0));
         $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==1){
-        $("#txtBeginDate").val(GetDateStr(-29));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==2){
-        $("#txtBeginDate").val(GetDateStr(-89));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==3){
-        $("#txtBeginDate").val(GetDateStr(-364));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==4){
-        $(".filterBlock .middle").show(200);
     }
     accEvent();
 })
@@ -118,16 +126,7 @@ function columnsDataListFun (){
 			type: "module",title: "操作模块",name: "module",
 			tHead:{style: {width: "12%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
 			tBody:{style: {width: "12%"},customFunc: function (data, row, i) {
-                if(data=="mgr_client"){ return "终端管理"; 
-                 }else if(data=="mgr_policy"){return "防护策略";
-                 }else if(data=="mgr_distr"){return "文件管理";
-                 }else if(data=="mgr_log"){return "事件日志";
-                 }else if(data=="mgr_tools"){return "管理工具";
-                 }else if(data=="mgr_user"){return "账户管理";
-                 }else if(data=="system_conf"){return "系统设置";
-                 }else if(data=="system_auth"){return "用户登录";
-                 }else if(data=="mgr_remote"){return "远程桌面";
-                 }else{ return "--"; }
+                return moduleField(data);
             }},
 		},{
 			type: "",title: "操作描述",name: "description",
