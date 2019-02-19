@@ -640,5 +640,5 @@ function fieldHandle(dataMap,data){
 /*操作模块*/
 function moduleField(data){
     var dataMap = {'mgr_client':'终端管理','mgr_policy':'防护策略','mgr_distr':'文件管理','mgr_log':'事件日志','mgr_tools':'管理工具','mgr_user':'账户管理','system_conf':'系统设置','system_auth':'用户登录','mgr_remote':'远程桌面'};
-    fieldHandle(dataMap,data);
+    return fieldHandle(dataMap,data);
 }
