@@ -1,0 +1,252 @@
+.pop .statusIcon{padding-left: 16px;vertical-align: middle;}
+/*终端详情*/
+.main .mainLeft{width:250px;background: rgb(255,255,255);position:absolute;}
+.main .mainRight{min-height: 1120px;width:930px;float: right;background: rgb(255,255,255);position: relative;}
+.mainLeft .title{font-size: 14px;color: #676a6c;padding:20px 20px;padding-bottom: 5px}
+.mainLeft .li,.mainLeft .current{display: block;line-height: 44px;font-size: 12px;color:#6c6c6c;text-decoration: none;padding-left: 20px;position: relative;height:44px;}
+.mainLeft .li:hover{background-color: rgb(249,249,249);}
+.mainLeft .current{background-color: rgb(249,249,249);}
+.mainLeft .li a,.mainLeft .current a{text-decoration: none;color:#6c6c6c;cursor: pointer;display: block;}
+.mainLeft .current a{color: #5fc47f;}
+.mainLeft .li span{vertical-align: middle;}
+.mainLeft .li .icon{width:18px;height: 18px;display: inline-block;vertical-align: middle;margin-right: 10px}
+.mainLeft .li .iconComputer{background: url(../images/computer.png);}
+.mainLeft .li .iconPerson{background: url(../images/person.png);}
+.mainLeft .current .icon{background-position: -18px;}
+.mainLeft .li .iconGE,.mainLeft .li .iconGD{width:18px;height: 18px;display: inline-block;vertical-align: middle;margin-right: 10px;position: absolute;cursor: pointer;}
+.mainLeft .li .iconGE:hover,.mainLeft .li .iconGD:hover{background-position: -18px}
+.mainLeft .li .iconGE{background: url(../images/group_edit.png);right: 40px;top:15px;#top:14px;}
+.mainLeft .li .iconGD{background: url(../images/group_delete.png);right: 10px;top:15px;#top:14px;}
+.mainLeft .li .characters{letter-spacing: 1px;display: inline-block;}
+.mainLeft .li .characters font{display: inline-block;max-width: 100px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;vertical-align: middle;}
+.mainLeft .li .characters b{font-weight: normal;vertical-align: middle;}
+.mainLeft .button{cursor:pointer;width:175px;line-height: 35px;border:1px solid rgb(101,197,129);display:block;border-radius: 2px;color:#5fc47f;text-align: center;font-size: 14px;margin: 20px auto}
+
+.mainRight .title{position: relative;}
+.mainRight .title .left{float: left;color: #676a6c;font-size: 14px;padding: 18px 20px}
+.mainRight .title .right{cursor: pointer;position: absolute;right:0px;top:0px;color: #5fc47f;font-size: 12px;width:85px;line-height: 25px;text-align: center;margin: 15px 20px;border:1px solid rgb(101,197,129);border-radius: 2px}
+.mainRight .tab{background-color: rgb(240,240,240);padding-top: 5px}
+.mainRight .tab a{cursor: pointer;border-radius: 5px 5px 0 0;text-decoration: none;width: 130px;line-height: 45px;display: inline-block;text-align: center;font-size: 12px;color: #676a6c;letter-spacing: 1px}
+.mainRight .tab a:hover{background-color: rgb(247,247,247)}
+.mainRight .tab .current{background-color: #ffffff}
+.mainRight .tab .current:hover{background-color: #ffffff}
+.mainRight .buttonGroup{padding: 15px 20px;}
+.mainRight .buttonGroup a{cursor: pointer;display: inline-block;width: 85px;line-height: 20px;background-color: rgb(101,197,129);color: #ffffff;text-align: center;border-radius: 3px;font-size: 12px;}
+.mainRight .buttonGroup a:hover{background-color: rgb(71,172,117)}
+
+.mainRight .table{font-size: 12px;padding:0 20px;padding-bottom: 20px;}
+.mainRight .table table{width: 100%;border-collapse:collapse;}
+.mainRight .table table tr{border-bottom: 1px solid rgb(231,234,236)}
+.mainRight .table table tr:nth-child(even){background:rgb(249,249,249);}
+.mainRight .table th{color:#676a6c;font-weight:bold;text-align: left;line-height: 40px }
+.mainRight .table td{color:#6c6c6c;font-weight:normal;text-align: left; line-height: 40px;white-space: nowrap;}
+.mainRight .table td img{vertical-align: middle;margin-right: 10px}
+.mainRight .table td .nameText{display: inline-block;max-width: 128px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;vertical-align: middle;}
+.mainRight .table td .editTNB{display: inline-block;width: 18px;height: 18px;background: url(../images/group_edit.png);vertical-align: middle;}
+.mainRight .table td .editTNB:hover{background-position: -18px;cursor: pointer;}
+.mainRight .table .firstth{padding-left: 10px}
+.mainRight .table .firstth input{vertical-align: middle;}
+.mainRight .table .detail{width: 85px;line-height: 20px;display: inline-block;border: 1px solid rgb(231,234,236);text-align: center;border-radius: 3px;cursor: pointer;}
+.mainRight .table .detail:hover{border: 1px solid rgb(162,164,166)}
+
+.delayHide{display: none;z-index: 999;text-align: center;color: #ffbe00;position: fixed;top:40%;left:50%;margin-left:-65px;width:130px;height: 44px;background-color: rgba(255,239,194,0.86);background-color:rgb(255,239,194)\9;border-radius: 5px}
+.delayHide .p1{font-size: 14px;line-height: 44px}
+.delayHide .p2{font-size: 12px;margin-top: 6px;}
+.delayHide .p2 font{color:rgb(101,197,129);}
+.delayHideS{display: none;z-index: 999;text-align: center;color: #5fc47f;position: fixed;top:40%;left:50%;margin-left:-65px;width:130px;height: 44px;background-color: rgba(211,255,211,0.86);background-color:rgb(211,255,211)\9;border-radius: 5px}
+.delayHideS .p1{font-size: 14px;line-height: 44px}
+.delayHideS .p2{font-size: 12px;margin-top: 6px;}
+.delayHideS .p2 font{color:rgb(101,197,129);}
+/*终端详情弹层*/
+.detailPop{display: none;width:845px;height:520px;background: #ffffff;z-index: 999;position: fixed;top: 28%;left:50%;margin-left: -423px;margin-top: -260px;}
+.detailPop .title{position: relative;padding-top: 20px;padding-bottom: 34px;font-size: 14px;color: #676a6c;padding-left: 20px}
+.detailPop .title .closeW{cursor: pointer;position: absolute;top:20px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png)}
+.detailPop .title .closeW:hover{background-position: -20px}
+.detailPop .left{width:200px;float: left;}
+.detailPop .left .detailcom{text-align: center;}
+.detailPop .left .terminalname{font-size: 16px;color:#676a6c;padding-top: 10px;}
+.detailPop .left .isgroup{font-size: 14px;color:#676a6c;padding-bottom: 60px;padding-top: 5px}
+.detailPop .left p{text-align: center;}
+.detailPop .left a{display: block;padding-left: 45px;font-size: 14px;line-height: 46px;cursor: pointer;}
+.detailPop .left a img{vertical-align: middle;}
+.detailPop .left a span{vertical-align: middle;padding-left: 28px;color: #6c6c6c;}
+.detailPop .left .general span{color: #5fc47f}
+
+.detailPop .right{float: right;width: 645px}
+.detailPop .right h1{font-size: 30px;color: #595959;font-weight: normal;padding-bottom: 20px}
+.detailPop .right h1 span{font-size: 12px;font-weight: normal;}
+.detailPop .right p{font-size: 12px;color: #595959;letter-spacing: 1px}
+.informationB .heading{padding-top: 40px;padding-bottom: 20px}
+.informationB .heading img{vertical-align: middle;}
+.informationB .heading span{vertical-align: middle;padding-left: 14px;font-size: 14px;color: #595959}
+.fontGreen{color: #5fc47f;text-decoration: none;}
+.informationB p{padding-left: 32px;}
+.detailPop .right .informationB p{color: #6c6c6c;line-height: 18px}
+.informationBL{float: left;}
+.informationBR{float:right;width: 334px}
+.informationBD .heading{padding-top: 32px}
+
+.detailPop .right .stopSK{position: absolute;display: block;width: 100px;height: 30px;line-height: 30px;text-align: center;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;right: 30px;top:-10px;cursor: pointer;}
+.detailPop .right .table{padding-right: 30px}
+.table .describe{padding-top: 50px;padding-bottom: 10px;padding-left: 10px;position: relative;}
+.table .describe a{text-decoration: underline;color: #5fc47f;display: block;cursor: pointer;position: absolute;right: 20px;bottom:10px;}
+.table table{border: 1px solid rgb(231,234,236);border-collapse: collapse;font-size: 12px;color: #6c6c6c}
+.table table th,.table table td{padding-left: 10px;line-height: 36px;}
+.table .th th{background: rgb(240,240,240);font-size: 12px;color: #595959;font-weight: normal;text-align: left;}
+.table .seeDetail{display: inline-block;width: 60px;height: 22px;line-height: 22px;border-radius: 3px;background: rgb(101,197,129);text-align: center;color: #ffffff;cursor: pointer;}
+.tacticsSwitch{right:30px;bottom:0px;}
+.tacticsSwitch a{width:90px;line-height: 30px;height: 30px;display: inline-block;background: rgb(240,240,240);text-align: center;font-size: 12px;color: #676a6c;border-radius: 20px;}
+.tacticsSwitch .current{background: rgb(101,197,129);color: #ffffff}
+.tacticsSwitch input{display: none;}
+.tacticsDTitle{padding-top:50px;padding-bottom: 10px;padding-left: 10px;}
+.tacticsDescribe{border:1px solid rgb(231,234,236);padding: 10px;margin-right: 30px;}
+.tacticsDescribe select{right:10px;top:16px;border:1px solid rgb(231,234,236);font-size: 12px;}
+
+.eventLog .selectCondition{border-top:1px solid rgb(231,234,236);background: rgb(240,240,240);font-size: 12px;padding-left: 12px;margin-right: 30px;}
+.eventLog .selectCondition span{display: inline-block;line-height: 34px;color: #595959}
+.eventLog .selectCondition select{font-size: 12px;color: #6c6c6c;width: 100px;border: 1px solid rgb(231,234,236)}
+.eventLog .eventTable table{border-collapse: collapse;}
+.eventLog .eventTable{font-size: 12px;color: #6c6c6c;height:154px;overflow-y:scroll;margin-right:30px; }
+.eventLog .eventTable tr:hover{background: rgb(239,249,242);}
+.eventLog .eventTable td{line-height: 36px;}
+
+.eventLog .eventDetail{height:194px;overflow-y: scroll;margin-right: 30px;border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236)}
+.eventLog .eventDetail h2{font-size: 14px;color:#595959;line-height: 34px;height: 34px;}
+.eventLog .eventDetail p{line-height: 30px;height: 30px;}
+.eventLog .buttons{padding-top: 14px;margin-right: 30px;float: right;}
+.eventLog .buttons a{width:84px;line-height: 24px;height: 24px;display: inline-block;background: rgb(101,197,129);font-size: 12px;color: #ffffff;text-align: center;border-radius: 2px;}
+
+
+/*近期任务弹层*/
+.recentTaskPop{display: none;width: 662px;height: 442px;position: fixed;top: 28%;left:50%;margin-left: -331px;margin-top: -221px;z-index: 999;background: #ffffff;}
+.recentTaskPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.recentTaskPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.recentTaskPop .title .closeW:hover{background-position: -20px}
+.recentTaskPop .content{font-size: 12px;padding: 0 20px;height: 334px;}
+.recentTaskPop .content .taskType{line-height: 56px;color: #676a6c;border-bottom: 1px solid rgb(231,234,236);position: relative;}
+.recentTaskPop .content .container{height:280px;overflow-y: scroll;}
+.taskType img{position: absolute;right: 0px;top:18px;*top:6px;}
+.recentTaskPop .list{line-height: 36px;color: #6c6c6c;}
+.recentTaskPop .list .td{padding-left: 12px;padding-right:62px;line-height: 36px;display: inline-block;}
+.recentTaskPop .list .firsttd{width:108px;padding-right: 0}
+.recentTaskPop .list a{text-decoration: underline;color: #5fc47f;}
+.recentTaskPop .table{padding-bottom: 2px;background: rgb(249,249,249);display: none;border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236)}
+.recentTaskPop .table .seeMore{cursor: pointer;line-height: 20px;color: #6c6c6c;display: block;background: rgb(230,230,230);text-align: center;margin:0 14px;border-radius: 10px;margin-top: 2px;}
+.recentTaskPop .table table{border-collapse: collapse;}
+.recentTaskPop .table tr{line-height: 30px;}
+.recentTaskPop .table td,.recentTaskPop .table th{padding-left: 14px;font-weight: normal;color:#6c6c6c;}
+.recentTaskPop .table .th{text-align: left;background: rgb(240,240,240)}
+.recentTaskPop .bottom{line-height: 56px;font-size: 12px;color: #6c6c6e;border-top:1px solid rgb(231,234,236);margin:0 20px;position: relative;}
+.recentTaskPop .bottom span{letter-spacing: 1px}
+.recentTaskPop .bottom a{text-align: center;width:84px;line-height: 22px;background: rgb(101,197,129);display: inline-block;color: #ffffff;border-radius: 3px;position: absolute;right:0px;top:16px;cursor: pointer;*top:-2px;}
+/*新建群组弹层*/
+.newGroupPop{display: none;width: 400px;height: 250px;position: fixed;top: 28%;left:50%;margin-left: -200px;margin-top: -125px;z-index: 999;background: #ffffff;}
+.newGroupPop .title{font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.newGroupPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.newGroupPop .title .closeW:hover{background-position: -20px}
+.newGroupPop .content span{font-size: 14px;color: #676a6c;display: block;padding-left: 48px;padding-top: 44px;}
+.newGroupPop .content input{padding-left: 12px;color: #6c6c6c;outline: none;display: block;margin-left: 36px;margin-top: 10px;line-height: 34px;height: 34px;width:314px;border: 1px solid rgb(229,230,231)}
+.newGroupPop .content a{cursor:pointer;font-size: 12px;margin-left: 264px;display: inline-block;color: #ffffff;background: rgb(101,197,129);line-height: 24px;width: 100px;border-radius: 3px;margin-top: 36px;text-align: center;}
+
+.newGroupPop .content .placeholder{position: absolute;top:12px;left:50px;font-size: 12px;color: #777777;}
+.newGroupPop .content  .unusualTxt{font-size: 12px;color: #f37e00;padding-top: 6px;right: 38px;top:34px;display: none;}
+.newGroupPop .content  .unusualTxt img{vertical-align: middle;margin-bottom: 4px;margin-left: 10px}
+
+/*快速查杀/全盘查杀/终端升级弹层*/
+
+.fastSKPop, .overallSKPop,.terminalUpPop{display: none;width: 662px;height: 442px;position: fixed;top: 28%;left:50%;margin-left: -331px;margin-top: -221px;z-index: 999;background: #ffffff;}
+.fastSKPop .title,.overallSKPop .title,.terminalUpPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.fastSKPop .title .closeW,.overallSKPop .title .closeW,.terminalUpPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.fastSKPop .title .closeW:hover,.overallSKPop .title .closeW:hover,.terminalUpPop .title .closeW:hover{background-position: -20px}
+.fastSKPop .describe,.overallSKPop .describe,.terminalUpPop .describe{line-height: 60px;font-size: 12px;color: #676a6c;position: relative;padding-left: 34px}
+.fastSKPop .describe img,.overallSKPop .describe img,.terminalUpPop .describe img{position: absolute;top:21px;right: 30px;cursor: pointer;}
+.fastSKPop .table,.fastSKPop .tableth,.overallSKPop .table,.overallSKPop .tableth,.terminalUpPop .table,.terminalUpPop .tableth{color: #6c6c6c;font-size: 12px;padding:0 22px;}
+.fastSKPop .tableth table,.fastSKPop .table table,.overallSKPop .tableth table,.overallSKPop .table table,.terminalUpPop .tableth table,.terminalUpPop .table table{border-collapse: collapse;}
+.fastSKPop .tableth tr,.overallSKPop .tableth tr,.terminalUpPop .tableth tr{background: rgb(240,240,240);border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236)}
+.fastSKPop .tableth th,.fastSKPop .table td,.overallSKPop .tableth th,.overallSKPop .table td,.terminalUpPop .tableth th,.terminalUpPop .table td{line-height: 36px;padding-left: 10px;font-weight: normal;}
+.fastSKPop .tableth th,.overallSKPop .tableth th,.terminalUpPop .tableth th{color: #676a6c;text-align: left;}
+.fastSKPop .table,.overallSKPop .table,.terminalUpPop .table{height: 246px;overflow-y:scroll;padding-right: 5px;}
+.fastSKPop .table table,.overallSKPop .table table,.terminalUpPop .table table{border:0;}
+.fastSKPop .table tr:hover,.overallSKPop .table tr:hover,.terminalUpPop .table tr:hover{background: rgb(249,249,249)}
+.fastSKPop .buttons,.overallSKPop .buttons,.terminalUpPop .buttons{padding-right: 20px;border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
+.fastSKPop .buttons a,.overallSKPop .buttons a,.terminalUpPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 84px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+
+
+.fastSKCPop,.overallSKCPop{display: none;width: 662px;height: 442px;position: fixed;top: 28%;left:50%;margin-left: -331px;margin-top: -221px;z-index: 999;background: #ffffff;}
+.fastSKCPop .title,.overallSKCPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.fastSKCPop .title .closeWW,.overallSKCPop .title .closeWW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.fastSKCPop .title .closeWW:hover,.overallSKCPop .title .closeWW:hover{background-position: -20px}
+.fastSKCPop .buttons,.overallSKCPop .buttons{padding-right: 20px;border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
+.fastSKCPop .buttons a,.overallSKCPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 84px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+
+.fastSKCPop .content,.overallSKCPop .content{height: 346px;overflow-y:scroll }
+.setBlock{padding: 0 20px;border-bottom: 1px solid rgb(231,234,236);padding-bottom: 10px;color: #6c6c6c;padding-top: 10px}
+.setBlock h4{line-height: 30px;font-size: 14px;font-weight: normal;}
+
+.setBlock p{font-size: 12px;line-height: 26px;}
+.setBlock .leftP{float: left;margin-right: 104px}
+.setBlock p span{vertical-align: middle;}
+.setBlock p input{vertical-align: middle;margin-right: 20px;}
+.setBlock p input[name=overallPara1],.setBlock p input[name=overallPara2]{margin-left: 10px;margin-right: 10px;outline: none;border: 1px solid rgb(231,234,236);padding-left: 10px;width:100px;line-height: 20px;height: 20px;color: #333333;font-size: 12px}
+/*修改群组名称*/
+.modifyGNPop{display: none;width: 482px;height: 252px;position: fixed;top: 28%;left:50%;margin-left: -241px;margin-top: -126px;z-index: 999;background: #ffffff;}
+.modifyGNPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.modifyGNPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.modifyGNPop .title .closeW:hover{background-position: -20px}
+.modifyGNPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.modifyGNPop .right{float: right;padding-right: 34px;position: relative;}
+.modifyGNPop .describe{color: #676a6c;font-size: 14px;padding-top: 40px;padding-left: 12px}
+.modifyGNPop .right .input{padding-top: 12px}
+.modifyGNPop .right input{width:318px;line-height: 34px;height:34px;border: 1px solid rgb(229,230,231);padding-left: 12px;}
+.modifyGNPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 32px;}
+.modifyGNPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.modifyGNPop .right .unusualTxt{font-size: 12px;color: #f37e00;padding-top: 6px;position: absolute;right: 36px;top:104px;display: none;}
+.modifyGNPop .right .unusualTxt img{vertical-align: middle;margin-bottom: 4px;margin-left: 10px}
+/*修改终端名称*/
+.editTNPop{display: none;width: 482px;height: 252px;position: fixed;top: 28%;left:50%;margin-left: -241px;margin-top: -126px;z-index: 999;background: #ffffff;}
+.editTNPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.editTNPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.editTNPop .title .closeW:hover{background-position: -20px}
+.editTNPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.editTNPop .right{float: right;padding-right: 34px}
+.editTNPop .describe{color: #676a6c;font-size: 14px;padding-top: 40px;padding-left: 12px}
+.editTNPop .right .input{padding-top: 12px}
+.editTNPop .right input{width:318px;line-height: 34px;height:34px;border: 1px solid rgb(229,230,231);padding-left: 12px;}
+.editTNPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 38px;}
+.editTNPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+
+/*删除群组*/
+.deleteGPop{display: none;width: 482px;height: 252px;position: fixed;top: 28%;left:50%;margin-left: -241px;margin-top: -126px;z-index: 999;background: #ffffff;}
+.deleteGPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.deleteGPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.deleteGPop .title .closeW:hover{background-position: -20px}
+.deleteGPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.deleteGPop .right{float: right;padding-right: 34px;font-size: 14px;color: #676a6c;padding-top: 44px}
+.deleteGPop .right .describe{line-height: 30px}
+.deleteGPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 34px;}
+.deleteGPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+
+/*移动分组*/
+.moveGPop{display: none;width: 500px;height: 334px;position: fixed;top: 28%;left:50%;margin-left: -241px;margin-top: -126px;z-index: 999;background: #ffffff;}
+.moveGPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.moveGPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.moveGPop .title .closeW:hover{background-position: -20px}
+.moveGPop .describe{font-size: 14px;color: #676a6c;line-height: 48px;padding-left: 32px}
+.moveGPop .ul{font-size: 12px;color: #676a6c;padding: 0 20px}
+.moveGPop .ul ul{height: 180px;overflow-y:scroll;}
+.moveGPop .ul ul li{line-height: 34px;background: rgb(243,243,244);margin-bottom: 2px;padding-left: 10px;border: 1px solid #ffffff}
+.moveGPop .ul ul li:hover{background: #ffffff;border: 1px solid rgb(243,243,244)}
+.moveGPop .ul ul li input{vertical-align: middle;}
+.moveGPop .ul ul li span{vertical-align: middle;padding-left: 10px;}
+.moveGPop .sureButton{cursor: pointer;font-size: 12px;width: 100px;text-align: center;line-height: 22px;height: 22px;display: inline-block;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;margin-top: 14px;margin-right: 20px; }
+
+/*发送消息*/
+.sendMPop{display: none;width: 500px;height: 334px;position: fixed;top: 28%;left:50%;margin-left: -241px;margin-top: -126px;z-index: 999;background: #ffffff;}
+.sendMPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.sendMPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.sendMPop .title .closeW:hover{background-position: -20px}
+.sendMPop .describe{font-size: 14px;color: #676a6c;line-height: 48px;padding-left: 32px}
+.sendMPop .textarea{position: relative;}
+.sendMPop textarea{font-size: 12px;width: 440px;height: 138px;margin: 0 auto;display: block;resize:none;outline: none;border:1px solid rgb(229,230,231);padding: 10px}
+.sendMPop .sureButton{cursor: pointer;font-size: 12px;width: 100px;text-align: center;line-height: 22px;height: 22px;display: inline-block;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;margin-top: 26px;margin-right: 20px; }
+.sendMPop .textarea .placeholder{position: absolute;left:30px;top:10px;font-size: 12px;color: #a1a1a1}

@@ -1,0 +1,383 @@
+.pop .statusIcon{padding-left: 16px;vertical-align: middle;}
+/*终端详情*/
+.main .mainLeft{width:250px;background: rgb(255,255,255);float: left;}
+.main .mainRight{height:100%;width:930px;float: right;background: rgb(255,255,255);position: relative;}
+.mainLeft .title{font-size: 14px;color: #676a6c;padding:14px 20px;padding-bottom: 5px}
+.mainLeft .container .groupsPage{margin-bottom: 10px;*position: relative;*top:0;*left:0;}
+.mainLeft .container .groupsPage .groupsPageContainer{width:100%;}
+.mainLeft .container .moreGroupsButton{height: 30px;line-height: 30px;border-top: 1px solid #ffffff);display: none;}
+.mainLeft .container .moreGroupsButton a{display: block;width: 20px;height: 20px;margin: 0 auto;background: url(../images/moregroup.png);margin-top: 6px;}
+
+.mainLeft .container .moreGroupsButton:active{background-color: rgb(249,249,249);}
+.mainLeft .li,.mainLeft .current{display: block;line-height: 44px;font-size: 12px;color:#6c6c6c;text-decoration: none;padding-left: 20px;position: relative;height:44px;}
+.mainLeft .li:hover{background-color: rgb(249,249,249);}
+.mainLeft .current{background-color: rgb(249,249,249);}
+.mainLeft .li a,.mainLeft .current a{text-decoration: none;color:#6c6c6c;cursor: pointer;display: block;}
+.mainLeft .current a{color: #5fc47f;}
+.mainLeft .li span{vertical-align: middle;}
+.mainLeft .li .icon{width:18px;height: 18px;display: inline-block;vertical-align: middle;margin-right: 10px}
+.mainLeft .li .iconComputer{background: url(../images/computer.png);}
+.mainLeft .li .iconPerson{background: url(../images/person.png);}
+.mainLeft .current .icon{background-position: -18px;}
+.mainLeft .li .iconGE,.mainLeft .li .iconGD{width:18px;height: 18px;display: none;vertical-align: middle;margin-right: 6px;position: absolute;cursor: pointer;}
+.mainLeft .li .iconGE:hover,.mainLeft .li .iconGD:hover{background-position: -18px}
+.mainLeft .li .iconGE{background: url(../images/group_edit.png);right: 34px;top:15px;#top:14px;}
+.mainLeft .li .iconGD{background: url(../images/group_delete.png);right: 10px;top:15px;#top:14px;}
+.mainLeft .current .iconGE{background: url(../images/group_editc.png);right: 34px;top:15px;#top:14px;}
+.mainLeft .current .iconGD{background: url(../images/group_deletec.png);right: 10px;top:15px;#top:14px;}
+.mainLeft .li .characters{letter-spacing: 1px;}
+.mainLeft .li .characters font{display: inline-block;max-width: 140px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;vertical-align: middle;}
+.mainLeft .li .characters b{font-weight: normal;vertical-align: middle;float: right;padding-right: 20px;}
+.mainLeft .button{cursor:pointer;width:100px;line-height: 30px;border:1px solid rgb(101,197,129);display:inline-block;border-radius: 2px;color:#5fc47f;text-align: center;font-size: 14px;margin: 20px auto}
+.mainLeft .button:hover{background: rgb(99,194,129);border: 1px solid rgb(99,194,129);color: rgb(255,255,255);transition:0.2s;}
+.mainLeft .button1{margin-left: 20px;}
+
+
+.mainRight .title .left{float: left;color: #676a6c;font-size: 14px;padding: 12px 20px;}
+.mainRight .title .right{cursor: pointer;position: absolute;right:20px;top:11px;color: #5fc47f;font-size: 12px;width:85px;line-height: 22px;text-align: center;border:1px solid rgb(101,197,129);border-radius: 2px}
+.mainRight .title .right:hover{border: 1px solid rgb(99,194,129);background: rgb(99,194,129);color: #ffffff;transition:0.2s;}
+.mainRight .tab{background-color: rgb(240,240,240);padding-top: 5px}
+.mainRight .tab a{cursor: pointer;border-radius: 5px 5px 0 0;text-decoration: none;width: 130px;line-height: 45px;display: inline-block;text-align: center;font-size: 12px;color: #676a6c;letter-spacing: 1px}
+.mainRight .tab a:hover{background-color: rgb(247,247,247)}
+.mainRight .tab .current{background-color: #ffffff}
+.mainRight .tab .current:hover{background-color: #ffffff}
+.mainRight .buttonGroup{padding: 15px 20px;border-bottom: 1px solid rgb(231,234,236);border-top: 4px solid rgb(231,234,236);margin-bottom: 20px;#padding-top: 4px;}
+.mainRight .buttonGroup a{cursor: pointer;display: inline-block;width: 85px;line-height: 20px;background-color: rgb(101,197,129);color: #ffffff;text-align: center;border-radius: 3px;font-size: 12px;}
+.mainRight .buttonGroup a:hover{background-color: rgb(71,172,117)}
+.mainRight .buttonGroup .moreB{top: 17px;right:20px;cursor: pointer;display: inline-block;width: 85px;line-height: 20px;background-color: rgb(101,197,129);color: #ffffff;text-align: center;border-radius: 3px;font-size: 12px;*top:36px;#top:12px;}
+@-moz-document url-prefix(){.mainRight .buttonGroup .moreB{top:18px;}}
+.mainRight .buttonGroup .block{display: block;}
+.mainRight .buttonGroup .buttonsGatherC{padding-top: 10px;right: -14px;top:20px;z-index: 111;}
+.mainRight .buttonGroup .buttonsGather{background: rgb(249,249,249);border-radius:2px;border: 1px solid rgb(231,234,236);width: 112px;}
+.mainRight .buttonGroup .buttonsGather a{color: #6c6c6c;background: #ffffff;line-height: 24px;height: 24px;width: 112px;}
+.mainRight .buttonGroup .buttonsGather a:hover{background: rgb(245,245,245)}
+/*加入终端搜索*/
+.mainRight .title .left select{width: 116px;height: 24px;line-height: 24px;color: #6c6c6c}
+.mainRight .title .left select option{color: #6c6c6c}
+.searchT{padding:10px 20px;}
+.searchT input{border: 1px solid rgb(231,234,236);line-height: 26px;height: 26px;width: 186px;padding-left: 14px;}
+.searchT img{background-color: rgb(101,197,129);padding: 5px 11px;border: 1px solid rgb(101,197,129);border-top-right-radius: 4px;border-bottom-right-radius: 4px;}
+.searchT img:hover{background-color: rgb(71,172,117)}
+.searchT .placeholder{position: absolute;display: block;top:16px;left:34px;color: #989898;#top:22px;font-size: 12px;}
+
+
+#selectTerminal{font-size: 12px;z-index: 9}
+#selectTerminal img{margin-right: 10px;}
+#selectTerminal .mR0{margin-right: 0px;}
+#selectTerminal #TSName{line-height: 22px;height: 22px;padding: 0px 10px;display: inline-block;border: 1px solid rgb(231,234,236)}
+#selectTerminal .trangle{background: rgb(101,197,129);width: 34px;text-align: center;display: inline-block;line-height: 22px;height: 22px;border: 1px solid rgb(101,197,129);border-top-right-radius: 4px;border-bottom-right-radius: 4px;#padding-top: 4px;#height:18px;#line-height: 18px;}
+#selectTerminal .trangle:hover{background: rgb(71,172,117);}
+.terminalSC{z-index: 9999999;padding-top: 4px;right: 0px;top:24px;}
+.terminalStatus{background: #ffffff;width: 132px;border: 1px solid rgb(231,234,236)}
+.terminalStatus a{line-height: 22px;height: 22px;padding-left: 10px;font-size: 12px;}
+.terminalStatus a font{font-size: 12px;}
+.terminalStatus a:hover{background: rgb(245,245,245)}
+#TSName font{font-size: 12px;}
+/**/
+.mainRight .table,.mainRight .tableth{font-size: 12px;margin: 0 20px;}
+.mainRight .tableth{padding-right: 18px;}
+.mainRight .table{overflow-x:hidden;border-bottom: 1px solid rgb(231,234,236)}
+.mainRight .table table,.mainRight .tableth table{width: 100%;border-collapse:collapse;}
+.mainRight .table table tr,.mainRight .tableth table tr{border-bottom: 1px solid rgb(231,234,236)}
+.mainRight .table table tr:nth-child(even){background:rgb(249,249,249);}
+.mainRight .tableth th{color:#676a6c;font-weight:bold;text-align: left;line-height: 38px }
+.mainRight .table td{color:#6c6c6c;font-weight:normal;text-align: left; line-height: 38px;white-space: nowrap;}
+.mainRight .table td img{vertical-align: middle;margin-right: 10px}
+.mainRight .table td .nameText{display: inline-block;width: 130px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;vertical-align: middle;}
+.mainRight .table td .editTNB{display: inline-block;width: 18px;height: 18px;background: url(../images/group_edit.png);vertical-align: middle;}
+.mainRight .table td .editTNB:hover{background-position: -18px;cursor: pointer;}
+.mainRight .table .firstth{padding-left: 10px}
+.mainRight .table .firstth input{vertical-align: middle;}
+
+
+/*分页样式*/
+.table .tcdPageCode{padding: 15px 20px;text-align: left;color: #ccc;font-size: 12px}  
+.tcdPageCode a{display: inline-block;color: #6a6c6e;display: inline-block;height: 25px;line-height: 25px; padding: 0 10px;border: 1px solid rgb(221,221,221);margin: 0 2px;border-radius: 4px;vertical-align: middle;}  
+.tcdPageCode a:hover{text-decoration: none;background: rgb(244,244,244)}  
+.tcdPageCode span.current{display: inline-block;height: 25px;line-height: 25px;padding: 0 10px;margin: 0 2px;color: #fff;background-color: rgb(101,197,129);    border: 1px solid rgb(101,197,129);border-radius: 4px;vertical-align: middle;}  
+.tcdPageCode span.disabled{    display: inline-block;height: 25px;line-height: 25px;padding: 0 10px; margin: 0 2px;color: #bfbfbf;background: #f2f2f2;border: 1px solid #bfbfbf;border-radius: 4px;vertical-align: middle;}
+
+/*终端详情弹层*/
+.detailPop{display: none;width:845px;height:520px;background: #ffffff;z-index: 999;position: fixed;top: 50%;left:50%;margin-left: -423px;margin-top: -300px;}
+.detailPop .title{position: relative;padding-top: 20px;padding-bottom: 34px;font-size: 14px;color: #676a6c;padding-left: 20px}
+.detailPop .title .closeW{cursor: pointer;position: absolute;top:20px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png)}
+.detailPop .title .closeW:hover{background-position: -20px}
+.detailPop .left{width:200px;float: left;}
+.detailPop .left .detailcom{text-align: center;}
+.detailPop .left .terminalstatus{font-size: 16px;color: #6c6c6c;font-weight: bold;}
+.detailPop .left .terminalname{font-size: 16px;color:#676a6c;padding-top: 10px;}
+.detailPop .left .terminalname .editTNIcon{display: inline-block;width: 18px;height: 18px;background: url(../images/group_edit.png);vertical-align: middle;}
+.detailPop .left .terminalname .editTNIcon:hover{background-position: -18px;cursor: pointer;}
+.detailPop .left .isgroup{font-size: 14px;color:#676a6c;padding-bottom: 180px;padding-top: 5px}
+.detailPop .left p{text-align: center;}
+.detailPop .left a{display: block;padding-left: 45px;font-size: 14px;line-height: 46px;cursor: pointer;}
+.detailPop .left a img{vertical-align: middle;}
+.detailPop .left a span{vertical-align: middle;padding-left: 28px;color: #6c6c6c;}
+.detailPop .left .general span{color: #5fc47f}
+.detailPop .left .versionnum,.detailPop .left .dbversion{font-size: 12px;color: #595959;text-align: left;padding-left: 20px}
+
+
+.detailPop .right{float: right;width: 645px;background: url(../images/lockbg.png) no-repeat right 20px;}
+.detailPop .right h1{font-size: 30px;color: #595959;font-weight: normal;padding-bottom: 20px}
+.detailPop .right h1 span{font-size: 12px;font-weight: normal;}
+.detailPop .right p{font-size: 12px;color: #595959;letter-spacing: 1px}
+.informationB .heading{padding-bottom: 20px}
+.informationB .heading img{vertical-align: middle;}
+.informationB .heading span{vertical-align: middle;padding-left: 14px;font-size: 14px;color: #595959}
+.fontGreen{color: #5fc47f;text-decoration: none;}
+.informationB p{padding-left: 32px;}
+.detailPop .right .informationB p{color: #6c6c6c;line-height: 18px;word-break:break-all;min-height: 18px;}
+.informationBL{float: left;}
+.informationBR{float:right;width: 334px}
+.informationBD .heading{padding-top: 32px;clear: both;}
+
+.detailPop .right .stopSK{position: absolute;display: block;width: 100px;height: 30px;line-height: 30px;text-align: center;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;right: 30px;top:-10px;cursor: pointer;}
+.detailPop .right .table{padding-right: 30px}
+.table .describe{padding-top: 50px;padding-bottom: 10px;padding-left: 10px;position: relative;}
+.table .describe a{text-decoration: underline;color: #5fc47f;display: block;cursor: pointer;position: absolute;right: 20px;bottom:10px;}
+.table table,.tableth table{border-collapse: collapse;font-size: 12px;color: #6c6c6c}
+.tableth table th,.table table td{padding-left: 10px;line-height: 36px;}
+.table .th th{background: rgb(240,240,240);font-size: 12px;color: #595959;font-weight: normal;text-align: left;}
+.table .seeDetail{display: inline-block;width: 60px;height: 22px;line-height: 22px;border-radius: 3px;background: rgb(101,197,129);text-align: center;color: #ffffff;cursor: pointer;}
+.tacticsSwitch{padding-left: 34px;}
+.tacticsSwitch p{line-height: 20px}
+.tacticsSwitch select{left:170px;bottom: 0;width:200px;}
+.tacticsSwitch input{margin-right:12px;border: 1px solid rgb(231,234,236)}
+.tacticsSwitch a{width:90px;line-height: 30px;height: 30px;display: inline-block;background: rgb(240,240,240);text-align: center;font-size: 12px;color: #676a6c;border-radius: 20px;}
+.tacticsSwitch .current{background: rgb(101,197,129);color: #ffffff}
+
+.tacticsDTitle{padding-top:50px;padding-bottom: 10px;padding-left: 10px;}
+.tacticsDescribe{border:1px solid rgb(231,234,236);padding: 10px;margin-right: 30px;}
+.tacticsDescribe select{right:10px;top:16px;border:1px solid rgb(231,234,236);font-size: 12px;}
+.tacticsDescribe select option{max-width: 150;}
+
+.eventLog .selectCondition{border-top:1px solid rgb(231,234,236);background: rgb(240,240,240);font-size: 12px;padding-left: 12px;margin-right: 30px;}
+.eventLog .selectCondition span{display: inline-block;line-height: 34px;color: #595959}
+.eventLog .selectCondition select{font-size: 12px;color: #6c6c6c;width: 100px;border: 1px solid rgb(231,234,236)}
+.eventLog .eventTable table{border-collapse: collapse;}
+.eventLog .eventTable{font-size: 12px;color: #6c6c6c;height:154px;overflow-y:scroll;margin-right:30px; }
+.eventLog .eventTable tr:hover{background: rgb(239,249,242);}
+.eventLog .eventTable td{line-height: 36px;}
+
+.eventLog .eventDetail{height:194px;overflow-y: scroll;margin-right: 30px;border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236)}
+.eventLog .eventDetail h2{font-size: 14px;color:#595959;line-height: 34px;height: 34px;}
+.eventLog .eventDetail p{line-height: 30px;height: 30px;}
+.eventLog .buttons{padding-top: 14px;margin-right: 30px;float: right;}
+.eventLog .buttons a{width:84px;line-height: 24px;height: 24px;display: inline-block;background: rgb(101,197,129);font-size: 12px;color: #ffffff;text-align: center;border-radius: 2px;}
+
+
+/*近期任务弹层*/
+.recentTaskPop{display: none;width: 662px;height: 442px;position: fixed;top: 50%;left:50%;margin-left: -331px;margin-top: -221px;z-index: 999;background: #ffffff;}
+.recentTaskPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.recentTaskPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.recentTaskPop .title .closeW:hover{background-position: -20px}
+.recentTaskPop .content{font-size: 12px;padding: 0 20px;height: 334px;}
+.recentTaskPop .content .taskType{line-height: 56px;color: #676a6c;border-bottom: 1px solid rgb(231,234,236);position: relative;}
+.recentTaskPop .content .containerTh span{display: inline-block;width: 180px;padding-left: 12px;font-weight: bold;color: #6c6c6c;line-height: 36px;}
+.recentTaskPop .content .containerTh .firstth{width: 108px;}
+.recentTaskPop .content .containerTh .lastth{width: 50px;padding-left: 0;}
+.recentTaskPop .content .container{height:242px;overflow-y: scroll;}
+.taskType .refurbishRTL{position: absolute;right: 0px;top:18px;*top:6px;display: inline-block;width:18px;height: 18px;background: url(../images/refurbish.png)}
+.taskType .refurbishRTL:hover{background-position:-18px;}
+.taskType .refurbishRTL:active{background-position: -36px;}
+.recentTaskPop .list{line-height: 36px;color: #6c6c6c;}
+.recentTaskPop .list .td{padding-left: 12px;line-height: 36px;display: inline-block;width: 180px;}
+.recentTaskPop .list .firsttd{width:108px;padding-right: 0}
+.recentTaskPop .list a{text-decoration: underline;}
+.recentTaskPop .table{padding-bottom: 2px;background: rgb(249,249,249);display: none;border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236)}
+.recentTaskPop .table .seeMore{cursor: pointer;line-height: 20px;color: #6c6c6c;display: block;background: rgb(230,230,230);text-align: center;margin:0 14px;border-radius: 10px;margin-top: 2px;}
+.recentTaskPop .table table{border-collapse: collapse;}
+.recentTaskPop .table tr{line-height: 30px;}
+.recentTaskPop .table td,.recentTaskPop .table th{padding-left: 14px;font-weight: normal;color:#6c6c6c;}
+.recentTaskPop .table .th{text-align: left;background: rgb(240,240,240)}
+.recentTaskPop .bottom{line-height: 56px;font-size: 12px;color: #6c6c6e;border-top:1px solid rgb(231,234,236);margin:0 20px;position: relative;}
+.recentTaskPop .bottom span{letter-spacing: 1px}
+.recentTaskPop .bottom a{text-align: center;width:84px;line-height: 22px;background: rgb(101,197,129);display: inline-block;color: #ffffff;border-radius: 3px;position: absolute;right:0px;top:16px;cursor: pointer;*top:-2px;}
+.recentTaskPop .bottom a:hover{background: rgb(71,172,117)}
+.recentTaskPop .list .showTaskTerIcon{display: inline-block;width: 18px;height: 18px;background: url(../images/task1.png);margin-left: 22px;}
+/*新建群组弹层*/
+.newGroupPop{display: none;width: 400px;height: 250px;position: fixed;top: 50%;left:50%;margin-left: -200px;margin-top: -235px;z-index: 999;background: #ffffff;}
+.newGroupPop .title{font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.newGroupPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.newGroupPop .title .closeW:hover{background-position: -20px}
+.newGroupPop .content span{font-size: 14px;color: #676a6c;display: block;padding-left: 48px;padding-top: 44px;}
+.newGroupPop .content input{padding-left: 12px;color: #6c6c6c;outline: none;display: block;margin-left: 36px;margin-top: 10px;line-height: 30px;height: 30px;width:314px;border: 1px solid rgb(229,230,231)}
+.newGroupPop .content a{cursor:pointer;font-size: 12px;margin-left: 264px;display: inline-block;color: #ffffff;background: rgb(101,197,129);line-height: 22px;width: 100px;border-radius: 3px;margin-top: 36px;text-align: center;}
+.newGroupPop .content a:hover{background: rgb(71,172,117)}
+
+.newGroupPop .content .placeholder{position: absolute;top:8px;left:50px;font-size: 12px;color: #777777;}
+.newGroupPop .content  .unusualTxt{font-size: 12px;color: #f37e00;padding-top: 6px;right: 38px;top:34px;display: none;}
+.newGroupPop .content  .unusualTxt img{vertical-align: middle;margin-bottom: 4px;margin-left: 10px}
+
+/*快速查杀/全盘查杀/终端升级弹层*/
+
+.fastSKPop, .overallSKPop,.terminalUpPop{display: none;width: 662px;height: 442px;position: fixed;top: 50%;left:50%;margin-left: -331px;margin-top: -270px;z-index: 999;background: #ffffff;}
+.fastSKPop .title,.overallSKPop .title,.terminalUpPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.fastSKPop .title .closeW,.overallSKPop .title .closeW,.terminalUpPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.fastSKPop .title .closeW:hover,.overallSKPop .title .closeW:hover,.terminalUpPop .title .closeW:hover{background-position: -20px}
+.fastSKPop .describe,.overallSKPop .describe,.terminalUpPop .describe{line-height: 60px;font-size: 12px;color: #676a6c;position: relative;padding-left: 32px}
+.fastSKPop .describe span,.overallSKPop .describe span,.terminalUpPop .describe span{position: absolute;top:21px;right: 30px;cursor: pointer;width: 18px;height: 18px;display: inline-block;background: url(../images/gear.png)}
+.fastSKPop .describe span:hover,.overallSKPop .describe span:hover{background-position: -18px;}
+.fastSKPop .describe span:active,.overallSKPop .describe span:active{background-position: -36px;}
+.fastSKPop .table,.fastSKPop .tableCon,.fastSKPop .tableth,.overallSKPop .table,.overallSKPop .tableCon,.overallSKPop .tableth,.terminalUpPop .table,.terminalUpPop .tableCon,.terminalUpPop .tableth{color: #6c6c6c;font-size: 12px;margin: 0 22px;}
+.fastSKPop .tableth,.overallSKPop .tableth,.terminalUpPop .tableth{border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236);background: rgb(240,240,240);padding-right: 18px;}
+.fastSKPop .tableth table,.fastSKPop .table table,.fastSKPop .tableCon table,.overallSKPop .tableth table,.overallSKPop .table table,.overallSKPop .tableCon table,.terminalUpPop .tableth table,.terminalUpPop .table ,.terminalUpPop .tableCon table{border-collapse: collapse;}
+.fastSKPop .tableth th,.fastSKPop .table td,.fastSKPop .tableCon td,.overallSKPop .tableth th,.overallSKPop .table td,.overallSKPop .tableCon td,.terminalUpPop .tableth th,.terminalUpPop .table td,.terminalUpPop .tableCon td{line-height: 35px;padding-left: 10px;font-weight: normal;}
+.fastSKPop .tableth th,.overallSKPop .tableth th,.terminalUpPop .tableth th{color: #676a6c;text-align: left;}
+/* .fastSKPop .table,.fastSKPop .tableCon,.overallSKPop .table,.overallSKPop .tableCon,.terminalUpPop .table,.terminalUpPop .tableCon{height: 246px;overflow-y:scroll;overflow-x:hidden } */
+.fastSKPop .table table,.overallSKPop .table table,.terminalUpPop .table table,.fastSKPop .tableCon table,.overallSKPop .tableCon table,.terminalUpPop .tableCon table{border:0;}
+.fastSKPop .table tr:hover,.overallSKPop .table tr:hover,.terminalUpPop .table tr:hover,.fastSKPop .tableCon tr:hover,.overallSKPop .tableCon tr:hover,.terminalUpPop .tableCon tr:hover{background: rgb(249,249,249)}
+.fastSKPop .buttons,.overallSKPop .buttons,.terminalUpPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
+.fastSKPop .buttons a,.overallSKPop .buttons a,.terminalUpPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.fastSKPop .buttons a:hover,.overallSKPop .buttons a:hover,.terminalUpPop .buttons a:hover{background: rgb(71,172,117)}
+
+.fastSKCPop,.overallSKCPop{display: none;width: 662px;height: 442px;position: fixed;top: 50%;left:50%;margin-left: -331px;margin-top: -270px;z-index: 999;background: #ffffff;}
+.fastSKCPop .title,.overallSKCPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.fastSKCPop .title .closeWW,.overallSKCPop .title .closeWW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.fastSKCPop .title .closeWW:hover,.overallSKCPop .title .closeWW:hover{background-position: -20px}
+.fastSKCPop .buttons,.overallSKCPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
+.fastSKCPop .buttons a,.overallSKCPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.fastSKCPop .buttons a:hover,.overallSKCPop .buttons a:hover{background: rgb(71,172,117)}
+.fastSKCPop .buttons .recoverDefault,.overallSKCPop .buttons .recoverDefault{float: left}
+
+.fastSKCPop .content,.overallSKCPop .content{height: 346px;overflow-y:scroll;margin:0 22px; }
+.setBlock{padding: 0 20px;border-bottom: 1px solid rgb(231,234,236);padding-bottom: 10px;color: #6c6c6c;padding-top: 10px}
+.setBlockLast{border-bottom:0px; }
+.setBlock h4{line-height: 30px;font-size: 14px;font-weight: normal;}
+
+.setBlock p{font-size: 12px;line-height: 26px;}
+.setBlock .leftP{float: left;margin-right: 104px}
+.setBlock p span{vertical-align: middle;}
+.setBlock p input{vertical-align: middle;margin-right: 20px;}
+.setBlock p input[name=overallPara1],.setBlock p input[name=overallPara2]{margin-left: 10px;margin-right: 10px;outline: none;border: 1px solid rgb(231,234,236);padding-left: 10px;width:100px;line-height: 20px;height: 20px;color: #333333;font-size: 12px}
+/*删除终端关机重启弹层*/
+.DPSPop{display: none;width: 662px;height: 442px;position: fixed;top: 50%;left:50%;margin-left: -331px;margin-top: -260px;z-index: 999;background: #ffffff;}
+.DPSPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.DPSPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.DPSPop .title .closeW:hover{background-position: -20px}
+.DPSPop .describe{line-height: 60px;font-size: 12px;color: #676a6c;position: relative;padding-left: 32px}
+.DPSPop .describe span{position: absolute;top:21px;right: 30px;cursor: pointer;width: 18px;height: 18px;display: inline-block;background: url(../images/gear.png)}
+.DPSPop .table,.DPSPop .tableth,.DPSPop .tableCon{color: #6c6c6c;font-size: 12px;margin: 0 22px;}
+.DPSPop .tableth{padding-right: 18px;background: rgb(240,240,240);border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236)}
+.DPSPop .tableth table,.DPSPop .tableCon table{border-collapse: collapse;}
+.DPSPop .tableth tr{background: rgb(240,240,240);}
+.DPSPop .tableth th,.DPSPop .tableCon td{line-height: 35px;padding-left: 10px;font-weight: normal;}
+.DPSPop .tableth th{color: #676a6c;text-align: left;}
+/* .DPSPop .table,.DPSPop .tableCon{height: 246px;overflow-y:scroll;overflow-x:hidden } */
+.DPSPop .table table{border:0;}
+.DPSPop .table tr:hover{background: rgb(249,249,249)}
+.DPSPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
+.DPSPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.DPSPop .buttons a:hover{background: rgb(71,172,117)}
+/*修改群组名称*/
+.modifyGNPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
+.modifyGNPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.modifyGNPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.modifyGNPop .title .closeW:hover{background-position: -20px}
+.modifyGNPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.modifyGNPop .right{float: right;padding-right: 34px;position: relative;}
+.modifyGNPop .describe{color: #676a6c;font-size: 14px;padding-top: 40px;padding-left: 12px}
+.modifyGNPop .right .input{padding-top: 12px}
+.modifyGNPop .right input{width:318px;line-height: 30px;height:30px;border: 1px solid rgb(229,230,231);padding-left: 12px;}
+.modifyGNPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 32px;}
+.modifyGNPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.modifyGNPop .right .unusualTxt{font-size: 12px;color: #f37e00;padding-top: 6px;position: absolute;right: 36px;top:104px;display: none;}
+.modifyGNPop .right .unusualTxt img{vertical-align: middle;margin-bottom: 4px;margin-left: 10px}
+/*修改终端名称*/
+.editTNPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -126px;z-index: 999;background: #ffffff;}
+.editTNPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.editTNPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.editTNPop .title .closeW:hover{background-position: -20px}
+.editTNPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.editTNPop .right{float: right;padding-right: 34px}
+.editTNPop .describe{color: #676a6c;font-size: 14px;padding-top: 40px;padding-left: 12px}
+.editTNPop .right .input{padding-top: 12px}
+.editTNPop .right input{width:318px;line-height: 34px;height:34px;border: 1px solid rgb(229,230,231);padding-left: 12px;}
+.editTNPop .buttons,.waitTipPop .buttons {padding-right: 20px;margin:0 22px;padding-top: 38px;}
+.editTNPop .buttons a,.waitTipPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+
+/*删除群组*/
+.deleteGPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
+.deleteGPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.deleteGPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.deleteGPop .title .closeW:hover{background-position: -20px}
+.deleteGPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.deleteGPop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 32px}
+.deleteGPop .right .describe{line-height: 30px}
+.deleteGPop .right .font12{font-size: 12px;line-height: 24px;}
+.deleteGPop .right .describe font{display: inline-block;max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;vertical-align: middle;}
+.deleteGPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 27px;}
+
+.deleteGPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px;border: 1px solid #63c380 }
+.deleteGPop .buttons .sure{background: #ffffff;color: #63c380}
+/*移动分组*/
+.moveGPop{display: none;width: 662px;height: 442px;position: fixed;top: 50%;left:50%;margin-left: -331px;margin-top: -260px;z-index: 999;background: #ffffff;}
+.moveGPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.moveGPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.moveGPop .title .closeW:hover{background-position: -20px}
+.moveGPop .describe{font-size: 14px;color: #676a6c;line-height: 60px;padding-left: 32px}
+.moveGPop .describe .groupsSelect{right: 22px;top:18px;width: 200px;font-size: 12px;color: #676a6c;height: 24px;line-height: 24px;}
+.moveGPop .table,.moveGPop .tableth,.moveGPop .tableCon{color: #6c6c6c;font-size: 12px;margin: 0 22px;}
+.moveGPop .tableth{padding-right: 18px;background: rgb(240,240,240);border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236)}
+.moveGPop .tableth table,.moveGPop .table table,.moveGPop .tableCon table{border-collapse: collapse;}
+.moveGPop .tableth tr{background: rgb(240,240,240);}
+.moveGPop .tableth th,.moveGPop .table td,.moveGPop .tableCon td{line-height: 35px;padding-left: 10px;font-weight: normal;}
+.moveGPop .tableth th{color: #676a6c;text-align: left;}
+/* .moveGPop .table,.moveGPop .tableCon{height: 246px;overflow-y:scroll;overflow-x:hidden;border-bottom: 1px solid rgb(231,234,236) } */
+.moveGPop .table table,.moveGPop .tableCon table{border:0;}
+.moveGPop .table tr:hover,.moveGPop .tableCon tr:hover{background: rgb(249,249,249)}
+.moveGPop .sureButton{cursor: pointer;font-size: 12px;width: 100px;text-align: center;line-height: 22px;height: 22px;display: inline-block;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;margin-top: 12px;margin-right: 20px; }
+.moveGPop .sureButton:hover{background: rgb(71,172,117)}
+
+/*发送消息*/
+.sendMPop,.remoteDeskPop{display: none;width: 662px;height: 442px;position: fixed;top: 50%;left:50%;margin-left: -331px;margin-top: -260px;z-index: 999;background: #ffffff;}
+.sendMPop .title,.remoteDeskPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.sendMPop .title .closeW,.remoteDeskPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.sendMPop .title .closeW:hover,.remoteDeskPop .title .closeW:hover{background-position: -20px}
+.sendMPop .describe{font-size: 14px;color: #676a6c;line-height: 48px;padding-left: 32px}
+.sendMPop .textarea{position: relative;margin-top: 10px;}
+.sendMPop textarea,.remoteDeskPop textarea{font-size: 12px;width: 596px;height: 50px;margin: 0 auto;display: block;resize:none;outline: none;border:1px solid rgb(229,230,231);padding: 10px}
+.sendMPop .sureButton,.remoteDeskPop .sureButton,.remoteDeskPop .closeBtn{cursor: pointer;font-size: 12px;width: 100px;text-align: center;line-height: 22px;height: 22px;display: inline-block;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;margin-top: 12px;margin-right: 20px; }
+.sendMPop .sureButton:hover,.remoteDeskPop .sureButton:hover{background: rgb(71,172,117)}
+.sendMPop .textarea .placeholder,.remoteDeskPop .textarea .placeholder{position: absolute;left:30px;top:10px;font-size: 12px;color: #a1a1a1}
+.sendMPop .table,.sendMPop .tableth,.sendMPop .tableCon{color: #6c6c6c;font-size: 12px;margin: 0 22px;}
+.sendMPop .tableth{padding-right: 18px;background: rgb(240,240,240);border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236)}
+.sendMPop .tableth table,.sendMPop .table table,.sendMPop .tableCon table{border-collapse: collapse;}
+.sendMPop .tableth tr{background: rgb(240,240,240);}
+.sendMPop .tableth th,.sendMPop .table td,.sendMPop .tableCon td{line-height: 35px;padding-left: 10px;font-weight: normal;}
+.sendMPop .tableth th{color: #676a6c;text-align: left;}
+/* .sendMPop .table,.sendMPop .tableCon{height: 176px;overflow-y:scroll;overflow-x:hidden;border-bottom: 1px solid rgb(231,234,236) } */
+.sendMPop .table table,.sendMPop .tableCon table{border:0;}
+.sendMPop .table tr:hover,.sendMPop .tableCon tr:hover{background: rgb(249,249,249)}
+/*导出终端信息弹层*/
+/*删除群组*/
+.exportTIPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
+.exportTIPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.exportTIPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.exportTIPop .title .closeW:hover{background-position: -20px}
+.exportTIPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.exportTIPop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 68px}
+.exportTIPop .right .describe{line-height: 30px}
+/*远程桌面*/
+.remoteDeskPop{width: 520px;height: 326px;}
+.remoteDeskPop .remoteItem{line-height: 40px;color: #6c6c6c;font-size: 12px;}
+.remoteDeskPop .remoteItem label{margin-left:22px ;display: inline-block;width: 65px;}
+.remoteDeskPop .remoteItem input[type=radio]{margin-right:5px;vertical-align: middle;}
+.remoteDeskPop .textarea{position: relative;}
+.remoteDeskPop textarea{width: 370px;height: 140px;display: inline-block;color: rgb(108, 108, 108);}
+.remoteDeskPop .closeWW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);}
+.remoteDeskPop .buttons{margin:0 22px;padding-top: 12px;    border-top: 1px solid rgb(231,234,236);}
+.remoteDeskPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.remoteDeskPop>.buttons a:hover{background: rgb(71,172,117)}
+.waitTipPop{width: 482px;height: 252px;position: fixed;top: 50%;left: 50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: rgb(255, 255, 255);display: none;}
+.waitTipPop .title {position: relative;font-size: 14px;color: rgb(103, 106, 108);padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.waitTipPop .title .closeW {cursor: pointer;position: absolute;top: 16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);}
+.waitTipPop .left {float: left; padding-left: 34px;padding-top: 44px;}
+.waitTipPop .right {float: left;padding-left: 20px; font-size: 14px;color: rgb(103, 106, 108);padding-top: 44px;}
+.waitTipPop .right .describe {line-height: 35px;}
+
+/*终端名称限制*/
+.fastSKPop .filePath,.overallSKPop .filePath,.sendMPop .filePath,.moveGPop .filePath,.terminalUpPop .filePath,.DPSPop .filePath{width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: top;vertical-align: middle;}
+
+/* 表格样式 */
+.tableCon table tbody{height: 246px;}

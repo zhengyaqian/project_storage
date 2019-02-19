@@ -1,0 +1,558 @@
+
+/*表格右上方按钮样式*/
+.search{background: #ffffff;margin-top: 10px;border-bottom: 1px solid rgb(231,234,236);position: relative;height:62px;}
+.tabButton{padding-right: 20px;line-height: 62px;font-size: 12px;right: 0px; }
+.tabButton a{width: 84px;height: 26px;line-height: 26px;border: 1px solid rgb(231,234,236);display: inline-block;color: #676a6c}
+.tabButton .current{background: #63c380;color: #ffffff;border: 1px solid #63c380}
+.tabButton .detailButton{border-top-left-radius: 5px;border-bottom-left-radius:5px;}
+.tabButton .terminalButton{border-top-right-radius: 5px;border-bottom-right-radius:5px;}
+.tabButton a:hover{background: #f7f7f7}
+.tabButton .current:hover{background: #63c380}
+
+.tabSel{border-bottom: 2px solid rgb(231,234,236);height: 44px;background: #ffffff}
+.tabSel a{cursor: pointer;display: inline-block;line-height: 44px;width: 130px;text-align: center;font-size: 12px;color: #676a6c;text-decoration: none;}
+.tabSel a:hover{border-bottom: 2px solid #c6c6c6;}
+.tabSel .current{border-bottom: 2px solid rgb(101,197,128);color: #63c380}
+.tabSel .current:hover{border-bottom: 2px solid rgb(101,197,128);}
+.filterBlock{color:#676a6c;font-size: 12px;padding-top: 13px;padding-bottom: 13px;background: #ffffff}
+.filterBlock p{line-height: 39px}
+.filterBlock p .bu{line-height: 22px;padding:0 14px;border: 1px solid rgb(231,234,236);cursor: pointer;display: inline-block;height:22px;}
+.filterBlock p .bu:hover{background: #f7f7f7}
+.filterBlock p .bu:nth-child(2){border-top-left-radius: 4px;border-bottom-left-radius: 4px;}
+.filterBlock p .bu:last-child{border-top-right-radius: 4px;border-bottom-right-radius: 4px;}
+.filterBlock p .current{background-color: rgb(101,197,128);color: #ffffff;border: 1px solid rgb(101,197,128)}
+.filterBlock p .current:hover{background-color: rgb(101,197,128);}
+.filterBlock .left,.filterBlock .middle,.filterBlock .right{float: left;}
+.filterBlock .middle{position: relative;padding-left: 4px;display: none;z-index: 9;background: #ffffff}
+.filterBlock .middle .zhi{padding: 0 4px}
+.filterBlock .middle .img1{position: absolute;right: 169px;top:9px;top:8px\0;}
+.filterBlock .middle .img2{position: absolute;right: 1px;top:9px;top:8px\0;}
+.filterBlock .conditionN{padding-right: 4px;padding-left: 20px}
+.searchBlock .condition{padding-left: 20px;}
+.filterBlock .right select{width:95px;text-align: center;border: 1px solid rgb(231,234,236);color:#6c6c6c;}
+#specialTime select{width:74px;text-align: center;border: 1px solid rgb(231,234,236);font-size: 12px;color: #6c6c6c}
+.searchBlock{font-size: 12px;color: #676a6c;line-height: 62px;background: #ffffff;position: absolute;}
+.searchBlock select{border:1px solid rgb(231,234,236);width: 120px;height: 28px;line-height: 28px;vertical-align: middle;color: #6c6c6c}
+.searchBlock .textbox input{font-size: 12px;width: 186px;height: 26px;border: 1px solid rgb(231,234,236);margin-left: 20px;line-height: 30px;outline: none;padding-left: 14px;vertical-align: middle;}
+.searchBlock .textbox{position: relative;display: inline-block;}
+.searchBlock .textbox .placeholder{position: absolute;display: block;top:1px;left:30px;color: #989898;}
+.searchBlock .textbox img{vertical-align: middle;top:14px;border: 1px solid #63c380;padding: 5px 11px;right: -39px;top:1px;top:15px\0;background: #63c380;border-top-right-radius:4px;border-bottom-right-radius:4px;}
+.searchBlock .textbox img:hover{background: rgb(71,172,117);cursor: pointer;}
+@-moz-document url-prefix(){
+	.filterBlock .middle img{top:8px;}
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {.searchBlock .textbox img{top:15px;}}
+.tableContainer{background: #ffffff}
+.hTTableContainer{margin-top: 10px;padding-top: 14px;}
+/* .table{overflow-y: scroll;overflow-x:hidden;border-bottom: 1px solid rgb(231,234,236);position: relative;} */
+.table,.main .tableth{margin: 0 20px;background: #ffffff;}
+.main .tableth{padding-right: 18px;border-bottom: 1px solid rgb(231,234,236)}
+
+.table table{border-collapse: collapse;}
+.table table tbody tr:nth-child(odd){background:rgb(249,249,249);}
+.table table tr{border-bottom: 1px solid rgb(231,234,236)}
+
+
+
+/*.tableth th:nth-child(1)::after{content: "";}*/
+.table td{color:#6c6c6c;font-size: 12px;line-height: 39px;padding-left: 22px;white-space: nowrap;}
+.table td font{font-size: 12px;}
+.table .filePath{width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: top;vertical-align: middle;}
+.taskDetailPop .filePath{width: 110px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: top;}
+.table .seeDetail{text-decoration: underline;}
+.table .detailFloat{position: absolute;display: none;line-height: 20px;background: #ffffff;border:1px solid rgb(199,199,199);border-radius: 5px;right:90px ;top:64px;padding:16px 24px;z-index:1;word-wrap:break-word;white-space:pre-wrap;width: 400px;margin-top: -50px}
+.table .detailFloat h4{font-weight: bold;font-size: 12px;color: #676a6c;margin-bottom: 20px}
+.table .detailFloat h4 span{float: right;width: 20px;height: 20px;background: url(../images/closeW.png);display: block;}
+.table .detailFloat h4 span:hover{background-position: -20px;}
+/*日期样式*/
+#txtBeginDate,#txtEndDate{width:72px;height:20px;border:1px solid rgb(231,234,236);color: #676a6c;padding-left: 6px;font-size: 12px;line-height: 20px}
+.filterBlock p .calendar .current{background: #ffffff;}
+#txtBeginDateCalendar{left:4px;top:36px;}
+#txtEndDateCalendar{left:104px;top:36px;}
+/*分页样式*/
+.table .tcdPageCode{padding: 15px 20px;text-align: left;color: #ccc;font-size: 12px}  
+.tcdPageCode a{display: inline-block;color: #6a6c6e;display: inline-block;height: 25px;line-height: 25px; padding: 0 10px;border: 1px solid rgb(221,221,221);margin: 0 2px;border-radius: 4px;vertical-align: middle;}  
+.tcdPageCode a:hover{text-decoration: none;background: rgb(244,244,244)}  
+.tcdPageCode span.current{display: inline-block;height: 25px;line-height: 25px;padding: 0 10px;margin: 0 2px;color: #fff;background-color: rgb(101,197,129);    border: 1px solid rgb(101,197,129);border-radius: 4px;vertical-align: middle;}  
+.tcdPageCode span.disabled{    display: inline-block;height: 25px;line-height: 25px;padding: 0 10px; margin: 0 2px;color: #bfbfbf;background: #f2f2f2;border: 1px solid #bfbfbf;border-radius: 4px;vertical-align: middle;}
+
+/*查看历史任务详情*/
+.taskDetailPop{display: none;width: 745px;height: 500px;position: fixed;top: 50%;left:50%;margin-left: -373px;margin-top: -260px;z-index: 999;background: #ffffff;}
+.taskDetailPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 48px;}
+.taskDetailPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.taskDetailPop .title .closeW:hover{background-position: -20px}
+.taskDetailPop .describe{line-height: 46px;font-size: 12px;color: #676a6c;position: relative;padding-left: 32px;}
+.taskDetailPop .describebg{background: #f9f9f9}
+.taskDetailPop .describe img{position: absolute;top:21px;right: 30px;cursor: pointer;}
+.taskDetailPop .tableth{background: rgb(240,240,240);border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236);padding-right: 18px;}
+.taskDetailPop .taskDetailTable,.taskDetailPop .tableth{color: #6c6c6c;font-size: 12px;margin:0 22px;}
+.taskDetailPop .tableth table,.taskDetailPop .taskDetailTable table{border-collapse: collapse;}
+.taskDetailPop .tableth tr{background: rgb(240,240,240);}
+.taskDetailPop .tableth th,.taskDetailPop .taskDetailTable td{line-height: 35px;padding-left: 10px;font-weight: normal;}
+.taskDetailPop .tableth th{color: #676a6c;text-align: left;background: rgb(240,240,240);line-height: 34px;}
+.taskDetailPop .taskDetailTable{height: 315px;border-bottom: 1px solid rgb(231,234,236);overflow:hidden; }
+.taskDetailPop .taskDetailTable table{border:0;}
+.taskDetailPop .taskDetailTable tr:hover{background: rgb(249,249,249)}
+.taskDetailPop .taskDetailTable td div{height:68px;line-height: 34px;overflow: hidden;position: relative;}
+.taskDetailPop .taskDetailTable td div::after{content: "..."; position: absolute; bottom: 0; right: 0; padding-left: 40px;background: -webkit-linear-gradient(left, transparent, #fff 55%);background: -o-linear-gradient(right, transparent, #fff 55%);background: -moz-linear-gradient(right, transparent, #fff 55%);background: linear-gradient(to right, transparent, #fff 55%);}
+.taskDetailPop .taskDetailTable td div.detailFloat::after{content: ""; }
+.taskDetailPop .taskDetailTable{overflow-y: scroll;}
+/*.taskDetailPop .taskDetailTable::-webkit-scrollbar {width: 0;}*/
+.taskDetailPop .describe span{position: absolute;top:14px;right: 30px;cursor: pointer;width: 18px;height: 18px;display: inline-block;background: url(../images/gear.png)}
+.taskDetailPop .describe span:hover{background-position: -18px;}
+.taskDetailPop .describe span:active{background-position: -36px;}
+.taskDetailPop .softInf{padding-left: 32px;padding-right: 22px;height:61px;padding-top: 10px;}
+.taskDetailPop .softInf span{font-size: 12px;color: #6c6c6c;margin-right: 38px;}
+.taskDetailPop .softInf .distrfName{width: 692px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: top;}
+.taskDetailPop .softInf p{font-size: 12px;color: #6c6c6c;overflow-y:scroll;height: 34px;word-break:break-all; }
+.taskDetailPop .messageTxt{font-size: 12px;color: #6c6c6c;padding-left: 32px;height: 61px;padding-right: 22px;padding-top: 10px;}
+.taskDetailPop .messageTxt p{word-break:break-all;overflow-y: scroll;height: 52px;}
+/*任务参数弹层*/
+.fastSKCPop,.overallSKCPop{display: none;width: 745px;height: 500px;position: fixed;top: 50%;left:50%;margin-left: -373px;margin-top: -260px;z-index: 999;background: #ffffff;}
+.fastSKCPop .title,.overallSKCPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 48px;}
+.fastSKCPop .title .closeWW,.overallSKCPop .title .closeWW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.fastSKCPop .title .closeWW:hover,.overallSKCPop .title .closeWW:hover{background-position: -20px}
+.fastSKCPop .buttons,.overallSKCPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
+.fastSKCPop .buttons a,.overallSKCPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 84px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.fastSKCPop .buttons a:hover,.overallSKCPop .buttons a:hover{background: rgb(71,172,117)}
+.fastSKCPop .buttons .recoverDefault,.overallSKCPop .buttons .recoverDefault{float: left}
+
+.fastSKCPop .content,.overallSKCPop .content{height: 407px;overflow-y:scroll;margin:0 22px;border-bottom: 1px solid rgb(231,234,236) }
+.setBlock{padding: 0 20px;border-bottom: 1px solid rgb(231,234,236);padding-bottom: 10px;color: #6c6c6c;padding-top: 10px}
+.setBlockLast{border-bottom: 0px;}
+.setBlock h4{line-height: 30px;font-size: 14px;font-weight: normal;}
+
+.setBlock p{font-size: 12px;line-height: 26px;}
+.setBlock .leftP{float: left;margin-right: 104px}
+.setBlock p span{vertical-align: middle;}
+.setBlock p input{vertical-align: middle;margin-right: 20px;}
+.setBlock p input[name=overallPara1],.setBlock p input[name=overallPara2]{margin-left: 10px;margin-right: 10px;outline: none;border: 1px solid rgb(231,234,236);padding-left: 10px;width:50px;line-height: 20px;height: 20px;color: #333333;font-size: 12px}
+.setBlock p input[name=overallPara2]{width:150px;}
+/*查看弹窗中详情*/
+.taskDetailTable td div.detailFloat{height:auto;position: fixed;display: none;width: 406px;line-height: 20px;background: #ffffff;border:1px solid rgb(199,199,199);border-radius: 5px;left: 50%;top:50%;padding:16px 24px;z-index: 9;word-wrap:break-word;white-space:pre-wrap;margin-left: -227px;margin-top: -120px}
+.taskDetailTable .detailFloat h4{font-weight: bold;font-size: 12px;color: #676a6c;margin-bottom: 20px}
+.taskDetailTable .detailFloat h4 span{float: right;width: 20px;height: 20px;background: url(../images/closeW.png);display: block;}
+.taskDetailTable .detailFloat h4 span:hover{background-position: -20px;}
+
+/*文件管理*/
+/*软件统计*/
+.softwareSTable .filePath{width: 300px;}
+.tabButton .uninstallM{border-radius: 2px;}
+.tabButton .uninstallM:hover{background: rgb(71,172,117)}
+.tabButton .uninstallMB{background: rgb(101,197,129);color: #ffffff;border: 1px solid rgb(101,197,129);border-radius: 2px;}
+.tabButton .uninstallMB:hover{background: rgb(71,172,117);border: 1px solid rgb(71,172,117)}
+.taskDetailTableSS .filePath{width: 220px;}
+/*详情弹层*/
+.softSDetailPop{width: 662px;height: 442px;margin-left: -331px;margin-top: -250px;}
+.softSDetailPop .taskDetailTable{height: 245px;}
+.softSDetailPop .title{line-height: 50px;}
+.softSDetailPop .describe{line-height: 53px;}
+/*卸载软件弹层*/
+.uninstallSPop{display: none;width: 662px;height: 513px;position: fixed;top: 50%;left:50%;margin-left: -331px;margin-top: -250px;z-index: 999;background: #ffffff;}
+.uninstallSPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.uninstallSPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.uninstallSPop .title .closeW:hover{background-position: -20px}
+.uninstallSPop .searchTerminal{font-size: 12px;color: #676a6c;line-height: 50px;background: #ffffff}
+.uninstallSPop .searchTerminal .textbox input{font-size: 12px;width: 562px;height: 26px;border: 1px solid rgb(231,234,236);margin-left: 22px;line-height: 26px;outline: none;padding-left: 14px;vertical-align: middle;color:#6c6c6c}
+.uninstallSPop .searchTerminal .textbox{position: relative;display: inline-block;}
+.uninstallSPop .searchTerminal .textbox .placeholder{position: absolute;display: block;top:1px;left:30px;color: #989898;}
+.uninstallSPop .searchTerminal .textbox img{vertical-align: middle;top:14px;border: 1px solid #63c380;padding: 5px 11px;right: -39px;#top:1px;top:15px\0;background: #63c380;border-top-right-radius:4px;border-bottom-right-radius:4px;}
+.uninstallSPop .searchTerminal .textbox img:hover{background: rgb(71,172,117);cursor: pointer;}
+.uninstallSPop .uStable,.uninstallSPop .uStableth{color: #6c6c6c;font-size: 12px;margin: 0 22px;}
+.uninstallSPop .uStableth{border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236);background: rgb(240,240,240);padding-right: 18px;}
+.uninstallSPop .uStableth table,.uninstallSPop .uStable table{border-collapse: collapse;}
+.uninstallSPop .uStableth th,.uninstallSPop .uStable td{line-height: 35px;padding-left: 10px;font-weight: normal;}
+.uninstallSPop .uStableth th{color: #676a6c;text-align: left;}
+.uninstallSPop .uStable{height: 176px;overflow-y:scroll;overflow-x:hidden;border-bottom: 1px solid rgb(231,234,236)}
+.uninstallSPop .uStable table{border:0;}
+.uninstallSPop .uStable tr:hover{background: rgb(249,249,249)}
+.uninstallSPop .textarea{position: relative;margin-top: 10px;}
+.uninstallSPop .textarea .placeholder{position: absolute;left:30px;top:10px;font-size: 12px;color: #a1a1a1}
+.uninstallSPop textarea{font-size: 12px;width: 596px;height: 50px;margin: 0 auto;display: block;resize:none;outline: none;border:1px solid rgb(229,230,231);padding: 10px;color: #6c6c6c}
+.uninstallSPop .buttons{margin:0 22px;padding-top: 12px;}
+.uninstallSPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.uninstallSPop .buttons a:hover{background: rgb(71,172,117)}
+
+/*.uninstallSCPop{display: none;width: 662px;height: 442px;position: fixed;top: 50%;left:50%;margin-left: -331px;margin-top: -186px;z-index: 999;background: #ffffff;}
+.uninstallSCPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.uninstallSCPop .title .closeWW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.uninstallSCPop .title .closeWW:hover{background-position: -20px}
+.uninstallSCPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
+.uninstallSCPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 84px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.uninstallSCPop .buttons a:hover{background: rgb(71,172,117)}
+.uninstallSCPop .buttons .recoverDefault{float: left}
+
+.uninstallSCPop .content{height: 346px;margin:0 34px; }
+.uninstallSCPop .content .describe{font-size: 12px;font-weight: bold;color: #6c6c6c;padding-top: 14px;padding-bottom: 10px;}
+.uninstallSCPop input{border: 1px solid rgb(229,230,231);font-size: 12px;color: #6c6c6c;height:24px;line-height: 24px;padding-left: 10px;padding-right: 10px;}
+.uninstallSCPop .titleText input{width: 570px;padding-left: 10px;padding-right: 10px;}
+.uninstallSCPop textarea{margin-top: 10px;display: block;width:570px;padding: 10px;font-size: 12px;color: #6c6c6c;border: 1px solid rgb(229,230,231);resize:none;height: 230px;outline: none;}*/
+/*卸载管理弹层*/
+.uninstallMPop{display: none;width: 662px;height: 442px;position: fixed;top: 50%;left:50%;margin-left: -331px;margin-top: -250px;z-index: 999;background: #ffffff;}
+.uninstallMPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.uninstallMPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.uninstallMPop .title .closeW:hover{background-position: -20px}
+.uninstallMPop .uMtable,.uninstallMPop .uMtableth{color: #6c6c6c;font-size: 12px;margin: 0 22px;}
+.uninstallMPop .uMtableth{border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236);background: rgb(240,240,240);padding-right: 18px;margin-top: 10px;}
+.uninstallMPop .uMtableth table,.uninstallMPop .uMtable table{border-collapse: collapse;}
+.uninstallMPop .uMtableth th,.uninstallMPop .uMtable td{line-height: 36px;padding-left: 10px;font-weight: normal;}
+.uninstallMPop .uMtableth th{color: #676a6c;text-align: left;}
+.uninstallMPop .uMtable{height: 310px;overflow-y:scroll;overflow-x:hidden;border-bottom: 1px solid rgb(231,234,236)}
+.uninstallMPop .uMtable table{border:0;}
+.uninstallMPop .uMtable tr:hover{background: rgb(249,249,249)}
+
+/*近期任务弹层*/
+.recentTaskPop{display: none;width: 662px;height: 442px;position: fixed;top: 50%;left:50%;margin-left: -331px;margin-top: -250px;z-index: 999;background: #ffffff;}
+.recentTaskPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.recentTaskPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.recentTaskPop .title .closeW:hover{background-position: -20px}
+.recentTaskPop .content{font-size: 12px;padding: 0 20px;height: 324px;padding-top: 10px}
+.recentTaskPop .content .taskType{line-height: 56px;color: #676a6c;border-bottom: 1px solid rgb(231,234,236);position: relative;}
+.recentTaskPop .content .containerTh{border-bottom: 1px solid rgb(231,234,236);background: rgb(240,240,240);border-top: 1px solid rgb(231,234,236)}
+.recentTaskPop .content .containerTh span{display: inline-block;width: 150px;padding-left: 12px;font-weight: bold;color: #6c6c6c;line-height: 36px;}
+.recentTaskPop .content .containerTh .firstth{width: 200px;}
+.recentTaskPop .content .containerTh .lastth{width: 50px;}
+.recentTaskPop .content .container{height:286px;overflow-y: scroll;}
+.taskType .refurbishRTL{position: absolute;right: 0px;top:18px;*top:6px;display: inline-block;width:18px;height: 18px;background: url(../images/refurbish.png)}
+.taskType .refurbishRTL:hover{background-position:-18px;}
+.taskType .refurbishRTL:active{background-position: -36px;}
+.recentTaskPop .list{line-height: 36px;color: #6c6c6c;}
+.recentTaskPop .list .td{padding-left: 12px;line-height: 36px;display: inline-block;width: 150px;}
+.recentTaskPop .list .firsttd{width:200px;padding-right: 0}
+.recentTaskPop .list .lasttd{width:50px;padding-right: 0}
+.recentTaskPop .list a{text-decoration: underline;}
+.recentTaskPop .table{padding-bottom: 2px;background: rgb(249,249,249);display: none;border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236);overflow-y: visible;margin: 0;}
+.recentTaskPop .table .seeMore{cursor: pointer;line-height: 20px;color: #6c6c6c;display: block;background: rgb(230,230,230);text-align: center;margin:0 14px;border-radius: 10px;margin-top: 2px;}
+.recentTaskPop .table table{border-collapse: collapse;}
+.recentTaskPop .table tr{line-height: 30px;border-bottom: 0px;}
+.recentTaskPop .table td,.recentTaskPop .table th{padding-left: 14px;font-weight: normal;color:#6c6c6c;text-align: left;}
+.recentTaskPop .table .th{text-align: left;background: rgb(240,240,240)}
+.recentTaskPop .table .filePath{width: auto;max-width: 226px;}
+.recentTaskPop .bottom{line-height: 56px;font-size: 12px;color: #6c6c6e;border-top:1px solid rgb(231,234,236);margin:0 20px;position: relative;}
+.recentTaskPop .bottom span{letter-spacing: 1px}
+.recentTaskPop .bottom a{text-align: center;width:84px;line-height: 22px;background: rgb(101,197,129);display: inline-block;color: #ffffff;border-radius: 3px;position: absolute;right:0px;top:16px;cursor: pointer;*top:-2px;}
+.recentTaskPop .bottom a:hover{background: rgb(71,172,117)}
+.recentTaskPop .list .showTaskTerIcon{display: inline-block;width: 18px;height: 18px;background: url(../images/task1.png);margin-left: 12px;}
+/*文件分发*/
+
+.functionButtonsBlock{background: #ffffff;line-height: 65px;padding-left: 20px;}
+.functionButtonsBlock p .bu{line-height: 24px;width: 84px;background: rgb(101,197,129);font-size: 12px;color: #ffffff;display: inline-block;text-align: center;border-radius: 2px;}
+.functionButtonsBlock p .bu:hover{background: rgb(71,172,117)}
+.fileDistributeTContainer{background: #ffffff;width: 950px;}
+.fDTableTab{width: 230px;padding-left: 20px;background: #ffffff}
+.fDTableTab .fDTableTabContainer{background: rgb(249,249,249);padding-left: 12px;padding-top: 12px;}
+.fDTableTab a{font-size: 12px;color: #989898;line-height: 40px;padding-left: 12px;cursor: pointer;height: 40px;}
+.fDTableTab a font{right: 12px;top:0px;}
+.fDTableTab .current{background: #ffffff;color: #5fc47f}
+.fDTableTab a:hover{background: #ffffff}
+.fileDistributeTContainer .nameWidth{width: 236px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;}
+/*下发文件弹层*/
+.providePop{display: none;width: 572px;height: 442px;position: fixed;top: 50%;left:50%;margin-left: -286px;margin-top: -250px;z-index: 999;background: #ffffff;}
+.providePop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.providePop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.providePop .title .closeW:hover{background-position: -20px}
+.providePop .searchTerminal{font-size: 12px;color: #676a6c;line-height: 62px;background: #ffffff}
+.providePop .searchTerminal .textbox input{color: #6c6c6c;font-size: 12px;width: 476px;height: 26px;border: 1px solid rgb(231,234,236);margin-left: 20px;line-height: 26px;outline: none;padding-left: 14px;vertical-align: middle;}
+.providePop .searchTerminal .textbox{position: relative;display: inline-block;}
+.providePop .searchTerminal .textbox .placeholder{position: absolute;display: block;top:1px;left:30px;color: #989898;}
+.providePop .searchTerminal .textbox img{vertical-align: middle;top:14px;border: 1px solid #63c380;padding: 5px 11px;right: -39px;#top:1px;top:15px\0;background: #63c380;border-top-right-radius:4px;border-bottom-right-radius:4px;}
+.providePop .searchTerminal .textbox img:hover{background: rgb(71,172,117);cursor: pointer;}
+.providePop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
+.providePop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 84px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.providePop .buttons a:hover{background: rgb(71,172,117)}
+.providePop .gTerminalList,.uninstallSPop .gTerminalList{height: 280px;border-top: 1px solid rgb(231,234,236);margin: 0px 20px}
+.providePop .grouplist,.uninstallSPop .grouplist{width: 172px;background: rgb(249,249,249);height: 280px;}
+.providePop .grouplist .container,.uninstallSPop .grouplist .container{overflow-y:scroll;height: 248px }
+.providePop .grouplist a,.uninstallSPop .grouplist a{font-size: 12px;color: #6c6c6c;}
+.providePop .grouplist .th,.uninstallSPop .grouplist .th{font-weight: bold;line-height: 30px;height: 30px;border-bottom: 1px solid rgb(231,234,236);padding-left: 12px;}
+.providePop .grouplist .td,.uninstallSPop .grouplist .td{width:100%;line-height: 28px;height: 28px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap; text-indent: 12px;}
+.providePop .grouplist .current,.uninstallSPop .grouplist .current{background: #ffffff;color: #5fc47f;}
+.providePop .terminallist,.uninstallSPop .terminallist{width: 344px;height: 280px;font-size: 12px; }
+.providePop .terminallist .container,.uninstallSPop .terminallist .container{overflow-y:scroll;height: 248px }
+.providePop .terminallist a,.uninstallSPop .terminallist a{font-size: 12px;color: #6c6c6c;padding-left: 12px;}
+.providePop .terminallist .th,.uninstallSPop .terminallist .th{font-weight: bold;line-height: 30px;height: 30px;border-bottom: 1px solid rgb(231,234,236)}
+.providePop .terminallist .td,.uninstallSPop .terminallist .td{line-height: 28px;}
+/*下发文件下一步弹层*/
+.provideNPop{display: none;width: 572px;height: 442px;position: fixed;top: 50%;left:50%;margin-left: -286px;margin-top: -250px;z-index: 999;background: #ffffff;font-size: 12px;}
+.provideNPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.provideNPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.provideNPop .title .closeW:hover{background-position: -20px}
+.provideNPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
+.provideNPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 84px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.provideNPop .buttons a:hover{background: rgb(71,172,117)}
+.provideNPop .content{height: 325px;padding-top: 18px;}
+.provideNPop .content label{width: 90px;display: inline-block;font-size: 12px;text-align: right;color: #6c6c6c;padding-right: 24px;}
+.provideNPop .content .p{line-height: 34px;height: 34px;}
+.provideNPop .content input[type=radio],.provideNPop .content input[type=checkbox]{margin-right: 18px;}
+.provideNPop .content input[type=text]{padding-left: 12px;width: 198px;}
+.provideNPop .content span{font-size: 12px;color: #6c6c6c}
+.provideNPop .content textarea{margin-top: 8px;margin-left: 120px;display: inline-block;width:344px;padding: 10px 12px;font-size: 12px;color: #6c6c6c;border: 1px solid rgb(229,230,231);resize:none;height: 100px;outline: none;}
+#providePosition{width: 120px;text-align: center;height: 22px;line-height: 22px;margin-right: 14px;font-size: 12px;color: #6c6c6c}
+#runPara{width:198px;padding-left: 12px;height: 24px;line-height: 24px;}
+#effTime{width: 108px;height: 24px;line-height: 24px;font-size: 12px;}
+#effTimeCalendar{left:118px;bottom: 34px;}
+.provideNPop .ML{margin-left: 55px;}
+.provideNPop .ML1{margin-left: 44px;}
+/*上传文件弹层*/
+.uploadPop{display: none;width: 502px;height: 334px;position: fixed;top: 50%;left:50%;margin-left: -251px;margin-top: -277px;z-index: 999;background: #ffffff;}
+.uploadPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.uploadPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.uploadPop .title .closeW:hover{background-position: -20px}
+.uploadPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
+.uploadPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 84px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.uploadPop .buttons a:hover{background: rgb(71,172,117)}
+.uploadPop .content{height: 216px;padding-top: 18px;}
+.uploadPop form label{width: 90px;display: inline-block;font-size: 12px;text-align: right;color: #6c6c6c;vertical-align: top;}
+.uploadPop form .p{line-height: 34px;height: 34px;}
+.uploadPop form input{margin-left: 24px;width: 368px;height: 24px;}
+.uploadPop form input[type=text]{padding-left: 12px;width: 356px;}
+.uploadPop form textarea{margin-top: 8px;margin-left: 24px;display: inline-block;width:344px;padding: 10px 12px;font-size: 12px;color: #6c6c6c;border: 1px solid rgb(229,230,231);resize:none;height: 100px;outline: none;}
+/*删除信任项目*/
+.deleteFPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
+.deleteFPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.deleteFPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.deleteFPop .title .closeW:hover{background-position: -20px}
+.deleteFPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.deleteFPop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 44px}
+.deleteFPop .right .describe{line-height: 30px}
+.deleteFPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 34px;}
+.deleteFPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; border: 1px solid #63c380}
+.deleteFPop .buttons .sure{background: #ffffff;color: #63c380}
+.deleteFPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+/*账号管理*/
+.marginL20{margin-left: 20px;}
+.adminFBBlock{line-height: 60px;}
+.table .unstartuse{color: #dfdfdd}
+.auditorIn{font-size: 12px;color: #959595}
+/*新建管理员弹层*/
+.newAdminPop{display: none;width: 660px;height: 440px;position: fixed;top: 50%;left:50%;margin-left: -330px;margin-top: -250px;z-index: 999;background: #ffffff;}
+.newAdminPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.newAdminPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.newAdminPop .title .closeW:hover{background-position: -20px}
+.newAdminPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
+.newAdminPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 84px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.newAdminPop .buttons a:hover{background: rgb(71,172,117)}
+.newAdminPop .content{height: 316px;padding-top: 18px;}
+.newAdminPop form label{width: 180px;display: inline-block;font-size: 14px;text-align: right;color: #6c6c6c;vertical-align: top;}
+.newAdminPop form .p{line-height: 34px;height: 34px;margin-top: 30px;}
+.newAdminPop form .marginT4{margin-top: 4px;}
+.newAdminPop form input[type=text]{padding-left: 12px;width: 270px;height: 30px;line-height: 30px;margin-left: 24px;font-size: 12px;color: #6c6c6c}
+.newAdminPop form select{width: 120px;height: 30px;line-height: 30px;margin-left: 24px;font-size: 12px;color: #6c6c6c;padding-left: 12px;}
+.newAdminPop form .notice{font-size: 12px;color: #6c6c6c;padding-left: 116px;}
+.newAdminPop form .notice font{color: #f37e00;}
+/*修改信息弹层*/
+.modifyInfPop{display: none;width: 660px;height: 440px;position: fixed;top: 50%;left:50%;margin-left: -330px;margin-top: -250px;z-index: 999;background: #ffffff;}
+.modifyInfPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.modifyInfPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.modifyInfPop .title .closeW:hover{background-position: -20px}
+.modifyInfPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
+.modifyInfPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 84px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.modifyInfPop .buttons a:hover{background: rgb(71,172,117)}
+.modifyInfPop .content{height: 316px;padding-top: 18px;}
+.modifyInfPop form label{width: 180px;display: inline-block;font-size: 14px;text-align: right;color: #6c6c6c;vertical-align: top;}
+.modifyInfPop form .p{line-height: 34px;height: 34px;margin-top: 30px;}
+.modifyInfPop form .marginT4{margin-top: 4px;}
+.modifyInfPop form input[type=text]{padding-left: 12px;width: 270px;height: 30px;line-height: 30px;margin-left: 24px;font-size: 12px;color: #6c6c6c}
+.modifyInfPop form select{width: 120px;height: 30px;line-height: 30px;margin-left: 24px;font-size: 12px;color: #6c6c6c;padding-left: 12px;}
+.modifyInfPop form .notice{font-size: 12px;color: #6c6c6c;padding-left: 116px;}
+.modifyInfPop form .notice font{color: #f37e00;}
+/*权限管理弹层*/
+.powerManagePop{display: none;width: 660px;height: 440px;position: fixed;top: 50%;left:50%;margin-left: -330px;margin-top: -250px;z-index: 999;background: #ffffff;}
+.powerManagePop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.powerManagePop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.powerManagePop .title .closeW:hover{background-position: -20px}
+.powerManagePop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
+.powerManagePop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 84px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.powerManagePop .buttons a:hover{background: rgb(71,172,117)}
+.powerManagePop .content{height: 316px;padding-top: 18px;}
+.powerManagePop .pMTableth{background: rgb(240,240,240);border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236);margin:0 22px;}
+.powerManagePop .pMTable{margin: 0 22px;}
+.powerManagePop .pMTable tr:hover{background: rgb(249,249,249)}
+.powerManagePop table{border-collapse: collapse;font-size: 12px;color: #6c6c6c;}
+.powerManagePop table input[type=checkbox]{margin-right: 20px;color: #6c6c6c}
+.powerManagePop table th,.powerManagePop table td{padding-left: 12px;text-align: left;line-height: 34px;height: 34px;}
+.powerManagePop .windowShade{width: 100%;height: 100%;z-index: 1;background: rgb(60,60,60);opacity: 0.4;filter:alpha(opacity:40);}
+/*修改权限弹层*/
+.modifyPowerPop{display: none;width: 660px;height: 440px;position: fixed;top: 50%;left:50%;margin-left: -330px;margin-top: -250px;z-index: 999;background: #ffffff;}
+.modifyPowerPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.modifyPowerPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.modifyPowerPop .title .closeW:hover{background-position: -20px}
+.modifyPowerPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
+.modifyPowerPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 84px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.modifyPowerPop .buttons a:hover{background: rgb(71,172,117)}
+.modifyPowerPop .content{height: 316px;padding-top: 18px;}
+.modifyPowerPop .pMTableth{background: rgb(240,240,240);border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236);margin:0 22px;}
+.modifyPowerPop .pMTable{margin: 0 22px;}
+.modifyPowerPop .pMTable tr:hover{background: rgb(249,249,249)}
+.modifyPowerPop table{border-collapse: collapse;font-size: 12px;color: #6c6c6c;}
+.modifyPowerPop table input[type=checkbox]{margin-right: 20px;color: #6c6c6c}
+.modifyPowerPop table th,.modifyPowerPop table td{padding-left: 12px;text-align: left;line-height: 34px;height: 34px;}
+/*密码重置弹层*/
+.pwResetPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
+.pwResetPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.pwResetPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.pwResetPop .title .closeW:hover{background-position: -20px}
+.pwResetPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.pwResetPop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 44px}
+.pwResetPop .right .describe{line-height: 30px}
+.pwResetPop .right .adminName{max-width: 110px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;font-size: 14px}
+.pwResetPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 34px;}
+.pwResetPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; border: 1px solid #63c380}
+.pwResetPop .buttons .sure{background: #ffffff;color: #63c380}
+.pwResetPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+/*停用弹层*/
+.stopPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
+.stopPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.stopPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.stopPop .title .closeW:hover{background-position: -20px}
+.stopPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.stopPop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 44px}
+.stopPop .right .describe{line-height: 30px}
+.stopPop .right .adminName{max-width: 110px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;font-size: 14px}
+.stopPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 34px;}
+.stopPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; border: 1px solid #63c380}
+.stopPop .buttons .sure{background: #ffffff;color: #63c380}
+.stopPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+/*放弃新建管理员弹层*/
+.abandonNAPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
+.abandonNAPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.abandonNAPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.abandonNAPop .title .closeW:hover{background-position: -20px}
+.abandonNAPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.abandonNAPop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 44px}
+.abandonNAPop .right .describe{line-height: 30px}
+.abandonNAPop .right .adminName{max-width: 110px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;font-size: 14px}
+.abandonNAPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 34px;}
+.abandonNAPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; border: 1px solid #63c380}
+.abandonNAPop .buttons .sure{background: #ffffff;color: #63c380}
+.abandonNAPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+
+/*删除管理员弹层*/
+.deleteAdminPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
+.deleteAdminPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.deleteAdminPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.deleteAdminPop .title .closeW:hover{background-position: -20px}
+.deleteAdminPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.deleteAdminPop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 44px}
+.deleteAdminPop .right .describe{line-height: 30px}
+.deleteAdminPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 34px;}
+.deleteAdminPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; border: 1px solid #63c380}
+.deleteAdminPop .buttons .sure{background: #ffffff;color: #63c380}
+.deleteAdminPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+/*漏洞修复*/
+.functionButtonsBlock p .ignored{font-size: 12px;top: 7px;margin-left: 8px;}
+.taskDetailPop .describe .charaButton{padding-right: 44px;}
+.functionButtonsBlock p .setButton{font-size: 12px;top:7px;right: 40px;}
+.functionButtonsBlock p .setButton span{background: url(../images/gear.png);display: inline-block;width:18px;height: 18px;}
+.functionButtonsBlock p .setButton:hover span{background-position: -18px;}
+.table .loophtWidth{width: 350px;}
+/*漏洞修复设置弹层*/
+.loopholeRSPop{display: none;width: 662px;height: 442px;position: fixed;top: 50%;left:50%;margin-left: -331px;margin-top: -270px;z-index: 999;background: #ffffff;}
+.loopholeRSPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.loopholeRSPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.loopholeRSPop .title .closeW:hover{background-position: -20px}
+.loopholeRSPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
+.loopholeRSPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.loopholeRSPop .buttons a:hover{background: rgb(71,172,117)}
+.loopholeRSPop .buttons .recoverDefault{float: left}
+
+.loopholeRSPop .content{height: 346px;overflow-y:scroll;margin:0 22px; }
+.loopholeRSPop .setBlock{padding: 0 20px;border-bottom: 1px solid rgb(231,234,236);padding-bottom: 10px;color: #6c6c6c;padding-top: 10px}
+.loopholeRSPop .setBlockLast{border-bottom:0px; }
+.loopholeRSPop .setBlock h4{line-height: 30px;font-size: 14px;font-weight: normal;}
+.loopholeRSPop 
+.loopholeRSPop .setBlock p{font-size: 12px;line-height: 26px;}
+.loopholeRSPop .setBlock .leftP{float: left;margin-right: 104px}
+.loopholeRSPop .setBlock p span{vertical-align: middle;}
+.loopholeRSPop .setBlock p input{vertical-align: middle;margin-right: 20px;}
+.loopholeRSPop .setBlock p input[name=patchDir]{margin-right: 10px;outline: none;border: 1px solid rgb(231,234,236);padding-left: 10px;width:200px;line-height: 20px;height: 20px;color: #333333;font-size: 12px}
+
+/*扫描漏洞弹层*/
+.cleanLoopPop,.repairLoopPop{display: none;width: 662px;height: 442px;position: fixed;top: 50%;left:50%;margin-left: -331px;margin-top: -270px;z-index: 999;background: #ffffff;}
+.cleanLoopPop .title,.repairLoopPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 48px;}
+.cleanLoopPop .title .closeW,.repairLoopPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.cleanLoopPop .title .closeW:hover,.repairLoopPop .title .closeW:hover{background-position: -20px}
+.cleanLoopPop .describe,.repairLoopPop .describe{line-height: 46px;font-size: 12px;color: #676a6c;position: relative;padding-left: 32px;}
+.cleanLoopPop .describebg,.repairLoopPop .describebg{background: #f9f9f9}
+.cleanLoopPop .describe img,.repairLoopPop .describe img{position: absolute;top:21px;right: 30px;cursor: pointer;}
+.cleanLoopPop .describe .charaButton,.repairLoopPop .describe .charaButton{padding-right: 44px;}
+.cleanLoopPop .tableth,.repairLoopPop .tableth{background: rgb(240,240,240);border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236)}
+.cleanLoopPop .tableCon,.cleanLoopPop .tableth,.repairLoopPop .tableCon,.repairLoopPop .tableth{color: #6c6c6c;font-size: 12px;margin:0 22px;}
+.cleanLoopPop .tableth table,.cleanLoopPop .tableCon table,.repairLoopPop .tableth table,.repairLoopPop .tableCon table{border-collapse: collapse;}
+.cleanLoopPop .tableth tr,.cleanLoopPop .tableth tr{background: rgb(240,240,240);}
+.cleanLoopPop .tableth th,.cleanLoopPop .tableCon td,.repairLoopPop .tableth th,.repairLoopPop .tableCon td{line-height: 35px;padding-left: 10px;font-weight: normal;}
+.cleanLoopPop .tableth th,.repairLoopPop .tableth th{color: #676a6c;text-align: left;background: rgb(240,240,240);line-height: 34px;}
+.cleanLoopPop .tableCon,.repairLoopPop .tableCon{height: 246px;border-bottom: 1px solid rgb(231,234,236);overflow:hidden; }
+.cleanLoopPop .tableCon table,.repairLoopPop .tableCon table{border:0;}
+.cleanLoopPop .tableCon tr:hover,.repairLoopPop .tableCon tr:hover{background: rgb(249,249,249)}
+.cleanLoopPop .describe span,.repairLoopPop .describe span{position: absolute;top:14px;right: 30px;cursor: pointer;width: 18px;height: 18px;display: inline-block;background: url(../images/gear.png)}
+.cleanLoopPop .describe span:hover,.repairLoopPop .describe span:hover{background-position: -18px;}
+.cleanLoopPop .describe span:active,.repairLoopPop .describe span:active{background-position: -36px;}
+.cleanLoopPop .buttons,.repairLoopPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
+.cleanLoopPop .buttons a,.repairLoopPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.cleanLoopPop .buttons a:hover,.repairLoopPop .buttons a:hover{background: rgb(71,172,117)}
+.cleanLoopPop .buttons .recoverDefault,.repairLoopPop .buttons .recoverDefault{float: left}
+.pop .statusIcon{padding-left: 16px;vertical-align: middle;}
+
+
+/*已忽略终端弹层*/
+.ignoredTPop{display: none;width: 745px;height: 500px;position: fixed;top: 50%;left:50%;margin-left: -373px;margin-top: -260px;z-index: 999;background: #ffffff;}
+.ignoredTPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 48px;}
+.ignoredTPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.ignoredTPop .title .closeW:hover{background-position: -20px}
+.ignoredTPop .describe{line-height: 46px;font-size: 12px;color: #676a6c;position: relative;padding-left: 32px;}
+.ignoredTPop .describebg{background: #f9f9f9}
+.ignoredTPop .describe img{position: absolute;top:21px;right: 30px;cursor: pointer;}
+.ignoredTPop .describe .charaButton{padding-right: 44px;}
+.ignoredTPop .tableth{background: rgb(240,240,240);border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236)}
+.ignoredTPop .ignoredTTable,.ignoredTPop .tableth{color: #6c6c6c;font-size: 12px;margin:0 22px;}
+.ignoredTPop .tableth table,.ignoredTPop .ignoredTTable table{border-collapse: collapse;}
+.ignoredTPop .tableth tr{background: rgb(240,240,240);}
+.ignoredTPop .tableth th,.ignoredTPop .ignoredTTable td{line-height: 35px;padding-left: 10px;font-weight: normal;}
+.ignoredTPop .tableth th{color: #676a6c;text-align: left;background: rgb(240,240,240);line-height: 34px;}
+.ignoredTPop .ignoredTTable{height: 313px;border-bottom: 1px solid rgb(231,234,236);overflow:hidden; }
+.ignoredTPop .ignoredTTable table{border:0;}
+.ignoredTPop .ignoredTTable tr:hover{background: rgb(249,249,249)}
+.ignoredTPop .filePath{width: 235px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: top;vertical-align: middle;}
+.ignoredTPop .describe span{position: absolute;top:14px;right: 30px;cursor: pointer;width: 18px;height: 18px;display: inline-block;background: url(../images/gear.png)}
+.ignoredTPop .describe span:hover{background-position: -18px;}
+.ignoredTPop .describe span:active{background-position: -36px;}
+/*最新任务弹层*/
+.loopholeTRTPop .content .containerTh .firstth{width: 130px}
+.loopholeTRTPop .content .containerTh span{width: 94px}
+.loopholeTRTPop .content .containerTh .lastth{width: 30px;}
+.loopholeTRTPop .list .lasttd{width:30px;}
+.loopholeTRTPop .list .td{width: 94px;}
+.loopholeTRTPop .list .firsttd{width:130px;}
+/*小提示弹层*/
+/*弹窗提示*/
+.delayHide{display: none;z-index: 999;text-align: center;color: #ffbe00;position: fixed;top:30%;left:50%;margin-left:-65px;width:130px;height: 44px;background-color: rgba(255,239,194,0.86);background-color:rgb(255,239,194)\9;border-radius: 5px}
+.delayHide .p1{font-size: 14px;line-height: 44px}
+.delayHide .p2{font-size: 12px;margin-top: 6px;}
+.delayHide .p2 font{color:rgb(101,197,129);}
+.delayHideS{display: none;z-index: 999;text-align: center;color: #5fc47f;position: fixed;top:30%;left:50%;margin-left:-65px;width:130px;height: 44px;background-color: rgba(211,255,211,0.86);background-color:rgb(211,255,211)\9;border-radius: 5px}
+.delayHideS .p1{font-size: 14px;line-height: 44px}
+.delayHideS .p2{font-size: 12px;margin-top: 6px;}
+.delayHideS .p2 font{color:rgb(101,197,129);}
+
+/*终端名称字数限制*/
+.repairLoopPop .filePath,.uninstallSPop .filePath{width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: top;vertical-align: middle;}
+.taskDetailPop .popHostname{width: auto;max-width: 110px;}
+
+/*事件日志导出按钮样式*/
+.tabButton .exportLog{background: rgb(101,197,129);color: #ffffff;border: 1px solid rgb(101,197,129);border-radius: 2px;}
+.tabButton .exportLog:hover{background: rgb(71,172,117);border: 1px solid rgb(71,172,117)}
+.filterBlock div.tabButton{line-height: 39px;}
+
+
+/* 表格样式 */
+/* 漏洞修复 */
+.taskDetailPop .taskDetailTable,.ignoredTPop .ignoredTTable{
+    overflow: hidden;
+    height: 349px;
+}
+.recentTaskPop .table table tbody{
+    height: auto;
+    overflow: hidden;
+    border: 0;
+}

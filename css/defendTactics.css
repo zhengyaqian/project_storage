@@ -1,0 +1,148 @@
+
+/**/
+.tabSel{border-bottom: 2px solid rgb(231,234,236);height: 44px;background: #ffffff}
+.tabSel a{cursor: pointer;display: inline-block;line-height: 44px;width: 130px;text-align: center;font-size: 12px;color: #676a6c;text-decoration: none;}
+.tabSel a:hover{border-bottom: 2px solid #c6c6c6;}
+.tabSel .current{border-bottom: 2px solid rgb(101,197,128);color: #63c380}
+.tabSel .current:hover{border-bottom: 2px solid rgb(101,197,128);}
+.main .topHint{position: relative;background-color: #ffffff;letter-spacing: 1px;color: #676a6c;padding: 10px 130px;margin-bottom: 10px }
+.topHint p{line-height: 20px;font-size: 12px;}
+.topHint img{position: absolute;left: 50px;top:8px;}
+
+.tacticsTable{height: 878px;}
+.tacticsManageTable{height: 834px;*position: relative;*left:0;*top:0;}
+.bgContainer{padding:16px 20px;background-color: #ffffff;font-size: 12px;}
+.bgContainer .newTacticsB{float:right;width: 84px;line-height: 24px;height: 24px;border-radius: 3px;text-align: center;display: block;background: rgb(101,197,129);color: #ffffff;margin-bottom: 16px}
+.bgContainer .newTacticsB:hover{background: rgb(71,172,117)}
+.bgContainer .tacticsDescribeTxt{font-size: 12px;color: #6c6c6c;margin-left:20px;line-height: 24px;height: 24px;}
+.main .tableth{background: rgb(249,249,249);}
+.tableth{background: rgb(249,249,249);padding-right: 18px;border-bottom: 1px solid rgb(231,234,236);border-top: 1px solid rgb(231,234,236);}
+/* .table{overflow-y:scroll;overflow-x:hidden;} */
+.table table tr td,.table table tr th{line-height: 60px;}
+.table tr{border-bottom: 1px solid rgb(231,234,236)}
+.table tbody tr:nth-child(even){background:rgb(249,249,249);}
+.table table tbody tr:nth-child(odd){background:none;}
+
+.table .th,.table .th{line-height: 40px;background-color: rgb(249,249,249)}
+
+.table table,.table table th{border-collapse: collapse;width:100%;}
+.table th{font-weight: normal;color: #676a6c;text-align: left;padding-left: 30px;font-weight: bold;position: relative;}
+.table td{color: #6c6c6c;padding-left: 30px;}
+.table td img{vertical-align: middle;margin-right: 26px;}
+.table td span{vertical-align: middle;}
+.table select{border: 1px solid rgb(231,234,236);color: #6c6c6c;width: 120px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;}
+.table select option{max-width: 120px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;}
+
+.table .absoluteTxt{position: absolute;line-height: 20px;left:100px;top:10px;}
+.table .absoluteTxt h3{font-weight: normal;font-size: 12px;color: rgb(108,108,108)}
+.table .absoluteTxt p{color: rgb(152,152,152)}
+.table .button{color:#6c6c6c;margin-right:10px;line-height: 22px;height: 22px;width: 86px;display: inline-block;border:1px solid rgb(231,234,236);text-align: center;border-radius: 3px;}
+.table .button:hover{border: 1px solid rgb(162,164,166)}
+.table .noava{background: rgb(217,217,217);border: 1px solid rgb(217,217,217);}
+.table .noava:hover{border: 1px solid rgb(217,217,217)}
+
+
+/*新建策略弹层*/
+
+.newTacticsPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
+.newTacticsPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.newTacticsPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);top:2px;}
+.newTacticsPop .title .closeW:hover{background-position: -20px}
+.newTacticsPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.newTacticsPop .right{float: left;position: relative;padding-top: 26px;padding-left: 20px;}
+.newTacticsPop .describe{color: #676a6c;font-size: 14px;padding-top: 40px;padding-left: 12px}
+.newTacticsPop .right .input{padding-top: 12px;font-size: 14px;color: #676a6c}
+.newTacticsPop .right input{width:210px;line-height: 30px;height:30px;border: 1px solid rgb(229,230,231);padding-left: 12px;color: #676a6c;font-size: 12px}
+.newTacticsPop .right select{width:224px;line-height: 30px;height:30px;border: 1px solid rgb(229,230,231);padding-left: 12px;color: #676a6c;font-size: 12px}
+.newTacticsPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 32px;}
+.newTacticsPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.newTacticsPop .right .unusualTxt{font-size: 12px;color: #f37e00;padding-top: 14px;position: absolute;right: 0px;top:104px;display: none;}
+.newTacticsPop .right .unusualTxt img{vertical-align: middle;margin-bottom: 4px;margin-left: 10px}
+/*新建策略成功后弹层*/
+.newTacticsAPop{display: none;width: 400px;height: 250px;position: fixed;top: 50%;left:50%;margin-left: -200px;margin-top: -235px;z-index: 999;background: #ffffff;}
+.newTacticsAPop .title{font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.newTacticsAPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.newTacticsAPop .title .closeW:hover{background-position: -20px}
+.newTacticsAPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.newTacticsAPop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 48px;width: 300px\9}
+.newTacticsAPop .right .describe{line-height: 30px}
+.newTacticsAPop .buttons{padding-right: 14px;margin:0 22px;padding-top: 46px;}
+.newTacticsAPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px;border:1px solid #63c380; }
+.newTacticsAPop .buttons .sure{background: #ffffff;color: #63c380}
+.newTacticsAPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+/*删除策略*/
+.deletePPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
+.deletePPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.deletePPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.deletePPop .title .closeW:hover{background-position: -20px}
+.deletePPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.deletePPop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 44px;width: 350px\9}
+.deletePPop .right .describe{line-height: 30px}
+.deletePPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 34px;}
+.deletePPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px;border:1px solid #63c380; }
+.deletePPop .buttons .sure{background: #ffffff;color: #63c380}
+.deletePPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+/*信任区*/
+
+.bgContainer .projectNameW{width: 300px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;}
+.trustTable tr{line-height: 40px}
+.trustTable .select,.trustTable .selectAll{border:1px solid rgb(211,207,200);margin-right: 18px}
+.bgContainer .newTustPB{width: 92px;line-height: 24px;height: 24px;border-radius: 3px;text-align: center;display: block;background: rgb(101,197,129);color: #ffffff;margin-bottom: 16px;float: right;}
+.bgContainer .newTustPB:hover{background: rgb(71,172,117)}
+.trustTable .trustDescribe{color: #6c6c6c;display: inline-block;width: 596px;float: left;}
+.trustTable{border-bottom: 1px solid rgb(231,234,236)}
+
+/*新建信任项目弹层*/
+.newTrustPPop{display: none;width: 662px;height: 434px;position: fixed;top: 50%;left:50%;margin-left: -331px;margin-top: -280px;z-index: 999;background: #ffffff;}
+.newTrustPPop .title{font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.newTrustPPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.newTrustPPop .title .closeW:hover{background-position: -20px}
+.newTrustPPop .content{height: 330px;color: #6c6c6c;font-size: 12px;margin:0 20px;border-bottom: 1px solid rgb(231,234,236)}
+.newTrustPPop .content .setBlockk{border-bottom: 1px solid rgb(231,234,236);padding-bottom: 4px;padding-top: 4px;}
+.newTrustPPop .content .setBlockkLast{border-bottom: 0px;}
+.newTrustPPop .content .bTitle{font-weight: bold;padding-left: 10px;line-height: 40px;}
+.newTrustPPop .content .selectTitle{padding-left: 10px}
+.newTrustPPop .content p{line-height: 30px;padding-left: 39px;}
+.newTrustPPop .inputTitle{display: inline-block;width: 66px}
+.newTrustPPop input{vertical-align: middle;}
+.newTrustPPop span{vertical-align: middle;}
+.newTrustPPop .typeSelect{padding-right: 50px;}
+.newTrustPPop input[type=checkbox],.newTrustPPop input[type=radio]{margin-right: 16px}
+.newTrustPPop input[type=file]{margin-left: 16px;border: 1px solid rgb(231,234,236);width: 282px;height: 22px;line-height: 22px;padding-left: 12px;}
+.newTrustPPop input[type=text]{margin-left: 16px;border: 1px solid rgb(231,234,236);width: 282px;height: 22px;line-height: 22px;padding-left: 12px;}
+.newTrustPPop .buttons{float: right;padding-right: 20px;padding-top: 14px;}
+.newTrustPPop .buttons a{display: inline-block;width: 84px;height: 24px;line-height: 24px;background: rgb(101,197,129);text-align: center;font-size: 12px;border-radius: 2px;color: #ffffff}
+.newTrustPPop .buttons a:hover{background: rgb(71,172,117)}
+/*删除信任项目*/
+.deleteTPPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
+.deleteTPPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.deleteTPPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.deleteTPPop .title .closeW:hover{background-position: -20px}
+.deleteTPPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.deleteTPPop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 44px}
+.deleteTPPop .right .describe{line-height: 30px}
+.deleteTPPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 34px;}
+.deleteTPPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; border: 1px solid #63c380}
+.deleteTPPop .buttons .sure{background: #ffffff;color: #63c380}
+.deleteTPPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+/*分页样式*/
+.table .tcdPageCode{padding: 15px 20px;text-align: left;color: #ccc;font-size: 12px}  
+.tcdPageCode a{display: inline-block;color: #6a6c6e;display: inline-block;height: 25px;line-height: 25px; padding: 0 10px;border: 1px solid rgb(221,221,221);margin: 0 2px;border-radius: 4px;vertical-align: middle;}  
+.tcdPageCode a:hover{text-decoration: none;background: rgb(244,244,244)}  
+.tcdPageCode span.current{display: inline-block;height: 25px;line-height: 25px;padding: 0 10px;margin: 0 2px;color: #fff;background-color: rgb(101,197,129);    border: 1px solid rgb(101,197,129);border-radius: 4px;vertical-align: middle;}  
+.tcdPageCode span.disabled{    display: inline-block;height: 25px;line-height: 25px;padding: 0 10px; margin: 0 2px;color: #bfbfbf;background: #f2f2f2;border: 1px solid #bfbfbf;border-radius: 4px;vertical-align: middle;}
+
+
+.delayHide{display: none;z-index: 999;text-align: center;color: #ffbe00;position: fixed;top:30%;left:50%;margin-left:-65px;width:130px;height: 44px;background-color: rgba(255,239,194,0.86);background-color:rgb(255,239,194)\9;border-radius: 5px}
+.delayHide .p1{font-size: 14px;line-height: 44px}
+.delayHide .p2{font-size: 12px;margin-top: 6px;}
+.delayHide .p2 font{color:rgb(101,197,129);}
+.delayHideS{display: none;z-index: 999;text-align: center;color: #5fc47f;position: fixed;top:30%;left:50%;margin-left:-65px;width:130px;height: 44px;background-color: rgba(211,255,211,0.86);background-color:rgb(211,255,211)\9;border-radius: 5px}
+.delayHideS .p1{font-size: 14px;line-height: 44px}
+.delayHideS .p2{font-size: 12px;margin-top: 6px;}
+.delayHideS .p2 font{color:rgb(101,197,129);}
+
+.delayHideS{display: none;z-index: 999;text-align: center;color: #5fc47f;position: fixed;top:30%;left:50%;margin-left:-65px;width:130px;height: 44px;background-color: rgba(211,255,211,0.86);background-color:rgb(211,255,211)\9;border-radius: 5px}
+.delayHideS .p1{font-size: 14px;line-height: 44px}
+.delayHideS .p2{font-size: 12px;margin-top: 6px;}
+.delayHideS .p2 font{color:rgb(101,197,129);}
