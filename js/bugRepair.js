@@ -39,25 +39,31 @@ $(".filterBlock .tabButton").change(function(){
 
 //选择时间
 $("#specialTime select").change(function(){
-
-    if($(this).find("option:selected").val()==0){
-        $("#txtBeginDate").val(GetDateStr(-6));
+    var optionVal = $(this).find("option:selected").val();
+    var begintime = 0;
+    switch(parseInt(optionVal)){
+        case 0:
+            begintime = -6;
+            break;
+        case 1:
+            begintime = -29;
+            break;
+        case 2:
+            begintime = -89;
+            break;
+        case 3:
+            begintime = -364;
+            break;
+        default:
+            $(".filterBlock .middle").show(200);
+            break;
+    }
+    if(optionVal != 4){
+        if(begintime != 0){
+            $("#txtBeginDate").val(GetDateStr(begintime));
+        }
         $("#txtEndDate").val(GetDateStr(0));
         $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==1){
-        $("#txtBeginDate").val(GetDateStr(-29));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==2){
-        $("#txtBeginDate").val(GetDateStr(-89));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==3){
-        $("#txtBeginDate").val(GetDateStr(-364));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==4){
-        $(".filterBlock .middle").show(200);
     }
     accEvent();
 })
@@ -72,10 +78,7 @@ function grouplist(){
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
-        	}else{
-        		
         	}
-            
         },
         success:function(data){
             
@@ -140,7 +143,6 @@ function accEvnetParam(start){
     var groupid=parseInt($("#groupSelect option:selected").attr("groupid"));
     if($(".filterBlock .tabButton option:checked").val()==1){
         groupby="client";
-
     }else{
         groupby="detail";
     }
@@ -167,15 +169,15 @@ function columnsDataDetailListFun (){
 		},{
 			type: "hostname",title: "终端名称",name: "hostname",
 			tHead:{style: {width: "10%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "10%"},customFunc: function (data, row, i) {return "<span style='width:90px;' class='underline cursor blackfont filePath ctrlPopBtn' title='"+safeStr(data)+"'>"+safeStr(data)+"</span>";}},
+			tBody:{style: {width: "10%"},customFunc: function (data, row, i) {return "<span style='width:90px;' class='underline cursor blackfont filePath ctrlPopBtn' client="+row.client_id+" title='"+safeStr(data)+"'>"+safeStr(data)+"</span>";}},
 		},{
 			type: "group_name",title: "终端分组",name: "group_name",
 			tHead:{style: {width: "10%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "10%"},customFunc: function (data, row, i) {if(data==""){return "(已删除终端";}else{return safeStr(data);} }},
+			tBody:{style: {width: "10%"},customFunc: function (data, row, i) {if(data==""){return "(已删除终端)";}else{return safeStr(data);} }},
 		},{
 			type: "kbid",title: "补丁编号",name: "kbid",
 			tHead:{style: {width: "10%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "10%"},customFunc: function (data, row, i) {return "<span class='underline cursor blackfont  ctrlPopBtn'>KB"+data+"</span>";}},
+			tBody:{style: {width: "10%"},customFunc: function (data, row, i) {return "<span class='underline cursor blackfont  ctrlPopBtn' kbid="+data+">KB"+data+"</span>";}},
 		},{
 			type: "desc",title: "补丁描述",name: "desc",
 			tHead:{style: {width: "28%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
@@ -191,15 +193,7 @@ function columnsDataDetailListFun (){
 			type: "state",title: "状态",name: "state",
 			tHead:{style: {width: "8%"},customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
             tBody:{style: {width: "8%"},customFunc: function (data, row, i) {
-                if(data == 0){return "等待修复";
-                }else if(data == 1){ return "暂不修复";
-                }else if(data == 2){return "下载补丁";
-                }else if(data == 3){return "下载错误";
-                }else if(data == 4){return "下载完成";
-                }else if(data == 5){return "安装补丁";
-                }else if(data == 6){ return "安装错误";
-                }else if(data == 7){return "安装完成";
-                }else{ return "--";}
+                return patchStateField(data);
             }}
 		}
 	]
@@ -214,15 +208,15 @@ function columnsDataTerListFun (){
 	    {
 			type: "hostname",title: "终端名称",name: "hostname",
 			tHead:{style: {width: "40%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "40%"},customFunc: function (data, row, i) {return "<a class='filePath' client="+row.client_id+" style='width:400px;' title="+safeStr(pathtitle(data))+">"+safeStr(data)+"</a>"}},
+			tBody:{style: {width: "40%"},customFunc: function (data, row, i) {return "<a class='filePath' style='width:400px;' title="+safeStr(pathtitle(data))+">"+safeStr(data)+"</a>"}},
 		},{
 			type: "group_name",title: "终端分组",name: "group_name",
 			tHead:{style: {width: "40%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "40%"},customFunc: function (data, row, i) {if(data==""){return "(已删除终端";}else{return safeStr(data);} }},
+			tBody:{style: {width: "40%"},customFunc: function (data, row, i) {if(data==""){return "(已删除终端)";}else{return safeStr(data);} }},
 		},{
 			type: "count",title: "漏洞数量",name: "count",
 			tHead:{style: {width: "20%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "20%"},customFunc: function (data, row, i) {return "<span class='underline cursor blackfont  ctrlPopBtn'>"+data+"</span>";}},
+			tBody:{style: {width: "20%"},customFunc: function (data, row, i) {return "<span class='underline cursor blackfont  ctrlPopBtn' client="+row.client_id+">"+data+"</span>";}},
 		}
 	]
 	
@@ -284,10 +278,7 @@ function accEvent(start){
                         error:function(xhr,textStatus,errorThrown){
 				        	if(xhr.status==401){
 				        	    parent.window.location.href='/';
-				        	}else{
-				        		
 				        	}
-				            
 				        },
                         success:function(data){
                             var list=data.data.list;
@@ -335,15 +326,7 @@ function columnsDataDetail_NamePopFun (){
 			type: "state",title: "状态",name: "state",
 			tHead:{style: {width: "10%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
             tBody:{style: {width: "10%"},customFunc: function (data, row, i) {
-                if(data == 0){return "等待修复";
-                }else if(data == 1){ return "暂不修复";
-                }else if(data == 2){return "下载补丁";
-                }else if(data == 3){return "下载错误";
-                }else if(data == 4){return "下载完成";
-                }else if(data == 5){return "安装补丁";
-                }else if(data == 6){ return "安装错误";
-                }else if(data == 7){return "安装完成";
-                }else{ return "--";}
+                return patchStateField(data);
             }}
 		}
 	]
@@ -373,15 +356,7 @@ function columnsDataDetail_kbidPopFun (){
 			type: "state",title: "状态",name: "state",
 			tHead:{style: {width: "10%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
             tBody:{style: {width: "10%"},customFunc: function (data, row, i) {
-                if(data == 0){return "等待修复";
-                }else if(data == 1){ return "暂不修复";
-                }else if(data == 2){return "下载补丁";
-                }else if(data == 3){return "下载错误";
-                }else if(data == 4){return "下载完成";
-                }else if(data == 5){return "安装补丁";
-                }else if(data == 6){ return "安装错误";
-                }else if(data == 7){return "安装完成";
-                }else{ return "--";}
+                return patchStateField(data);
             }}
 		}
 	]
@@ -419,30 +394,34 @@ function seeDetailPop(start){
 		start = 0;
 	}else{
 		start = start;
-	}
+    }
     var pageIndex=$('.filterBlock .tabButton option:checked').val();
     var trIndex = $(".taskDetailPop").attr('trIndex');
     var tdIndex = $(".taskDetailPop").attr('tdIndex');
 	var begintime=getBeginTimes($("#txtBeginDate").val());
     var endtime=getEndTimes($("#txtEndDate").val());
+    var td = $('.tableContainer .table tbody tr').eq(trIndex).children("td");
+    var describeHtml = '';
     $(".taskDetailPop tbody").append("<div style='text-align:center;color:#6a6c6e;padding-top:201px;' class='detailLoading'><img src='images/loading.gif'></div>");
 	if(tdIndex == 1 && pageIndex == 0){
-		var hostname = $('.tableContainer .table tbody tr').eq(trIndex).children("td").eq(1).find('span').text();
-		var groupname = $('.tableContainer .table tbody tr').eq(trIndex).children("td").eq(2).text();
-		var clientid=$('.tableContainer .table tbody tr').eq(trIndex).attr('client');
-		$(".taskDetailPop .describe").html("终端名称 : <a class='filePath popHostname' title='"+safeStr(hostname)+"'>"+safeStr(hostname)+" ,</a> 终端分组 : "+groupname);
+		var hostname = td.eq(1).find('span').text();
+		var groupname = td.eq(2).text();
+		var clientid = td.eq(1).find('span').attr('client');
+		describeHtml = "终端名称 : <a class='filePath popHostname' title='"+safeStr(hostname)+"'>"+safeStr(hostname)+" ,</a> 终端分组 : "+groupname;
         
 	}else if(tdIndex == 3 && pageIndex == 0){
-		var level = $('.tableContainer .table tbody tr').eq(trIndex).children("td").eq(5).text();
-		var kbid=$('.tableContainer .table tbody tr').eq(trIndex).attr('kbid');
-		$(".taskDetailPop .describe").html("补丁编号 : "+kbid+" , 补丁类型 : "+level);
+		var level = td.eq(5).text();
+		var kbid = td.eq(3).text();
+		describeHtml = "补丁编号 : "+kbid+" , 补丁类型 : "+level;
 	
 	}else if(tdIndex == 2 && pageIndex == 1){
-		var hostname = $('.tableContainer .table tbody tr').eq(trIndex).children("td").eq(0).find('a').text();
-		var groupname = $('.tableContainer .table tbody tr').eq(trIndex).children("td").eq(1).text();
-		var clientid=$('.tableContainer .table tbody tr').eq(trIndex).attr('client');
-        $(".taskDetailPop .describe").html("终端名称 :<a class='filePath popHostname' title='"+safeStr(hostname)+"'>"+safeStr(hostname)+" ,</a>终端分组 : "+safeStr(groupname));
+		var hostname = td.eq(0).find('a').text();
+		var groupname = td.eq(1).text();
+		var clientid = td.eq(0).find('a').attr('client');
+        describeHtml = "终端名称 :<a class='filePath popHostname' title='"+safeStr(hostname)+"'>"+safeStr(hostname)+" ,</a>终端分组 : "+safeStr(groupname);
+
     }
+    $(".taskDetailPop .describe").html(describeHtml);
     var dataa={"date":{"begin":begintime,"end":endtime},"groupby":"detail","client_id":clientid,"view":{"begin":start,"count":9}};
     var type = $('.taskDetailPop .taskDetailTable th.th-ordery.th-ordery-current').attr('type');
     var orderClass = $('.taskDetailPop .taskDetailTable th.th-ordery.th-ordery-current').attr('class');
