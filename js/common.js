@@ -642,3 +642,9 @@ function moduleField(data){
     var dataMap = {'mgr_client':'终端管理','mgr_policy':'防护策略','mgr_distr':'文件管理','mgr_log':'事件日志','mgr_tools':'管理工具','mgr_user':'账户管理','system_conf':'系统设置','system_auth':'用户登录','mgr_remote':'远程桌面'};
     return fieldHandle(dataMap,data);
 }
+
+/**补丁状态 */
+function patchStateField(data){
+    var dataMap = {'0':'等待修复','1':'暂不修复','2':'下载补丁','3':'下载错误','4':'下载完成','5':'安装补丁','6':'安装错误','7':'安装完成'};
+    return fieldHandle(dataMap,data);
+}

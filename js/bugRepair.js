@@ -508,9 +508,6 @@ function tbodyAddHeight(){
     $(".main .table tbody").css({height:mainlefth-347});
 }
 window.onresize = function(){
-    var mainlefth=parent.$("#iframe #mainFrame").height();
-
-    $(".main .table tbody").css({height:mainlefth-347});
-
+    tbodyAddHeight();
 }
 

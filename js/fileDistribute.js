@@ -12,13 +12,8 @@ function tbodyAddHeight(){
     $(".fDTableTabContainer").css({height:mainlefth-260});
 }
 
-
 window.onresize = function(){
-    var mainlefth=parent.$("#iframe #mainFrame").height();
-
-    $(".main .table tbody").css({height:mainlefth-347});
-    $(".fDTableTabContainer").css({height:mainlefth-260});
-
+    tbodyAddHeight();
 }
 // 点击文件类型刷新文件列表
 $(".fDTableTab a").click(function(){
@@ -114,7 +109,10 @@ $(document).on('click','.fileDistributeTContainer .table th.th-ordery',function(
 	var toggleClass = $(this).attr('class');
 	var _this = $(this);
     sortingFun(_this,toggleClass);
-	softlist();
+    var currentPage = $(this).parents('.fileDistributeTContainer').find('.tcdPageCode span.current').text();
+	var currentNum = $(this).parents('.fileDistributeTContainer').find('#numperpageinput').val();
+    var start = (parseInt(currentPage) - 1) * parseInt(currentNum);
+	softlist(start);
 })
 //列表信息
 function columnsDataListFun (){
@@ -128,7 +126,7 @@ function columnsDataListFun (){
 		},
 		{
 			type: "remark",title: "备注",name: "remark",
-			tHead:{style:{width: "25%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
+			tHead:{style:{width: "25%"},customFunc: function (data, row, i) {return ""}},
 			tBody:{style:{width: "25%"},customFunc: function (data, row, i) {
                 if(trim(data)==""){
                     return "(无)";
@@ -166,19 +164,23 @@ var tabListstr =columnsDataListFun();
 // 软件列表
 softlist();
 var ajaxtable=null;
-function softlist(){
+function softlist(start){
     if(ajaxtable){
     ajaxtable.abort();  
     }
-    var start=0;
+    if(start){
+        start = start;
+    }else{
+        start=0;
+    }
+    
 	var type=$(".fDTableTab .current").attr("type");
 	var filtername=trim($("#searchKey").val());
-	var dataa={"type":type,"filter":{"filename":filtername},"view":{"begin":0,"count":numperpage}};
-	
-
+	var dataa={"type":type,"filter":{"filename":filtername},"view":{"begin":start,"count":numperpage}};
 	var type1 = $('.fileDistributeTContainer .table th.th-ordery.th-ordery-current').attr('type');
 	var orderClass = $('.fileDistributeTContainer .table th.th-ordery.th-ordery-current').attr('class');
-	dataa = sortingDataFun(dataa,type1,orderClass);
+    dataa = sortingDataFun(dataa,type1,orderClass);
+    
     $(".fileDistributeTContainer .table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
      ajaxtable=
 	$.ajax({
@@ -199,41 +201,27 @@ function softlist(){
             var wholenum=0;
             var total=Math.ceil(data.data.view.total/numperpage);
             if(data.data.typeclass!==null){
-               var numlist=data.data.typeclass;
-               var namearr=[];
+                var numlist=data.data.typeclass;
+                var nameMap={};
+                //遍历list，将name和对应count值添加都nameMap中
                 for (var i = 0; i < numlist.length; i++) {
                     wholenum+=numlist[i].count;
-                    namearr.push(numlist[i].name);
-                    if(numlist[i].name=="exe"){
-                       $(".fDTableTab font").eq(1).html("("+numlist[i].count+")"); 
-                    }else if(numlist[i].name=="doc"){
-                        $(".fDTableTab font").eq(2).html("("+numlist[i].count+")"); 
-                    }else if(numlist[i].name=="pk"){
-                        $(".fDTableTab font").eq(3).html("("+numlist[i].count+")"); 
-                    }else if(numlist[i].name=="unknow"){
-                        $(".fDTableTab font").eq(4).html("("+numlist[i].count+")"); 
-                    }
-                    
+                    var name = numlist[i].name;
+                    var count = numlist[i].count;
+                    nameMap[name] = count;
                 };
-                if(isInArray(namearr,"exe")==false){
-                   $(".fDTableTab font").eq(1).html("(0)");  
-                }
-                if(isInArray(namearr,"doc")==false){
-                   $(".fDTableTab font").eq(2).html("(0)");  
-                }
-                if(isInArray(namearr,"pk")==false){
-                   $(".fDTableTab font").eq(3).html("(0)");  
-                }
-                if(isInArray(namearr,"unknow")==false){
-                   $(".fDTableTab font").eq(4).html("(0)");  
+                //遍历name数组，判断nameMap对象中是否存在
+                var namearr = ["exe","doc","pk","unknow"];
+                for(var i=0;i<namearr.length;i++){
+                    if(!nameMap.hasOwnProperty(namearr[i])){
+                        $(".fDTableTab font").eq(i+1).html("(0)");  
+                    }else{
+                        $(".fDTableTab font").eq(i+1).html("("+nameMap[namearr[i]]+")"); 
+                    }
                 }
                 $(".fDTableTab font").eq(0).html("("+wholenum+")");  
             }else{
-            	$(".fDTableTab font").eq(0).html("0"); 
-            	$(".fDTableTab font").eq(1).html("0"); 
-            	$(".fDTableTab font").eq(2).html("0"); 
-            	$(".fDTableTab font").eq(3).html("0"); 
-            	$(".fDTableTab font").eq(4).html("0"); 
+            	$(".fDTableTab font").html("0"); 
             }
            
             if(list.length==0){
@@ -247,14 +235,14 @@ function softlist(){
             $(".tcdPageCode").remove();
             $(".totalPages").remove();
             $(".numperpage").remove();
+            var current = (dataa.view.begin/dataa.view.count) + 1;
             $(".fileDistributeTContainer").append("<a style='font-size:12px;color:#6a6c6e;line-height:54px;padding-left:20px;float:left' class='totalPages'>共 "+data.data.view.total+" 条记录</a><div class='tcdPageCode' style='font-size:12px;float:right;padding-top:14px;padding-bottom:14px;padding-right:20px;'></div><a style='font-size:12px;float:right;line-height:54px;padding-right:20px;color:#6a6c6e' class='numperpage'>每页<input type='text' id='numperpageinput' value="+numperpage+" style='font-size:12px;width:40px;height:24px;margin:0 4px;vertical-align:middle;padding:0 10px;'>条</a><div class='clear clearfloat'></div>");
             $(".fileDistributeTContainer .tcdPageCode").createPage({
                 pageCount:total,
-                current:1,
+                current:parseInt(current),
                 backFn:function(pageIndex){
-                    $(".table table").html("");
                     start=(pageIndex-1)*numperpage;
-                    dataa={"type":type,"filter":{"filename":filtername},"view":{"begin":start,"count":numperpage}};
+                    dataa.view.begin=start;
                     $("fileDistributeTContainer .table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
                     ajaxtable=
                     $.ajax({
@@ -367,10 +355,7 @@ function showTaskTer(a){
                 error:function(xhr,textStatus,errorThrown){
 		        	if(xhr.status==401){
 		        	    parent.window.location.href='/';
-		        	}else{
-		        		
 		        	}
-		            
 		        },
                 success:function(data){
                     var html="";
@@ -659,13 +644,13 @@ $("#ctlBtn").on('click', function() {
 $(document).on('click','.terminallist p.th-ordery a i',function(){
 	var toggleClass = $(this).parents('p').attr('class');
 	if(toggleClass == 'th-ordery'){
-		$(this).parents('p').addClass('th-ordery-current th-ordery-up');
+		$(this).parents('p').addClass('th-ordery-up th-ordery-current');
 		$(this).attr('class','fa fa-sort-asc');
-	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up'){
-		$(this).parents('p').addClass('th-ordery-current th-ordery-down');
+	}else if(toggleClass == 'th-ordery th-ordery-up th-ordery-current'){
+		$(this).attr('class','th-ordery th-ordery-down th-ordery-current');
 		$(this).attr('class','fa fa-sort-desc');
-	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
-		$(this).parents('p').removeClass('th-ordery-current th-ordery-down th-ordery-up');
+	}else if(toggleClass == 'th-ordery th-ordery-down th-ordery-current'){
+		$(this).attr('class','th-ordery');
 		$(this).attr('class','fa fa-sort');
 	}
 	
@@ -677,7 +662,6 @@ var terminalidarr=[];
 $(".providePop .terminallist .container").on("change","input[type=checkbox]",function(){
     var terminalid=parseInt($(this).parent().attr("terminalid"));
     if($(this).is(":checked")){
-        
         terminalidarr.push(terminalid);    
     }else{
         terminalidarr.splice(jQuery.inArray(terminalid,terminalidarr),1);
@@ -751,28 +735,16 @@ $("#searchKeyT").keyup(function(){
 })
 function terminallist(){
 	var filtername=$("#searchKeyT").val();
-	var count=parseInt($(".providePop .grouplist .container .current").attr("clientnum"));
-	if($(".providePop .grouplist .container .current").index()==0){
-	    var dataa={"view": {"begin": 0,"count": count},"filter":{"name":filtername}};	
-	}else{
-		var groupid=parseInt($(".providePop .grouplist .container .current").attr("groupid"));
-		var dataa={"group_id":groupid,"view": {"begin": 0,"count": count},"filter":{"name":filtername}};
+    var count=parseInt($(".providePop .grouplist .container .current").attr("clientnum"));
+    var dataa={"view": {"begin": 0,"count": count},"filter":{"name":filtername}};
+	if($(".providePop .grouplist .container .current").index()!=0){
+	    var groupid=parseInt($(".providePop .grouplist .container .current").attr("groupid"));
+		dataa.group_id=groupid;
 	}
-	
 	var type = $('.terminallist p.th-ordery.th-ordery-current').attr('type');
 	var orderClass = $('.terminallist p.th-ordery.th-ordery-current').attr('class');
-	var ordery;
-	var order = {};
-	dataa.order = [];
-	if(orderClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
-		ordery = 'desc';
-	}else if(orderClass == 'th-ordery th-ordery-current th-ordery-up'){
-		ordery = 'asc';
-	}
-	if(type){
-		order[type] = ordery;
-		dataa.order.push(order);
-	}
+    dataa = sortingDataFun(dataa,type,orderClass);
+
 	$.ajax({
 		url:'/mgr/clnt/_list',
 		data:JSON.stringify(dataa),
@@ -788,22 +760,24 @@ function terminallist(){
         },
 		success:function(data){
 			var list=data.data.list;
-			var html="";
+            var html="";
+            var checked;
             var checkednum=0;
 			for (var i = 0; i < list.length; i++) {
                 if(isInArray(terminalidarr,list[i].client_id)==true){
                     checkednum++;
-                    html+="<a class='td block' terminalid="+list[i].client_id+"><input type='checkbox' class='verticalMiddle select' checked> <span class='verticalMiddle'> "+safeStr(list[i].hostname)+"</span></a>"; 
+                    checked = 'checked';
                 }else{
-                    html+="<a class='td block' terminalid="+list[i].client_id+"><input type='checkbox' class='verticalMiddle select'> <span class='verticalMiddle'> "+safeStr(list[i].hostname)+"</span></a>";
+                    checked = '';
                 }
-				
+                html+="<a class='td block' terminalid="+list[i].client_id+"><input type='checkbox' class='verticalMiddle select' "+checked+"> <span class='verticalMiddle'> "+safeStr(list[i].hostname)+"</span></a>"; 
 			};
             if(checkednum==list.length && list.length>0){
-                $(".providePop .terminallist .th input[type=checkbox]").prop("checked",true); 
+                checked = true;
             }else{
-                $(".providePop .terminallist .th input[type=checkbox]").prop("checked",false);
+                checked = false;
             }
+            $(".providePop .terminallist .th input[type=checkbox]").prop("checked",checked); 
 			$(".providePop .terminallist .container").html(html);
 			
 		}
@@ -906,12 +880,7 @@ $(".deleteB").click(function(){
 })
 //关闭弹层
 $(".closeW").click(function(){
-	$(".shade").hide();
-	parent.$(".topshade").hide();
-    $(this).parent().parent().hide();
-    $('#picker').remove();
-	$('.btns').append('<div id="picker">选择文件</div>');
-//  uploader.destroy();
+	hideButton($(this));
 });
 function hideButton(a){
 	$(".shade").hide();

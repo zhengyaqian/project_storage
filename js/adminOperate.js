@@ -24,10 +24,8 @@ $("#modules").change(function(){
 })
 //选择时间
 $("#specialTime select").change(function(){
-
     var optionVal = $(this).find("option:selected").val();
     var begintime = 0;
-    var displayVal = 0;
     switch(parseInt(optionVal)){
         case 0:
             begintime = -6;
@@ -45,10 +43,10 @@ $("#specialTime select").change(function(){
             $(".filterBlock .middle").show(200);
             break;
     }
-    if(begintime != 0){
-        $("#txtBeginDate").val(GetDateStr(begintime));
-    }
     if(optionVal != 4){
+        if(begintime != 0){
+            $("#txtBeginDate").val(GetDateStr(begintime));
+        }
         $("#txtEndDate").val(GetDateStr(0));
         $(".filterBlock .middle").hide(200);
     }
@@ -228,7 +226,7 @@ function accEvent(start){
     });
 
 }
-tbodyAddHeight();
+
 
 //调整页面内元素高度
 function tbodyAddHeight(){
@@ -237,9 +235,7 @@ function tbodyAddHeight(){
     $(".main .table tbody").css({height:mainlefth-347});
 }
 window.onresize = function(){
-    var mainlefth=parent.$("#iframe #mainFrame").height();
-
-    $(".main .table tbody").css({height:mainlefth-347});
+    tbodyAddHeight();
 
 }
 

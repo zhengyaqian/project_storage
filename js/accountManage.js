@@ -734,7 +734,7 @@ function sureDeleteButton(a){
     })
     
 }
-tbodyAddHeight();
+
 //调整页面内元素高度
 function tbodyAddHeight(){
 var mainlefth=parent.$("#iframe #mainFrame").height();
@@ -742,9 +742,7 @@ var mainlefth=parent.$("#iframe #mainFrame").height();
 $(".main .table tbody").css({height:mainlefth-296});
 }
 window.onresize = function(){
-    var mainlefth=parent.$("#iframe #mainFrame").height();
-
-    $(".main .table tbody").css({height:mainlefth-296});
+    tbodyAddHeight();
 
 }
 
