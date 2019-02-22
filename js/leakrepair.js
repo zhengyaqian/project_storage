@@ -38,10 +38,7 @@ function grouplist() {
 		error: function(xhr, textStatus, errorThrown) {
 			if(xhr.status == 401) {
 				parent.window.location.href = '/';
-			} else {
-
 			}
-
 		},
 		success: function(data) {
 
@@ -75,15 +72,15 @@ $(".functionButtonsBlock .setButton").click(function(event) {
 			}
 
 			if(data.data.boot_scan.repair == true) {
-				$('.loopholeRSPop input[name=loopS2]').attr('checked', 'checked')
+				$('.loopholeRSPop input[name=loopS2]').attr('checked', 'checked');
 			}
 			if(data.data.save_patch == true) {
-				$('.loopholeRSPop input[name=loopS3]').attr('checked', 'checked')
+				$('.loopholeRSPop input[name=loopS3]').attr('checked', 'checked');
 			}
 
 			$('.loopholeRSPop #filete').val(data.data.save_dir);
 			if(data.data.sysupdate_disable == true) {
-				$('.loopholeRSPop input[name=loopS4]').attr('checked', 'checked')
+				$('.loopholeRSPop input[name=loopS4]').attr('checked', 'checked');
 			}
 
 		}
@@ -351,10 +348,7 @@ $(document).on('click','.ignoredTPop .selectAll-repair-pop',function() {
 		error: function(xhr, textStatus, errorThrown) {
 			if(xhr.status == 401) {
 				parent.window.location.href = '/';
-			} else {
-
-			}
-
+			} 
 		},
 		success: function(data) {
 			var list = data.data.list;
@@ -386,23 +380,23 @@ function columnsIgnoredFun (){
 			type: "client_id",title: "",name: "client_id",
 			tHead:{style: {width: "10%"},class:"",customFunc: function (data, row, i) {return "<input type='checkbox' class='topCheckbox selectAll-repair-pop'  name='client'/>"}},
 			tBody:{style: {width: "10%"},customFunc: function (data, row, i) {
+				var checked;
 				if(isInArray(repairIdarrPop,parseInt(data))==true){
-					return "<input type='checkbox'  class='select select-repair-pop verticalMiddle' value='" + data + "' checked >";
+					checked = 'checked';
 				}else{
-					return "<input type='checkbox'  class='select select-repair-pop verticalMiddle' value='" + data + "'>";
+					checked = '';
 				}
+				return "<input type='checkbox'  class='select select-repair-pop verticalMiddle' value='" + data + "' "+checked+">";
 			}}
-	   	},
-		{
+	   	},{
 			type: "hostname",title: "终端名称",name: "hostname",
-			tHead:{style: {width: "50%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
+			tHead:{style: {width: "50%"},customFunc: function (data, row, i) {return ""}},
 			tBody:{style: {width: "50%"},customFunc: function (data, row, i) {
 				return "<span style='width:300px;' class='filePath' title='"+safeStr(data)+"'>"+safeStr(data)+"</span>";
 			}},
-		},
-		{
+		},{
 			type: "group_name",title: "终端分组",name: "group_name",
-			tHead:{style: {width: "40%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
+			tHead:{style: {width: "40%"},customFunc: function (data, row, i) {return ""}},
 			tBody:{style: {width: "40%"},customFunc: function (data, row, i) {return "<span>" + safeStr(data) + "</span>";}},
 		}
 	]
@@ -463,16 +457,7 @@ function ignoredTPop() {
 				current: 1,
 				backFn: function(pageIndex) {
 					start = (pageIndex - 1) * detailnumperpage;
-					dataa = {
-						"groupby": "client",
-						"view": {
-							"begin": start,
-							"count": detailnumperpage
-						},
-						"filter": {
-							"exclude": true
-						}
-					};
+					dataa.view.begin = start;
 					$.ajax({
 						url: '/mgr/leakrepair/_list',
 						data: JSON.stringify(dataa),
@@ -550,30 +535,11 @@ $(document).on('click','.taskDetailPop table th .topCheckbox',function(){
 	var clientid = $('.ignoreBtn').attr('taskid');
 	var level = $('.ignoreBtn').attr('level');
 	var dataa = {};
+	dataa = {"groupby": "patch","filter": {"client_id": parseInt(clientid)},"view": {"begin": 0,"count": parseInt(total)}};
 	if(type == "取消忽略") {
-		dataa = {
-			"groupby": "patch",
-			"filter": {
-				"client_id": parseInt(clientid),
-				"exclude": true
-			},
-			"view": {
-				"begin": 0,
-				"count": parseInt(total)
-			}
-		};
+		dataa.filter.exclude = true;
 	} else {
-		dataa = {
-			"groupby": "patch",
-			"filter": {
-				"client_id": parseInt(clientid),
-				"level": parseInt(level)
-			},
-			"view": {
-				"begin": 0,
-				"count": parseInt(total)
-			}
-		};
+		dataa.filter.level = parseInt(level);
 	}
 	$.ajax({
 		url: '/mgr/leakrepair/_list',
@@ -623,11 +589,12 @@ $(document).on('click','.taskDetailPop th.th-ordery',function(){
 	taskDetailPop(start);
 })
 //漏洞详情弹层显示
+var tabstrTask;
 $(document).on('click','.tableContainer .taskDetailBtn',function(){
 	detailsIdarrPop = [];
 	var level = $(this).attr('level');
 	var exclude = $(this).attr('exclude');
-	$('.taskDetailPop .tableth th.th-ordery').removeClass().addClass('th-ordery');
+	
 	var clientid = $(this).parents("tr").find('input[type=checkbox]').val();
 	var hostname = $(this).parents("td").siblings().eq(1).find('span').html();
 	if($(this).parent("td").index() == 3) {
@@ -635,20 +602,18 @@ $(document).on('click','.tableContainer .taskDetailBtn',function(){
 		$(".taskDetailPop .taskInf").html("高危漏洞 - <span class='filePath' title='"+hostname+"'>" + hostname + "</span>");
 		$(".taskDetailPop .ignoreBtn").attr('index', '3');
 		$(".taskDetailPop .ignoreBtn").attr('level', level);
-		$(".taskDetailPop .ignoreBtn").attr('indexP', $(this).parents("tr").index());
 	} else if($(this).parent("td").index() == 4) {
 		$(".taskDetailPop .describe").html("以下漏洞为功能性漏洞，可以选择性修复<a class='charaButton floatR greenfont underline cursor ignoreBtn' onclick='ignorePopFun(this," + clientid + ")'>忽略</a>");
 		$(".taskDetailPop .taskInf").html("功能漏洞 - <span class='filePath' title='"+hostname+"'>" + hostname + "</span>");
 		$(".taskDetailPop .ignoreBtn").attr('index', '4');
 		$(".taskDetailPop .ignoreBtn").attr('level', level);
-		$(".taskDetailPop .ignoreBtn").attr('indexP', $(this).parents("tr").index());
 	} else {
 		$(".taskDetailPop .describe").html("以下补丁已被忽略，火绒将不再此终端修复这些补丁<a class='charaButton floatR greenfont underline cursor ignoreBtn' onclick='ignorePopFun(this," + clientid + ")'>取消忽略</a>");
 		$(".taskDetailPop .taskInf").html("已忽略补丁 - <span class='filePath' title='"+hostname+"'>" + hostname + "</span>");
 		$(".taskDetailPop .ignoreBtn").attr('index', '5');
-		$(".taskDetailPop .ignoreBtn").attr('indexP', $(this).parents("tr").index());
 	}
 
+	$(".taskDetailPop .ignoreBtn").attr('indexP', $(this).parents("tr").index());
 	$(".taskDetailPop").show();
 	$(".taskDetailPop .ignoreBtn").attr('taskid', clientid);
 	$('.taskDetailPop input[type=checkbox]').attr('checked', false);
@@ -657,7 +622,8 @@ $(document).on('click','.tableContainer .taskDetailBtn',function(){
 	$('.taskDetailPop').attr('exclude',exclude);
 	shade();
 	taskDetailPop(index);
-	
+	$('.taskDetailPop .taskDetailTable').html('');
+	tabstrTask = columnsTaskDetailFun();
 })
 //漏洞详情列表信息
 function columnsTaskDetailFun (){
@@ -681,21 +647,15 @@ function columnsTaskDetailFun (){
 			}},
 		},
 		{
-			type: "desc",title: "补丁描述",name: "desc",
-			tHead:{style: {width: "38%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
+			type: "",title: "补丁描述",name: "desc",
+			tHead:{style: {width: "38%"},customFunc: function (data, row, i) {return ""}},
 			tBody:{style: {width: "38%"},customFunc: function (data, row, i) {return "<span class='filePath loophtWidth' style='width:250px;' title='"+data+"'>" + data+ "</span>"}},
 		},
 		{
 			type: "level",title: "补丁类型",name: "level",
 			tHead:{style: {width: "12%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
 			tBody:{style: {width: "12%"},customFunc: function (data, row, i) {
-				var dataStr = '';
-				if(data == 0) {
-					dataStr= "高危";
-				} else if(data == 1) {
-					dataStr = "功能";
-				}
-				return dataStr;
+				return fieldHandle(pathLevelField,data);
 			}},
 		},
 		{
@@ -708,7 +668,7 @@ function columnsTaskDetailFun (){
 	return tabstr;
 	
 }
-var tabstrTask = columnsTaskDetailFun();
+
 function taskDetailPop(index) {
 	var start;
 	var detailnumperpage = 9;
@@ -721,43 +681,13 @@ function taskDetailPop(index) {
 	var level = $('.taskDetailPop').attr('level');
 	var exclude = $('.taskDetailPop').attr('exclude');
 	var clientid = $(".taskDetailPop .ignoreBtn").attr('taskid');
-	
+	dataa = {"groupby": "patch","filter": {"client_id": parseInt(clientid)},"view": {"begin": start,"count": detailnumperpage}};
 	if(index == '5') {
-		dataa = {
-			"groupby": "patch",
-			"filter": {
-				"client_id": parseInt(clientid),
-				"exclude": true
-			},
-			"view": {
-				"begin": start,
-				"count": detailnumperpage
-			}
-		};
+		dataa.filter.exclude = true;
 	} else if(index == '3'){
-		dataa = {
-			"groupby": "patch",
-			"filter": {
-				"client_id": parseInt(clientid),
-				"level": 0
-			},
-			"view": {
-				"begin": start,
-				"count": detailnumperpage
-			}
-		};
+		dataa.filter.level = 0;
 	}else if(index == '4'){
-		dataa = {
-			"groupby": "patch",
-			"filter": {
-				"client_id": parseInt(clientid),
-				"level": 1
-			},
-			"view": {
-				"begin": start,
-				"count": detailnumperpage
-			}
-		};
+		dataa.filter.level = 1;
 	}
 	var type = $('.taskDetailPop .taskDetailTable th.th-ordery.th-ordery-current').attr('type');
 	var orderClass = $('.taskDetailPop .taskDetailTable th.th-ordery.th-ordery-current').attr('class');
@@ -770,13 +700,9 @@ function taskDetailPop(index) {
 		error: function(xhr, textStatus, errorThrown) {
 			if(xhr.status == 401) {
 				parent.window.location.href = '/';
-			} else {
-
 			}
-
 		},
 		success: function(data) {
-			
 			var list = data.data.list;
 			var totalnum = data.data.view.total;
 			var pages = Math.ceil(totalnum / detailnumperpage);
@@ -830,20 +756,11 @@ function ignorePopFun(b, a) {
 		delayHide("请选择终端!");
 		
 	} else {
+		var dataa = {"client_id": a,"patch": {}};
 		if($(b).text() == '忽略') {
-			var dataa = {
-				"client_id": a,
-				"patch": {
-					'exclude': repairIdarrPop
-				}
-			};
+			dataa.patch.exclude = repairIdarrPop;
 		} else {
-			var dataa = {
-				"client_id": a,
-				"patch": {
-					'include': repairIdarrPop
-				}
-			};
+			dataa.patch.include = repairIdarrPop;
 		}
 		$.ajax({
 			url: '/mgr/leakrepair/_clientkb',
@@ -1124,22 +1041,7 @@ function leakrepairClient(start) {
 			}
 		});
 }
-//修复漏洞列表信息
-function columnsRepairLoopFun (){
-	var columns = [
-		{
-			type: "hostname",title: "终端名称",name: "hostname",tHead:{style: {width: "40%"},},
-		},
-		{
-			type: "group_name",title: "终端分组",name: "group_name",tHead:{style: {width: "40%"}},
-		},
-		{
-			type: "ex_cnt",title: "状态",name: "ex_cnt",tHead:{style: {width: "20%"}}
-		}
-	]
 
-	return columns;
-}
 //修复漏洞弹窗
 $(document).on('click', '.repairLoop', function() {
 	if($(".table td .select-repair:checked").length == 0) {
@@ -1162,9 +1064,7 @@ $(document).on('click', '.repairLoop', function() {
 				error: function(xhr, textStatus, errorThrown) {
 					if(xhr.status == 401) {
 						parent.window.location.href = '/';
-					} else {
-
-					}
+					} 
 				},
 				success: function(data) {
 					var data = data.data;
@@ -1180,23 +1080,7 @@ $(document).on('click', '.repairLoop', function() {
 		})
 	}
 })
-//修复所有漏洞列表信息
-function columnsAllRepairLoopFun (){
-	var columns = [
-		{
-			title: "终端名称",name: "hostname",tHead:{style: {width: "40%"}},
-			tBody:{style: {width: "40%"},customFunc: function (data, row, i) {return "<span style='width:228px;' class='filePath' title='"+data+"'>"+ safeStr(data) +"</span>"}}
-		},{
-			title: "终端分组",name: "group_name",tHead:{style: {width: "40%"}},
-			tBody:{style: {width: "40%"},customFunc: function (data, row, i) {return "<span>"+ safeStr(data) +"</span>"}}
-		},{
-			title: "状态",name: "status",tHead:{style: {width: "20%"}},
-			tBody:{style: {width: "40%"},customFunc: function (data, row, i) {return "<span>"+ safeStr(data) +"</span>"}}
-		}
-	]
 
-	return columns;
-}
 //修复所有---高危漏洞
 var looptimeRepair = "";
 function repairAllbugFun(a) {
@@ -1210,13 +1094,7 @@ function repairAllbugFun(a) {
 		$(".repairLoopPop .buttons a").eq(0).hide();
 	}
 	$(".repairLoopPop .buttons").html("<a class='stopRepairBtn' index='"+index+"'>停止修复</a>");
-	var dataa = {
-		"type": "leakrepair_repair",
-		"clients": repairIdarr,
-		"param": {
-			"level": level
-		}
-	}
+	var dataa = {"type": "leakrepair_repair","clients": repairIdarr,"param": {"level": level}}
 	$.ajax({
 		url: '/mgr/task/_create',
 		data: JSON.stringify(dataa),
@@ -1225,62 +1103,54 @@ function repairAllbugFun(a) {
 		error: function(xhr, textStatus, errorThrown) {
 			if(xhr.status == 401) {
 				parent.window.location.href = '/';
-			} else {
-
-			}
-
+			} 
 		},
 		success: function(data) {
 			if(data.errno == 0) {
-        	   delayHideS("操作成功");
+        	    delayHideS("操作成功");
 				taskid = data.data.task_id;
-				dataa = {
-					"taskid": taskid,
-					"view": {
-						"begin": 0,
-						"count": repairIdarr.length
-					}
-				};
-				$.ajax({
-					url: '/mgr/task/_clnt',
-					data: JSON.stringify(dataa),
-					type: 'POST',
-					async: true,
-					contentType: 'text/plain',
-					error: function(xhr, textStatus, errorThrown) {
-						if(xhr.status == 401) {
-							parent.window.location.href = '/';
-						} else {
-
-						}
-
-					},
-					success: function(data1) {
-						var list = data1.data.list;
-						var html = "";
-						
-						for(var i = 0; i < list.length; i++) {
-							html += "<tr>";
-                			html+="<td width='40%'><span style='width:228px;' class='filePath' title='"+safeStr(list[i].hostname)+"'>"+safeStr(list[i].hostname)+"</span></td>";
-							html += "<td width='40%'>" + safeStr(list[i].groupname) + "</td>";
-							if(list[i].status == 0) {
-								html += "<td width='20%' id='unresponds'><span class='verticalMiddle'>未响应</span><img src='images/unresponds.png' class='statusIcon'/></td>";
-							} else if(list[i].status == 1) {
-								html += "<td width='20%'><span class='verticalMiddle'>已接受</span><img src='images/accepts.png' class='statusIcon'/></td>";
-							} else if(list[i].status == 2) {
-								html += "<td width='20%'><span class='verticalMiddle'>已拒绝</span><img src='images/refuses.png' class='statusIcon'/></td>";
-							}
-							html += "</tr>";
-						};
-
-						$(".repairLoopPop .tableCon table tbody").html(html);
-					}
-				});
-				
+				dataa = {"taskid": taskid,"view": {"begin": 0,"count": repairIdarr.length}};
+				debugger;
+				taskClntAllAjax(dataa);
 			}
 			looptimeRepair = setInterval("eachAllRepairTable()", 500);
 		}
 	})
+}
+function taskClntAllAjax(dataa){
+	$.ajax({
+		url: '/mgr/task/_clnt',
+		data: JSON.stringify(dataa),
+		type: 'POST',
+		async: true,
+		contentType: 'text/plain',
+		error: function(xhr, textStatus, errorThrown) {
+			if(xhr.status == 401) {
+				parent.window.location.href = '/';
+			} 
+		},
+		success: function(data1) {
+			var list = data1.data.list;
+			var html = "";
+			
+			for(var i = 0; i < list.length; i++) {
+				html += "<tr>";
+				html+="<td width='40%'><span style='width:228px;' class='filePath' title='"+safeStr(list[i].hostname)+"'>"+safeStr(list[i].hostname)+"</span></td>";
+				html += "<td width='40%'>" + safeStr(list[i].groupname) + "</td>";
+				if(list[i].status == 0) {
+					html += "<td width='20%' id='unresponds'><span class='verticalMiddle'>未响应</span><img src='images/unresponds.png' class='statusIcon'/></td>";
+				} else if(list[i].status == 1) {
+					html += "<td width='20%'><span class='verticalMiddle'>已接受</span><img src='images/accepts.png' class='statusIcon'/></td>";
+				} else if(list[i].status == 2) {
+					html += "<td width='20%'><span class='verticalMiddle'>已拒绝</span><img src='images/refuses.png' class='statusIcon'/></td>";
+				}
+				html += "</tr>";
+			};
+
+			$(".repairLoopPop .tableCon table tbody").html(html);
+		}
+	});
+				
 }
 //扫描漏洞未响应的状态
 function eachAllRepairTable() {
@@ -1288,46 +1158,8 @@ function eachAllRepairTable() {
 		clearInterval(looptimeRepair);
 		$(".repairLoopPop .buttons").html("<a onclick='repairLoopPop()'>完成</a>");
 	} else {
-		dataa = {
-			"taskid": taskid,
-			"view": {
-				"begin": 0,
-				"count": repairIdarr.length
-			}
-		};
-		$.ajax({
-			url: '/mgr/task/_clnt',
-			data: JSON.stringify(dataa),
-			type: 'POST',
-			contentType: 'text/plain',
-			error: function(xhr, textStatus, errorThrown) {
-				if(xhr.status == 401) {
-					parent.window.location.href = '/';
-				} else {
-
-				}
-
-			},
-			success: function(data1) {
-				var list = data1.data.list;
-				var html = "";
-				for(var i = 0; i < list.length; i++) {
-					html += "<tr>";
-                	html+="<td width='40%'><span style='width:228px;' class='filePath' title='"+safeStr(list[i].hostname)+"'>"+safeStr(list[i].hostname)+"</span></td>";
-					html += "<td width='40%'>" + safeStr(list[i].groupname) + "</td>";
-					if(list[i].status == 0) {
-						html += "<td width='20%' id='unresponds'><span class='verticalMiddle'>未响应</span><img src='images/unresponds.png' class='statusIcon'</td>";
-					} else if(list[i].status == 1) {
-						html += "<td width='20%'><span class='verticalMiddle'>已接受</span><img src='images/accepts.png' class='statusIcon'</td>";
-					} else if(list[i].status == 2) {
-						html += "<td width='20%'><span class='verticalMiddle'>已拒绝</span><img src='images/refuses.png' class='statusIcon'</td>";
-					}
-					html += "</tr>";
-				};
-
-				$(".repairLoopPop .tableCon table tbody").html(html);
-			}
-		});
+		dataa = {"taskid": taskid,"view": {"begin": 0,"count": repairIdarr.length}};
+		taskClntAllAjax(dataa);
 	}
 }
 // 扫描漏洞任务停止下发
@@ -1409,10 +1241,5 @@ window.onload = function(){
 	});
 }
 window.onresize = function() {
-	var mainlefth = parent.$("#iframe #mainFrame").height();
-
-	$(".main .table tbody").css({
-		height: mainlefth - 347
-	});
-
+	tbodyAddHeight();
 }

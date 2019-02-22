@@ -664,5 +664,8 @@ var fnameTypeField = {'filemon':'文件实时监控','behavior':'恶意行为监
 /**网址类型 */
 var clsTypeField = {'spy':'木马，盗号','phising':'钓鱼，仿冒','fraud':'虚假，欺诈'};
 
+/**补丁类型 */
+var pathLevelField = {'0':'高危','1':'功能'};
+
 /**任务备注 */
 var taskRemarkField = {'0':'任务尚未被接受','1':'任务已经接受','2':'终端任务繁忙'};
