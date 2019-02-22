@@ -63,11 +63,13 @@ function columnsDataListFun (){
 			type: "id",title: "",name: "id",
 			tHead:{style: {width: "4%"},class:"",customFunc: function (data, row, i) {return "<input type='checkbox' class='verticalMiddle selectAll-repair'/>"}},
 			tBody:{style: {width: "4%"},customFunc: function (data, row, i) {
+				var checked;
 				if(isInArray(repairIdarr,parseInt(data))==true){
-					return "<input type='checkbox'  class='select select-repair verticalMiddle' value='" + data + "' checked >";
+					checked = 'checked';
 				}else{
-					return "<input type='checkbox'  class='select select-repair verticalMiddle' value='" + data + "'>";
+					checked = '';
 				}
+				return "<input type='checkbox'  class='select select-repair verticalMiddle' value='" + data + "' "+checked+" >";
 			}}
 	   	},
 		{
@@ -79,7 +81,7 @@ function columnsDataListFun (){
 		},
 		{
 			type: "desc",title: "补丁描述",name: "desc",
-			tHead:{style: {width: "50%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
+			tHead:{style: {width: "50%"},customFunc: function (data, row, i) {return ""}},
 			tBody:{style: {width: "50%"},customFunc: function (data, row, i) {
 				return "<span class='filePath loophtWidth' style='width:550px;' title='" + data + "'>" + data + "</span>"}},
 		},
@@ -87,14 +89,7 @@ function columnsDataListFun (){
 			type: "level",title: "补丁类型",name: "level",
 			tHead:{style: {width: "10%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
 			tBody:{style: {width: "10%"},customFunc: function (data, row, i) {
-				if(data == '0') {
-					return "<span>高危补丁</span>"
-				} else if(data == '1') {
-					return "<span>功能更新</span>"
-				} else {
-					return "<span></span>"
-
-				}
+				return fieldHandle(pathLevelField,data);
 			}},
 		},
 		{
@@ -150,10 +145,7 @@ function leakrepairPatch(start) {
 			error: function(xhr, textStatus, errorThrown) {
 				if(xhr.status == 401) {
 					parent.window.location.href = '/';
-				} else {
-
-				}
-
+				} 
 			},
 			success: function(data) {
 				$(".table div").remove();
@@ -200,10 +192,7 @@ function createPageFun(pages, dataa) {
 				error: function(xhr, textStatus, errorThrown) {
 				if(xhr.status == 401) {
 					parent.window.location.href = '/';
-				} else {
-
 				}
-
 			},
 				success: function(data) {
 					var list = data.data.list;
@@ -341,11 +330,13 @@ function columnsIgnoredFun (){
 			type: "id",title: "",name: "id",
 			tHead:{style: {width: "5%"},class:"",customFunc: function (data, row, i) {return "<input type='checkbox' class='verticalMiddle selectAll-repair-pop'/>"}},
 			tBody:{style: {width: "5%"},customFunc: function (data, row, i) {
+				var checked;
 				if(isInArray(repairIdarrPop,parseInt(data))==true){
-					return "<input type='checkbox'  class='select select-repair-pop verticalMiddle' value='" + data + "' checked >";
+					checked = 'checked';
 				}else{
-					return "<input type='checkbox'  class='select select-repair-pop verticalMiddle' value='" + data + "'>";
+					checked = '';
 				}
+				return "<input type='checkbox'  class='select select-repair-pop verticalMiddle' value='" + data + "' "+checked+">";
 			}}
 	   	},
 		{
@@ -356,8 +347,8 @@ function columnsIgnoredFun (){
 			}},
 		},
 		{
-			type: "desc",title: "补丁描述",name: "desc",
-			tHead:{style: {width: "35%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
+			type: "",title: "补丁描述",name: "desc",
+			tHead:{style: {width: "35%"},customFunc: function (data, row, i) {return ""}},
 			tBody:{style: {width: "35%"},customFunc: function (data, row, i) {
 				return "<span class='filePath loophtWidth' title='" + data + "'>" + data + "</span>"}},
 		},
@@ -365,14 +356,7 @@ function columnsIgnoredFun (){
 			type: "level",title: "补丁类型",name: "level",
 			tHead:{style: {width: "12%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
 			tBody:{style: {width: "12%"},customFunc: function (data, row, i) {
-				if(data == '0') {
-					return "<span>高危补丁</span>"
-				} else if(data == '1') {
-					return "<span>功能更新</span>"
-				} else {
-					return "<span></span>"
-
-				}
+				return fieldHandle(pathLevelField,data);
 			}},
 		},
 		{
@@ -415,10 +399,7 @@ function ignoredTPop() {
 		error: function(xhr, textStatus, errorThrown) {
 			if(xhr.status == 401) {
 				parent.window.location.href = '/';
-			} else {
-
 			}
-
 		},
 		success: function(data) {
 			var list = data.data.list;
@@ -442,16 +423,7 @@ function ignoredTPop() {
 				current: 1,
 				backFn: function(pageIndex) {
 					start = (pageIndex - 1) * numperpage;
-					dataa = {
-						"groupby": "patch",
-						"view": {
-							"begin": start,
-							"count": numperpage
-						},
-						"filter": {
-							"exclude": true
-						}
-					};
+					dataa.view.begin = start;
 					$.ajax({
 						url: '/mgr/leakrepair/_list',
 						data: JSON.stringify(dataa),
@@ -507,8 +479,6 @@ $(document).on('click', '.selectAll-repair-pop', function() {
 		error: function(xhr, textStatus, errorThrown) {
 			if(xhr.status == 401) {
 				parent.window.location.href = '/';
-			} else {
-
 			}
 
 		},
@@ -580,10 +550,5 @@ function tbodyAddHeight(){
 
 
 window.onresize = function() {
-	var mainlefth = parent.$("#iframe #mainFrame").height();
-
-	$(".main .table tbody").css({
-		height: mainlefth - 347
-	});
-
+	tbodyAddHeight();
 }
