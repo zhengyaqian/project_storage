@@ -193,7 +193,7 @@ function columnsDataDetailListFun (){
 			type: "state",title: "状态",name: "state",
 			tHead:{style: {width: "8%"},customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
             tBody:{style: {width: "8%"},customFunc: function (data, row, i) {
-                return patchStateField(data);
+                return fieldHandle(patchStateField,data);
             }}
 		}
 	]
@@ -326,7 +326,7 @@ function columnsDataDetail_NamePopFun (){
 			type: "state",title: "状态",name: "state",
 			tHead:{style: {width: "10%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
             tBody:{style: {width: "10%"},customFunc: function (data, row, i) {
-                return patchStateField(data);
+                return fieldHandle(patchStateField,data);
             }}
 		}
 	]
@@ -356,7 +356,7 @@ function columnsDataDetail_kbidPopFun (){
 			type: "state",title: "状态",name: "state",
 			tHead:{style: {width: "10%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
             tBody:{style: {width: "10%"},customFunc: function (data, row, i) {
-                return patchStateField(data);
+                return fieldHandle(patchStateField,data);
             }}
 		}
 	]

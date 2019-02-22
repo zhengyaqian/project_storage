@@ -73,7 +73,7 @@ table{border-collapse: collapse;}
 .taskDetailPop.tableth tr{background: rgb(240,240,240);border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236)}
 .taskDetailPop .tableth th,.taskDetailPop .taskDetailTable td{line-height: 36px;padding-left: 10px;font-weight: normal;}
 .taskDetailPop .tableth th{color: #676a6c;text-align: left;background: rgb(240,240,240)}
-.taskDetailPop .taskDetailTable{height: 313px;overflow-y:scroll;border-bottom:1px solid rgb(231,234,236) }
+/* .taskDetailPop .taskDetailTable{height: 313px;overflow-y:scroll;border-bottom:1px solid rgb(231,234,236) } */
 .taskDetailPop .taskDetailTable table{border:0;}
 .taskDetailPop .taskDetailTable tr:hover{background: rgb(249,249,249)}
 .taskDetailPop .taskDetailTable table td .nameWidth{width: 100px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: bottom;}

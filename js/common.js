@@ -629,7 +629,9 @@ function delayHideS(msg){
     $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> "+msg+"</span>");
     setTimeout(function(){$(".delayHideS").hide()},2000);
 }
-/*字段处理*/
+
+
+/**字段处理 */
 function fieldHandle(dataMap,data){
     if(dataMap.hasOwnProperty(data)){
         return dataMap[data];
@@ -637,14 +639,30 @@ function fieldHandle(dataMap,data){
         return '--';
     }
 }
-/*操作模块*/
-function moduleField(data){
-    var dataMap = {'mgr_client':'终端管理','mgr_policy':'防护策略','mgr_distr':'文件管理','mgr_log':'事件日志','mgr_tools':'管理工具','mgr_user':'账户管理','system_conf':'系统设置','system_auth':'用户登录','mgr_remote':'远程桌面'};
-    return fieldHandle(dataMap,data);
-}
+/**操作模块 */
+var moduleField = {'mgr_client':'终端管理','mgr_policy':'防护策略','mgr_distr':'文件管理','mgr_log':'事件日志','mgr_tools':'管理工具','mgr_user':'账户管理','system_conf':'系统设置','system_auth':'用户登录','mgr_remote':'远程桌面'};
 
 /**补丁状态 */
-function patchStateField(data){
-    var dataMap = {'0':'等待修复','1':'暂不修复','2':'下载补丁','3':'下载错误','4':'下载完成','5':'安装补丁','6':'安装错误','7':'安装完成'};
-    return fieldHandle(dataMap,data);
-}
+var patchStateField = {'0':'等待修复','1':'暂不修复','2':'下载补丁','3':'下载错误','4':'下载完成','5':'安装补丁','6':'安装错误','7':'安装完成'};
+
+/**分发状态 */
+var distrStatusField = {'0':'正在分发','1':'分发结束'};
+
+var resultField = {'0':'处理失败','1':'处理失败','2':'已忽略','3':'已处理','4':'已处理','5':'已信任','6':'已忽略'};
+var treatmentField = {'0':'已忽略','1':'待处理','2':'已处理','3':'已阻止','4':'已信任','5':'已处理'};
+var blockedField = {'0':'已放过','1':'已阻止'};
+
+/**任务状态 */
+var taskStatusField = {'0':'未响应','1':'已接受','2':'已拒绝'};
+
+/**任务类型 */
+var taskTypeField = {'quick_scan':'快速查杀','full_scan':'全盘查杀','update':'升级任务','message':'通知任务','shutdown':'关机','reboot':'重启','msg_uninstall':'软件卸载','msg_distrfile':'文件分发','migrate':'中心迁移','leakrepair_repair':'漏洞修复','leakrepair_scan':'漏洞扫描','vnc_launch':'远程桌面'};
+
+/**事件类型 */
+var fnameTypeField = {'filemon':'文件实时监控','behavior':'恶意行为监控','dlmon':'下载保护','udiskmon':'U盘保护','sysprot':'系统加固','scan':'病毒查杀','malurl':'恶意网站拦截','instmon':'软件安装拦截','intrusion':'黑客入侵拦截','ipattaack':'对外攻击检测','mail':'邮件监控','ipblacklist':'IP黑名单','ipproto':'IP协议控制'};
+
+/**网址类型 */
+var clsTypeField = {'spy':'木马，盗号','phising':'钓鱼，仿冒','fraud':'虚假，欺诈'};
+
+/**任务备注 */
+var taskRemarkField = {'0':'任务尚未被接受','1':'任务已经接受','2':'终端任务繁忙'};

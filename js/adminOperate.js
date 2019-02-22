@@ -124,7 +124,7 @@ function columnsDataListFun (){
 			type: "module",title: "操作模块",name: "module",
 			tHead:{style: {width: "12%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
 			tBody:{style: {width: "12%"},customFunc: function (data, row, i) {
-                return moduleField(data);
+                return fieldHandle(moduleField,data);
             }},
 		},{
 			type: "",title: "操作描述",name: "description",
