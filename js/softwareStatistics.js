@@ -15,10 +15,7 @@ function tbodyAddHeight(){
 
 
 window.onresize = function(){
-    var mainlefth=parent.$("#iframe #mainFrame").height();
-
-    $(".main .table tbody").css({height:mainlefth-347});
-
+    tbodyAddHeight();
 }
 // 搜索按钮触发
 function searchList(){
@@ -88,10 +85,7 @@ function uninstallSPop(a){
             error:function(xhr,textStatus,errorThrown){
 	        	if(xhr.status==401){
 	        	    parent.window.location.href='/';
-	        	}else{
-	        		
 	        	}
-	            
 	        },
             success:function(data){
                 var list=data.data.list;
@@ -133,10 +127,7 @@ function uninstallSTAjax(){
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
-        	}else{
-        		
         	}
-            
         },
         success:function(data){
             var list=data.data.list;
@@ -196,8 +187,6 @@ function sureUSButton(a){
             error:function(xhr,textStatus,errorThrown){
 	        	if(xhr.status==401){
 	        	    parent.window.location.href='/';
-	        	}else{
-	        		
 	        	}
 	            
 	        },
@@ -252,10 +241,7 @@ function recentTaskAjax(){
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
-        	}else{
-        		
         	}
-            
         },
         success:function(data){
             var list=data.data.list;
@@ -310,10 +296,7 @@ function showTaskTer(a){
                 error:function(xhr,textStatus,errorThrown){
 		        	if(xhr.status==401){
 		        	    parent.window.location.href='/';
-		        	}else{
-		        		
 		        	}
-		            
 		        },
                 success:function(data){
                     var html="";
@@ -677,10 +660,7 @@ function seeDetailPop(start){
             error:function(xhr,textStatus,errorThrown){
 	        	if(xhr.status==401){
 	        	    parent.window.location.href='/';
-	        	}else{
-	        		
 	        	}
-	            
 	        },
             success:function(data){
                 var list=data.data.list;

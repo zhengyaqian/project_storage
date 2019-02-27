@@ -655,8 +655,14 @@ var blockedField = {'0':'已放过','1':'已阻止'};
 /**任务状态 */
 var taskStatusField = {'0':'未响应','1':'已接受','2':'已拒绝'};
 
+/**升级日志任务状态 */
+var result_Field = {'success':'升级成功','connect failed':'连接失败','fetch failed':'下载失败','merge failed':'更新失败'};
+
 /**任务类型 */
 var taskTypeField = {'quick_scan':'快速查杀','full_scan':'全盘查杀','update':'升级任务','message':'通知任务','shutdown':'关机','reboot':'重启','msg_uninstall':'软件卸载','msg_distrfile':'文件分发','migrate':'中心迁移','leakrepair_repair':'漏洞修复','leakrepair_scan':'漏洞扫描','vnc_launch':'远程桌面'};
+
+/**升级日志任务类型 */
+var productField = {'client.windows':'终端升级','virdb.windows':'病毒库升级','center.windows':'中心升级'};
 
 /**事件类型 */
 var fnameTypeField = {'filemon':'文件实时监控','behavior':'恶意行为监控','dlmon':'下载保护','udiskmon':'U盘保护','sysprot':'系统加固','scan':'病毒查杀','malurl':'恶意网站拦截','instmon':'软件安装拦截','intrusion':'黑客入侵拦截','ipattaack':'对外攻击检测','mail':'邮件监控','ipblacklist':'IP黑名单','ipproto':'IP协议控制'};
@@ -664,8 +670,16 @@ var fnameTypeField = {'filemon':'文件实时监控','behavior':'恶意行为监
 /**网址类型 */
 var clsTypeField = {'spy':'木马，盗号','phising':'钓鱼，仿冒','fraud':'虚假，欺诈'};
 
+/**授权状态 */
+var licenseStatusField = {'1':'未授权','2':'授权已满','3':'授权到期','4':'需要升级'};
+
 /**补丁类型 */
 var pathLevelField = {'0':'高危','1':'功能'};
+
+/**保护类型 */
+var classField = {'0':'文件保护规则','1':'注册表保护规则','2':'执行防护规则','3':'病毒免疫','4':'危险动作拦截','5':'进程保护'}
+
+/**操作类型 */
 
 /**任务备注 */
 var taskRemarkField = {'0':'任务尚未被接受','1':'任务已经接受','2':'终端任务繁忙'};

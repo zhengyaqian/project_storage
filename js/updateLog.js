@@ -14,25 +14,31 @@ document.cookie='page=updateLog.html';
 
 //选择时间
 $("#specialTime select").change(function(){
-
-    if($(this).find("option:selected").val()==0){
-        $("#txtBeginDate").val(GetDateStr(-6));
+    var optionVal = $(this).find("option:selected").val();
+    var begintime = 0;
+    switch(parseInt(optionVal)){
+        case 0:
+            begintime = -6;
+            break;
+        case 1:
+            begintime = -29;
+            break;
+        case 2:
+            begintime = -89;
+            break;
+        case 3:
+            begintime = -364;
+            break;
+        default:
+            $(".filterBlock .middle").show(200);
+            break;
+    }
+    if(optionVal != 4){
+        if(begintime != 0){
+            $("#txtBeginDate").val(GetDateStr(begintime));
+        }
         $("#txtEndDate").val(GetDateStr(0));
         $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==1){
-        $("#txtBeginDate").val(GetDateStr(-29));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==2){
-        $("#txtBeginDate").val(GetDateStr(-89));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==3){
-        $("#txtBeginDate").val(GetDateStr(-364));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==4){
-        $(".filterBlock .middle").show(200);
     }
     accEvent();
 })
@@ -66,10 +72,7 @@ function columnsDataListFun (){
 			type: "product",title: "任务类型",name: "product",
 			tHead:{style: {width: "16%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
 			tBody:{style: {width: "16%"},customFunc: function (data, row, i) {
-				if(data == 'client.windows'){return "终端升级";
-				}else if(data == 'virdb.windows'){return "病毒库升级";
-				}else if(data == 'center.windows'){return "中心升级";
-				}else{return "--";}
+				return fieldHandle(productField,data);
             }}
 		},{
 			type: "orgver",title: "升级前版本",name: "orgver",
@@ -85,11 +88,7 @@ function columnsDataListFun (){
             type: "result",title: "状态",name: "result",
             tHead:{style: {width: "16%"},class: "th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
 			tBody:{style: {width: "16%"},customFunc: function (data, row, i) {
-				if(data=="success"){return "升级成功"; 
-				}else if(data=="connect failed"){return "连接失败"; 
-				}else if(data=="fetch failed"){return "下载失败";
-				}else if(data=="merge failed"){return "更新失败";
-				}else{return "--";}
+				return fieldHandle(result_Field,data);
             }}
 		}]
 	var tabstr = new createTable(columns,[] ,$('.tableContainer .table'));
@@ -102,7 +101,6 @@ function accEvnetParam(){
     var endtime=getEndTimes($("#txtEndDate").val());
     var module = $('#specialModel select option:selected').val();
 
-    var sta="";
     var type="";
     var dataa="";
     var start=0;
@@ -163,10 +161,7 @@ function accEvent(){
                         error:function(xhr,textStatus,errorThrown){
 				        	if(xhr.status==401){
 				        	    parent.window.location.href='/';
-				        	}else{
-				        		
 				        	}
-				            
 				        },
                         success:function(data){
                             var list=data.data.list;
@@ -191,9 +186,6 @@ function tbodyAddHeight(){
 	$(".main .table tbody").css({height:mainlefth-288});
 }
 window.onresize = function(){
-    var mainlefth=parent.$("#iframe #mainFrame").height();
-
-    $(".main .table tbody").css({height:mainlefth-288});
-
+    tbodyAddHeight();
 }
 

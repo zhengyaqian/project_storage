@@ -9,6 +9,7 @@
 <link href="css/defendTactics.css" rel="stylesheet">
 <link href="css/checkTactics.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery.min.js"></script>
+<script src="js/dataTable/jquery-datatable.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/json3.js"></script>
 <script type="text/javascript" src="js/zUI.js"></script>
@@ -52,6 +53,7 @@
 .mainBlock .leftScroll .current{color: #5fc47f;background-color: #ffffff}
 .th-ordery img{top:22px}
 .tacticsManageTable thead{background: rgb(249,249,249);border-top: 1px solid rgb(231,234,236);}
+.systemRooting table tbody,.blackLTable table tbody,.protocolCTable table tbody,.mailMTable table tbody{overflow: hidden;height: auto;border: 0;}
 </style>
 </head>
 	<body>
@@ -754,15 +756,6 @@
                                             <div class="clear"></div>
                                         </div>
                                         <div class="protocolCTable">
-                                            <table>
-                                                <tr>
-                                                    <th width='10%'><input type='checkbox' onclick='selectAllFP(this)' class='verticalMiddle'></th>
-                                                    <th width='15%'>规则名</th>
-                                                    <th width='50%'>说明</th>
-                                                    <th width='10%'>启用</th>
-                                                    <th width='15%'>操作</th>
-                                                </tr>
-                                            </table>
 
                                         </div>
                                     </div>

@@ -9,13 +9,12 @@ var totalnum="";
 
 // 隐藏或者显示更多分组按钮
 function showOrHidemgb(){
+	var mainlefth=parent.$("#iframe #mainFrame").height();
 	if($(".groupsPageContainer").height()>$(".groupsPage").height()){
 		$(".moreGroupsButton").show();
-		var mainlefth=parent.$("#iframe #mainFrame").height();
 		$(".main .mainLeft .groupsPage").css({height:mainlefth-215});
 	}else{
 		$(".moreGroupsButton").hide();
-		var mainlefth=parent.$("#iframe #mainFrame").height();
 		$(".main .mainLeft .groupsPage").css({height:mainlefth-184});
 	}
 }
@@ -88,53 +87,8 @@ $(".mainRight").on("click",".table .select-td",function(){
 	}else{
 		selectterminalarr.splice(jQuery.inArray(parseInt($(this).val()),selectterminalarr),1);
 	}
-	// 遍历当前所有终端是否在选中终端数组（控制全选按钮的状态）
-	var filtername=trim($("#filter").val());
 	var num=parseInt($(".mainLeft .current").attr("num"));
-	switch ($("#TSName>font").html())
-	{
-		case '所有终端':
-		switch (grouppid)
-		{
-			case 0:
-			var dataa={"view": {"begin": 0,"count": num},"filter":{"name":filtername}};
-			break;
-			default:
-			var dataa={"group_id":grouppid,"view": {"begin": 0,"count": num},"filter":{"name":filtername}};
-		}
-		break;
-		case '在线终端':
-		switch (grouppid)
-		{
-			case 0:
-			var dataa={"online":true,"view": {"begin": 0,"count": num},"filter":{"name":filtername}};
-			break;
-			default:
-			var dataa={"online":true,"group_id":grouppid,"view": {"begin": 0,"count": num},"filter":{"name":filtername}};
-		}
-		break;
-		case '离线终端':
-		switch (grouppid)
-		{
-			case 0:
-			var dataa={"online":false,"view": {"begin": 0,"count": num},"filter":{"name":filtername}};
-			break;
-			default:
-			var dataa={"online":false,"group_id":grouppid,"view": {"begin": 0,"count": num},"filter":{"name":filtername}};
-		}
-		break;
-		case '异常终端':
-		switch (grouppid)
-		{
-			case 0:
-			var dataa={"status":1,"view": {"begin": 0,"count": num},"filter":{"name":filtername}};
-			break;
-			default:
-			var dataa={"status":1,"group_id":grouppid,"view": {"begin": 0,"count": num},"filter":{"name":filtername}};
-		}
-		break;
-
-	}
+	var dataa = terminalFilter(0,num);
 	$.ajax({
 		url:'/mgr/clnt/_list',
 		data:JSON.stringify(dataa),
@@ -143,10 +97,7 @@ $(".mainRight").on("click",".table .select-td",function(){
 		error:function(xhr,textStatus,errorThrown){
 			if(xhr.status==401){
 				parent.window.location.href='/';
-			}else{
-				
 			}
-			
 		},
 		success:function(data){
 			var list=data.data.list;
@@ -166,56 +117,14 @@ $(".mainRight").on("click",".table .select-td",function(){
 	})
 
 })
+
+
 // 已经选择的终端数组
 var selectterminalarr=[];
 // 全选按钮点击将当前组所有的终端加入已选终端数组或者全部移除
 $(".mainRight .container").on("click",".table th .selectAll-th",function(){
-	var filtername=trim($("#filter").val());
 	var num=parseInt($(".mainLeft .current").attr("num"));
-	switch ($("#TSName>font").html())
-	{
-		case '所有终端':
-		switch (grouppid)
-		{
-			case 0:
-			var dataa={"view": {"begin": 0,"count": num},"filter":{"name":filtername}};
-			break;
-			default:
-			var dataa={"group_id":grouppid,"view": {"begin": 0,"count": num},"filter":{"name":filtername}};
-		}
-		break;
-		case '在线终端':
-		switch (grouppid)
-		{
-			case 0:
-			var dataa={"online":true,"view": {"begin": 0,"count": num},"filter":{"name":filtername}};
-			break;
-			default:
-			var dataa={"online":true,"group_id":grouppid,"view": {"begin": 0,"count": num},"filter":{"name":filtername}};
-		}
-		break;
-		case '离线终端':
-		switch (grouppid)
-		{
-			case 0:
-			var dataa={"online":false,"view": {"begin": 0,"count": num},"filter":{"name":filtername}};
-			break;
-			default:
-			var dataa={"online":false,"group_id":grouppid,"view": {"begin": 0,"count": num},"filter":{"name":filtername}};
-		}
-		break;
-		case '异常终端':
-		switch (grouppid)
-		{
-			case 0:
-			var dataa={"status":1,"view": {"begin": 0,"count": num},"filter":{"name":filtername}};
-			break;
-			default:
-			var dataa={"status":1,"group_id":grouppid,"view": {"begin": 0,"count": num},"filter":{"name":filtername}};
-		}
-		break;
-
-	}
+	var dataa = terminalFilter(0,num);
 	$.ajax({
 		url:'/mgr/clnt/_list',
 		data:JSON.stringify(dataa),
@@ -224,10 +133,7 @@ $(".mainRight .container").on("click",".table th .selectAll-th",function(){
 		error:function(xhr,textStatus,errorThrown){
 			if(xhr.status==401){
 				parent.window.location.href='/';
-			}else{
-				
 			}
-			
 		},
 		success:function(data){
 			var list=data.data.list;
@@ -254,6 +160,55 @@ $(".mainRight .container").on("click",".table th .selectAll-th",function(){
 
 })
 
+function terminalFilter(start,num){
+	// 遍历当前所有终端是否在选中终端数组（控制全选按钮的状态）
+	var filtername=trim($("#filter").val());
+	switch ($("#TSName>font").html())
+	{
+		case '所有终端':
+		switch (grouppid)
+		{
+			case 0:
+			var dataa={"view": {"begin": start,"count": num},"filter":{"name":filtername}};
+			break;
+			default:
+			var dataa={"group_id":grouppid,"view": {"begin": 0,"count": num},"filter":{"name":filtername}};
+		}
+		break;
+		case '在线终端':
+		switch (grouppid)
+		{
+			case 0:
+			var dataa={"online":true,"view": {"begin": start,"count": num},"filter":{"name":filtername}};
+			break;
+			default:
+			var dataa={"online":true,"group_id":grouppid,"view": {"begin": start,"count": num},"filter":{"name":filtername}};
+		}
+		break;
+		case '离线终端':
+		switch (grouppid)
+		{
+			case 0:
+			var dataa={"online":false,"view": {"begin": start,"count": num},"filter":{"name":filtername}};
+			break;
+			default:
+			var dataa={"online":false,"group_id":grouppid,"view": {"begin": start,"count": num},"filter":{"name":filtername}};
+		}
+		break;
+		case '异常终端':
+		switch (grouppid)
+		{
+			case 0:
+			var dataa={"status":1,"view": {"begin": start,"count": num},"filter":{"name":filtername}};
+			break;
+			default:
+			var dataa={"status":1,"group_id":grouppid,"view": {"begin":start,"count": num},"filter":{"name":filtername}};
+		}
+		break;
+
+	}
+	return dataa;
+}
 // 改变每页多少数据
 $("body").on("blur","#numperpageinput",function(){
 	if($(this).val()==""||parseInt($(this).val())<10){
@@ -286,10 +241,7 @@ $.ajax({
 	error:function(xhr,textStatus,errorThrown){
 		if(xhr.status==401){
 			parent.window.location.href='/';
-		}else{
-			
 		}
-		
 	},
 	success:function(data){			
 		lastclientversion=data.data.client_version;
@@ -314,11 +266,8 @@ function columnsDataListFun (){
 			type: "client_id",title: "",name: "client_id",
 			tHead:{style: {width: "4%"},class:"",customFunc: function (data, row, i) {return "<input type='checkbox' class='verticalMiddle selectAll-th'/>"}},
 			tBody:{style: {width: "4%"},customFunc: function (data, row, i) {
-				if(isInArray(selectterminalarr,parseInt(data))==true){
-					return "<input type='checkbox'  class='select select-td verticalMiddle' name='terminal' value='" + data + "' checked >";
-				}else{
-					return "<input type='checkbox'  class='select select-td verticalMiddle' name='terminal' value='" + data + "'>";
-				}
+				if(isInArray(selectterminalarr,parseInt(data))==true){checked = 'checked';}else{checked = '';}
+				return "<input type='checkbox'  class='select select-td verticalMiddle' name='terminal' value='" + data + "' "+checked+" >";
 			}}
 	   	},
 		{
@@ -390,50 +339,8 @@ function filterTerminal(start){
 	}else{
 		start = start;
 	}
-	switch ($("#TSName>font").html())
-	{
-		case '所有终端':
-		switch (grouppid)
-		{
-			case 0:
-			var dataa={"view": {"begin": start,"count": numperpage},"filter":{"name":filtername}};
-			break;
-			default:
-			var dataa={"group_id":grouppid,"view": {"begin": start,"count": numperpage},"filter":{"name":filtername}};
-		}
-		break;
-		case '在线终端':
-		switch (grouppid)
-		{
-			case 0:
-			var dataa={"online":true,"view": {"begin": start,"count": numperpage},"filter":{"name":filtername}};
-			break;
-			default:
-			var dataa={"online":true,"group_id":grouppid,"view": {"begin": start,"count": numperpage},"filter":{"name":filtername}};
-		}
-		break;
-		case '离线终端':
-		switch (grouppid)
-		{
-			case 0:
-			var dataa={"online":false,"view": {"begin": start,"count": numperpage},"filter":{"name":filtername}};
-			break;
-			default:
-			var dataa={"online":false,"group_id":grouppid,"view": {"begin": start,"count": numperpage},"filter":{"name":filtername}};
-		}
-		break;
-		case '异常终端':
-		switch (grouppid)
-		{
-			case 0:
-			var dataa={"status":1,"view": {"begin": start,"count": numperpage},"filter":{"name":filtername}};
-			break;
-			default:
-			var dataa={"status":1,"group_id":grouppid,"view": {"begin": start,"count": numperpage},"filter":{"name":filtername}};
-		}
-		break;
-
-	}
+	var dataa = terminalFilter(start,numperpage);
+	
 	var type = $('.table th.th-ordery.th-ordery-current').attr('type');
 	var orderClass = $('.table th.th-ordery.th-ordery-current').attr('class');
 	dataa = sortingDataFun(dataa,type,orderClass);
@@ -445,10 +352,7 @@ function filterTerminal(start){
 		error:function(xhr,textStatus,errorThrown){
 			if(xhr.status==401){
 				parent.window.location.href='/';
-			}else{
-				
 			}
-			
 		},
 		success:function(data){
 			var list=data.data.list;
@@ -516,10 +420,7 @@ function showGroup(){
 		error:function(xhr,textStatus,errorThrown){
 			if(xhr.status==401){
 				parent.window.location.href='/';
-			}else{
-				
 			}
-			
 		},
 		success:function(data){
 			var list=data.data.list;
@@ -597,12 +498,12 @@ function submitGN(a){
 		$(".newGroupPop .content .unusualTxt").html("分组名称不能为空<img src='images/unusual.png'>");
 
 	}else if(newGNText.length>20){
-					$(".newGroupPop .content .unusualTxt").show();
-					$(".newGroupPop .content .unusualTxt").html("分组名太长,创建分组失败<img src='images/unusual.png'>");
-					setTimeout(function(){$(".newGroupPop .content .unusualTxt").hide()},2000)
+		$(".newGroupPop .content .unusualTxt").show();
+		$(".newGroupPop .content .unusualTxt").html("分组名太长,创建分组失败<img src='images/unusual.png'>");
+		setTimeout(function(){$(".newGroupPop .content .unusualTxt").hide()},2000)
 	}else if(newGNText=="全网终端"){
-					$(".newGroupPop .content .unusualTxt").show();
-					$(".newGroupPop .content .unusualTxt").html("已存在相同分组名,创建分组失败<img src='images/unusual.png'>");
+		$(".newGroupPop .content .unusualTxt").show();
+		$(".newGroupPop .content .unusualTxt").html("已存在相同分组名,创建分组失败<img src='images/unusual.png'>");
 				
 	}else{
 		$.ajax({
@@ -613,10 +514,7 @@ function submitGN(a){
 			error:function(xhr,textStatus,errorThrown){
 				if(xhr.status==401){
 					parent.window.location.href='/';
-				}else{
-					
 				}
-				
 			},
 			success:function(data){
 				if(data.errno==-1 && data.errmsg.indexOf("1062")>0){
@@ -668,10 +566,7 @@ function sureDeleteButton(a){
 		error:function(xhr,textStatus,errorThrown){
 			if(xhr.status==401){
 				parent.window.location.href='/';
-			}else{
-				
 			}
-			
 		},
 		success:function(data){
 			showGroup();
@@ -714,10 +609,7 @@ function sureMGNButton(a){
 			error:function(xhr,textStatus,errorThrown){
 				if(xhr.status==401){
 					parent.window.location.href='/';
-				}else{
-					
 				}
-				
 			},
 			success:function(data){
 				if(data.errno==-1 && data.errmsg.indexOf("1062")>0){
@@ -800,10 +692,7 @@ $("input[name=tacticsSelect]").click(function(){
 			error:function(xhr,textStatus,errorThrown){
 				if(xhr.status==401){
 					parent.window.location.href='/';
-				}else{
-					
 				}
-				
 			},
 			success:function(data){
 
@@ -817,10 +706,7 @@ $("input[name=tacticsSelect]").click(function(){
 			error:function(xhr,textStatus,errorThrown){
 				if(xhr.status==401){
 					parent.window.location.href='/';
-				}else{
-					
 				}
-				
 			},
 			success:function(data1){
 				var list1=data1.data.list;
@@ -855,10 +741,7 @@ $(".tacticsSwitch select").change(function(){
 		error:function(xhr,textStatus,errorThrown){
 			if(xhr.status==401){
 				parent.window.location.href='/';
-			}else{
-				
 			}
-			
 		},
 		success:function(data){
 			prevIPolicy=policyid;//改变后记住这一次 为下一次点独立策略回来恢复
@@ -881,10 +764,7 @@ function detailPop(a){
 		error:function(xhr,textStatus,errorThrown){
 			if(xhr.status==401){
 				parent.window.location.href='/';
-			}else{
-				
 			}
-			
 		},
 		success:function(data){
 			var data=data.data;
@@ -1074,10 +954,7 @@ function groupingMPop(){
 		error:function(xhr,textStatus,errorThrown){
 			if(xhr.status==401){
 				parent.window.location.href='/';
-			}else{
-				
 			}
-			
 		},
 		success:function(data){
 			var list=data.data.list;
@@ -1099,10 +976,7 @@ function groupingMPop(){
 				error:function(xhr,textStatus,errorThrown){
 					if(xhr.status==401){
 						parent.window.location.href='/';
-					}else{
-						
 					}
-					
 				},
 				success:function(data){
 					var list=data.data.list;
@@ -1377,10 +1251,7 @@ function sureSetButton(a){
 		error:function(xhr,textStatus,errorThrown){
 			if(xhr.status==401){
 				parent.window.location.href='/';
-			}else{
-				
 			}
-			
 		},
 		success:function(data){
 			if(data.errno==-1){
@@ -1407,10 +1278,7 @@ function createTaskFun(dataa){
 		error:function(xhr,textStatus,errorThrown){
 			if(xhr.status==401){
 				parent.window.location.href='/';
-			}else{
-				
 			}
-			
 		},
 		success:function(data){
 			// 下发任务成功提示
@@ -1437,10 +1305,7 @@ function taskAjaxFun(dataa){
 		error:function(xhr,textStatus,errorThrown){
 			if(xhr.status==401){
 				parent.window.location.href='/';
-			}else{
-				
 			}
-			
 		},
 		success:function(data1){
 			var list=data1.data.list;
@@ -1475,10 +1340,7 @@ function stopTask(a){
 		error:function(xhr,textStatus,errorThrown){
 			if(xhr.status==401){
 				parent.window.location.href='/';
-			}else{
-				
 			}
-			
 		},
 		success:function(data){
 			$(a).parent('.buttons').html("<a onclick='closePop(this)' looptime='"+looptime+"'>完成</a>")
@@ -1499,10 +1361,7 @@ function taskListPop(){
 			error:function(xhr,textStatus,errorThrown){
 				if(xhr.status==401){
 					parent.window.location.href='/';
-				}else{
-					
 				}
-				
 			},
 			success:function(data){
 				var data=data.data;
@@ -1552,10 +1411,7 @@ $(".fastSKB").click(function(){
 			error:function(xhr,textStatus,errorThrown){
 				if(xhr.status==401){
 					parent.window.location.href='/';
-				}else{
-					
 				}
-				
 			},
 			success:function(data){
 
@@ -1746,10 +1602,7 @@ $(".overallSKB").click(function(){
 			error:function(xhr,textStatus,errorThrown){
 				if(xhr.status==401){
 					parent.window.location.href='/';
-				}else{
-					
 				}
-				
 			},
 			success:function(data){
 
@@ -1805,9 +1658,6 @@ $(".overallSKB").click(function(){
 					$(".overallSKCPop input[name=overallPara2]").val(overallpara2V);
 					$(".overallSKCPop input[name=overallPara2]").prop("disabled",true)
 				}
-
-				
-				
 				
 			}
 		});
@@ -2004,10 +1854,7 @@ $(".terminalUB").click(function(){
 				error:function(xhr,textStatus,errorThrown){
 					if(xhr.status==401){
 						parent.window.location.href='/';
-					}else{
-						
 					}
-					
 				},
 				success:function(data){
 					var data=data.data;
@@ -2039,10 +1886,7 @@ function sureTUButton(a){
 		error:function(xhr,textStatus,errorThrown){
 			if(xhr.status==401){
 				parent.window.location.href='/';
-			}else{
-				
 			}
-			
 		},
 		success:function(data){
 			// 下发任务成功提示
@@ -2058,10 +1902,7 @@ function sureTUButton(a){
 					error:function(xhr,textStatus,errorThrown){
 						if(xhr.status==401){
 							parent.window.location.href='/';
-						}else{
-							
 						}
-						
 					},
 					success:function(data1){
 						var list=data1.data.list;
@@ -2105,10 +1946,7 @@ function eachTerminalTable(){
 			error:function(xhr,textStatus,errorThrown){
 				if(xhr.status==401){
 					parent.window.location.href='/';
-				}else{
-					
 				}
-				
 			},
 			success:function(data1){
 				var list=data1.data.list;
@@ -2154,10 +1992,7 @@ $(".moveGB").click(function(){
 			error:function(xhr,textStatus,errorThrown){
 				if(xhr.status==401){
 					parent.window.location.href='/';
-				}else{
-					
 				}
-				
 			},
 			success:function(data){
 				
@@ -2195,10 +2030,7 @@ function sureMGButton(a){
 			error:function(xhr,textStatus,errorThrown){
 				if(xhr.status==401){
 					parent.window.location.href='/';
-				}else{
-					
 				}
-				
 			},
 			success:function(data){
 				// 下发任务成功提示
@@ -2245,10 +2077,7 @@ function sureSMButton(a){
 			error:function(xhr,textStatus,errorThrown){
 				if(xhr.status==401){
 					parent.window.location.href='/';
-				}else{
-					
 				}
-				
 			},
 			success:function(data){
 				// 下发任务成功提示
@@ -2318,10 +2147,7 @@ function sureDTButton(a){
 		error:function(xhr,textStatus,errorThrown){
 			if(xhr.status==401){
 				parent.window.location.href='/';
-			}else{
-				
 			}
-			
 		},
 		success:function(data){
 			if($(".DPSPop .tableCon tr[online=true]").length>0){
@@ -2352,7 +2178,7 @@ function eachPOTable(){
 	if($(".DPSPop #unresponds").length==0){
 		clearInterval(looptimePO);
 		$(".DPSPop .buttons").html("<a onclick='closePop(this)' looptime='looptimePO'>完成</a>");
-	}else{
+	}else{	
 		dataa={"taskid":taskid,"view":{"begin":0,"count":selectterminalarr.length}};
 		taskAjaxHtml = taskAjaxFun(dataa);
 		$(".DPSPop .tableCon table tbody").html(taskAjaxHtml);
@@ -2431,10 +2257,7 @@ $('.remoteDesktop').click(function(){
 				error:function(xhr,textStatus,errorThrown){
 					if(xhr.status==401){
 						parent.window.location.href='/';
-					}else{
-						
 					}
-					
 				},
 				success:function(data){
 					var data=data.data;
@@ -2477,10 +2300,7 @@ function sureRDButton(){
 		error:function(xhr,textStatus,errorThrown){
 			if(xhr.status==401){
 				parent.window.location.href='/';
-			}else{
-				
 			}
-			
 		},
 		success:function(data){
 			if(data.errno == 0){
@@ -2491,14 +2311,9 @@ function sureRDButton(){
 				window.open('remoteStu.html?task_id=' + task_id + '&id=' + selectterminalarr[0]);
 				selectterminalarr = [];
 				filterTerminal();
-				
-				
-
 			}else{
 				delayHide(data.errmsg+"!");
 			}
-
-			
 		}
 	});
 }
@@ -2554,8 +2369,6 @@ setTimeout(function(){
 	showOrHidemgb();
 },100)
 window.onresize = function(){
-	var mainlefth=parent.$("#iframe #mainFrame").height();
-	$(".main .mainLeft .groupsPage").css({height:mainlefth-215});
-	$(".main .mainRight .table tbody").css({height:mainlefth-285});
+	tbodyAddHeight();
 	showOrHidemgb();
 }

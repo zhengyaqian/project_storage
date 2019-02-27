@@ -23,8 +23,6 @@ function grouplist(){
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
-        	}else{
-        		
         	}
             
         },
@@ -52,25 +50,31 @@ $("#groupSelect").change(function(){
 })
 //选择时间
 $("#specialTime select").change(function(){
-
-    if($(this).find("option:selected").val()==0){
-        $("#txtBeginDate").val(GetDateStr(-6));
+    var optionVal = $(this).find("option:selected").val();
+    var begintime = 0;
+    switch(parseInt(optionVal)){
+        case 0:
+            begintime = -6;
+            break;
+        case 1:
+            begintime = -29;
+            break;
+        case 2:
+            begintime = -89;
+            break;
+        case 3:
+            begintime = -364;
+            break;
+        default:
+            $(".filterBlock .middle").show(200);
+            break;
+    }
+    if(optionVal != 4){
+        if(begintime != 0){
+            $("#txtBeginDate").val(GetDateStr(begintime));
+        }
         $("#txtEndDate").val(GetDateStr(0));
         $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==1){
-        $("#txtBeginDate").val(GetDateStr(-29));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==2){
-        $("#txtBeginDate").val(GetDateStr(-89));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==3){
-        $("#txtBeginDate").val(GetDateStr(-364));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==4){
-        $(".filterBlock .middle").show(200);
     }
     accEvent();
 })
@@ -200,10 +204,7 @@ function accEvent(start){
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
-        	}else{
-        		
         	}
-            
         },
         success:function(data){
             var list=data.data.list;
@@ -233,10 +234,7 @@ function accEvent(start){
                         error:function(xhr,textStatus,errorThrown){
 				        	if(xhr.status==401){
 				        	    parent.window.location.href='/';
-				        	}else{
-				        		
 				        	}
-				            
 				        },
                         success:function(data){
                             var list=data.data.list;
@@ -262,8 +260,5 @@ function tbodyAddHeight(){
     $(".main .table tbody").css({height:mainlefth-298});
 }
 window.onresize = function(){
-    var mainlefth=parent.$("#iframe #mainFrame").height();
-
-    $(".main .table tbody").css({height:mainlefth-298});
-
+    tbodyAddHeight();
 }

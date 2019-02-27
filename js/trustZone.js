@@ -144,10 +144,7 @@ function trustZone(start){
                         error:function(xhr,textStatus,errorThrown){
 				        	if(xhr.status==401){
 				        	    parent.window.location.href='/';
-				        	}else{
-				        		
 				        	}
-				            
 				        },
                         success:function(data){
                             var list=data.data.list;
@@ -201,10 +198,7 @@ function updateTrustP(a){
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
-        	}else{
-        		
         	}
-            
         },
         success:function(data){
 
@@ -288,10 +282,7 @@ function sureDeleteButton(a){
             error:function(xhr,textStatus,errorThrown){
 	        	if(xhr.status==401){
 	        	    parent.window.location.href='/';
-	        	}else{
-	        		
 	        	}
-	            
 	        },
             success:function(data){
                 trustZone();
@@ -308,8 +299,6 @@ $(".main .trustTable tbody").css({height:mainlefth-336});
 }
 
 window.onresize = function(){
-    var mainlefth=parent.$("#iframe #mainFrame").height();
-
-    $(".main .trustTable tbody").css({height:mainlefth-336});
+    tbodyAddHeight();
 }
 

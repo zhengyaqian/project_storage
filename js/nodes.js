@@ -109,16 +109,8 @@ function columnsDataListFun (){
 			tBody:{style: {width: "10%"},customFunc: function (data, row, i) {
 				if(data == 0){
 					return "正常";
-				}else if(data == 1){
-					return "<span class='orange'>未授权</span>";
-				}else if(data == 2){
-					return "<span class='orange'>授权已满</span>";
-				}else if(data == 3){
-					return "<span class='orange'>授权到期</span>";
-				}else if(data == 4){
-					return "<span class='orange'>需要升级</span>";
 				}else{
-					return "--";
+					return "<span class='orange'>"+fieldHandle(licenseStatusField,data)+"</span>";
 				}
 			}}
 		},{
@@ -162,8 +154,6 @@ function nodesListFun(start) {
 			error: function(xhr, textStatus, errorThrown) {
 				if(xhr.status == 401) {
 					parent.window.location.href = '/';
-				} else {
-
 				}
 			},
 			success: function(data) {
@@ -224,18 +214,14 @@ function nodesStatus(){
 			error: function(xhr, textStatus, errorThrown) {
 				if(xhr.status == 401) {
 					parent.window.location.href = '/';
-				} else {
-
 				}
 			},
 			success: function(data) {
 				if(data.errno == 0){
 					if(data.data.heartbeat == 0){
 						$('.topTips').html('<a>与上级中心最近通讯时间:<span>未通讯</span></a>');
-						
 					}else{
 						$('.topTips').html('<a>与上级中心最近通讯时间:<span>' + getLocalTime(data.data.heartbeat) + '</span></a>');
-						
 					}
 
 				}
@@ -541,7 +527,6 @@ function saveNodes(){
 			success: function(data) {
 				if(data.errno == 0){
 					delayHideS("操作成功");
-					
 					$('.nodesPop').hide();
 					$('.shade').hide();
 				}else{
@@ -563,7 +548,7 @@ $('.closePop').click(function(){
 	$(".nodesPop input[name=nodesSwitch]").next().addClass("lcs_on");
 	$(".nodesPop input[name=nodesSwitch]").next().removeClass("lcs_off");
 })
-tbodyAddHeight();
+
 //调整页面内元素高度
 function tbodyAddHeight(){
 	var mainlefth = parent.$("#iframe #mainFrame").height();
@@ -571,7 +556,5 @@ function tbodyAddHeight(){
 	$(".main .table tbody").css({height: mainlefth - 240});
 }
 window.onresize = function() {
-	var mainlefth = parent.$("#iframe #mainFrame").height();
-
-	$(".main .table tbody").css({height: mainlefth - 240});
+	tbodyAddHeight();
 }

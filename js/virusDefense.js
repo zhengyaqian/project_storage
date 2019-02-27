@@ -10,8 +10,6 @@ parent.$(".footer").hide();
 parent.$(".nav .container a").removeClass("current");
 parent.$(".nav .container a[name='virusDefense.html']").addClass("current");
 
-
-
 document.cookie='page=virusDefense.html';
 //按钮样式
 
@@ -50,31 +48,33 @@ $(".filterBlock  .tabButton").change(function(){
 
 //选择时间
 $("#specialTime select").change(function(){
-
-    if($(this).find("option:selected").val()==0){
-        $("#txtBeginDate").val(GetDateStr(-6));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-        accEvent();
-    }else if($(this).find("option:selected").val()==1){
-        $("#txtBeginDate").val(GetDateStr(-29));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-        accEvent();
-    }else if($(this).find("option:selected").val()==2){
-        $("#txtBeginDate").val(GetDateStr(-89));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-        accEvent();
-    }else if($(this).find("option:selected").val()==3){
-        $("#txtBeginDate").val(GetDateStr(-364));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-        accEvent();
-    }else if($(this).find("option:selected").val()==4){
-        $(".filterBlock .middle").show(200);
+    var optionVal = $(this).find("option:selected").val();
+    var begintime = 0;
+    switch(parseInt(optionVal)){
+        case 0:
+            begintime = -6;
+            break;
+        case 1:
+            begintime = -29;
+            break;
+        case 2:
+            begintime = -89;
+            break;
+        case 3:
+            begintime = -364;
+            break;
+        default:
+            $(".filterBlock .middle").show(200);
+            break;
     }
-    
+    if(optionVal != 4){
+        if(begintime != 0){
+            $("#txtBeginDate").val(GetDateStr(begintime));
+        }
+        $("#txtEndDate").val(GetDateStr(0));
+        $(".filterBlock .middle").hide(200);
+    }
+    accEvent();
 })
 
 
@@ -89,10 +89,7 @@ function grouplist(){
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
-        	}else{
-        		
         	}
-            
         },
         success:function(data){
             
@@ -141,8 +138,8 @@ function accEvnetParam(start){
 	}
     var threatname="";
     var hostname="";
-
-    if($(".filterBlock .tabButton option:checked").val()==0){
+    var opCheckedVal = $(".filterBlock .tabButton option:checked").val();
+    if(opCheckedVal==0){
         if($("#selectVD").val()=="0"){
             hostname=$("#searchKey").val();
         }else{
@@ -152,24 +149,25 @@ function accEvnetParam(start){
         hostname=$("#searchKey").val();
     }
     var groupid=parseInt($("#groupSelect option:selected").attr("groupid"));
-    if($(".filterBlock .tabButton option:checked").val()==0){
+    if(opCheckedVal==0){
         groupby="detail";
-    }else if($(".filterBlock .tabButton option:checked").val()==1){
+    }else if(opCheckedVal==1){
         groupby="client";
     }
     
     dataa={"fname":"","date":{"begin":begintime,"end":endtime},"groupby":groupby,"view":{"begin":start,"count":numperpage},"filter":{"threat_name":threatname,"hostname":hostname}}
-
-    if($("#functionBlock .current").index()==1){dataa.fname = "antivirus";
-    }else if($("#functionBlock .current").index()==2){dataa.fname = "scan";
-    }else if($("#functionBlock .current").index()==3 ){dataa.fname = "filemon";
-    }else if($("#functionBlock .current").index()==4){dataa.fname = "behavior";
-    }else if($("#functionBlock .current").index()==5 ){dataa.fname = "udiskmon";
-    }else if($("#functionBlock .current").index()==6){dataa.fname = "dlmon";
-    }else if($("#functionBlock .current").index()==7){dataa.fname = "mail";}
+    
+    var currentIndex = $("#functionBlock .current").index();
+    if(currentIndex==1){dataa.fname = "antivirus";
+    }else if(currentIndex==2){dataa.fname = "scan";
+    }else if(currentIndex==3 ){dataa.fname = "filemon";
+    }else if(currentIndex==4){dataa.fname = "behavior";
+    }else if(currentIndex==5 ){dataa.fname = "udiskmon";
+    }else if(currentIndex==6){dataa.fname = "dlmon";
+    }else if(currentIndex==7){dataa.fname = "mail";}
 
 	if(parseInt($("#groupSelect option:selected").attr("groupid"))!==0 && groupid){
-    		dataa.group_id = groupid;
+        dataa.group_id = groupid;
     }
     var type = $('.table th.th-ordery.th-ordery-current').attr('type');
     var orderClass = $('.table th.th-ordery.th-ordery-current').attr('class');
@@ -257,12 +255,7 @@ function columnsDataDetialListFun (){
 			type: "fname",title: "检出方式",name: "fname",
 			tHead:{style: {width: "10%"},class: "th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
 			tBody:{style: {width: "10%"},customFunc: function (data, row, i) {
-                if(data=="scan"){ return "病毒查杀"; 
-                }else if(data=="filemon"){ return "文件实时监控"; 
-                }else if(data=="behavior"){return "恶意行为监控"; 
-                }else if(data=="dlmon"){ return "下载保护";  
-                }else if(data=="udiskmon"){ return "U盘保护";
-                }else if(data=="mail"){return "邮件监控"; }
+                return fieldHandle(fnameTypeField,data); 
             }},
 		},{
             type: "result",title: "状态",name: "result",
@@ -340,10 +333,7 @@ function accEvent(start){
                         error:function(xhr,textStatus,errorThrown){
 				        	if(xhr.status==401){
 				        	    parent.window.location.href='/';
-				        	}else{
-				        		
 				        	}
-				            
 				        },
                         success:function(data){
                             var list=data.data.list;
@@ -430,7 +420,7 @@ function columnsDataDetailNamePopFun (){
                 }else if(data==3){return "已删除";
                 }else if(data==4){return "已清除";
                 }else if(data==5){return "已信任";
-                }else if(data){return "已忽略";}
+                }else if(data==6){return "已忽略";}
             }}
 		}
 	]
@@ -462,7 +452,7 @@ function columnsDataVirusNamePopFun (){
                 }else if(data==3){return "已删除";
                 }else if(data==4){return "已清除";
                 }else if(data==5){return "已信任";
-                }else if(data){return "已忽略";}
+                }else if(data==6){return "已忽略";}
             }}
 		}
 	]
@@ -507,44 +497,35 @@ function seeDetailParam(start){
     }
     clientid=parseInt($('.taskDetailPop').attr('client'));
     
-    if($(".filterBlock .tabButton option:checked").val()==0 && parseInt(tdIndex)==1){
-        var groupname=$('.tableContainer .table tbody tr').eq(parseInt(trIndex)).children("td").eq(2).find("span").html();
-        var hostname=$('.tableContainer .table tbody tr').eq(parseInt(trIndex)).children("td").eq(1).find("a").html();
+    var opCheckedVal = $(".filterBlock .tabButton option:checked").val();
+    var td = $('.tableContainer .table tbody tr').eq(parseInt(trIndex)).children("td");
+    if(opCheckedVal==0 && parseInt(tdIndex)==1){
+        var groupname=td.eq(2).find("span").html();
+        var hostname=td.eq(1).find("a").html();
         var dataa={"fname":"antivirus","date":{"begin":begintime,"end":endtime},"groupby":"client","client_id":clientid,"view":{"begin":start,"count":9}};
        
-        $(".taskDetailPop .title font").html($('.tableContainer .table tbody tr').eq(parseInt(trIndex)).children("td").eq(5).html());
+        $(".taskDetailPop .title font").html(td.eq(5).html());
         $(".taskDetailPop .describe").html("终端名称 : <a class='filePath popHostname' title='"+hostname+"'>"+hostname+" ,</a> 终端分组 : "+groupname);
-    }else if($(".filterBlock .tabButton option:checked").val()==0 && parseInt(tdIndex)==3){
-        threatnamee=$('.tableContainer .table tbody tr').eq(parseInt(trIndex)).children("td").eq(3).find("a").html();
+    }else if(opCheckedVal==0 && parseInt(tdIndex)==3){
+        threatnamee=td.eq(3).find("a").html();
         var dataa={"fname":"antivirus","date":{"begin":begintime,"end":endtime},"groupby":"event","filter":{"threat_name":threatnamee},"view":{"begin":start,"count":9}};
         if(isbehavior!=="恶意行为监控"){
-            $(".taskDetailPop .title font").html($('.tableContainer .table tbody tr').eq(parseInt(trIndex)).children("td").eq(5).html());
+            $(".taskDetailPop .title font").html(td.eq(5).html());
             $(".taskDetailPop .describe").html("病毒ID : "+virusid+" , "+"病毒名称 : "+threatnamee);
         }else{
-            $(".taskDetailPop .title font").html($('.tableContainer .table tbody tr').eq(parseInt(trIndex)).children("td").eq(5).html());
+            $(".taskDetailPop .title font").html(td.eq(5).html());
             $(".taskDetailPop .describe").html("病毒名称 : "+threatnamee);
         }
        
-    }else if($(".filterBlock .tabButton option:checked").val()==1){
-        var groupname=$('.tableContainer .table tbody tr').eq(parseInt(trIndex)).children("td").eq(1).html();
-        var hostname=$('.tableContainer .table tbody tr').eq(parseInt(trIndex)).children("td").eq(0).find('span').html();
+    }else if(opCheckedVal==1){
+        var groupname=td.eq(1).html();
+        var hostname=td.eq(0).find('span').html();
         var dataa={"fname":"antivirus","date":{"begin":begintime,"end":endtime},"groupby":"client","client_id":clientid,"view":{"begin":start,"count":9}};
        
-        if($("#functionBlock .current").index()==1){
-            $(".taskDetailPop .title font").html("病毒防御");
-        }else if($("#functionBlock .current").index()==2){
-            $(".taskDetailPop .title font").html("病毒查杀");
-        }else if($("#functionBlock .current").index()==3){
-            $(".taskDetailPop .title font").html("文件实时监控");
-        }else if($("#functionBlock .current").index()==4){
-            $(".taskDetailPop .title font").html("恶意行为监控");
-        }else if($("#functionBlock .current").index()==5){
-            $(".taskDetailPop .title font").html("U盘保护");
-        }else if($("#functionBlock .current").index()==6){
-            $(".taskDetailPop .title font").html("下载保护");
-        }else if($("#functionBlock .current").index()==7){
-            $(".taskDetailPop .title font").html("邮件监控");
-        }
+        var currentHtml = {'1':'病毒防御','2':'病毒查杀','3':'文件实时监控','4':'恶意行为监控','5':'U盘保护','6':'下载保护','7':'邮件监控'};
+        var currentIndex = $("#functionBlock .current").index();
+        $(".taskDetailPop .title font").html(fieldHandle(currentHtml,currentIndex));
+       
         $(".taskDetailPop .describe").html("终端名称 : <a class='filePath popHostname' title='"+hostname+"'>"+hostname+" ,</a> 终端分组 : "+groupname);
     }
     var type = $('.taskDetailPop .taskDetailTable th.th-ordery.th-ordery-current').attr('type');
@@ -570,10 +551,7 @@ function seeDetailPop(start){
         error:function(xhr,textStatus,errorThrown){
             if(xhr.status==401){
                 parent.window.location.href='/';
-            }else{
-                
             }
-            
         },
         success:function(data){
             var list=data.data.list;
@@ -602,10 +580,7 @@ function seeDetailPop(start){
                         error:function(xhr,textStatus,errorThrown){
                             if(xhr.status==401){
                                 parent.window.location.href='/';
-                            }else{
-                                
                             }
-                            
                         },
                         success:function(data){
                             var list=data.data.list;
@@ -627,8 +602,5 @@ function tbodyAddHeight(){
 
 
 window.onresize = function(){
-    var mainlefth=parent.$("#iframe #mainFrame").height();
-
-    $(".main .table tbody").css({height:mainlefth-347});
-
+    tbodyAddHeight();
 }

@@ -18,71 +18,23 @@ $(".bu").click(function(){
 	$(this).siblings(".bu").removeClass("current");
 
 });
-
-
 //下拉列表
 $("#groupSelect").change(function(){
-    accEvent();
-})
-//类型选择
-$("#functionBlock .bu").click(function(){
-    var opChecked = $(".filterBlock .tabButton option:checked").val();
-    var blockChecked =  $("#functionBlock .current").index();
-    if($(".filterBlock .tabButton option:checked").val()==0){
-        if($("#functionBlock .current").index()==1){
-            $("#selectVD1").show();
-            $("#selectVD1").siblings("select").hide();
-        }else if($("#functionBlock .current").index()==2){
-            $("#selectVD2").show();
-            $("#selectVD2").siblings("select").hide();
-        }else if($("#functionBlock .current").index()==3){
-            $("#selectVD3").show();
-            $("#selectVD3").siblings("select").hide();
-        }else if($("#functionBlock .current").index()==4){
-            $("#selectVD4").show();
-            $("#selectVD4").siblings("select").hide();
-        }else if($("#functionBlock .current").index()==5){
-            $("#selectVD5").show();
-            $("#selectVD5").siblings("select").hide();
-        }
-    }else{
-        $("#selectVT").show();
-        $("#selectVT").siblings("select").hide();
-    }
-    $('.table').html('');
-    if(opChecked==0 && blockChecked==1){
-        tabListstr = columnsDataDetail_1_ListFun();
-    }else if(opChecked==0 && blockChecked==2){
-        tabListstr = columnsDataDetail_1_ListFun();
-    }else if(opChecked==0 && blockChecked==3){
-        tabListstr = columnsDataDetail_3_ListFun();
-    }else if(opChecked==0 && blockChecked==4){
-        tabListstr = columnsDataDetail_4_ListFun();
-    }else if(opChecked==0 && blockChecked==5){
-        tabListstr = columnsDataDetail_5_ListFun();
-    }else if(opChecked==1 && blockChecked==1){
-        tabListstr = columnsDataTer_1_ListFun();
-    }else if(opChecked==1 && blockChecked==2){
-        tabListstr = columnsDataTer_2_ListFun();
-    }else if(opChecked==1 && blockChecked==3){
-        tabListstr = columnsDataTer_3_ListFun();
-    }else if(opChecked==1 && blockChecked==4){
-        tabListstr = columnsDataTer_4_ListFun();
-    }else if(opChecked==1 && blockChecked==5){
-        tabListstr = columnsDataTer_5_ListFun();
-    }
     accEvent();
 })
 // 搜索类型选择
 $("#selectVD1,#selectVT,#selectVD2,#selectVD3,#selectVD4,#selectVD5").change(function(){
     accEvent();
 })
-// 搜索框键盘离开时
-// $("#searchKey").keyup(function(){
-//     accEvent();
-// })
+//类型选择
+$("#functionBlock .bu").click(function(){
+    functionType();
+})
 //选项卡选择
 $(".filterBlock .tabButton").change(function(){
+    functionType();
+})
+function functionType(){
     if($(".filterBlock .tabButton option:checked").val()==0){
         if($("#functionBlock .current").index()==1){
             $("#selectVD1").show();
@@ -127,29 +79,34 @@ $(".filterBlock .tabButton").change(function(){
         tabListstr = columnsDataDetail_5_ListFun();
     }
     accEvent();
-})
-
+}
 //选择时间
 $("#specialTime select").change(function(){
-
-    if($(this).find("option:selected").val()==0){
-        $("#txtBeginDate").val(GetDateStr(-6));
+    var optionVal = $(this).find("option:selected").val();
+    var begintime = 0;
+    switch(parseInt(optionVal)){
+        case 0:
+            begintime = -6;
+            break;
+        case 1:
+            begintime = -29;
+            break;
+        case 2:
+            begintime = -89;
+            break;
+        case 3:
+            begintime = -364;
+            break;
+        default:
+            $(".filterBlock .middle").show(200);
+            break;
+    }
+    if(optionVal != 4){
+        if(begintime != 0){
+            $("#txtBeginDate").val(GetDateStr(begintime));
+        }
         $("#txtEndDate").val(GetDateStr(0));
         $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==1){
-        $("#txtBeginDate").val(GetDateStr(-29));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==2){
-        $("#txtBeginDate").val(GetDateStr(-89));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==3){
-        $("#txtBeginDate").val(GetDateStr(-364));
-        $("#txtEndDate").val(GetDateStr(0));
-        $(".filterBlock .middle").hide(200);
-    }else if($(this).find("option:selected").val()==4){
-        $(".filterBlock .middle").show(200);
     }
     accEvent();
 })
@@ -226,65 +183,29 @@ function accEvnetParam(start){
 	}
     var threatname="";
     var hostname="";
+    var currentIndex = $("#functionBlock .current").index();
     if($(".filterBlock .tabButton option:checked").val()==0){
-        if($("#functionBlock .current").index()==1){
-            if($("#selectVD1").val()=="0"){
-                hostname=$("#searchKey").val();
-            }else{
-                threatname=$("#searchKey").val();
-            }
-        }else if($("#functionBlock .current").index()==2){
-            if($("#selectVD2").val()=="0"){
-                hostname=$("#searchKey").val();
-            }else{
-                threatname=$("#searchKey").val();
-            }
-        }else if($("#functionBlock .current").index()==3){
-            if($("#selectVD3").val()=="0"){
-                hostname=$("#searchKey").val();
-            }else{
-                threatname=$("#searchKey").val();
-            }
-        }else if($("#functionBlock .current").index()==4){
-            if($("#selectVD4").val()=="0"){
-                hostname=$("#searchKey").val();
-            }else{
-                threatname=$("#searchKey").val();
-            }
-        }else if($("#functionBlock .current").index()==5){
-            if($("#selectVD5").val()=="0"){
-                hostname=$("#searchKey").val();
-            }else{
-                threatname=$("#searchKey").val();
-            }
+        if($("#selectVD"+currentIndex).val()=="0"){
+            hostname=$("#searchKey").val();
+        }else{
+            threatname=$("#searchKey").val();
         }
-        
     }else{
         hostname=$("#searchKey").val();
     }
-    
+   
     var groupid=parseInt($("#groupSelect option:selected").attr("groupid"));
     if($(".filterBlock .tabButton option:checked").val()==1){
         groupby="client";
-
     }else{
         groupby="detail";
     }
 	dataa={"fname":"","date":{"begin":begintime,"end":endtime},"groupby":groupby,"view":{"begin":start,"count":numperpage},"filter":{"threat_name":threatname,"hostname":hostname}}
-    
- 	if($("#functionBlock .current").index()==1){
-    	dataa.fname = "intrusion";
-    }else if($("#functionBlock .current").index()==2){
-    	dataa.fname = "ipattack";
-    }else if($("#functionBlock .current").index()==3 ){
-    	dataa.fname = "malsite";
-    }else if($("#functionBlock .current").index()==4){
-    	dataa.fname = "ipblacklist";
-    }else if($("#functionBlock .current").index()==5 ){
-    	dataa.fname = "ipproto";
-    }
+    var fanmeField = ["intrusion","ipattack","malsite","ipblacklist","ipproto"];
+    dataa.fname = fanmeField[currentIndex-1];
+ 	
 	if(parseInt($("#groupSelect option:selected").attr("groupid"))!==0 && groupid){
-    		dataa.group_id = groupid;
+        dataa.group_id = groupid;
     }
 
     var type = $('.table th.th-ordery.th-ordery-current').attr('type');
@@ -352,13 +273,7 @@ function columnsDataDetail_3_ListFun (){
 			type: "class",title: "网址类型",name: "class",
 			tHead:{style: {width: "22%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
 			tBody:{style: {width: "22%"},customFunc: function (data, row, i) {
-                if(data=="spy"){
-                    return "<span class='filePath' title='木马，盗号' site='spy'>木马，盗号</span>";
-                }else if(data=="phising"){
-                    return "<span class='filePath' title='钓鱼，仿冒' site='phising'>钓鱼，仿冒</span>";
-                }else if(data=="fraud"){
-                    return "<span class='filePath' title='虚假，欺诈' site='fraud'>虚假，欺诈</span>";
-                }
+                return "<span class='filePath' title='"+fieldHandle(clsTypeField,data)+"' site='"+data+"'>"+fieldHandle(clsTypeField,data)+"</span>";
             }},
 		}
 	]
@@ -558,10 +473,7 @@ function accEvent(start){
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
-        	}else{
-        		
         	}
-            
         },
         success:function(data){
             var list=data.data.list;
@@ -894,10 +806,7 @@ function columnsDataDetail_b1_PopFun (){
 			type: "class",title: "网站分类",name: "class",
 			tHead:{style: {width: "30%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
 			tBody:{style: {width: "30%"},customFunc: function (data, row, i) {
-                if(data=="spy"){ return "<span class='filePath' title='木马，盗号'>木马，盗号</span>";
-                }else if(data=="phising"){return "<span class='filePath' title='钓鱼，仿冒'>钓鱼，仿冒</span>";
-                }else if(data=="fraud"){  return "<span class='filePath' title='虚假，欺诈'>虚假，欺诈</span>";
-                }
+                return "<span class='filePath' title='"+fieldHandle(clsTypeField,data)+"'>"+fieldHandle(clsTypeField,data)+"</span>";
            }}
 		}
 	]
@@ -1008,13 +917,13 @@ function columnsDataTer_2_PopFun (){
                 switch (data) {
                     case 0 : 
                     return "SYN<";
-                    break
+                    break;
                     case 1 :
                     return "UDP";
-                    break
+                    break;
                     case 2 :
                     return "ICMP";
-                    break
+                    break;
                 }
             }},
 		}
@@ -1039,10 +948,7 @@ function seeDetailPop(start){
         error:function(xhr,textStatus,errorThrown){
             if(xhr.status==401){
                 parent.window.location.href='/';
-            }else{
-                
             }
-            
         },
         success:function(data){
             var list=data.data.list;
@@ -1087,7 +993,7 @@ function seeDetailPop(start){
         }
     })
 }
-tbodyAddHeight();
+
 //调整页面内元素高度
 function tbodyAddHeight(){
     var mainlefth=parent.$("#iframe #mainFrame").height();
@@ -1097,9 +1003,6 @@ function tbodyAddHeight(){
 
 
 window.onresize = function(){
-    var mainlefth=parent.$("#iframe #mainFrame").height();
-
-    $(".main .table tbody").css({height:mainlefth-347});
-
+    tbodyAddHeight();
 }
 
