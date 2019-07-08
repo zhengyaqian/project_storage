@@ -22,6 +22,7 @@ function safeOverview(){
         data:{},
         type:'GET',
         contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
@@ -31,18 +32,19 @@ function safeOverview(){
             
         },
         success:function(data){
-            var countMap = ['client_count','virus_count','sysprot_count','netprot_count'];
-            for(var i=0;i<countMap.length;i++){
-                if(countMap[i] == 'client_count'){
-                    $(".overviewBlock").eq(i).find(".number").html(data.data.online_count+"/"+data.data[countMap[i]]);
-                }else{
-                    $(".overviewBlock").eq(i).find(".number").html(data.data[countMap[i]]+"次");
-                }
-            }
+        	$(".overviewBlock").eq(0).find(".number").html(data.data.online_count+"/"+data.data.client_count);
+            $(".overviewBlock").eq(1).find(".number").html(data.data.virus_count+"次");
+            $(".overviewBlock").eq(2).find(".number").html(data.data.sysprot_count+"次");
+            $(".overviewBlock").eq(3).find(".number").html(data.data.netprot_count+"次");
             if(data.data.client_count==0){
                 //没有终端的时候
                 $(".safeOverview .up .floatL").html("<span class='text'>安全概览</span><span>您还没有部署任何一台终端，请<a class='colorGreen ArrangeImmB'>立即前去部署</a></span>");
                 $(".safeOverview .up .floatR").hide();
+                // $(".overviewBlock .text").each(function(){
+                //     $(this).find("p").eq(1).remove();
+                //     $(this).append("<p class='number'>0</p>");
+                // });
+
             }else{
                 $(".safeOverview .up .floatL").html("<span class='text'>安全概览</span><span>累计保护&nbsp;<a class='colorGreen cursor' id='addUpDays'></a>&nbsp;天</span>");
                 $(".safeOverview .up .floatR").show();
@@ -58,6 +60,7 @@ function safeOverview(){
 //     data:{},
 //     type:'GET',
 //     contentType:'text/plain',
+// headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 //     error:function(xhr,textStatus,errorThrown){
 //     	if(xhr.status==401){
 //     	    parent.window.location.href='/';
@@ -77,55 +80,32 @@ function safeOverview(){
 //     }       
 // })
 threattrend();
-var pageMap = {'taskMore':'historyTask.html','logMore':'virusDefense.html','terminalHtmlB':'terminalManage.html','virusHtmlB':'virusDefense.html','systemHtmlB':'systemDefense.html','netHtmlB':'netDefense.html','terminalAB':'terminalArrange.html'}
-$.each(pageMap,function(key,val){
-    $("."+key).click(function(){
-        parent.$("#mainFrame").attr("src",val);
-    })
+$(".taskMore").click(function(){
+    parent.$("#mainFrame").attr("src","historyTask.html");
+})
+$(".logMore").click(function(){
+    parent.$("#mainFrame").attr("src","virusDefense.html");
+})
+$(".terminalHtmlB").click(function(){
+    parent.$("#mainFrame").attr("src","terminalManage.html");
+})
+$(".virusHtmlB").click(function(){
+    parent.$("#mainFrame").attr("src","virusDefense.html");
+})
+$(".systemHtmlB").click(function(){
+    parent.$("#mainFrame").attr("src","systemDefense.html");
+})
+$(".netHtmlB").click(function(){
+    parent.$("#mainFrame").attr("src","netDefense.html");
 })
 
-
-function columnsDataTaskListFun (){
-	var columns = [
-		{
-			type: "",title: "时间",name: "create_time",
-			tHead:{style: {width: "25%"},customFunc: function (data, row, i) {return ""}},
-			tBody:{style: {width: "25%"},customFunc: function (data, row, i) {
-                if(getLocalTime3(data)==GetDateStr(0)){
-                    return "今天 "+safeStr(getLocalTime4(data))+"<span style='display:none'>"+safeStr(getLocalTime(data))+"</span>";
-                }else if(getLocalTime3(data)==GetDateStr(-1)){
-                    return "昨天 "+safeStr(getLocalTime4(data))+"<span style='display:none'>"+safeStr(getLocalTime(data))+"</span>";
-                }else{
-                    return safeStr(getLocalTime3(data))+"<span style='display:none'>"+safeStr(getLocalTime(data))+"</span>";
-                }
-			}},
-		},{
-			type: "",title: "任务",name: "type",
-			tHead:{style: {width: "20%"},customFunc: function (data, row, i) {return ""}},
-			tBody:{style: {width: "20%"},customFunc: function (data, row, i) {
-                return fieldHandle(taskTypeField,data);
-			}}
-	   	},{
-			type: "",title: "执行/下发",name: "client_done",
-			tHead:{style: {width: "20%"},customFunc: function (data, row, i) {return ""}},
-			tBody:{style: {width: "20%"},customFunc: function (data, row, i) {return data+"/"+row.client_all;}},
-		},{
-			type: "",title: "状态",name: "status",
-			tHead:{style: {width: "20%"},customFunc: function (data, row, i) {return ""}},
-			tBody:{style: {width: "20%"},customFunc: function (data, row, i) {
-                return fieldHandle(distrStatusField,data);
-            }},
-		},{
-			type: "",title: "详情",name: "",
-			tHead:{style: {width: "15%"},customFunc: function (data, row, i) {return ""}},
-			tBody:{style: {width: "15%"},customFunc: function (data, row, i) {return "<a class='blackfont underline cursor'  onclick='taskDetailPop(this)' taskid='"+row.task_id+"'>详情</a>";}},
-		}
-	]
-	var tabstr = new createTable(columns,[] ,$('.taskTable'));
-	return tabstr;
-	
-}
-var tabstrList = columnsDataTaskListFun();
+$(".terminalAB").click(function(){
+    parent.$("#mainFrame").attr("src","terminalArrange.html");
+})
+// $(".safeOverview").on("click",".ArrangeImmB",function(){
+//     parent.$("#mainFrame").attr("src","terminalArrange.html");
+//     parent.$(".nav .container a").eq(5).attr("id","firstPage");
+// })
 //任务列表
 taskTable();
 setInterval(function(){taskTable()},30000);
@@ -135,6 +115,7 @@ function taskTable(){
         data:{},
         type:'GET',
         contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
@@ -145,180 +126,129 @@ function taskTable(){
         },
         success:function(data){
             var list=data.data.list;
+            var html="";
             if(list.length==0){
                 $(".taskMore").hide();
-                $(".taskTable tbody").html("<img src='images/notable.png' style='display:block;margin:0 auto;padding-top:118px;'><p style='text-align:center;padding-top:24px;'>暂无数据内容</p>");   
+                $(".taskTable").html("<img src='images/notable.png' style='display:block;margin:0 auto;padding-top:118px;'><p style='text-align:center;padding-top:24px;'>暂无数据内容</p>");   
             }else{
+                html+="<tr>";                              
+                html+="<th width='26%'>时间</th>";
+                html+="<th width='22%'>任务</th>";
+                html+="<th width='21%'>执行/下发</th>";
+                html+="<th width='21%'>状态</th>";
+                html+="<th width='10%'>详情</th>";
+                html+="</tr>";
+
                 if(list.length<10){
                     $(".taskMore").hide();
+                    for (var i = 0; i < list.length; i++) {
+                        html+="<tr taskid="+list[i].task_id+">";
+                        if(getLocalTime3(list[i].create_time)==GetDateStr(0)){
+                            html+="<td>今天 "+safeStr(getLocalTime4(list[i].create_time))+"<span style='display:none'>"+safeStr(getLocalTime(list[i].create_time))+"</span></td>";
+                        }else if(getLocalTime3(list[i].create_time)==GetDateStr(-1)){
+                            html+="<td>昨天 "+safeStr(getLocalTime4(list[i].create_time))+"<span style='display:none'>"+safeStr(getLocalTime(list[i].create_time))+"</span></td>";
+                        }else{
+                            html+="<td>"+safeStr(getLocalTime3(list[i].create_time))+"<span style='display:none'>"+safeStr(getLocalTime(list[i].create_time))+"</span></td>";
+                        } 
+                        
+                        if(list[i].type=="quick_scan"){
+                            html+="<td>快速查杀</td>";
+                        }else if(list[i].type=="full_scan"){
+                            html+="<td>全盘查杀</td>";
+                        }else if(list[i].type=="update"){
+                            html+="<td>升级任务</td>";
+                        }else if(list[i].type=="message"){
+                            html+="<td>通知任务</td>";
+                        }else if(list[i].type=="shutdown"){
+                            html+="<td>关机</td>";
+                        }else if(list[i].type=="reboot"){
+                            html+="<td>重启</td>";
+                        }else if(list[i].type=="msg_uninstall"){
+                            html+="<td>软件卸载</td>";
+                        }else if(list[i].type=="msg_distrfile"){
+                            html+="<td>文件分发</td>";
+                        }else if(list[i].type=="migrate"){
+                            html+="<td>中心迁移</td>";
+                        }else if(list[i].type=="leakrepair_repair"){
+                            html+="<td>漏洞修复</td>";
+                        }else if(list[i].type=="leakrepair_scan"){
+                            html+="<td>漏洞扫描</td>";
+                        }else if(list[i].type=="vnc_launch"){
+                            html+="<td>远程桌面</td>";
+                        }else if(!list[i].type){
+                            html+="<td></td>";
+                        }
+
+                        html+="<td>"+list[i].client_done+"/"+list[i].client_all+"</td>";
+                        if(list[i].status==0){
+                            html+="<td>正在分发</td>"; 
+                        }else if(list[i].status==1){
+                            html+="<td>分发结束</td>";
+                        }else{
+                        	html+="<td></td>";
+                        }
+                        html+="<td><a class='blackfont underline cursor'  onclick='taskDetailPop(this)'>详情</a></td>";
+                        html+="</tr>";
+                    }
                 }else{
                     $(".taskMore").show();
+                    for (var i = 0; i < 10; i++) {
+                        html+="<tr taskid="+list[i].task_id+">";
+                        if(getLocalTime3(list[i].create_time)==GetDateStr(0)){
+                            html+="<td>今天 "+safeStr(getLocalTime4(list[i].create_time))+"<span style='display:none'>"+safeStr(getLocalTime(list[i].create_time))+"</span></td>";
+                        }else if(getLocalTime3(list[i].create_time)==GetDateStr(-1)){
+                            html+="<td>昨天 "+safeStr(getLocalTime4(list[i].create_time))+"<span style='display:none'>"+safeStr(getLocalTime(list[i].create_time))+"</span></td>";
+                        }else{
+                            html+="<td>"+safeStr(getLocalTime3(list[i].create_time))+"<span style='display:none'>"+safeStr(getLocalTime(list[i].create_time))+"</span></td>";
+                        } 
+                        
+                        if(list[i].type=="quick_scan"){
+                            html+="<td>快速查杀</td>";
+                        }else if(list[i].type=="full_scan"){
+                            html+="<td>全盘查杀</td>";
+                        }else if(list[i].type=="update"){
+                            html+="<td>升级任务</td>";
+                        }else if(list[i].type=="message"){
+                            html+="<td>通知任务</td>";
+                        }else if(list[i].type=="shutdown"){
+                            html+="<td>关机</td>";
+                        }else if(list[i].type=="reboot"){
+                            html+="<td>重启</td>";
+                        }else if(list[i].type=="msg_uninstall"){
+                            html+="<td>软件卸载</td>";
+                        }else if(list[i].type=="msg_distrfile"){
+                            html+="<td>文件分发</td>";
+                        }else if(list[i].type=="migrate"){
+                            html+="<td>中心迁移</td>";
+                        }else if(list[i].type=="leakrepair_repair"){
+                            html+="<td>漏洞修复</td>";
+                        }else if(list[i].type=="leakrepair_scan"){
+                            html+="<td>漏洞扫描</td>";
+                        }else if(list[i].type=="vnc_launch"){
+                            html+="<td>远程桌面</td>";
+                        }else if(!list[i].type){
+                            html+="<td></td>";
+                        }
+                        html+="<td>"+list[i].client_done+"/"+list[i].client_all+"</td>";
+                        if(list[i].status==0){
+                            html+="<td>正在分发</td>"; 
+                        }else if(list[i].status==1){
+                            html+="<td>分发结束</td>";
+                        }else{
+                        	html+="<td></td>";
+                        }
+                        html+="<td><a class='blackfont underline cursor'  onclick='taskDetailPop(this)'>详情</a></td>";
+                        html+="</tr>";
+                    }
+
                 }
-                tabstrList.setData(list);
+                
+                $(".taskTable table").html(html); 
             }
         }
     });  
 }
 
-function columnsDataEventListFun (){
-	var columns = [
-		{
-			type: "",title: "时间",name: "time",
-			tHead:{style: {width: "26%"},customFunc: function (data, row, i) {return ""}},
-			tBody:{style: {width: "26%"},customFunc: function (data, row, i) {
-                if(getLocalTime3(data)==GetDateStr(0)){
-                    return "今天 "+safeStr(getLocalTime4(data));
-                }else if(getLocalTime3(data)==GetDateStr(-1)){
-                    return "昨天 "+safeStr(getLocalTime4(data));
-                }else{
-                    return safeStr(getLocalTime3(data));
-                }
-			}},
-		},{
-			type: "",title: "事件",name: "fname",
-			tHead:{style: {width: "26%"},customFunc: function (data, row, i) {return ""}},
-			tBody:{style: {width: "26%"},customFunc: function (data, row, i) {
-                return fieldHandle(fnameTypeField,data);
-			}}
-	   	},{
-			type: "",title: "终端",name: "hostname",
-			tHead:{style: {width: "21%"},customFunc: function (data, row, i) {return ""}},
-			tBody:{style: {width: "21%"},customFunc: function (data, row, i) {return "<span class='nameWidth' title="+safeStr(pathtitle(data))+">"+safeStr(data)+"</span>";}},
-		},{
-			type: "",title: "状态",name: "",
-			tHead:{style: {width: "21%"},customFunc: function (data, row, i) {return ""}},
-			tBody:{style: {width: "21%"},customFunc: function (data, row, i) {
-                var data =row.detail;
-                if('result' in data){
-                    return fieldHandle(resultField,data.result);
-                }
-                if('treatment' in data){
-                    if(data.treatment & 0x0FFFF){
-                        return fieldHandle(treatmentField,data.treatment);
-                    }
-                }
-                if('blocked' in data){
-                    if(data.blocked & 0x0FFFF){
-                        return fieldHandle(blockedField,data.blocked);
-                    }
-                }
-              
-            }},
-		},{
-			type: "",title: "详情",name: "",
-			tHead:{style: {width: "10%"},customFunc: function (data, row, i) {return ""}},
-			tBody:{style: {width: "10%"},class:"relative",customFunc: function (data, row, i) {
-                var detail_Div=detailDiv(row);
-                return "<a class='blackfont underline cursor' onclick='seeDetailFloat(this)'>详情</a>"+detail_Div;
-            }},
-		}
-	]
-	var tabstr = new createTable(columns,[] ,$('.eventTable'));
-	return tabstr;
-	
-}
-var tabstrEventList = columnsDataEventListFun();
-function detailDiv(row){
-    var html="";
-    html+="<div class='absolute detailFloat'>";
-    html+="<h4><p class='floatL'>事件详情</p><span onclick='closeDetailFloat(this)'></span><div class='clear'></div></h4>";
-    switch (row.fname) {
-        case "filemon":
-        case "scan":
-        case "behavior":
-        case "udiskmon":
-        case "dlmon":
-        case "mail":
-        if(row.fname!=="behavior"){
-            html+="<p>病毒ID : "+safeStr(row.detail.virus_id)+"</p>";
-        }
-        
-        html+="<p>病毒名称 : "+safeStr(row.detail.virus_name)+"</p>";
-        switch (row.fname){
-            case "mail":
-            html+="<p>威胁来源 : "+safeStr(row.detail.mail_from.replace('<','&lt;').replace('>','&gt;'))+"</p>";
-            break;
-            default:
-            html+="<p>威胁来源 : "+safeStr(row.detail.file_path)+"</p>";
-            break;
-        }
-        html+="<td>检出方式 :"+fieldHandle(fnameTypeField,row.fname)+"</td>";
-        html+="<p>状态 : "+fieldHandle(resultField,row.detail.result)+"</p>";
-        break;
-
-        case "sysprot":
-        html+="<p>保护项目 : "+safeStr(row.detail.rule_name)+"</p>";
-        html+="<p>操作者 : "+safeStr(row.detail.proc_name)+"</p>";
-        html+="<p>命令行 : "+safeStr(row.detail.cmdline)+"</p>";
-
-        var clsArr = ['目标文件','目标注册表','执行文件','可疑文件'];
-        for(var i=0;i<clsArr.length;i++){
-            if(row.detail.cls==i){
-                html+="<p>"+clsArr[i]+" : "+safeStr(row.detail.res_path)+"</p>";
-            }
-        }
-        /**操作类型 */
-        var acttypeField = {'0x01':'创建','0x02':'读取','0x04':'写入','0x08':'删除','0x10':'执行'}
-
-        $.each(acttypeField,function(key,val){
-            if((row.detail.acttype&key)!== 0) {
-                html+="<p>操作类型 : "+val+"</p>";
-            }
-        })
-        
-        if(row.detail.cls==1){
-            html+="<p>数据内容 : "+safeStr(row.detail.res_val)+"</p>";           
-        }        
-        html+="<p>状态 : "+fieldHandle(treatmentField,(row.detail.treatment & 0x0FFFF))+"</p>";   
-        break;
-
-        case "instmon":
-        html+="<p>软件名称 : "+safeStr(row.detail.display_name)+"</p>";
-        html+="<p>软件路径 : "+safeStr(row.detail.file_path)+"</p>";
-        html+="<p>操作者 : "+safeStr(row.detail.proc_path)+"</p>";
-        html+="<p>状态 : "+fieldHandle(treatmentField,(row.detail.treatment & 0x0FFFF))+"</p>";   
-        html+="<p></p>";
-        break;
-
-        case "intrusion":
-        html+="<p>入侵类型 : "+safeStr(row.detail.name)+"</p>";
-        html+="<p>远程地址 : "+row.detail.raddr+"</p>";
-        html+="<p>关联进程 : "+safeStr(row.detail.cmdline)+"</p>";
-        html+="<p>状态 : "+fieldHandle(blockedField,row.detail.blocked)+"</p>";   
-        break;
-
-        case "ipattaack":
-        html+="<p>攻击类型 : "+safeStr(row.detail.rule_name)+"</p>";
-        html+="<p>远程地址 : "+safeStr(row.detail.proc_name)+"</p>";
-        html+="<p>关联进程 : "+safeStr(row.detail.cmdline)+"</p>";
-        html+="<p>状态:已阻止</p>";
-        break;
-
-        case "malurl":
-        html+="<p>拦截网址 : "+safeStr(row.detail.domain)+"</p>";
-        html+="<p>网址类型 :"+fieldHandle(clsTypeField,row.detail.cls)+"</p>";  
-        html+="<p>状态:已阻止</p>";
-        break;
-
-        case "ipblacklist":
-        html+="<p>远程IP : "+row.detail.raddr+"</p>";
-        html+="<p>备注 : "+safeStr(row.detail.name)+"</p>";
-        html+="<p>状态 : "+fieldHandle(blockedField,row.detail.blocked)+"</p>";   
-        break;
-
-        case "ipproto":
-        html+="<p>触犯规则名称 : "+safeStr(row.detail.name)+"</p>";
-        if(row.detail.outbound==1){
-            html+="<p>触犯动作 : 联出"+safeStr(_int2ip(row.detail.raddr))+":"+row.detail.rport+"</p>";
-        }else{
-            html+="<p>触犯动作 : 联入"+safeStr(_int2ip(row.detail.raddr))+":"+row.detail.rport+"</p>";
-        }
-        html+="<p>状态 : "+fieldHandle(blockedField,row.detail.blocked)+"</p>";   
-        break;
-    }
-    html+="</div>";
-    return html;
-}
 
 //事件列表
 eventTable();
@@ -330,6 +260,7 @@ function eventTable(){
         data:{},
         type:'POST',
         contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
@@ -340,16 +271,385 @@ function eventTable(){
         },
         success:function(data){
             var list=data.data;
+                            
+            var html="";
+
             if(list.length==0){
                 $(".logMore").hide();
-                $(".eventTable tbody").html("<img src='images/notable.png' style='display:block;margin:0 auto;padding-top:118px;'><p style='text-align:center;padding-top:24px;'>暂无数据内容</p>");   
+                $(".eventTable").html("<img src='images/notable.png' style='display:block;margin:0 auto;padding-top:118px;'><p style='text-align:center;padding-top:24px;'>暂无数据内容</p>");   
             }else{
                 if(list.length<10){
                     $(".logMore").hide();
                 }else{
                     $(".logMore").show();
                 }     
-                tabstrEventList.setData(list);
+                html+="<tr>";
+                                            
+                html+="<th width='26%'>时间</th>";
+                html+="<th width='22%'>事件</th>";
+                html+="<th width='21%'>终端</th>";
+                html+="<th width='21%'>状态</th>";
+                html+="<th width='10%'>详情</th>";
+                html+="</tr>";
+                for (var i = 0; i < list.length; i++) {
+                    html+="<tr>";
+                    if(getLocalTime3(list[i].time)==GetDateStr(0)){
+                        html+="<td>今天 "+safeStr(getLocalTime4(list[i].time))+"</td>";
+                    }else if(getLocalTime3(list[i].time)==GetDateStr(-1)){
+                        html+="<td>昨天 "+safeStr(getLocalTime4(list[i].time))+"</td>";
+                    }else{
+                        html+="<td>"+safeStr(getLocalTime3(list[i].time))+"</td>";
+                    }
+                    
+                    switch (list[i].fname) {
+                        case "filemon":
+                        html+="<td>文件实时监控</td>";
+                        break;
+                        case "behavior":
+                        html+="<td>恶意行为监控</td>";
+                        break;
+                        case "dlmon":
+                        html+="<td>下载保护</td>";
+                        break;
+                        case "udiskmon":
+                        html+="<td>U盘保护</td>";
+                        break;
+                        case "sysprot":
+                        html+="<td>系统加固</td>";
+                        break;
+                        case "scan":
+                        html+="<td>病毒查杀</td>";
+                        break;
+                        case "malurl":
+                        html+="<td>恶意网站拦截</td>";
+                        break;
+                        case "instmon":
+                        html+="<td>软件安装拦截</td>";
+                        break;
+                        case "intrusion":
+                        html+="<td>黑客入侵拦截</td>";
+                        break;
+                        case "ipattaack":
+                        html+="<td>对外攻击检测</td>";
+                        break;
+                        case "mail":
+                        html+="<td>邮件监控</td>";
+                        break;
+                        case "ipblacklist":
+                        html+="<td>IP黑名单</td>";
+                        break;
+                        case "ipproto":
+                        html+="<td>IP协议控制</td>";
+                        break;
+                        default:
+                        html+="<td></td>";
+                        break;
+                    }
+                    
+                    html+="<td><span class='nameWidth' title="+safeStr(pathtitle(list[i].hostname))+">"+safeStr(list[i].hostname)+"</td>";
+                    if('result' in list[i].detail){
+                        switch (list[i].detail.result) {
+                            case 0:
+                            html+="<td>处理失败</td>";
+                            break;
+                            case 1:
+                            html+="<td>处理失败</td>";
+                            break;
+                            case 2:
+                            html+="<td>已忽略</td>";
+                            break;
+                            case 3:
+                            html+="<td>已处理</td>";
+                            break;
+                            case 4:
+                            html+="<td>已处理</td>";
+                            break;
+                            case 5:
+                            html+="<td>已信任</td>";
+                            break;
+                            case 6:
+                            html+="<td>已忽略</td>";
+                            break;
+                            default:
+	                        html+="<td></td>";
+	                        break;
+
+                        }
+                    }
+                    if('treatment' in list[i].detail){
+                        switch (list[i].detail.treatment & 0x0FFFF) {
+                            case 0:
+                            html+="<td>已忽略</td>";
+                            break;
+                            case 1:
+                            html+="<td>待处理</td>";
+                            break;
+                            case 2:
+                            html+="<td>已处理</td>";
+                            break;
+                            case 3:
+                            html+="<td>已阻止</td>";
+                            break;
+                            case 4:
+                            html+="<td>已信任</td>";
+                            break;
+                            case 5:
+                            html+="<td>已处理</td>";
+                            break;
+							default:
+	                        html+="<td></td>";
+	                        break;
+                        } 
+                    }
+                    if('blocked' in list[i].detail){
+                        switch (list[i].detail.blocked & 0x0FFFF) {
+                            case 0:
+                            html+="<td>已放过</td>";
+                            break;
+                            case 1:
+                            html+="<td>已阻止</td>";
+                            break;
+                            default:
+	                        html+="<td></td>";
+	                        break;
+                        } 
+                    }
+                    if(!('treatment' in list[i].detail) && !('result' in list[i].detail) && !('blocked' in list[i].detail)){
+                        html+="<td>已阻止</td>";
+                    }
+            
+                    html+="<td class='relative'><a class='blackfont underline cursor' onclick='seeDetailFloat(this)'>详情</a>";
+                    switch (list[i].fname) {
+                        case "filemon":
+                        case "scan":
+                        case "behavior":
+                        case "udiskmon":
+                        case "dlmon":
+                        case "mail":
+                        html+="<div class='absolute detailFloat'>";
+                        html+="<h4><p class='floatL'>事件详情</p><span onclick='closeDetailFloat(this)'></span><div class='clear'></div></h4>";
+                        if(list[i].fname!=="behavior"){
+                            html+="<p>病毒ID : "+safeStr(list[i].detail.virus_id)+"</p>";
+                        }
+                        
+                        html+="<p>病毒名称 : "+safeStr(list[i].detail.virus_name)+"</p>";
+                        switch (list[i].fname){
+                            case "mail":
+                            html+="<p>威胁来源 : "+safeStr(list[i].detail.mail_from.replace('<','&lt;').replace('>','&gt;'))+"</p>";
+                            break;
+                            default:
+                            html+="<p>威胁来源 : "+safeStr(list[i].detail.file_path)+"</p>";
+                            break;
+                        }
+                        
+                        switch (list[i].fname){
+                            case "filemon":
+                            html+="<p>检出方式 : 文件实时监控</p>";
+                            break;
+                            case "scan":
+                            html+="<p>检出方式 : 病毒查杀</p>";
+                            break;
+                            case "behavior":
+                            html+="<p>检出方式 : 恶意行为监控</p>";
+                            break;
+                            case "udiskmon":
+                            html+="<p>检出方式 : U盘保护</p>";
+                            break;
+                            case "dlmon":
+                            html+="<p>检出方式 : 下载保护</p>";
+                            break;
+                            case "mail":
+                            html+="<p>检出方式 :  邮件监控</p>";
+                            break;
+                            html+="<td></td>";
+	                        break;
+
+                        }
+                        if(list[i].detail.result==0){
+                            html+="<p>状态 : 处理失败</p>";
+                        }else if(list[i].detail.result==1){
+                            html+="<p>状态 : 处理失败</p>";
+                        }else if(list[i].detail.result==2){
+                            html+="<p>状态 : 已忽略</p>";
+                        }else if(list[i].detail.result==3){
+                            html+="<p>状态 : 已处理</p>";
+                        }else if(list[i].detail.result==4){
+                            html+="<p>状态 : 已处理</p>";
+                        }else if(list[i].detail.result==5){
+                            html+="<p>状态 : 已信任</p>";
+                        }else if(list[i].detail.result==6){
+                            html+="<p>状态 : 已忽略</p>";
+                        }else{
+                        	html+="<p></p>";
+                        }
+                        html+="</div>";
+                        break;
+                        case "sysprot":
+                        
+                        html+="<div class='absolute detailFloat'>";
+                        html+="<h4><p class='floatL'>事件详情</p><span onclick='closeDetailFloat(this)'></span><div class='clear'></div></h4>";
+                        html+="<p>保护项目 : "+safeStr(list[i].detail.rule_name)+"</p>";
+                        html+="<p>操作者 : "+safeStr(list[i].detail.proc_name)+"</p>";
+                        html+="<p>命令行 : "+safeStr(list[i].detail.cmdline)+"</p>";
+                        if(list[i].detail.cls==0){
+                            html+="<p>目标文件 : "+safeStr(list[i].detail.res_path)+"</p>";
+                        }
+                        if(list[i].detail.cls==1){
+                            html+="<p>目标注册表 : "+safeStr(list[i].detail.res_path)+"</p>";
+                        }
+                        if(list[i].detail.cls==2){
+                            html+="<p>执行文件 : "+safeStr(list[i].detail.res_path)+"</p>";
+                        }
+                        if(list[i].detail.cls==3){
+                            html+="<p>可疑文件 : "+safeStr(list[i].detail.res_path)+"</p>";
+                        }
+                        if((list[i].detail.acttype&0x01)!== 0) {
+
+                            html+="<p>操作类型 : 创建</p>";
+                        }else if((list[i].detail.acttype&0x02)!= 0){
+
+                            html+="<p>操作类型 : 读取</p>";
+                        }else if((list[i].detail.acttype&0x04)!= 0){
+
+                            html+="<p>操作类型 : 写入</p>";
+                        }else if((list[i].detail.acttype&0x08)!= 0){
+
+                            html+="<p>操作类型 : 删除</p>";
+                        }else if((list[i].detail.acttype&0x10)!= 0){
+
+                            html+="<p>操作类型 : 执行</p>";
+                        }
+                        if(list[i].detail.cls==1){
+                            html+="<p>数据内容 : "+safeStr(list[i].detail.res_val)+"</p>";           
+                        }                        
+                        if((list[i].detail.treatment & 0x0FFFF)==0){
+                            html+="<p>状态 : 已忽略</p>";
+                        }else if((list[i].detail.treatment & 0x0FFFF)==1){
+                            html+="<p>状态 : 待处理</p>";
+                        }else if((list[i].detail.treatment & 0x0FFFF)==2){
+                            html+="<p>状态 : 已处理</p>";
+                        }else if((list[i].detail.treatment & 0x0FFFF)==3){
+                            html+="<p>状态 : 已阻止</p>";
+                        }else if((list[i].detail.treatment & 0x0FFFF)==4){
+                            html+="<p>状态 : 已信任</p>";
+                        }else if((list[i].detail.treatment & 0x0FFFF)==5){
+                            html+="<p>状态 : 已处理</p>";
+                        }else{
+                        	html+="<p></p>";
+                        };
+                        html+="</div>";
+                        break;
+                        case "instmon":
+                        html+="<div class='absolute detailFloat'>";
+                        html+="<h4><p class='floatL'>事件详情</p><span onclick='closeDetailFloat(this)'></span><div class='clear'></div></h4>";
+                        html+="<p>软件名称 : "+safeStr(list[i].detail.display_name)+"</p>";
+                        html+="<p>软件路径 : "+safeStr(list[i].detail.file_path)+"</p>";
+                        html+="<p>操作者 : "+safeStr(list[i].detail.proc_path)+"</p>";
+                        
+                                              
+                        if((list[i].detail.treatment & 0x0FFFF)==0){
+                            html+="<p>状态 : 已忽略</p>";
+                        }else if((list[i].detail.treatment & 0x0FFFF)==1){
+                            html+="<p>状态 : 待处理</p>";
+                        }else if((list[i].detail.treatment & 0x0FFFF)==2){
+                            html+="<p>状态 : 已处理</p>";
+                        }else if((list[i].detail.treatment & 0x0FFFF)==3){
+                            html+="<p>状态 : 已阻止</p>";
+                        }else if((list[i].detail.treatment & 0x0FFFF)==4){
+                            html+="<p>状态 : 已信任</p>";
+                        }else if((list[i].detail.treatment & 0x0FFFF)==5){
+                            html+="<p>状态 : 已处理</p>";
+                        }else{
+                        	html+="<p></p>";
+                        };
+                        html+="</div>";
+                        break;
+                        case "intrusion":
+                        html+="<div class='absolute detailFloat'>";
+                        html+="<h4><p class='floatL'>事件详情</p><span onclick='closeDetailFloat(this)'></span><div class='clear'></div></h4>";
+                        html+="<p>入侵类型 : "+safeStr(list[i].detail.name)+"</p>";
+                        html+="<p>远程地址 : "+list[i].detail.raddr+"</p>";
+                        html+="<p>关联进程 : "+safeStr(list[i].detail.cmdline)+"</p>";
+                        if((list[i].detail.blocked)==0){
+                            html+="<p>状态 : 已放过</p>";
+                        }else if((list[i].detail.blocked)==1){
+                            html+="<p>状态 : 已阻止</p>";
+                        }else{
+                        	html+="<p></p>";
+                        }
+                        html+="</div>";
+                        break;
+                        case "ipattaack":
+                        html+="<div class='absolute detailFloat'>";
+                        html+="<h4><p class='floatL'>事件详情</p><span onclick='closeDetailFloat(this)'></span><div class='clear'></div></h4>";
+                        html+="<p>攻击类型 : "+safeStr(list[i].detail.rule_name)+"</p>";
+                        html+="<p>远程地址 : "+safeStr(list[i].detail.proc_name)+"</p>";
+                        html+="<p>关联进程 : "+safeStr(list[i].detail.cmdline)+"</p>";
+                        html+="<p>状态:已阻止</p>";
+                        html+="</div>";
+                        break;
+                        case "malurl":
+                        html+="<div class='absolute detailFloat'>";
+                        html+="<h4><p class='floatL'>事件详情</p><span onclick='closeDetailFloat(this)'></span><div class='clear'></div></h4>";
+                        html+="<p>拦截网址 : "+safeStr(list[i].detail.domain)+"</p>";
+                        if(list[i].detail.cls=="spy"){
+                            html+="<p>网址类型 : 木马，盗号</p>";  
+                        }else if(list[i].detail.cls=="phising"){
+                            html+="<p>网址类型 : 钓鱼，仿冒</p>";
+                        }else if(list[i].detail.cls=="fraud"){
+                            html+="<p>网址类型 : 虚假，欺诈</p>";
+                        }else{
+                        	html+="<p></p>";
+                        }
+                        
+
+                        html+="<p>状态:已阻止</p>";
+                        
+                        html+="</div>";
+                        break;
+                        case "ipblacklist":
+                        html+="<div class='absolute detailFloat'>";
+                        html+="<h4><p class='floatL'>事件详情</p><span onclick='closeDetailFloat(this)'></span><div class='clear'></div></h4>";
+                       
+                        html+="<p>远程IP : "+list[i].detail.raddr+"</p>";
+                        html+="<p>备注 : "+safeStr(list[i].detail.name)+"</p>";
+                        if(list[i].detail.blocked==1){
+                        	 html+="<p>状态 : 已阻止</p>";
+                        }else{
+                        	 html+="<p>状态 : 已放过</p>";
+                        }
+                       
+                        html+="</div>";
+                        break;
+                        case "ipproto":
+                        html+="<div class='absolute detailFloat'>";
+                        html+="<h4><p class='floatL'>事件详情</p><span onclick='closeDetailFloat(this)'></span><div class='clear'></div></h4>";
+                       
+                        html+="<p>触犯规则名称 : "+safeStr(list[i].detail.name)+"</p>";
+                        if(list[i].detail.outbound==1){
+                        	html+="<p>触犯动作 : 联出"+safeStr(_int2ip(list[i].detail.raddr))+":"+list[i].detail.rport+"</p>";
+                        }else{
+                        	html+="<p>触犯动作 : 联入"+safeStr(_int2ip(list[i].detail.raddr))+":"+list[i].detail.rport+"</p>";
+                        }
+                        
+                        if(list[i].detail.blocked==1){
+                        	 html+="<p>状态 : 已阻止</p>";
+                        }else{
+                        	 html+="<p>状态 : 已放过</p>";
+                        }
+                       
+                        html+="</div>";
+                        break;
+                        
+                        
+
+                    }
+                    
+                    html+="</td>";
+                    html+="</tr>"; 
+                }
+                
+                $(".eventTable table").html(html);
             }                        
         }
     });   
@@ -374,193 +674,6 @@ function seeDetailFloat(a){
 function closeDetailFloat(a){
     $(a).parents(".detailFloat").hide();
 }
-function scanType(param){
-    var first=param['scan.maxspeed'];
-    var second=param['scan.sysrepair'];
-    var third=param['clean.automate'];
-    var fourth=param['clean.quarantine'];
-    if(first==true){
-        $(".fastSKCPop input[name=scanOp]").eq(1).prop("checked",true);
-        $(".fastSKCPop input[name=scanOp]").eq(0).prop("checked",false);
-
-    }else if(first==false){
-        $(".fastSKCPop input[name=scanOp]").eq(0).prop("checked",true);
-        $(".fastSKCPop input[name=scanOp]").eq(1).prop("checked",false);
-    }
-    if(second==true){
-        $(".fastSKCPop input[name=repairSet]").prop("checked",true);
-    }else{
-        $(".fastSKCPop input[name=repairSet]").prop("checked",false);
-
-    }
-    if(third==true){
-        $(".fastSKCPop input[name=isHandle]").eq(0).prop("checked",true);
-        $(".fastSKCPop input[name=isHandle]").eq(1).prop("checked",false)
-    }else if(third==false){
-        $(".fastSKCPop input[name=isHandle]").eq(1).prop("checked",true);
-        $(".fastSKCPop input[name=isHandle]").eq(0).prop("checked",false)
-    }
-    if(fourth==true){
-        $(".fastSKCPop input[name=afterClear]").prop("checked",true)
-    }else{
-        $(".fastSKCPop input[name=afterClear]").prop("checked",false)
-    }
-}
-function columnsTaskDetailListFun (){
-	var columns = [
-		{
-			type: "",title: "终端名称",name: "hostname",
-			tHead:{style: {width: "25%"},customFunc: function (data, row, i) {return ""}},
-			tBody:{style: {width: "25%"},customFunc: function (data, row, i) {
-				return "<span style='width:300px;' class='filePath' title='"+safeStr(data)+"'>"+safeStr(data)+"</span>";
-			}},
-		},{
-			type: "",title: "终端分组",name: "groupname",
-			tHead:{style: {width: "25%"},customFunc: function (data, row, i) {return ""}},
-			tBody:{style: {width: "25%"},customFunc: function (data, row, i) {
-                if(data==""){
-                    return "<span class='nameWidth'>(已删除终端)</span>";  
-                }else{
-                    return "<span class='nameWidth' title="+safeStr(pathtitle(data))+">"+safeStr(data)+"</span>";
-                }
-            }},
-		},{
-			type: "",title: "任务状态",name: "status",
-			tHead:{style: {width: "25%"},class:"th-ordery",customFunc: function (data, row, i) {return ""}},
-			tBody:{style: {width: "25%"},customFunc: function (data, row, i) {
-                var html = fieldHandle(taskStatusField,data);
-                if(html=="--"){
-                    return "终端异常</td>";
-                }else{
-                    return fieldHandle(taskStatusField,data);
-                }
-            }},
-		},{
-			type: "",title: "备注",name: "status",
-			tHead:{style: {width: "25%"},customFunc: function (data, row, i) {return ""}},
-			tBody:{style: {width: "25%"},customFunc: function (data, row, i) {
-                var html = fieldHandle(taskStatusField,data);
-                if(html=="--"){
-                    return "终端服务异常，无法接受任务</td>";
-                }else{
-                    return fieldHandle(taskStatusField,data);
-                }
-            }},
-		}
-	]
-	var tabstr = new createTable(columns,[] ,$('.taskDetailPop .taskDetailTable'));
-	return tabstr;
-	
-}
-var tabstrTaskDetail = columnsTaskDetailListFun();
-//弹窗详情配置信息
-function taskConfigFun(data,timetext){
-    switch(data.data.type){
-        case "quick_scan":
-        case "full_scan":
-        case "update":
-        case "shutdown":
-        case "reboot":
-        case "leakrepair_repair":
-        case "leakrepair_scan":
-        case "vnc_launch":
-            $(".taskDetailPop .describe").removeClass("describebg");
-            $(".taskDetailPop .softInf").hide();
-            $(".taskDetailPop .taskDetailTable tbody").height("313px");
-            $(".taskDetailPop .messageTxt").hide();
-        break;
-
-        case "msg_uninstall":
-        case "msg_distrfile":
-        case "message":
-        case "migrate":
-            $(".taskDetailPop .describe").addClass("describebg");
-            $(".taskDetailPop .softInf").show();
-            $(".taskDetailPop .messageTxt").hide();
-            $(".taskDetailPop .taskDetailTable tbody").height("245px");
-            if(data.data.type == "message"){
-                $(".taskDetailPop .softInf").hide();
-                $(".taskDetailPop .messageTxt").show();
-            }
-        break;
-
-    }
-
-    if(data.data.type=="quick_scan"){
-        var configB="<span class='fastSKCB'></span>";
-        var param = data.data.param;
-        scanType(param);
-        $(".taskDetailPop .describe").html("快速查杀时间 : "+timetext+configB);
-        $(".fastSKCPop input").prop("disabled",true);
-
-    }else if(data.data.type=="full_scan"){
-        var configB="<span class='overallSKCB'></span>";
-        $(".taskDetailPop .describe").html("全盘查杀时间 : "+timetext+configB);
-
-        var param = data.data.param;
-        scanType(param);
-        if(data.data.param['decompo.limit.size']){
-            var overallpara1=data.data.param['decompo.limit.size'].enable;
-            var overallpara1V=data.data.param['decompo.limit.size'].value;
-        }
-        if(data.data.param['scan.exclusion.ext']){
-            var overallpara2=data.data.param['scan.exclusion.ext'].enable;
-            var overallpara2V=data.data.param['scan.exclusion.ext'].value;
-        }
-        
-        if(overallpara1==true){
-            $(".overallSKCPop input[name=overallSet1]").prop("checked",true);
-            $(".overallSKCPop input[name=overallPara1]").val(overallpara1V);
-        }else{
-            $(".overallSKCPop input[name=overallSet1]").prop("checked",false);
-            $(".overallSKCPop input[name=overallPara1]").val(overallpara1V);
-            $(".overallSKCPop input[name=overallPara1]").prop("disabled",true)
-        }
-        if(overallpara2==true){
-            $(".overallSKCPop input[name=overallSet2]").prop("checked",true);
-            $(".overallSKCPop input[name=overallPara2]").val(overallpara2V);
-        }else{
-            $(".overallSKCPop input[name=overallSet2]").prop("checked",false);
-            $(".overallSKCPop input[name=overallPara2]").val(overallpara2V);
-            $(".overallSKCPop input[name=overallPara2]").prop("disabled",true)
-        }
-        $(".overallSKCPop input").prop("disabled",true);
-
-    }else if(data.data.type=="msg_uninstall"){
-        $(".taskDetailPop .describe").html("软件卸载时间 : "+timetext);
-        var softinf="<span>卸载软件 : "+safeStr(data.data.param.software.name)+"    "+safeStr(data.data.param.software.version)+"</span><br/><span>软件发布者 : "+safeStr(data.data.param.software.publisher)+"</span>";
-        $(".taskDetailPop .softInf").html(softinf);
-    }else if(data.data.type=="msg_distrfile"){
-        $(".taskDetailPop .describe").html("文件分发时间 : "+timetext);
-        var softinf="<span class='distrfName'>分发文件 : "+safeStr(data.data.param.name)+"</span><br/><p>通知 : "+safeStr(data.data.param.text)+"</p>";
-        $(".taskDetailPop .softInf").html(softinf);
-    }else if(data.data.type=="message"){
-        $(".taskDetailPop .describe").html("通知时间 : "+safeStr(timetext)); 
-        var messagetxt="<p>"+"通知内容 : "+safeStr(data.data.param.text)+"</p>";
-        $(".taskDetailPop .messageTxt").html(messagetxt);
-    }else if(data.data.type=="update"){
-        $(".taskDetailPop .describe").html("升级时间  : "+timetext);  
-    }else if(data.data.type=="shutdown"){
-        $(".taskDetailPop .describe").html("关机时间  : "+timetext);  
-    }else if(data.data.type=="reboot"){
-        $(".taskDetailPop .describe").html("重启时间  : "+timetext);  
-    }else if(data.data.type=="migrate"){
-        $(".taskDetailPop .describe").html("迁移时间  : "+timetext); 
-        if(data.data.param.group_name==""){
-            var softinf="<span class='distrfName'>迁移分组 : 全网终端</span><br/><p>迁移地址 : "+data.data.param.addr+"</p>";
-        }else{
-            var softinf="<span class='distrfName'>迁移分组 : "+data.data.param.group_name+"</span><br/><p>迁移地址 : "+data.data.param.addr+"</p>";
-        }
-        
-        $(".taskDetailPop .softInf").html(softinf);
-    }else if(data.data.type=="leakrepair_repair"){
-        $(".taskDetailPop .describe").html("漏洞修复时间  : "+timetext);  
-    }else if(data.data.type=="leakrepair_scan"){
-        $(".taskDetailPop .describe").html("漏洞扫描时间  : "+timetext);  
-    }else if(data.data.type=="vnc_launch"){
-        $(".taskDetailPop .describe").html("远程时间  : "+timetext);  
-    }
-}
 //弹出任务详情
 var totalnum="";
 var taskid="";
@@ -577,8 +690,9 @@ function taskDetailPop(a){
     var start=0;
     $(".taskDetailPop").show();
     shade();
-    taskid=parseInt($(a).attr("taskid"));
+    taskid=parseInt($(a).parents("tr").attr("taskid"));
     var dataa={"taskid":taskid,"view":{"begin":start,"count":detailnumperpage}};
+    var typetext=$(a).parents("tr").find("td").eq(1).html();
     var timetext=$(a).parents("tr").find("td").eq(0).find("span").html();
     var numtext=$(a).parents("tr").find("td").eq(2).html();
     
@@ -587,19 +701,241 @@ function taskDetailPop(a){
         data:JSON.stringify(dataa),
         type:'POST',
         contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
+        	}else{
+        		
         	}
+            
         },
         success:function(data){
+            var html="";
             var list=data.data.list;
             totalnum=data.data.view.total;
             var total=Math.ceil(totalnum/detailnumperpage);
-            tabstrTaskDetail.setData(list);
 
-            taskConfigFun(data,timetext);
-            var tbodyHeight = $('.taskDetailPop tbody').height();
+            if(data.data.type=="quick_scan"){
+                var configB="<span class='fastSKCB'></span>";
+                $(".taskDetailPop .describe").removeClass("describebg");
+                $(".taskDetailPop .describe").html("快速查杀时间 : "+timetext+configB);
+                $(".taskDetailPop .softInf").hide();
+                $(".taskDetailPop .taskDetailTable").height("313px");
+                $(".taskDetailPop .messageTxt").hide();
+
+                var first=data.data.param['scan.maxspeed'];
+                var second=data.data.param['scan.sysrepair'];
+                var third=data.data.param['clean.automate'];
+                var fourth=data.data.param['clean.quarantine'];
+                if(first==true){
+                    $(".fastSKCPop input[name=scanOp]").eq(1).prop("checked",true);
+                    $(".fastSKCPop input[name=scanOp]").eq(0).prop("checked",false);
+
+                }else if(first==false){
+                    $(".fastSKCPop input[name=scanOp]").eq(0).prop("checked",true);
+                    $(".fastSKCPop input[name=scanOp]").eq(1).prop("checked",false);
+                }
+                if(second==true){
+                    $(".fastSKCPop input[name=repairSet]").prop("checked",true);
+                }else{
+                    $(".fastSKCPop input[name=repairSet]").prop("checked",false);
+
+                }
+                if(third==true){
+                    $(".fastSKCPop input[name=isHandle]").eq(0).prop("checked",true);
+                    $(".fastSKCPop input[name=isHandle]").eq(1).prop("checked",false)
+                }else if(third==false){
+                    $(".fastSKCPop input[name=isHandle]").eq(1).prop("checked",true);
+                    $(".fastSKCPop input[name=isHandle]").eq(0).prop("checked",false)
+                }
+                if(fourth==true){
+                    $(".fastSKCPop input[name=afterClear]").prop("checked",true)
+                }else{
+                    $(".fastSKCPop input[name=afterClear]").prop("checked",false)
+                }
+                $(".fastSKCPop input").prop("disabled",true);
+            }else if(data.data.type=="full_scan"){
+                var configB="<span class='overallSKCB'></span>";
+                $(".taskDetailPop .describe").removeClass("describebg");
+                $(".taskDetailPop .describe").html("全盘查杀时间 : "+timetext+configB);
+                $(".taskDetailPop .softInf").hide();
+                $(".taskDetailPop .taskDetailTable").height("313px");
+                $(".taskDetailPop .messageTxt").hide();
+
+                var first=data.data.param['scan.maxspeed'];
+                var second=data.data.param['scan.sysrepair'];
+                var third=data.data.param['clean.automate'];
+                var fourth=data.data.param['clean.quarantine'];
+                var overallpara1=data.data.param['decompo.limit.size'].enable;
+                var overallpara2=data.data.param['scan.exclusion.ext'].enable;
+                var overallpara1V=data.data.param['decompo.limit.size'].value;
+                var overallpara2V=data.data.param['scan.exclusion.ext'].value;
+                if(first==true){
+                    $(".overallSKCPop input[name=scanOp]").eq(1).prop("checked",true);
+                    $(".overallSKCPop input[name=scanOp]").eq(0).prop("checked",false);
+                }else{
+                    $(".overallSKCPop input[name=scanOp]").eq(0).prop("checked",true);
+                    $(".overallSKCPop input[name=scanOp]").eq(1).prop("checked",false);
+                }
+                if(second==true){
+                    $(".overallSKCPop input[name=repairSet]").prop("checked",true)
+                }else{
+                    $(".overallSKCPop input[name=repairSet]").prop("checked",false)
+                }
+                if(third==true){
+                    $(".overallSKCPop input[name=isHandle]").eq(0).prop("checked",true);
+                    $(".overallSKCPop input[name=isHandle]").eq(1).prop("checked",false);
+                }else{
+                    $(".overallSKCPop input[name=isHandle]").eq(1).prop("checked",true);
+                    $(".overallSKCPop input[name=isHandle]").eq(0).prop("checked",false);
+                }
+                if(fourth==true){
+                    $(".overallSKCPop input[name=afterClear]").prop("checked",true)
+                }else{
+                    $(".overallSKCPop input[name=afterClear]").prop("checked",false)
+                }
+
+                if(overallpara1==true){
+                    $(".overallSKCPop input[name=overallSet1]").prop("checked",true);
+                    $(".overallSKCPop input[name=overallPara1]").val(overallpara1V);
+                }else{
+                    $(".overallSKCPop input[name=overallSet1]").prop("checked",false);
+                    $(".overallSKCPop input[name=overallPara1]").val(overallpara1V);
+                    $(".overallSKCPop input[name=overallPara1]").prop("disabled",true)
+                }
+                if(overallpara2==true){
+                    $(".overallSKCPop input[name=overallSet2]").prop("checked",true);
+                    $(".overallSKCPop input[name=overallPara2]").val(overallpara2V);
+                }else{
+                    $(".overallSKCPop input[name=overallSet2]").prop("checked",false);
+                    $(".overallSKCPop input[name=overallPara2]").val(overallpara2V);
+                    $(".overallSKCPop input[name=overallPara2]").prop("disabled",true)
+                }
+                $(".overallSKCPop input").prop("disabled",true);
+
+            }else if(data.data.type=="msg_uninstall"){
+                $(".taskDetailPop .describe").addClass("describebg");
+                $(".taskDetailPop .describe").html("软件卸载时间 : "+timetext);
+                var softinf="<span>卸载软件 : "+safeStr(data.data.param.software.name)+"    "+safeStr(data.data.param.software.version)+"</span><br/><span>软件发布者 : "+safeStr(data.data.param.software.publisher)+"</span>";
+                $(".taskDetailPop .softInf").html(softinf);
+                $(".taskDetailPop .softInf").show();
+                $(".taskDetailPop .messageTxt").hide();
+                $(".taskDetailPop .taskDetailTable").height("240px");
+            }else if(data.data.type=="msg_distrfile"){
+                $(".taskDetailPop .describe").addClass("describebg");
+                $(".taskDetailPop .describe").html("文件分发时间 : "+timetext);
+                var softinf="<span class='distrfName'>分发文件 : "+safeStr(data.data.param.name)+"</span><br/><p>通知 : "+safeStr(data.data.param.text)+"</p>";
+                $(".taskDetailPop .softInf").html(softinf);
+                $(".taskDetailPop .softInf").show();
+                $(".taskDetailPop .messageTxt").hide();
+                $(".taskDetailPop .taskDetailTable").height("240px");
+            }else if(data.data.type=="message"){
+                $(".taskDetailPop .describe").addClass("describebg");
+                $(".taskDetailPop .describe").html("通知时间 : "+safeStr(timetext)); 
+                var messagetxt="<p>"+"通知内容 : "+safeStr(data.data.param.text)+"</p>";
+                $(".taskDetailPop .messageTxt").html(messagetxt);
+                $(".taskDetailPop .softInf").hide();
+                $(".taskDetailPop .messageTxt").show();
+                $(".taskDetailPop .taskDetailTable").height("240px");
+            }else if(data.data.type=="update"){
+                $(".taskDetailPop .describe").removeClass("describebg");
+                $(".taskDetailPop .describe").html("升级时间  : "+timetext);  
+                $(".taskDetailPop .softInf").hide();
+                $(".taskDetailPop .messageTxt").hide();
+                $(".taskDetailPop .taskDetailTable").height("313px");
+            }else if(data.data.type=="shutdown"){
+                $(".taskDetailPop .describe").removeClass("describebg");
+                $(".taskDetailPop .describe").html("关机时间  : "+timetext);  
+                $(".taskDetailPop .softInf").hide();
+                $(".taskDetailPop .messageTxt").hide();
+                $(".taskDetailPop .taskDetailTable").height("313px");
+            }else if(data.data.type=="reboot"){
+                $(".taskDetailPop .describe").removeClass("describebg");
+                $(".taskDetailPop .describe").html("重启时间  : "+timetext);  
+                $(".taskDetailPop .softInf").hide();
+                $(".taskDetailPop .messageTxt").hide();
+                $(".taskDetailPop .taskDetailTable").height("313px");
+            }else if(data.data.type=="migrate"){
+                $(".taskDetailPop .describe").addClass("describebg");
+                $(".taskDetailPop .describe").html("迁移时间  : "+timetext); 
+                if(data.data.param.group_name==""){
+                    var softinf="<span class='distrfName'>迁移分组 : 全网终端</span><br/><p>迁移地址 : "+data.data.param.addr+"</p>";
+                }else{
+                    var softinf="<span class='distrfName'>迁移分组 : "+data.data.param.group_name+"</span><br/><p>迁移地址 : "+data.data.param.addr+"</p>";
+                }
+                
+                $(".taskDetailPop .softInf").html(softinf);
+                $(".taskDetailPop .softInf").show();
+                $(".taskDetailPop .messageTxt").hide();
+                $(".taskDetailPop .taskDetailTable").height("240px");
+            }else if(data.data.type=="leakrepair_repair"){
+                $(".taskDetailPop .describe").removeClass("describebg");
+                $(".taskDetailPop .describe").html("漏洞修复时间  : "+timetext);  
+                $(".taskDetailPop .softInf").hide();
+                $(".taskDetailPop .messageTxt").hide();
+                $(".taskDetailPop .taskDetailTable").height("313px");
+            }else if(data.data.type=="leakrepair_scan"){
+                $(".taskDetailPop .describe").removeClass("describebg");
+                $(".taskDetailPop .describe").html("漏洞扫描时间  : "+timetext);  
+                $(".taskDetailPop .softInf").hide();
+                $(".taskDetailPop .messageTxt").hide();
+                $(".taskDetailPop .taskDetailTable").height("313px");
+            }else if(data.data.type=="vnc_launch"){
+                $(".taskDetailPop .describe").removeClass("describebg");
+                $(".taskDetailPop .describe").html("远程时间  : "+timetext);  
+                $(".taskDetailPop .softInf").hide();
+                $(".taskDetailPop .messageTxt").hide();
+                $(".taskDetailPop .taskDetailTable").height("313px");
+            }
+            html+="<tr id='tableAlign'>";
+            html+="<td width='25%'>终端分组</td>";
+            html+="<td width='25%'>终端名称</td>";
+            html+="<td width='25%'>任务状态</td>";
+            html+="<td width='25%'>备注</td>";
+            html+="</tr>";
+            var finsh_text = "";
+            for (var i = 0; i < list.length; i++) {
+                html+="<tr>";
+                if(list[i].groupname==""){
+                    html+="<td><span class='nameWidth'>(已删除终端)</span></td>";  
+                }else{
+                    html+="<td><span class='nameWidth' title="+safeStr(pathtitle(list[i].groupname))+">"+safeStr(list[i].groupname)+"</span></td>";
+                }
+                
+                html+="<td><span class='nameWidth' title="+safeStr(pathtitle(list[i].hostname))+">"+safeStr(list[i].hostname)+"</span></td>";
+                if(list[i].status==0){
+                    html+="<td>未响应</td>";
+                    html+="<td>任务尚未被接受</td>";
+                }else if(list[i].status==1){
+                    html+="<td>正在执行</td>";
+                    html+="<td>任务正在执行</td>";
+                }else if(list[i].status==2){
+                    if(list[i].message == 'completed'){
+						finsh_text = '任务完成'
+					}else if(list[i].message == 'conflict'){
+                        finsh_text = '任务冲突'
+					}else if(list[i].message == 'timeout'){
+                        finsh_text = '任务超时'
+					}else if(list[i].message == 'unsupported'){
+                        finsh_text = '终端不支持'
+					}else if(list[i].message == 'failed'){
+                        finsh_text = '执行失败'
+					}else if(list[i].message == 'refused'){
+                        finsh_text = '用户拒绝'
+					}else{
+                        finsh_text = list[i].message
+					}
+					html+="<td>任务完成</td>";
+					html+="<td>" + finsh_text + "</td>";
+                   
+                }else{
+                    html+="<td>终端异常</td>";
+                    html+="<td>终端服务异常，无法接受任务</td>";
+                }
+                html+="</tr>";
+            };
+            $(".taskDetailPop .taskDetailTable table").html(html);
             // 分页
             $(".taskDetailPop .clearfloat").remove();
             $(".taskDetailPop .tcdPageCode").remove();
@@ -610,21 +946,71 @@ function taskDetailPop(a){
                 current:1,
                 backFn:function(pageIndex){
                     start=(pageIndex-1)*detailnumperpage;
-                    dataa.view.begin = start;
+                    var dataa={"taskid":taskid,"view":{"begin":start,"count":detailnumperpage}};
+                    
                     $.ajax({
                         url:'/mgr/task/_clnt',
                         data:JSON.stringify(dataa),
                         type:'POST',
                         contentType:'text/plain',
+                        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
                         error:function(xhr,textStatus,errorThrown){
 				        	if(xhr.status==401){
 				        	    parent.window.location.href='/';
+				        	}else{
+				        		
 				        	}
+				            
 				        },
                         success:function(data){
+                            var html="";
+                            var finsh_text = "";
                             var list=data.data.list;
-                            tabstrTaskDetail.setData(list);
-                            $('.taskDetailPop tbody').height(tbodyHeight);
+                            html+="<tr id='tableAlign'>";
+                            html+="<td width='25%'>终端分组</td>";
+                            html+="<td width='25%'>终端名称</td>";
+                            html+="<td width='25%'>任务状态</td>";
+                            html+="<td width='25%'>备注</td>";
+                            html+="</tr>";
+                            for (var i = 0; i < list.length; i++) {
+                                html+="<tr>";
+                                if(list[i].groupname==""){
+                                    html+="<td><span class='nameWidth'>(已删除终端)</span></td>";  
+                                }else{
+                                    html+="<td><span class='nameWidth' title="+safeStr(pathtitle(list[i].groupname))+">"+safeStr(list[i].groupname)+"</span></td>";
+                                }
+                                html+="<td><span class='nameWidth' title="+safeStr(pathtitle(list[i].hostname))+">"+safeStr(list[i].hostname)+"</span></td>";
+                                if(list[i].status==0){
+                                    html+="<td>未响应</td>";
+                                    html+="<td>任务尚未被接受</td>";
+                                }else if(list[i].status==1){
+                                    html+="<td>正在执行</td>";
+                                    html+="<td>任务正在执行</td>";
+                                }else if(list[i].status==2){
+                                    if(list[i].message == 'completed'){
+                                        finsh_text = '任务完成'
+                                    }else if(list[i].message == 'conflict'){
+                                        finsh_text = '任务冲突'
+                                    }else if(list[i].message == 'timeout'){
+                                        finsh_text = '任务超时'
+                                    }else if(list[i].message == 'unsupported'){
+                                        finsh_text = '终端不支持'
+                                    }else if(list[i].message == 'failed'){
+                                        finsh_text = '执行失败'
+                                    }else if(list[i].message == 'refused'){
+                                        finsh_text = '用户拒绝'
+                                    }else{
+                                        finsh_text = list[i].message
+                                    }
+                                    html+="<td>任务完成</td>";
+                                    html+="<td>" + finsh_text + "</td>";
+                                }else{
+                                    html+="<td>终端异常</td>";
+                                    html+="<td>终端服务异常，无法接受任务</td>";
+                                }
+                                html+="</tr>";
+                            };
+                            $(".taskDetailPop .taskDetailTable table").html(html);
                         }       
                     });
                 }
@@ -651,48 +1037,87 @@ var vdataArr=new Array();
 var sdataArr=new Array();
 var ndataArr=new Array();
 var date=new Array();
+
 function threattrend(){
-    trendAjax(0);
-    trendAjax(1);
-    trendAjax(2);
-}
-function trendAjax(type){
+    
     $.ajax({
         url:'/mgr/stat/_trend',
-        data:JSON.stringify({"type":parseInt(type)}),
+        data:JSON.stringify({"type":0}),
         type:'POST',
         contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
+        	}else{
+        		
         	}
+            
         },
         success:function(data){
-            trendData(type,data);
+            for (var i = 0; i < data.data.length; i++) {
+                vdataArr.push(data.data[i].count);
+                date.push(getLocalTime5(data.data[i].date))
+            }
+            threatchart();
         }       
     })
 
-}
-function trendData(type,data){
-    for (var i = 0; i < data.data.length; i++) {
-        if(type == 0){
-            vdataArr.push(data.data[i].count);
-            date.push(getLocalTime5(data.data[i].date));
-            threatchart();
-        }else{
-            if(type == 1){
-                sdataArr.push(data.data[i].count);
-            }else if(type == 2){
-                ndataArr.push(data.data[i].count);
+    $.ajax({
+        url:'/mgr/stat/_trend',
+        data:JSON.stringify({"type":1}),
+        type:'POST',
+        contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
+        error:function(xhr,textStatus,errorThrown){
+        	if(xhr.status==401){
+        	    parent.window.location.href='/';
+        	}else{
+        		
+        	}
+            
+        },
+        success:function(data){
+            for (var i = 0; i < data.data.length; i++) {
+                sdataArr.push(data.data[i].count)
             }
+
             if(vdataArr.length==0 && sdataArr.length==0 && ndataArr.length==0){
                 $("#threatchart").html("<img src='images/nochart.png' style='display:block;margin:0 auto;padding-top:130px;'><p style='text-align:center;padding-top:24px;'>暂无数据内容</p>");
             }else{
                 threatchart();
             }
-        }
-    }
+        }       
+    })
+    $.ajax({
+        url:'/mgr/stat/_trend',
+        data:JSON.stringify({"type":2}),
+        type:'POST',
+        contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
+        error:function(xhr,textStatus,errorThrown){
+        	if(xhr.status==401){
+        	    parent.window.location.href='/';
+        	}else{
+        		
+        	}
+            
+        },
+        success:function(data){
+            for (var i = 0; i < data.data.length; i++) {
+                ndataArr.push(data.data[i].count)
+            }
+            
+            if(vdataArr.length==0 && sdataArr.length==0 && ndataArr.length==0){
+                $("#threatchart").html("<img src='images/nochart.png' style='display:block;margin:0 auto;padding-top:130px;'><p style='text-align:center;padding-top:24px;'>暂无数据内容</p>");
+            }else{
+                threatchart();
+            }
+        }       
+    })  
 }
+
+
 function threatchart(){
     $("#threatchart").highcharts({
         chart:{
@@ -752,61 +1177,44 @@ var ndataArrr=new Array();
 var ternamev=new Array();
 var ternames=new Array();
 var ternamen=new Array();
-trendtopAjax(0);
-function trendtopAjax(type){
+//默认显示病毒图
+columnChart(0,'#f8ac59');
+function columnChart(type,color){
+    dataArrr=[];
+    tername=[];
     $.ajax({
         url:'/mgr/stat/_trendtop',
-        data:JSON.stringify({"type":parseInt(type)}),
+        data:JSON.stringify({"type":type}),
         type:'POST',
         contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
             if(xhr.status==401){
                 parent.window.location.href='/';
             }
         },
         success:function(data){
-            trendtopData(type,data);
+            if(data.errno==0){
+                for (var i = 0; i < data.data.length; i++) {
+                    dataArrr.push(data.data[i].count);
+                    tername.push(data.data[i].hostname)
+                }
+                if(dataArrr.length==0){
+                    $("#column").html("<img src='images/nochart.png' style='display:block;margin:0 auto;padding-top:60px;'><p style='text-align:center;padding-top:24px;'>暂无数据内容</p>");
+    
+                }else{
+                    column(dataArrr,tername,color);
+    
+                }
+            }else if(data.errno==-1){
+                alert(data.errmsg);
+            }
+            
+            
         }       
     })
 }
-function trendtopData(type,data){
-    if(type == 0){
-        for(var i = 0; i < data.data.length; i++){
-            vdataArrr.push(data.data[i].count);
-            ternamev.push(data.data[i].hostname);
-        }
-        if(vdataArrr.length==0){
-            $("#column").html("<img src='images/nochart.png' style='display:block;margin:0 auto;padding-top:60px;'><p style='text-align:center;padding-top:24px;'>暂无数据内容</p>");
-        }else{
-            column(ternamev,vdataArrr);
-        }
-    }else if(type == 2){
-        for(var i = 0; i < data.data.length; i++){
-            ndataArrr.push(data.data[i].count);
-            ternamen.push(data.data[i].hostname);
-        }
-        if(ndataArrr.length==0){
-            $("#column").html("<img src='images/nochart.png' style='display:block;margin:0 auto;padding-top:60px;'><p style='text-align:center;padding-top:24px;'>暂无数据内容</p>");
-        }else{
-            column(ternamen,ndataArrr);
-        }
-    }else if(type == 1){
-        for(var i = 0; i < data.data.length; i++){
-            sdataArrr.push(data.data[i].count);
-            ternames.push(data.data[i].hostname);
-        }
-        if(sdataArrr.length==0){
-            $("#column").html("<img src='images/nochart.png' style='display:block;margin:0 auto;padding-top:60px;'><p style='text-align:center;padding-top:24px;'>暂无数据内容</p>");
-        }else{
-            column(ternames,sdataArrr);
-        }
-    }
-   
-    
-}
-
-
-function column(tername,dataArrr){
+function column(dataArrr,tername,color){
     $('#column').highcharts({
         chart: {
             type: 'column'
@@ -829,10 +1237,10 @@ function column(tername,dataArrr){
             allowDecimals: false
         },
         tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table><tbody style="overflow:initial;display:table-row-group;height:auto">',
-            pointFormat: '<tr style="display: table-row;"><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
             '<td style="padding:0"><b>{point.y:1f} 个</b></td></tr>',
-            footerFormat: '</tbody></table>',
+            footerFormat: '</table>',
             shared: true,
             useHTML: true
         },
@@ -844,51 +1252,36 @@ function column(tername,dataArrr){
         },
         series: [{
             name: '数量',
-            color:'#f8ac59',
+            color:color,
             data: dataArrr
         }]
     })
 }
 
 
-
-//柱状图图例按钮悬浮效果
-// $(".chartBlock .buttons .virusB").hover(function(){
-//     $(this).css({background:'#63c380',color:'#ffffff'})
-// })
-// $(".chartBlock .buttons .systemB").hover(function(){
-//     $(this).css({background:'#7ea0fc',color:'#ffffff'})
-// })
-// $(".chartBlock .buttons .netB").hover(function(){
-//     $(this).css({background:'#a889dd',color:'#ffffff'})
-// })
-
 $(".virusB").click(function(){
+    var color = '#f8ac59';
     $(".chartBlock .buttons a").css({background:"#ffffff"});
     $(".netB").css({color:"#a889dd"});
     $(".systemB").css({color:"#7ea0fc"});
     $(this).css({background:"#f8ac59",color:"#ffffff"});
-    vdataArrr=[];
-    ternamev=[];
-    trendtopAjax(0);
+    columnChart(0,color);  
 })
 $(".netB").click(function(){
+    var color = '#a889dd';
     $(".chartBlock .buttons a").css({background:"#ffffff"});
     $(".virusB").css({color:"#f8ac59"});
     $(".systemB").css({color:"#7ea0fc"});
     $(this).css({background:"#a889dd",color:"#ffffff"});
-    ndataArrr=[];
-    ternamen=[];
-    trendtopAjax(2);
+    columnChart(2,color);  
 })
 $(".systemB").click(function(){
+    var color = '#7ea0fc';
     $(".chartBlock .buttons a").css({background:"#ffffff"});
     $(".virusB").css({color:"#f8ac59"});
     $(".netB").css({color:"#a889dd"});
     $(this).css({background:"#7ea0fc",color:"#ffffff"});
-    sdataArrr=[];
-    ternames=[];
-    trendtopAjax(1);
+    columnChart(1,color);
 })
 //一键查杀分组选择改变时全选input的变化
 $("body").on("change","input[name=groupN]",function(){
@@ -911,16 +1304,16 @@ $(".onekeySKB").click(function(){
 	    url:'/mgr/group/_list',
 	    dataType:'json',
 	    data:{},
-	    type:'GET',
+        type:'GET',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 	    error:function(xhr,textStatus,errorThrown){
 	    	if(xhr.status==401){
 	    	    parent.window.location.href='/';
-	    	}else{
-	    		
 	    	}
 	        
 	    },
 	    success:function(data){
+	        
 	        var list=data.data.list;
 	        var html="";
 	        html+="<ul class='relative'>";
@@ -940,6 +1333,7 @@ $(".onekeySKB").click(function(){
         data:{},
         type:'GET',
         contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
@@ -964,6 +1358,7 @@ $(".onekeySKB").click(function(){
         data:{},
         type:'GET',
         contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
@@ -996,20 +1391,22 @@ $(".sureSKButton").click(function(){
     $("input[name=groupN]:checked").each(function(){
         groupsArr.push(parseInt($(this).parent().attr("groupid")));
     })
-    var dataa={"type":"full_scan","groups":groupsArr,"param":overallskcdefault};  
     if($(this).index()==0){
-        dataa.param = overallskcdefault;  
+        var dataa={"type":"full_scan","groups":groupsArr,"param":overallskcdefault};  
     }else{
-        dataa.param = fastskcdefault;  
+        var dataa={"type":"quick_scan","groups":groupsArr,"param":fastskcdefault};  
     }
     if($("input[name=groupN]:checked").length==0){
-       delayHide("请选择分组!");
+        $(".delayHide").show();
+        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'><span class='verticalMiddle'> 请选择分组!</span>");
+        setTimeout(function(){$(".delayHide").hide()},2000); 
     }else{
         $.ajax({
             url:'/mgr/task/_create',
             data:JSON.stringify(dataa),
             type:'POST',
             contentType:'text/plain',
+            headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
             error:function(xhr,textStatus,errorThrown){
 	        	if(xhr.status==401){
 	        	    parent.window.location.href='/';
@@ -1022,9 +1419,11 @@ $(".sureSKButton").click(function(){
                 $(".shade").hide();
                 $(".onekeySKPop").hide();
                 parent.$(".topshade").hide();
-                delayHideS("操作成功!");
+                $(".delayHideS").show();
+                $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功!</span>");
+                setTimeout(function(){$(".delayHideS").hide()},2000);
             }           
         });
     }
     
-});
+})

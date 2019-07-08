@@ -16,7 +16,7 @@
     .progress { position:relative; width:400px; border: 1px solid #ddd; padding: 1px; border-radius: 3px;margin-top: 16px;background: #ffffff }
     .bar { background-color: rgb(71,172,117); width:0%; height:20px; border-radius: 3px; }
     .percent { position:absolute; display:inline-block; top:3px; left:48%;font-size: 12px;color: #6c6c6c }
-    .uploadingShade{width:100%;height: 100%;background: rgb(60,60,60);opacity: 0.4;filter:alpha(opacity:40);z-index:99;top:0;left:0;}
+    .uploadingShade{width:100%;height: 100%;background: rgb(60,60,60);opacity: 0.4;filter:alpha(opacity=40);z-index:99;top:0;left:0;}
     .uploading{z-index: 999;top:160px;left: 50px;}
     .uploadingText{text-align: center;color: #ffffff;font-size: 12px}
     .webuploader-pick{height: 23px;padding: 1px 9px;line-height: 23px;font-size: 12px;border: 1px solid rgb(204, 204, 204); color: rgb(0, 0, 0);background: rgb(233, 233, 233);}
@@ -33,12 +33,15 @@
                             <a href="softwareStatistics.html">软件统计<a href="fileDistribute.html" class="current">文件分发</a>
                     </div>
                     <div class="functionButtonsBlock">
-                        <p>
-                            <a class="bu cursor uploadB">上传</a>
-                            <a class="bu cursor provideB">分发</a>
-                            <a class="bu cursor downloadB" target="_blank">下载</a>
-                            <a class="bu cursor deleteB">删除</a>
-                        </p>
+                            <p>
+                                    <a class="bu cursor uploadB">上传</a>
+                                    <a class="bu cursor provideB">分发</a>
+                                    <a class="bu cursor downloadB" target="_blank">下载</a>
+                                    <a class="bu cursor deleteB">删除</a>
+
+                            </p>
+                            
+                            
                     </div>
                     
                     <div class="search">
@@ -62,8 +65,20 @@
                         </div>
                     </div>
                     <div class="fileDistributeTContainer floatR">
+                        <div class="tableth">
+                                <table>
+                                <tr>
+                                    <th width='33%'  class='th-ordery' type='name'>文件名称 <img src="images/th-ordery.png"/></th>
+                                    <th width='29%' class='th-ordery' type='remark'>备注 <img src="images/th-ordery.png"/></th>
+                                    <th width='9%' class='th-ordery' type='size'>文件大小 <img src="images/th-ordery.png"/></th>
+                                    <th width='19%' class='th-ordery' type='upts'>上传时间 <img src="images/th-ordery.png"/></th>
+                                </tr>                                       
+                                </table>
+                        </div>
                         <div class="table">
-                               
+                                <table>
+                                         
+                                </table>
                         </div>
                         <a style='font-size:12px;color:#6a6c6e;line-height:54px;padding-left:20px;float:left' class='totalPages'>总共 0 页</a><div class='tcdPageCode' style='font-size:12px;float:right;padding-top:14px;padding-bottom:14px;padding-right:20px;'></div><div class='clear clearfloat'></div>
                     </div>        
@@ -94,10 +109,8 @@
             </div>
             <!-- 上传弹层 start -->
             <div class="uploadPop pop relative" id="uploader">
-                    <div class="uploadingShade absolute hidden">
-                
-                        </div>                
-                        <div class="absolute uploading hidden">
+                <div class="uploadingShade absolute hidden"></div>                
+                <div class="absolute uploading hidden">
                     <div class="uploadingText">正在上传...</div>
                     <div class="progress">
                         <div class="bar"></div >
@@ -178,11 +191,23 @@
             <div class="provideNPop pop">
                 <div class="title">分发设置<span class="closeW"></span></div>
                 <div class="content">
+                    <div class="p ter_name">
+                        <label class="verticalMiddle">已选择终端 :</label>
+                        <span>某某某的终端10台</span>
+                    </div>
+                    <div class="p">
+                        <label class="verticalMiddle">分发方式 :</label>
+                        <input type="radio" class="verticalMiddle" name="exeMethod" checked><span>接收并运行</span>
+                        <input type="radio" class="verticalMiddle ML" name="exeMethod"><span>只接收</span>
+                        <input type="radio" class="verticalMiddle ML" name="exeMethod"><span>后台运行</span>
+
+                    </div>
                     <div class="p">
                         <label class="verticalMiddle">存放位置 :</label>
                         <select id="providePosition">
-                            <option value=0>桌面</option>
-                            <option value=1>临时目录</option>
+                            <option value='0'>桌面</option>
+                            <option value='1'>临时目录</option>
+                            <option value='2'>系统盘根目录</option>
                         </select>
                         <!-- <input type="checkbox" class="verticalMiddle" id="isRe">
                         <span class="verticalMiddle">替换同名文件</span> -->
@@ -190,18 +215,12 @@
                     </div>
                     <div class="p">
                         <label class="verticalMiddle">终端提示 :</label>
-                        <input type="radio" class="verticalMiddle" name="terminalHint" checked><span>弹窗提示</span>
-                        <input type="radio" class="verticalMiddle ML" name="terminalHint"><span>静默接收</span>
+                        <input type="checkbox" class="verticalMiddle tipsUser" name="show" checked><span>提示用户</span>
                     </div>
                     <div class="textarea">
                         <textarea maxlength="120"></textarea>
                     </div>
-                    <div class="p">
-                        <label class="verticalMiddle">执行方式 :</label>
-                        <input type="radio" class="verticalMiddle" name="exeMethod" checked><span class="verticalMiddle">接收并运行</span>
-                        <input type="radio" class="verticalMiddle ML1" name="exeMethod"><span class="verticalMiddle">只接收</span>
-                    </div>
-                    <div class="p">
+                    <div class="p runParaP">
                         <label class="verticalMiddle">运行参数 :</label>
                         <input type="text" class="verticalMiddle" id="runPara">
                     </div>
@@ -260,9 +279,7 @@
                 <p class="p1"></p>
             </div>
             <script type="text/javascript" src="js/jquery.min.js"></script>
-            <script src="js/dataTable/jquery-datatable.js"></script>
             <script src="js/lyz.calendar.min.distr.js" type="text/javascript"></script>
-            <script type="text/javascript" src="js/jquery.form.js"></script>
             <script type="text/javascript" src="js/common.js"></script>
             <script src="js/jquery.page.js" type="text/javascript"></script>
             <script src="js/webuploader-0.1.5/webuploader.js" type="text/javascript"></script>
@@ -270,97 +287,7 @@
             <script>
             //清理日志日期选择input
             $("#effTime").calendar({lowerLimit: new Date(GetDateStr(-1))});
-            
-            
-            //执行提交表单过程
-//          $(function(){
-//              var bar = $('.bar');
-//              var percent = $('.percent');
-//              var status = $('#status');
-//              $('form').ajaxForm({
-//              	timeout:6000,
-//                  beforeSerialize:function(){
-//                      //alert("表单数据序列化前执行的操作！");
-//                      //$("#txt2").val("java");//如：改变元素的值
-//                  },
-//                  beforeSubmit:function(){
-////debugger;
-//                         var filesize = $("input[type='file']")[0].files[0].size/1024/1024;
-//                         if(filesize > 1000000000){
-//                             alert("文件大小超过限制，最多50M");
-//                             return false;
-//                         }
-//                  },
-//                  beforeSend: function() {
-//                      status.empty();
-//                      var percentVal = '0%';
-//                      bar.width(percentVal)
-//                      percent.html(percentVal);
-//                  },
-//                  uploadProgress: function(event, position, total, percentComplete) {//上传的过程
-//                      //position 已上传了多少
-//                      //total 总大小
-//                      //已上传的百分数
-//                      var percentVal = percentComplete + '%';
-//                      bar.width(percentVal)
-//                      percent.html(percentVal);
-//                      //console.log(percentVal, position, total);
-//                  },
-//                  success: function(data) {//成功
-//                      var percentVal = '100%';
-//                      bar.width(percentVal)
-//                      percent.html(percentVal);
-//                      $(".uploadingShade").hide();
-//                      $(".uploading").hide();
-//
-//                      //判断浏览器是否为ie7或8
-//                      var browser=navigator.appName; 
-//                      if(browser=="Microsoft Internet Explorer"){
-//                          var b_version=navigator.appVersion; 
-//                          var version=b_version.split(";"); 
-//                          var trim_Version=version[1].replace(/[ ]/g,"");
-//                          if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE7.0") 
-//                          { 
-//                              data=JSON.parse(data);
-//                          }else if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE8.0") 
-//                          { 
-//                              data=JSON.parse(data);
-//                          }else if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE9.0") 
-//                          { 
-//                              data=JSON.parse(data);
-//                          }  
-//                      }
-//                      
-//
-//                      if(data.errno==-1 && data.errmsg.indexOf("1062")>0){
-//                          $(".delayHide").show();
-//                          $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 添加重复");
-//                          setTimeout(function(){$(".delayHide").hide()},2000);
-//                      }else if(data.errno==-1 && data.errmsg.indexOf("Parameter")>0){
-//                          $(".delayHide").show();
-//                          $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 无效参数");
-//                          setTimeout(function(){$(".delayHide").hide()},2000);
-//                      }else if(data.errno==0){
-//                          // 添加成功提示
-//                          $(".delayHideS").show();
-//                          $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 添加成功</span>");
-//                          setTimeout(function(){$(".delayHideS").hide()},2000);
-//                      }
-//                      softlist();
-//                      $(".uploadPop .buttons a").eq(0).click();             
-//                  },
-//                  error:function(err){//失败
-//                      alert("表单提交异常！"+err.msg);
-//                  },
-//                  complete: function(xhr) {//完成
-//                      
-//                  }
-//              });
-//
-//          });
-            
-           
-
+ 
             </script>
         </body>
 </html>

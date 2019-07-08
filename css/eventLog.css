@@ -1,7 +1,7 @@
 
 /*表格右上方按钮样式*/
-.search{background: #ffffff;margin-top: 10px;border-bottom: 1px solid rgb(231,234,236);position: relative;height:62px;}
-.tabButton{padding-right: 20px;line-height: 62px;font-size: 12px;right: 0px; }
+.search{background: #ffffff;margin-top: 10px;border-bottom: 1px solid rgb(231,234,236);#position: relative;#height:62px;}
+.tabButton{padding-right: 20px;line-height: 62px;font-size: 12px;#float: none;#position:absolute;right: 0px; }
 .tabButton a{width: 84px;height: 26px;line-height: 26px;border: 1px solid rgb(231,234,236);display: inline-block;color: #676a6c}
 .tabButton .current{background: #63c380;color: #ffffff;border: 1px solid #63c380}
 .tabButton .detailButton{border-top-left-radius: 5px;border-bottom-left-radius:5px;}
@@ -31,12 +31,12 @@
 .searchBlock .condition{padding-left: 20px;}
 .filterBlock .right select{width:95px;text-align: center;border: 1px solid rgb(231,234,236);color:#6c6c6c;}
 #specialTime select{width:74px;text-align: center;border: 1px solid rgb(231,234,236);font-size: 12px;color: #6c6c6c}
-.searchBlock{font-size: 12px;color: #676a6c;line-height: 62px;background: #ffffff;position: absolute;}
+.searchBlock{font-size: 12px;color: #676a6c;line-height: 62px;background: #ffffff;#position: absolute;}
 .searchBlock select{border:1px solid rgb(231,234,236);width: 120px;height: 28px;line-height: 28px;vertical-align: middle;color: #6c6c6c}
 .searchBlock .textbox input{font-size: 12px;width: 186px;height: 26px;border: 1px solid rgb(231,234,236);margin-left: 20px;line-height: 30px;outline: none;padding-left: 14px;vertical-align: middle;}
 .searchBlock .textbox{position: relative;display: inline-block;}
 .searchBlock .textbox .placeholder{position: absolute;display: block;top:1px;left:30px;color: #989898;}
-.searchBlock .textbox img{vertical-align: middle;top:14px;border: 1px solid #63c380;padding: 5px 11px;right: -39px;top:1px;top:15px\0;background: #63c380;border-top-right-radius:4px;border-bottom-right-radius:4px;}
+.searchBlock .textbox img{vertical-align: middle;top:14px;border: 1px solid #63c380;padding: 5px 11px;right: -39px;#top:1px;top:15px\0;background: #63c380;border-top-right-radius:4px;border-bottom-right-radius:4px;}
 .searchBlock .textbox img:hover{background: rgb(71,172,117);cursor: pointer;}
 @-moz-document url-prefix(){
 	.filterBlock .middle img{top:8px;}
@@ -44,12 +44,12 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {.searchBlock .textbox img{top:15px;}}
 .tableContainer{background: #ffffff}
 .hTTableContainer{margin-top: 10px;padding-top: 14px;}
-/* .table{overflow-y: scroll;overflow-x:hidden;border-bottom: 1px solid rgb(231,234,236);position: relative;} */
+.table{overflow-y: scroll;overflow-x:hidden;border-bottom: 1px solid rgb(231,234,236);position: relative;}
 .table,.main .tableth{margin: 0 20px;background: #ffffff;}
 .main .tableth{padding-right: 18px;border-bottom: 1px solid rgb(231,234,236)}
 
 .table table{border-collapse: collapse;}
-.table table tbody tr:nth-child(odd){background:rgb(249,249,249);}
+.table table tr:nth-child(even){background:rgb(249,249,249);}
 .table table tr{border-bottom: 1px solid rgb(231,234,236)}
 
 
@@ -57,7 +57,7 @@
 /*.tableth th:nth-child(1)::after{content: "";}*/
 .table td{color:#6c6c6c;font-size: 12px;line-height: 39px;padding-left: 22px;white-space: nowrap;}
 .table td font{font-size: 12px;}
-.table .filePath{width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: top;vertical-align: middle;}
+.table .filePath{width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: top;#vertical-align: middle;}
 .taskDetailPop .filePath{width: 110px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: top;}
 .table .seeDetail{text-decoration: underline;}
 .table .detailFloat{position: absolute;display: none;line-height: 20px;background: #ffffff;border:1px solid rgb(199,199,199);border-radius: 5px;right:90px ;top:64px;padding:16px 24px;z-index:1;word-wrap:break-word;white-space:pre-wrap;width: 400px;margin-top: -50px}
@@ -156,7 +156,7 @@
 .uninstallSPop .searchTerminal .textbox input{font-size: 12px;width: 562px;height: 26px;border: 1px solid rgb(231,234,236);margin-left: 22px;line-height: 26px;outline: none;padding-left: 14px;vertical-align: middle;color:#6c6c6c}
 .uninstallSPop .searchTerminal .textbox{position: relative;display: inline-block;}
 .uninstallSPop .searchTerminal .textbox .placeholder{position: absolute;display: block;top:1px;left:30px;color: #989898;}
-.uninstallSPop .searchTerminal .textbox img{vertical-align: middle;top:14px;border: 1px solid #63c380;padding: 5px 11px;right: -39px;#top:1px;top:15px\0;background: #63c380;border-top-right-radius:4px;border-bottom-right-radius:4px;}
+.uninstallSPop .searchTerminal .textbox img{vertical-align: middle;top:14px;border: 1px solid #63c380;padding: 5px 11px;right: -39px;top:1px;top:15px\0;background: #63c380;border-top-right-radius:4px;border-bottom-right-radius:4px;}
 .uninstallSPop .searchTerminal .textbox img:hover{background: rgb(71,172,117);cursor: pointer;}
 .uninstallSPop .uStable,.uninstallSPop .uStableth{color: #6c6c6c;font-size: 12px;margin: 0 22px;}
 .uninstallSPop .uStableth{border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236);background: rgb(240,240,240);padding-right: 18px;}
@@ -227,7 +227,7 @@
 .recentTaskPop .table tr{line-height: 30px;border-bottom: 0px;}
 .recentTaskPop .table td,.recentTaskPop .table th{padding-left: 14px;font-weight: normal;color:#6c6c6c;text-align: left;}
 .recentTaskPop .table .th{text-align: left;background: rgb(240,240,240)}
-.recentTaskPop .table .filePath{width: auto;max-width: 226px;}
+.recentTaskPop .table .filePath{width: 226px;}
 .recentTaskPop .bottom{line-height: 56px;font-size: 12px;color: #6c6c6e;border-top:1px solid rgb(231,234,236);margin:0 20px;position: relative;}
 .recentTaskPop .bottom span{letter-spacing: 1px}
 .recentTaskPop .bottom a{text-align: center;width:84px;line-height: 22px;background: rgb(101,197,129);display: inline-block;color: #ffffff;border-radius: 3px;position: absolute;right:0px;top:16px;cursor: pointer;*top:-2px;}
@@ -273,14 +273,14 @@
 .providePop .terminallist .th,.uninstallSPop .terminallist .th{font-weight: bold;line-height: 30px;height: 30px;border-bottom: 1px solid rgb(231,234,236)}
 .providePop .terminallist .td,.uninstallSPop .terminallist .td{line-height: 28px;}
 /*下发文件下一步弹层*/
-.provideNPop{display: none;width: 572px;height: 442px;position: fixed;top: 50%;left:50%;margin-left: -286px;margin-top: -250px;z-index: 999;background: #ffffff;font-size: 12px;}
+.provideNPop{display: none;width: 572px;height: 482px;position: fixed;top: 50%;left:50%;margin-left: -286px;margin-top: -250px;z-index: 999;background: #ffffff;font-size: 12px;}
 .provideNPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
 .provideNPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
 .provideNPop .title .closeW:hover{background-position: -20px}
 .provideNPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
 .provideNPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 84px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
 .provideNPop .buttons a:hover{background: rgb(71,172,117)}
-.provideNPop .content{height: 325px;padding-top: 18px;}
+.provideNPop .content{height: 365px;padding-top: 18px;}
 .provideNPop .content label{width: 90px;display: inline-block;font-size: 12px;text-align: right;color: #6c6c6c;padding-right: 24px;}
 .provideNPop .content .p{line-height: 34px;height: 34px;}
 .provideNPop .content input[type=radio],.provideNPop .content input[type=checkbox]{margin-right: 18px;}
@@ -325,30 +325,33 @@
 .table .unstartuse{color: #dfdfdd}
 .auditorIn{font-size: 12px;color: #959595}
 /*新建管理员弹层*/
-.newAdminPop{display: none;width: 660px;height: 440px;position: fixed;top: 50%;left:50%;margin-left: -330px;margin-top: -250px;z-index: 999;background: #ffffff;}
-.newAdminPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
-.newAdminPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
-.newAdminPop .title .closeW:hover{background-position: -20px}
-.newAdminPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
-.newAdminPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 84px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
-.newAdminPop .buttons a:hover{background: rgb(71,172,117)}
-.newAdminPop .content{height: 316px;padding-top: 18px;}
-.newAdminPop form label{width: 180px;display: inline-block;font-size: 14px;text-align: right;color: #6c6c6c;vertical-align: top;}
-.newAdminPop form .p{line-height: 34px;height: 34px;margin-top: 30px;}
-.newAdminPop form .marginT4{margin-top: 4px;}
-.newAdminPop form input[type=text]{padding-left: 12px;width: 270px;height: 30px;line-height: 30px;margin-left: 24px;font-size: 12px;color: #6c6c6c}
-.newAdminPop form select{width: 120px;height: 30px;line-height: 30px;margin-left: 24px;font-size: 12px;color: #6c6c6c;padding-left: 12px;}
-.newAdminPop form .notice{font-size: 12px;color: #6c6c6c;padding-left: 116px;}
-.newAdminPop form .notice font{color: #f37e00;}
+.accountPop{display: none;width: 660px;height: 475px;position: fixed;top: 50%;left:50%;margin-left: -330px;margin-top: -250px;z-index: 999;background: #ffffff;}
+.accountPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.accountPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.accountPop .title .closeW:hover{background-position: -20px}
+.accountPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
+.accountPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 84px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
+.accountPop .buttons a:hover{background: rgb(71,172,117)}
+.accountPop .content{height: 360px;padding-top: 18px;}
+
+.accountPop form label{width: 180px;display: inline-block;font-size: 14px;text-align: right;color: #6c6c6c;vertical-align: top;}
+.accountPop form .p{line-height: 34px;margin-top: 25px;position: relative;}
+.accountPop form .marginT4{margin-top: 4px;}
+.accountPop form input[type=text],.accountPop form input[type=password]{padding-left: 12px;width: 270px;height: 30px;line-height: 30px;margin-left: 24px;font-size: 12px;color: #6c6c6c}
+.accountPop form select{width: 120px;height: 30px;line-height: 30px;margin-left: 24px;font-size: 12px;color: #6c6c6c;padding-left: 12px;}
+.accountPop form .notice{font-size: 12px;color: #6c6c6c;padding-left: 116px;}
+.accountPop form .notice font{color: #f37e00;}
+.accountPop form .required{color: red; margin-left: 5px;}
+.accountPop form .form-tips{ font-size: 12px;color: rgb(243, 126, 0);top: 26px;left: 210px;display: none;}
 /*修改信息弹层*/
-.modifyInfPop{display: none;width: 660px;height: 440px;position: fixed;top: 50%;left:50%;margin-left: -330px;margin-top: -250px;z-index: 999;background: #ffffff;}
+.modifyInfPop{display: none; width: 590px;height: 320px;position: fixed;top: 50%;left:50%;margin-left: -330px;margin-top: -250px;z-index: 999;background: #ffffff;}
 .modifyInfPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
 .modifyInfPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
 .modifyInfPop .title .closeW:hover{background-position: -20px}
 .modifyInfPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
 .modifyInfPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 84px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; }
 .modifyInfPop .buttons a:hover{background: rgb(71,172,117)}
-.modifyInfPop .content{height: 316px;padding-top: 18px;}
+.modifyInfPop .content{height: 206px;padding-top: 18px;}
 .modifyInfPop form label{width: 180px;display: inline-block;font-size: 14px;text-align: right;color: #6c6c6c;vertical-align: top;}
 .modifyInfPop form .p{line-height: 34px;height: 34px;margin-top: 30px;}
 .modifyInfPop form .marginT4{margin-top: 4px;}
@@ -387,19 +390,29 @@
 .modifyPowerPop table{border-collapse: collapse;font-size: 12px;color: #6c6c6c;}
 .modifyPowerPop table input[type=checkbox]{margin-right: 20px;color: #6c6c6c}
 .modifyPowerPop table th,.modifyPowerPop table td{padding-left: 12px;text-align: left;line-height: 34px;height: 34px;}
+
 /*密码重置弹层*/
-.pwResetPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
-.pwResetPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
-.pwResetPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
-.pwResetPop .title .closeW:hover{background-position: -20px}
-.pwResetPop .left{float: left;padding-left: 34px;padding-top: 44px}
-.pwResetPop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 44px}
-.pwResetPop .right .describe{line-height: 30px}
-.pwResetPop .right .adminName{max-width: 110px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;font-size: 14px}
-.pwResetPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 34px;}
-.pwResetPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; border: 1px solid #63c380}
-.pwResetPop .buttons .sure{background: #ffffff;color: #63c380}
+.pwResetPop{display:none;width: 520px;height: 300px;margin-left: -260px;margin-top: -163px;}
+.pwResetPop .content{height: 185px;padding-top: 18px;}
 .pwResetPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+.pwResetPop form label{width:140px}
+.pwResetPop form .form-tips{left:170px;}
+
+/* 配置上级提示 */
+.switchTipPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
+.switchTipPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
+.switchTipPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
+.switchTipPop .title .closeW:hover{background-position: -20px}
+.switchTipPop .left{float: left;padding-left: 34px;padding-top: 44px}
+.switchTipPop .right{float: left;padding-left: 20px;font-size: 14px;color: #676a6c;padding-top: 44px}
+.switchTipPop .right .describe{line-height: 30px}
+.switchTipPop .right .adminName{max-width: 110px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;font-size: 14px}
+.switchTipPop .buttons{padding-right: 20px;margin:0 22px;padding-top: 34px;}
+.switchTipPop .buttons a{cursor: pointer;margin-left:4px;display: inline-block;width: 100px;line-height: 22px;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;text-align: center;font-size: 12px; border: 1px solid #63c380}
+.switchTipPop .buttons .sure{background: #ffffff;color: #63c380}
+.switchTipPop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
+
+
 /*停用弹层*/
 .stopPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
 .stopPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
@@ -526,11 +539,11 @@
 .loopholeTRTPop .list .firsttd{width:130px;}
 /*小提示弹层*/
 /*弹窗提示*/
-.delayHide{display: none;z-index: 999;text-align: center;color: #ffbe00;position: fixed;top:30%;left:50%;margin-left:-65px;width:130px;height: 44px;background-color: rgba(255,239,194,0.86);background-color:rgb(255,239,194)\9;border-radius: 5px}
+.delayHide{display: none;z-index: 999;text-align: center;color: #ffbe00;position: fixed;top:50%;left:50%;margin-left:-65px;background-color: rgba(255,239,194,0.86);background-color:rgb(255,239,194)\9;border-radius: 5px}
 .delayHide .p1{font-size: 14px;line-height: 44px}
 .delayHide .p2{font-size: 12px;margin-top: 6px;}
 .delayHide .p2 font{color:rgb(101,197,129);}
-.delayHideS{display: none;z-index: 999;text-align: center;color: #5fc47f;position: fixed;top:30%;left:50%;margin-left:-65px;width:130px;height: 44px;background-color: rgba(211,255,211,0.86);background-color:rgb(211,255,211)\9;border-radius: 5px}
+.delayHideS{display: none;z-index: 999;text-align: center;color: #5fc47f;position: fixed;top:30%;left:50%;margin-left:-65px;background-color: rgba(211,255,211,0.86);background-color:rgb(211,255,211)\9;border-radius: 5px}
 .delayHideS .p1{font-size: 14px;line-height: 44px}
 .delayHideS .p2{font-size: 12px;margin-top: 6px;}
 .delayHideS .p2 font{color:rgb(101,197,129);}
@@ -544,15 +557,12 @@
 .tabButton .exportLog:hover{background: rgb(71,172,117);border: 1px solid rgb(71,172,117)}
 .filterBlock div.tabButton{line-height: 39px;}
 
-
-/* 表格样式 */
-/* 漏洞修复 */
-.taskDetailPop .taskDetailTable,.ignoredTPop .ignoredTTable{
-    overflow: hidden;
-    height: 349px;
+/* 新建账号 placeholder*/
+.accountPop .placeholder{
+	top:0;
+	left: 218px;
 }
-.recentTaskPop .table table tbody{
-    height: auto;
-    overflow: hidden;
-    border: 0;
+.pwResetPop .placeholder{
+	left: 177px;
 }
+    

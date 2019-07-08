@@ -8,11 +8,8 @@
         <link href="css/eventLog.css" rel="stylesheet">
         <link href="css/lyz.calendar.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="js/jquery.min.js"></script>
-		<script src="js/dataTable/jquery-datatable.js"></script>
-
         <script type="text/javascript" src="js/json3.js"></script>
-        <script src="js/jquery.page.js"></script>  
-  
+        <script src="js/jquery.page.js"></script>       
     </head>
     <body>
         <div class="main">
@@ -45,7 +42,27 @@
                     <div class='clear'></div>
                 </div>
                 <div class="tableContainer">
+                    <div class="tableth">
+                            <table> 
+                            	<tr>
+	                            	<th width='4%'><input type='checkbox' class='verticalMiddle selectAll-repair'></th>
+	                            	<th width='10%' class='th-ordery' type='kbid'>补丁编号 <img src="images/th-ordery.png"/></th>
+	                            	<th width='50%' class='th-ordery' type='desc'>补丁描述 <img src="images/th-ordery.png"/></th>
+	                            	<th width='10%' class='th-ordery' type='level'>补丁类型 <img src="images/th-ordery.png"/></th>
+	                            	<th width='15%' class='th-ordery' type='pub_time'>发布时间 <img src="images/th-ordery.png"/></th>
+                            	</tr>
+                            </table>
+                    </div>
                     <div class="table">
+                            <table>  
+                            	<!--<tr id='tableAlign'>
+                            		<td width='4%'><input type='checkbox' class='verticalMiddle' onclick='selectAll(this)'></td>
+                            		<td width='10%'>补丁编号</td>
+                            		<td width='50%'>补丁描述</td>
+                            		<td width='10%'>补丁类型</td>
+	                            	<td width='15%'>发布时间</td>
+                            	</tr>-->
+                            </table>
                     </div>
                 </div>
 
@@ -57,8 +74,22 @@
         <div class="ignoredTPop pop">
             <div class="title"><span class="taskInf">已忽略补丁</span><span class="closeW"></span></div>
             <div class="describe">以下补丁已被忽略，火绒将不再为您修复这些补丁<a class='charaButton floatR greenfont underline cursor' onclick="ignorePopFun()">取消忽略</a></div>
-            <div class="ignoredTTable">
+            <div class="tableth">
+                <table width="100%">
+                    <tr>
+                        <th width="8%"><input type="checkbox" name="" value="" class='topCheckbox verticalMiddle selectAll-repair-pop' onclick='selectAllpop(this)'></th>
+                        <th width="10%" class='th-ordery' type='kbid'>补丁编号 <img src="images/th-ordery.png"/></th>
+                        <th width="35%" class='th-ordery' type='desc'>补丁描述 <img src="images/th-ordery.png"/></th>
+                        <th width="10%" class='th-ordery' type='level'>补丁类型 <img src="images/th-ordery.png"/></th>
+                        <th width="20%" class='th-ordery' type='pub_time'>发布时间 <img src="images/th-ordery.png"/></th>
+                    </tr>
+                </table>
 
+            </div>
+            <div class="ignoredTTable">
+                <table>
+                    
+                </table>
             </div>
             
         </div>

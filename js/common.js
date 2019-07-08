@@ -25,69 +25,7 @@ $(document).ready(function(){
 		$(".commonCon .tab a").removeClass("current");
 		$(this).addClass("current");
 	});
-    
-    //终端详情弹窗左导航
-    // $(".detailPop .left .general").click(function(){
-    // 	$(this).find("img").attr("src","images/general2.png");
-    // 	$(this).siblings("a").find("span").css({color:"#6c6c6c"});
-    // 	$(this).find("span").css({color:"#5fc47f"});
-    // 	$(this).siblings(".searchkill").find("img").attr("src","images/searchkill1.png");
-    // 	$(this).siblings(".update").find("img").attr("src","images/update1.png");
-    // 	$(this).siblings(".tactics").find("img").attr("src","images/tactics1.png");
-    // 	$(this).siblings(".log").find("img").attr("src","images/log1.png");
-
-    // });
-    // $(".detailPop .left .searchkill").click(function(){
-    // 	$(this).siblings("a").find("span").css({color:"#6c6c6c"});
-    // 	$(this).find("img").attr("src","images/searchkill2.png");
-    // 	$(this).find("span").css({color:"#5fc47f"});
-    // 	$(this).siblings(".general").find("img").attr("src","images/general1.png");
-    // 	$(this).siblings(".update").find("img").attr("src","images/update1.png");
-    // 	$(this).siblings(".tactics").find("img").attr("src","images/tactics1.png");
-    // 	$(this).siblings(".log").find("img").attr("src","images/log1.png");
-    // });
-    // $(".detailPop .left .update").click(function(){
-    // 	$(this).siblings("a").find("span").css({color:"#6c6c6c"});
-    // 	$(this).find("img").attr("src","images/update2.png");
-    // 	$(this).find("span").css({color:"#5fc47f"});
-    // 	$(this).siblings(".searchkill").find("img").attr("src","images/searchkill1.png");
-    // 	$(this).siblings(".general").find("img").attr("src","images/general1.png");
-    // 	$(this).siblings(".tactics").find("img").attr("src","images/tactics1.png");
-    // 	$(this).siblings(".log").find("img").attr("src","images/log1.png");
-    // });
-    // $(".detailPop .left .tactics").click(function(){
-    // 	$(this).siblings("a").find("span").css({color:"#6c6c6c"});
-    // 	$(this).find("img").attr("src","images/tactics2.png");
-    // 	$(this).find("span").css({color:"#5fc47f"});
-    // 	$(this).siblings(".searchkill").find("img").attr("src","images/searchkill1.png");
-    // 	$(this).siblings(".update").find("img").attr("src","images/update1.png");
-    // 	$(this).siblings(".general").find("img").attr("src","images/general1.png");
-    // 	$(this).siblings(".log").find("img").attr("src","images/log1.png");
-    // });
-    // $(".detailPop .left .log").click(function(){
-    // 	$(this).siblings("a").find("span").css({color:"#6c6c6c"});
-    // 	$(this).find("img").attr("src","images/log2.png");
-    // 	$(this).find("span").css({color:"#5fc47f"});
-    // 	$(this).siblings(".searchkill").find("img").attr("src","images/searchkill1.png");
-    // 	$(this).siblings(".update").find("img").attr("src","images/update1.png");
-    // 	$(this).siblings(".tactics").find("img").attr("src","images/tactics1.png");
-    // 	$(this).siblings(".general").find("img").attr("src","images/general1.png");
-    // });
-
-    // 周一到周日复选
-    // $(".day1,.day2,.day3,.day4,.day5,.day6,.day7").click(function(){
-    //     if($(this).find("a").length==0){
-    //     $(this).css({background:"#5fc47f",color:"#ffffff"});
-    //     $(this).append("<a></a>");
-    //     $(this).find("input").attr("checked",true)
-    // }else{
-    //     $(this).css({background:"#ffffff",color:"#6c6c6c"});
-    //     $(this).find("a").remove();
-    //     $(this).find("input").attr("checked",false)
-
-    // }
-
-    // });
+  
     //placeholder属性兼容
     $(".placeholderInput").focus(function(){
         $(this).siblings(".placeholder").hide();
@@ -100,8 +38,8 @@ $(document).ready(function(){
     $(".placeholderInput").blur(function(){
         var value=$(this).val();
         if(value==""){
-        $(this).siblings(".placeholder").show();
-    }
+            $(this).siblings(".placeholder").show();
+        }
     });
 
     //文本框获得焦点时边框颜色
@@ -308,7 +246,7 @@ function getEndTimes(YMD){
     var time = date.getTime();
     time=time/1000;
     return time;
-
+    
 }
 
 //删除字符串左右两端的空格
@@ -363,29 +301,6 @@ function onUploadChange(fileInput){
             setTimeout(function(){$(".delayHide").hide()},2000);
         }
          
-    } else {   
-        // fileInput.select();  
-        // var url = document.selection.createRange().text;  
-        // try {  
-        //     var fso = new ActiveXObject("Scripting.FileSystemObject"); 
-        //     var filesize=fso.GetFile(url).size;
-        //     filesize=Math.floor(filesize/1048576);
-        //     if(filesize>300){
-        //         $(".newTrustPPop input[type='file']").wrap('<form></form>');
-        //         $(".newTrustPPop input[type='file']").parent()[0].reset();
-        //         $(".newTrustPPop input[type='file']").unwrap();
-        //         $(".delayHide").show();
-        //         $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 不能超过300m");
-        //         setTimeout(function(){$(".delayHide").hide()},2000);
-        //     } 
-        // } catch (e) {  
-        //     alert('如果你用的是低版本ie 请将安全级别调低！参考https://jingyan.baidu.com/article/ae97a646d43dc8bbfd461d0b.html'); 
-        //     $(".newTrustPPop input[type='file']").wrap('<form></form>');
-        //     $(".newTrustPPop input[type='file']").parent()[0].reset();
-        //     $(".newTrustPPop input[type='file']").unwrap();
-    
-        // }  
-        
     } 
 }
 // 防御xss转换
@@ -413,6 +328,21 @@ function _int2ip(num)
     str = String(tt[0]) + "." + String(tt[1]) + "." + String(tt[2]) + "." + String(tt[3]);
     return str;
 }
+//比较两个ip的大小,如果大于，返回1，等于返回0，小于返回-1 
+function compareIP(ipBegin, ipEnd)       {
+    var temp1
+    var temp2
+    temp1 = ipBegin.split('.')
+    temp2 = ipEnd.split('.')
+    for (var i = 0; i < 4; i++) {
+      if (parseInt(temp1[i]) > parseInt(temp2[i])) {
+        return 1
+      } else if (parseInt(temp1[i]) < parseInt(temp2[i])) {
+        return -1
+      }
+    }
+    return 0
+  }
 
 //字符串转换成布尔值
 function stringToBoolean(str){
@@ -505,13 +435,6 @@ function getBrowserInfo(){
     
 }
 
-// 屏蔽f5刷新
-// document.onkeydown = function (e) {
-//     if (!e) e = window.event;
-//     if ((e.keyCode || e.which) == 116) {
-//         return false;
-//     }
-// }
 //按回车搜索
 $(document).on('keydown','#numperpageinput',function(e){
 	if (!e) e = window.event;
@@ -519,10 +442,6 @@ $(document).on('keydown','#numperpageinput',function(e){
         $(this).blur();
     }
 })
-//弹层随页面滚动
-// $(parent.window).scroll(function(){
-//   $('.fastSKCPop,.detailPop,.terminalUpPop,.moveGPop,.fastSKPop,.overallSKPop,.overallSKCPop,.recentTaskPop,.newGroupPop,.checkTacticsPop,.taskDetailPop,.newTrustPPop,.deleteTPPop,.modifyGNPop,.deleteGPop,.newTacticsPop,.newTacticsAPop,.deletePPop').animate({top:$(parent.window).scrollTop()+400},20);
-// });
 
 // 每页多少数据数字限制
 $("body").on("keyup", "#numperpageinput", function() {
@@ -537,37 +456,27 @@ if(localStorage.getItem('numperpage')){
 }
 
 
-//排序
-function sortingFun(_this,toggleClass){
-    _this.siblings('th.th-ordery').removeClass().addClass('th-ordery');
-    _this.siblings('th.th-ordery').find('img').attr('src','images/th-ordery.png');
-    if(toggleClass == 'th-ordery'){
-        _this.addClass('th-ordery-up th-ordery-current');
-        _this.find('img').attr('src','images/th-ordery-up.png');
-	}else if(toggleClass == 'th-ordery th-ordery-up th-ordery-current'){
-        _this.attr('class','th-ordery th-ordery-down th-ordery-current');
-        _this.find('img').attr('src','images/th-ordery-down.png');
-	}else if(toggleClass == 'th-ordery th-ordery-down th-ordery-current'){
-        _this.attr('class','th-ordery');
-        _this.find('img').attr('src','images/th-ordery.png');
+
+//排序----图片路径判断
+function imgOrderyFun(thIndex,thCls){
+	if(thCls == 'th-ordery'){
+		$('.main .tableth th').eq(thIndex).find('img').attr('src','images/th-ordery.png');
+	}else if(thCls == 'th-ordery th-ordery-current th-ordery-up'){
+		$('.main .tableth th').eq(thIndex).find('img').attr('src','images/th-ordery-up.png');
+	}else if(thCls == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		$('.main .tableth th').eq(thIndex).find('img').attr('src','images/th-ordery-down.png');
 	}
 	
 }
-//列表排序字段
-function sortingDataFun(dataa,type,orderClass){
-    var ordery;
-    var order = {};
-    dataa.order = [];
-    if(orderClass == 'th-ordery th-ordery-down th-ordery-current'){
-        ordery = 'desc';
-    }else if(orderClass == 'th-ordery th-ordery-up th-ordery-current'){
-        ordery = 'asc';
-    }
-    if(type){
-        order[type] = ordery;
-        dataa.order.push(order);
-    }
-    return dataa;
+function imgOrderyFun1(thIndex,thCls){
+	if(thCls == 'th-ordery'){
+		$('.pop .tableth th').eq(thIndex).find('img').attr('src','images/th-ordery.png');
+	}else if(thCls == 'th-ordery th-ordery-current th-ordery-up'){
+		$('.pop .tableth th').eq(thIndex).find('img').attr('src','images/th-ordery-up.png');
+	}else if(thCls == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		$('.pop .tableth th').eq(thIndex).find('img').attr('src','images/th-ordery-down.png');
+	}
+	
 }
 
 // 原生ajax请求导出excel
@@ -615,71 +524,196 @@ jQuery.download = function(url, method, param){
 	jQuery(content).appendTo('body').submit().remove();
 }
 
-
-//提示
-/**失败提示 */
-function delayHide(msg){
-    $(".delayHide").show();
-    $(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>"+msg+"</span>");
-    setTimeout(function(){$(".delayHide").hide()},2000);
-}
-/**成功提示 */
-function delayHideS(msg){
-    $(".delayHideS").show();
-    $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> "+msg+"</span>");
-    setTimeout(function(){$(".delayHideS").hide()},2000);
-}
-
-
-/**字段处理 */
-function fieldHandle(dataMap,data){
-    if(dataMap.hasOwnProperty(data)){
-        return dataMap[data];
-    }else{
-        return '--';
+function getCookie(cookie_name)
+{
+    var allcookies = document.cookie;
+    var cookie_pos = allcookies.indexOf(cookie_name);   //索引的长度
+  
+    // 如果找到了索引，就代表cookie存在，
+    // 反之，就说明不存在。
+    if (cookie_pos != -1)
+    {
+        // 把cookie_pos放在值的开始，只要给值加1即可。
+        cookie_pos += cookie_name.length + 1;      //这里容易出问题，所以请大家参考的时候自己好好研究一下
+        var cookie_end = allcookies.indexOf(";", cookie_pos);
+  
+        if (cookie_end == -1)
+        {
+            cookie_end = allcookies.length;
+        }
+  
+        var value = unescape(allcookies.substring(cookie_pos, cookie_end));         //这里就可以得到你想要的cookie的值了。。。
     }
+    return value;
 }
-/**操作模块 */
-var moduleField = {'mgr_client':'终端管理','mgr_policy':'防护策略','mgr_distr':'文件管理','mgr_log':'事件日志','mgr_tools':'管理工具','mgr_user':'账户管理','system_conf':'系统设置','system_auth':'用户登录','mgr_remote':'远程桌面'};
 
-/**补丁状态 */
-var patchStateField = {'0':'等待修复','1':'暂不修复','2':'下载补丁','3':'下载错误','4':'下载完成','5':'安装补丁','6':'安装错误','7':'安装完成'};
 
-/**分发状态 */
-var distrStatusField = {'0':'正在分发','1':'分发结束'};
+var clientid="";
+var grouppolicyname="";
+var prevTName="";
+function detailPop(a){
+    var top =  parent.$(".detailPop");
+    var spanIndex = $(a).attr('index');
+    var clientid=$(a).parents("tr").attr("clientid");
+    
+    parent.$('.shade').show();
+    top.show();
+    top.attr('clientid',clientid);
+    $.ajax({
+        url:'/mgr/clnt/_info?id='+clientid+'',
+        data:{},
+        type:'POST',
+        contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
+        error:function(xhr,textStatus,errorThrown){
+            if(xhr.status==401){
+                parent.window.location.href='/';
+            }
+            
+        },
+        success:function(data){
+            var data=data.data;
+            var html="";
+            var terpolicyid=data.policy_id;//读取终端详情时的终端独立策略id
+            grouppolicyname=data.policy_name;
+            prevTName=data.hostname;//读取终端详情时的终端名称
+            if(data.status==1){
+                top.find(".detailcom").html("<img src='images/unusualter.png'>");
+            }else{
+                if(data.online==true){
+                    top.find(".detailcom").html("<img src='images/onlineter.png'>");
+                }else{
+                    top.find(".detailcom").html("<img src='images/offlineter.png'>");
+                }
+            }
 
-var resultField = {'0':'处理失败','1':'处理失败','2':'已忽略','3':'已处理','4':'已处理','5':'已信任','6':'已忽略'};
-var treatmentField = {'0':'已忽略','1':'待处理','2':'已处理','3':'已阻止','4':'已信任','5':'已处理'};
-var blockedField = {'0':'已放过','1':'已阻止'};
+            // $(".detailPop .versionnum").html("<span style='display:inline-block;width:40px;text-align:justify; text-justify:inter-ideograph;'><font style='margin-right:12px;;'>版</font>本</span> : "+data.prod.ver);
+            // $(".detailPop .dbversion").html("<span style='display:inline-block;width:40px;text-align:justify; text-justify:inter-ideograph;'>病毒库</span> : "+getLocalTime1(data.prod.dbver));
 
-/**任务状态 */
-var taskStatusField = {'0':'未响应','1':'已接受','2':'已拒绝'};
+            html+="<div class='informationB informationBL'>";
+            html+="<div class='heading'><img src='images/information2.png'><span>网络信息</span></div>";
+            html+="<p>IP地址 : "+safeStr(data.ip)+"</p>";
+            html+="<p>MAC地址 : "+safeStr(data.mac)+"</p>";
+            html+="</div>";
+            html+="<div class='clear'></div>";
+            html+="<div class='informationB informationBD'>";
+            html+="<div class='heading'><img src='images/information3.png'><span>环境信息</span></div>";
+            html+="<p>操作系统 : "+safeStr(data.osinfo.name)+"    "+safeStr(data.osinfo.arch)+"   "+safeStr(data.osinfo.ver)+"</p>";
+            if("cpus" in data.hwinfo){
+                if(data.hwinfo.cpus){
+                    html+="<p><span style='width:10%;float:left;display:inline-block;'>处理器：</span><span style='display:inline-block;width:90%;float:left;'>"
+                    for(var i=0;i<data.hwinfo.cpus.length;i++){
+                        html+= "<a style='display:inline-block;width:100%'>" +data.hwinfo.cpus[i]+"</a>";
+                    }
+                    html+="</span></p>"
+                }else{
+                    html+="<p>处理器 :</p>";
+                }
+                
+            }else{
+                html+="<p>处理器 : "+safeStr(data.hwinfo.cpu)+"</p>";
+            }
+            
+            html+="<p>主板 : "+safeStr(data.hwinfo.board)+"</p>";
+            if("physicalmemory" in data.hwinfo){
+                if(data.hwinfo.physicalmemory){
+                    html+="<p><span style='width:7%;float:left;display:inline-block;'>内存：</span><span style='display:inline-block;width:93%;float:left;'>"
+                    for(var i=0;i<data.hwinfo.physicalmemory.length;i++){
+                        html+= "<a style='display:inline-block;width:100%'>" +data.hwinfo.physicalmemory[i]+"</a>";
+                    }
+                    html+="</span></p>"
+                }else{
+                    html+="<p>内存 :</p>";
+                }
+                
+            }else{
+                html+="<p>内存 : "+data.hwinfo.memory+"</p>";
+            }
+            
+            if("hdds" in data.hwinfo){
+                if(data.hwinfo.hdds){
+                    html+="<p><span style='width:7%;float:left;display:inline-block;'>硬盘：</span><span style='display:inline-block;width:93%;float:left;'>"
+                    for(var i=0;i<data.hwinfo.hdds.length;i++){
+                        html+= "<a style='display:inline-block;width:100%'>" +data.hwinfo.hdds[i]+"</a>";
+                    }
+                    html+="</span></p>"
+                }else{
+                    html+="<p>硬盘 :</p>";
+                }
+                
+            }else{
+                html+="<p>硬盘 :"+data.hwinfo.hdd+"</p>";
+            }
 
-/**升级日志任务状态 */
-var result_Field = {'success':'升级成功','connect failed':'连接失败','fetch failed':'下载失败','merge failed':'更新失败'};
+            if("videos" in data.hwinfo){
+                if(data.hwinfo.videos){
+                    html+="<p><span style='width:7%;float:left;display:inline-block;'>显卡：</span><span style='display:inline-block;width:93%;float:left;'>"
+                    for(var i=0;i<data.hwinfo.videos.length;i++){
+                        html+= "<a style='display:inline-block;width:100%'>" +data.hwinfo.videos[i]+"</a>";
+                    }
+                    html+="</span></p>"
+                }else{
+                    html+="<p>显卡 :</p>";
+                }
+            }else{
+                html+="<p>显卡 : "+data.hwinfo.video+"</p>";
+            }
+            
+            html+="</div>";
+            html+="<div class='informationB informationBD'>";
+            html+="<div class='heading'><img src='images/information4.png'><span>其它信息</span></div>";
+            html+="<p>终端版本 : "+safeStr(data.prod.ver)+"</p>";
+            html+="<p>病毒库时间 : "+safeStr(getLocalTime1(data.prod.dbver))+"</p>";
+            html+="<p>上次登录时间 : "+safeStr(getLocalTime1(data.lasttime))+"</p>";
+            html+="</div>";
+            top.find(".terOverview").html(html);
+            if(data.status==1){
+                top.find(".left .terminalstatus").html("<font style='color:#b28041;'>服务异常</font>");
 
-/**任务类型 */
-var taskTypeField = {'quick_scan':'快速查杀','full_scan':'全盘查杀','update':'升级任务','message':'通知任务','shutdown':'关机','reboot':'重启','msg_uninstall':'软件卸载','msg_distrfile':'文件分发','migrate':'中心迁移','leakrepair_repair':'漏洞修复','leakrepair_scan':'漏洞扫描','vnc_launch':'远程桌面'};
-
-/**升级日志任务类型 */
-var productField = {'client.windows':'终端升级','virdb.windows':'病毒库升级','center.windows':'中心升级'};
-
-/**事件类型 */
-var fnameTypeField = {'filemon':'文件实时监控','behavior':'恶意行为监控','dlmon':'下载保护','udiskmon':'U盘保护','sysprot':'系统加固','scan':'病毒查杀','malurl':'恶意网站拦截','instmon':'软件安装拦截','intrusion':'黑客入侵拦截','ipattaack':'对外攻击检测','mail':'邮件监控','ipblacklist':'IP黑名单','ipproto':'IP协议控制'};
-
-/**网址类型 */
-var clsTypeField = {'spy':'木马，盗号','phising':'钓鱼，仿冒','fraud':'虚假，欺诈'};
-
-/**授权状态 */
-var licenseStatusField = {'1':'未授权','2':'授权已满','3':'授权到期','4':'需要升级'};
-
-/**补丁类型 */
-var pathLevelField = {'0':'高危','1':'功能'};
-
-/**保护类型 */
-var classField = {'0':'文件保护规则','1':'注册表保护规则','2':'执行防护规则','3':'病毒免疫','4':'危险动作拦截','5':'进程保护'}
-
-/**操作类型 */
-
-/**任务备注 */
-var taskRemarkField = {'0':'任务尚未被接受','1':'任务已经接受','2':'终端任务繁忙'};
+            }else if(data.online==true && data.status==0){
+                top.find(".left .terminalstatus").html("<font style='color:#42aa76;'>在线</font>");
+            }else if(data.online==false && data.status==0){
+                top.find(".left .terminalstatus").html("<font style='color:#6c6c6c;'>离线</font>");
+            }
+            top.find(".left .terminalname").html("<span class='verticalMiddle' style='padding-left:18px;display: inline-block;max-width: 160px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;vertical-align: middle;' title="+safeStr(pathtitle(data.hostname))+">"+safeStr(data.hostname)+"</span><span class='editTNIcon' index='"+ parseInt(spanIndex) +"' onclick='editTN(this)'></span>");
+            top.find(".left .isgroup").html(safeStr(data.groupname));
+            
+        }
+    });
+};
+//编辑终端名称按钮
+function editTN(a){
+    var spanIndex = $(a).attr('index');
+    var tern=$(a).prev().text();
+    $(a).prev().remove();
+    $(a).before("<input type='text' style='height:20px;line-height:20px;width:140px;color:#676a6c;border:1px solid rgb(231,234,236);text-align:center;font-size:12px;'  class='terminalNInput' index='"+parseInt(spanIndex)+"' onblur='sureETN(this)'>");
+    $(a).prev().focus();
+    $(a).prev().val(tern);
+    $(a).hide();
+}
+//编辑终端名称文本框失去焦点
+function sureETN(a){
+    var terminalname = trim($(a).val());
+    var spanIndex = $(a).attr('index');
+    var clientid = $(a).parents('.detailPop').attr('clientid');
+    
+    var dataa={"client_id":parseInt(clientid),"aliasname":terminalname};
+    $.ajax({
+        url:'/mgr/clnt/_update',
+        data:JSON.stringify(dataa),
+        type:'POST',
+        contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
+        error:function(xhr,textStatus,errorThrown){
+            if(xhr.status==401){
+                parent.window.location.href='/';
+            }
+        },
+        success:function(data){
+            $(a).next().show();
+            $(".detailPop .left .terminalname").html("<span class='verticalMiddle' style='padding-left:18px;display: inline-block;max-width: 160px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;vertical-align: middle;'>"+safeStr(terminalname)+"</span><span class='editTNIcon' onclick='editTN(this)'></span>");
+            //将列表中修改后的终端名称显示
+            $('#mainFrame').contents().find('.table tr').not('#tableAlign').eq(parseInt(spanIndex)).find('.detailPopBtn').html($(a).val());
+        }
+    });
+}

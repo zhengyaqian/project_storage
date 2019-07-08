@@ -9,17 +9,16 @@
 <script type="text/javascript" src="js/highcharts.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/zUI.js"></script>
-
 <!--[if lt IE 9]>
 <script type="text/javascript" src="js/json3.js"></script>
 
 <![endif]-->
 <style>
 	.whole .zUIpanelScrollBox,.whole .zUIpanelScrollBar{
-		width:10px;
-		top:4px;
-		border-radius:5px;
-	}
+				width:10px;
+				top:4px;
+				border-radius:5px;
+			}
 	.whole .zUIpanelScrollBox{
 		background:black;
 		opacity:0;
@@ -32,7 +31,6 @@
 	}
 
 	.whole .wcontainer{width: 100%}
-	
 </style>
 	</head>
 	<body>
@@ -107,7 +105,18 @@
 									<div class="clear"></div>
 								</div>
 								<div class="table taskTable">
-									
+									<table>
+										<tr>
+											
+											<th width='20%'>任务</th>
+											<th width='25%'>时间</th>
+											<th width='20%'>执行/下发</th>
+											<th width='20%'>状态</th>
+											<th width='15%'>详情</th>
+										</tr>
+										
+										
+									</table>
 								</div>
 							</div>
 							<div class="clear"></div>
@@ -151,7 +160,7 @@
 					</div>
 			    </div>
 			    <div class="footerFP">
-					<div class="container">Copyright 2017-2018 北京火绒网络科技有限公司</div>
+					<div class="container">Copyright 2017-2019 北京火绒网络科技有限公司</div>
 				</div>
 				<div class="taskDetailPop pop">
 		            <div class="title">任务详情<span class="closeW"></span></div>
@@ -322,7 +331,6 @@
 		$(function(){
 			$(".whole").panel({iWheelStep:32});
 		}); 
-
 		</script>
 	</body>
 </html>

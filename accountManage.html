@@ -8,48 +8,61 @@
         <link href="css/eventLog.css" rel="stylesheet">
         <link href="css/lyz.calendar.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/sha1.js"></script>
         <script type="text/javascript" src="js/json3.js"></script>
         <script src="js/jquery.page.js"></script> 
-        <style>
-            .modifyPowerPop table tbody,.powerManagePop table tbody {
-                height: auto;
-                overflow: hidden;
-                border: 0;
-                display: inline;
-            }
-        </style>
     </head>
     <body>
         <div class="main">
-            <div class="functionButtonsBlock adminFBBlock">
-                <p>
-                    <a class="bu cursor uploadB" onclick="newAdminPop()">新建管理员</a>
-                    <a class="bu cursor provideB" onclick="deleteAdminPop()">删除管理员</a>
-                </p>
-            </div>
-            <div class="search">
-                <div class="searchBlock floatL">
-                    <span class='condition'></span>
-                    <select id='selectVT'>
-                        <option value=0>全部</option>
-                        <option value=1>普通管理员</option>
-                        <option value=2>审计员</option>
-                        <option value=3>超级管理员</option>
-                    </select>
-                    <span class='textbox'>
-                        <input type='text' class='placeholderInput' onfocus='fadeOut(this)' onblur='fadeIn(this)' id='searchKey'><span class='placeholder' onclick='spanFocus(this)'>请输入你要搜索的管理员</span><img src='images/search.png' onclick='accEvent()'>
-                    </span>
-                </div>
-                <div class='clear'></div>
-            </div>
-            <div class="tableContainer">
-                <div class="table">
+            
+                <div class="functionButtonsBlock adminFBBlock">
+                        <p>
+                                <a class="bu cursor uploadB" onclick="newAdminPop()">新建管理员</a>
+                                <a class="bu cursor provideB" onclick="deleteAdminPop()">删除管理员</a>
+                        </p>
                         
                 </div>
-            </div>
+               <div class="search">
+                    <div class="searchBlock floatL">
+                        <span class='condition'></span>
+
+                        <select id='selectVT'>
+                            <option value=0>全部</option>
+                            <option value=1>普通管理员</option>
+                            <option value=2>审计员</option>
+                            <option value=3>超级管理员</option>
+                        </select>
+                        <span class='textbox'>
+                            <input type='text' class='placeholderInput' onfocus='fadeOut(this)' onblur='fadeIn(this)' id='searchKey'><span class='placeholder' onclick='spanFocus(this)'>请输入你要搜索的管理员</span><img src='images/search.png' onclick='accEvent()'>
+                        </span>
+                            
+                    </div>
+                    <div class='clear'></div>
+                </div>
+                <div class="tableContainer">
+                    <div class="tableth">
+                            <table cellpadding="0" cellspacing="0">   
+                                <tr>
+                                    <th width='4%'><input type='checkbox' class='verticalMiddle' onclick='selectAll1(this)'></th>
+                                    <th width='15%' class='th-ordery' type='name'><span class='verticalTop'>账号</span><img src="images/th-ordery.png"/></th>
+                                    <th width='17%' class='th-ordery' type='remark'>备注<img src="images/th-ordery.png"/></th>
+                                    <th width='17%' class='th-ordery' type='phone'>联系方式<img src="images/th-ordery.png"/></th>
+                                    <th width='9%' class='th-ordery' type='group'>类型<img src="images/th-ordery.png"/></th>
+                                    <th width='13%' class='th-ordery' type='create_time'>创建时间<img src="images/th-ordery.png"/></th>
+                                    <th width='25%'>操作</th>
+                                </tr>                                
+                            </table>
+                    </div>
+                    <div class="table">
+                            <table>                                       
+                            </table>
+                    </div>
+                </div>
+
+                
         </div>
         <!-- 新建管理员弹层 start -->
-        <div class="newAdminPop pop relative">
+        <div class="accountPop newAdminPop pop relative">
             <div class="uploadingShade absolute hidden">
             
             </div>
@@ -66,22 +79,38 @@
             <div class="content">
                 <form  method="post" action="/mgr/distr/_create" enctype="multipart/form-data">
                     <div class="p marginT4">
-                        <label for="name">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号 :</label><input type="text" name="account" maxlength="16">
+                        <label for="name">账号 :</label>
+                        <input type="text" name="account" maxlength="16" id="account">
+                        <span class="required">*</span>
+                        <font class="absolute form-tips">账号不能为空</font>
+                    </div>
+                    <div class="p">
+                        <label for="name">密码 :</label>
+                        <input type="password"  name="pwd" maxlength="20" class="placeholderInput" onfocus="fadeOut(this)" onblur="fadeIn(this)" id="new_pass">
+                        <span class="required">*</span>
+                        <span class="placeholder" onclick="spanFocus(this)">8-32位大小写字母、数字、特殊字符组成</span>
+                        <font class="absolute form-tips">请输入密码</font>
+                    </div>
+                    <div class="p">
+                        <label for="name">确认密码 :</label>
+                        <input type="password" name="pwdd" maxlength="20" class="placeholderInput" onfocus="fadeOut(this)" onblur="fadeIn(this)" id="sure_pass">
+                        <span class="required">*</span>
+                        <span class="placeholder" onclick="spanFocus(this)">请再次输入新密码</span>
+                        <font class="absolute form-tips">两次输入密码不一致</font>
                     </div>
                     <div class="p">
                         <label for="name">联系方式 :</label><input type="text" name="contact" maxlength="20">
                     </div>
                     <div class="p">
-                        <label for="name">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注 :</label><input type="text" name="remark" maxlength="30">
+                        <label for="name">备注 :</label><input type="text" name="remark" maxlength="30">
                     </div>
                     <div class="p">
                         <label for="name">账号类型 :</label><select><option value=0>普通管理员</option><option value=1>审计员</option></select><span class="auditorIn hidden">    权限仅为事件日志相关模块</span>
                     </div>
-                    <div class="p notice">
-                        <font>注 ：</font> 所有账号的初始密码为"123456"
-                    </div>
-                    
-
+                    <!-- <div class="p">
+                        <label for="name">管理员密码 :</label><input type="password" name="authpwd" maxlength="20" class="placeholderInput" onfocus="fadeOut(this)" onblur="fadeIn(this)">
+                        <span class="placeholder" onclick="spanFocus(this)">请输入当前管理员密码</span>
+                    </div> -->
                 </form>
             </div>
             <div class="buttons">
@@ -111,7 +140,7 @@
             <div class="content">
                 <form  method="post" action="/mgr/distr/_create" enctype="multipart/form-data">
                     <div class="p marginT4">
-                        <label for="name">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号 :</label><input type="text" name="account" maxlength="16">
+                        <label for="name">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号 :</label><input type="text" name="account" maxlength="16" disabled>
                     </div>
                     <div class="p">
                         <label for="name">联系方式 :</label><input type="text" name="contact" maxlength="20">
@@ -119,14 +148,6 @@
                     <div class="p">
                         <label for="name">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注 :</label><input type="text" name="remark" maxlength="30">
                     </div>
-                    <div class="p">
-                        <label for="name">账号类型 :</label><select disabled><option value=0>普通管理员</option><option value=1>审计员</option><option value=2>超级管理员</option></select><span class="auditorIn hidden">    权限仅为事件日志相关模块</span>
-                    </div>
-                    <div class="p notice">
-                        <font>注 ：</font> 所有账号的初始密码为"123456"
-                    </div>
-                    
-
                 </form>
             </div>
             <div class="buttons">
@@ -257,13 +278,32 @@
         </div>
         <!-- 修改权限弹层 end -->
         <!-- 密码重置弹层 start -->
-        <div class="pwResetPop pop">
+        <div class="accountPop pwResetPop pop ">
             <div class="title">密码重置<span class="closeW"></span></div>
-            <div class="left"><img src="images/pwReset.png"></div>
-            <div class="right">
-                <p class="describe">账号<b class="adminName verticalTop">非admin</b>的密码将重置为初始密码<font class="resetpwd">123456</font></p>
-                <p class="describe">确定要重置密码</p>
+            <div class="content">
+                <form  method="post" action="/mgr/distr/_create" enctype="multipart/form-data">
+                    <div class="p marginT4">
+                        <label for="name">账号 :</label>
+                        <input type="text" name="account" maxlength="16">
+                    </div>
+                    <div class="p">
+                        <label for="name">新密码 :</label>
+                        <input type="password" name="pwd" maxlength="20" class="placeholderInput" onfocus="fadeOut(this)" onblur="fadeIn(this)" id="new_pwd">
+                        <span class="placeholder" onclick="spanFocus(this)">8-32位大小写字母、数字、特殊字符组成</span>
+                        <font class="absolute form-tips">请输入密码</font>
 
+                    </div>
+                    <div class="p">
+                        <label for="name">确认密码 :</label>
+                        <input type="password" name="pwdd" maxlength="20" class="placeholderInput" onfocus="fadeOut(this)" onblur="fadeIn(this)" id="sure_pwd">
+                        <span class="placeholder" onclick="spanFocus(this)">请再次输入新密码</span>
+                        <font class="absolute form-tips">两次输入密码不一致</font>
+                    </div>
+                    <!-- <div class="p">
+                        <label for="name">管理员密码 :</label><input type="password" name="authpwd" maxlength="20" class="placeholderInput" onfocus="fadeOut(this)" onblur="fadeIn(this)">
+                        <span class="placeholder" onclick="spanFocus(this)">请输入当前管理员密码</span>
+                    </div> -->
+                </form>
             </div>
             <div class="clear"></div>
             <div class="buttons"><a onclick="hideButton(this)">取消</a><a onclick="surePwResetButton(this)" class="sure">确定</a></div>
@@ -317,8 +357,6 @@
         <div class="delayHideS">
             <p class="p1"></p>
         </div>
-        <script src="js/dataTable/jquery-datatable.js"></script>
-
         <script type="text/javascript" src="js/common.js"></script>
         <script src="js/lyz.calendar.min.js" type="text/javascript"></script>
         

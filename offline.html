@@ -61,7 +61,8 @@
             url:'/mgr/deploy/_info',
             data:{},
             type:'GET',
-            contentType:'text/plain',
+			contentType:'text/plain',
+			headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
             success:function(data){
                 
             }

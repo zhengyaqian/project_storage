@@ -34,7 +34,7 @@
         </div>
 
 		<div class="footer">
-			<div class="container"><a href="http://www.huorong.cn/">Copyright 2017-2018 北京火绒网络科技有限公司</a></div>
+			<div class="container"><a href="http://www.huorong.cn/">Copyright 2017-2019 北京火绒网络科技有限公司</a></div>
 		</div>	
 		<script>
 		//iframe高度随浏览器窗口变化
@@ -53,6 +53,7 @@
 				url:'/mgr/backup/_status',
 				type:'GET',
 				contentType:'text/plain',
+				headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 				error:function(xhr,textStatus,errorThrown){
 		        	if(xhr.status==401){
 		        	    window.location.href='/';

@@ -51,7 +51,7 @@
 
 /*接入设置日志清理*/
 .mainBlock .right .describe{font-size: 12px;padding: 0 12px;line-height: 60px}
-/* .mainBlock .right .table{font-size: 12px;height: 246px;overflow-y: scroll} */
+.mainBlock .right .table{font-size: 12px;height: 246px;overflow-y: scroll}
 .mainBlock .right .table tr:hover{background: rgb(249,249,249);}
 .mainBlock .right .tableth{padding-right: 18px;background: rgb(240,240,240);border-top: 1px solid rgb(231,234,236);border-bottom: 1px solid rgb(231,234,236)}
 .mainBlock .right .tableth th{text-align: left;padding-left: 12px;}

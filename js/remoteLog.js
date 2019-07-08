@@ -20,9 +20,12 @@ function grouplist(){
         data:{},
         async:true,
         type:'GET',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
+        	}else{
+        		
         	}
             
         },
@@ -50,31 +53,25 @@ $("#groupSelect").change(function(){
 })
 //选择时间
 $("#specialTime select").change(function(){
-    var optionVal = $(this).find("option:selected").val();
-    var begintime = 0;
-    switch(parseInt(optionVal)){
-        case 0:
-            begintime = -6;
-            break;
-        case 1:
-            begintime = -29;
-            break;
-        case 2:
-            begintime = -89;
-            break;
-        case 3:
-            begintime = -364;
-            break;
-        default:
-            $(".filterBlock .middle").show(200);
-            break;
-    }
-    if(optionVal != 4){
-        if(begintime != 0){
-            $("#txtBeginDate").val(GetDateStr(begintime));
-        }
+
+    if($(this).find("option:selected").val()==0){
+        $("#txtBeginDate").val(GetDateStr(-6));
         $("#txtEndDate").val(GetDateStr(0));
         $(".filterBlock .middle").hide(200);
+    }else if($(this).find("option:selected").val()==1){
+        $("#txtBeginDate").val(GetDateStr(-29));
+        $("#txtEndDate").val(GetDateStr(0));
+        $(".filterBlock .middle").hide(200);
+    }else if($(this).find("option:selected").val()==2){
+        $("#txtBeginDate").val(GetDateStr(-89));
+        $("#txtEndDate").val(GetDateStr(0));
+        $(".filterBlock .middle").hide(200);
+    }else if($(this).find("option:selected").val()==3){
+        $("#txtBeginDate").val(GetDateStr(-364));
+        $("#txtEndDate").val(GetDateStr(0));
+        $(".filterBlock .middle").hide(200);
+    }else if($(this).find("option:selected").val()==4){
+        $(".filterBlock .middle").show(200);
     }
     accEvent();
 })
@@ -112,63 +109,34 @@ $("body").on("blur","#numperpageinput",function(){
 })
 //排序
 
-$(document).on('click','.table th.th-ordery',function(){
+$(document).on('click','.tableth th.th-ordery',function(){
 	var toggleClass = $(this).attr('class');
-	var _this = $(this);
-    sortingFun(_this,toggleClass);
+	$(this).siblings('th.th-ordery').removeClass().addClass('th-ordery');
+	$(this).siblings('th.th-ordery').find('img').attr('src','images/th-ordery.png');
+	
+	if(toggleClass == 'th-ordery'){
+		$(this).find('img').attr('src','images/th-ordery-up.png');
+		$(this).addClass('th-ordery-current th-ordery-up');
+		$(this).parents('.tableth').attr('indexCls','th-ordery th-ordery-current th-ordery-up');
+		$(this).parents('.tableth').attr('index',$(this).index());
+		
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up'){
+		$(this).find('img').attr('src','images/th-ordery-down.png');
+		$(this).addClass('th-ordery-current th-ordery-down');
+		$(this).parents('.tableth').attr('indexCls','th-ordery th-ordery-current th-ordery-up th-ordery-down');
+		$(this).parents('.tableth').attr('index',$(this).index());
+		
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		$(this).find('img').attr('src','images/th-ordery.png');
+		$(this).removeClass('th-ordery-current th-ordery-down th-ordery-up');
+		$(this).parents('.tableth').attr('indexCls','th-ordery');
+		$(this).parents('.tableth').attr('index',$(this).index());
+	}
 	var currentPage = $(this).parents('.tableContainer').find('.tcdPageCode span.current').text();
 	var currentNum = $(this).parents('.tableContainer').find('#numperpageinput').val();
 	var start = (parseInt(currentPage) - 1) * parseInt(currentNum);
 	accEvent(start);
 })
-//列表信息
-function columnsDataListFun (){
-	var columns = [
-		{
-			type: "user_name",title: "管理员",name: "user_name",
-			tHead:{style: {width: "8%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "8%"},customFunc: function (data, row, i) {return safeStr(data)}},
-		},{
-			type: "ip",title: "IP",name: "ip",
-			tHead:{style: {width: "10%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "10%"},customFunc: function (data, row, i) {return safeStr(data)}},
-		},{
-			type: "time",title: "开始时间",name: "start_time",
-			tHead:{style: {width: "13%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "13%"},customFunc: function (data, row, i) {return safeStr(getLocalTime(data));}},
-		},{
-			type: "hostname",title: "远程终端",name: "hostname",
-			tHead:{style: {width: "18%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "18%"},customFunc: function (data, row, i) {
-               return "<span class='filePath' style='width:180px' title="+safeStr(pathtitle(data))+">"+safeStr(data)+"</span>"
-            }}
-		},{
-			type: "groupname",title: "终端分组",name: "groupname",
-			tHead:{style: {width: "12%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "12%"},customFunc: function (data, row, i) {
-                if(data==""){
-                    return "<span class='filePath' title='(已删除终端)'>(已删除终端)</span>";
-                }else{
-                    return "<span class='filePath' title="+safeStr(pathtitle(data))+">"+safeStr(data)+"</span>";
-                }
-            }},
-		},{
-			type: "viewOnly",title: "远程方式",name: "viewOnly",
-			tHead:{style: {width: "8%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "8%"},customFunc: function (data, row, i) {
-                if(data == true){return "远程查看";
-                }else if(data == false){return "远程控制";
-                }else{ return "--";}
-            }},
-		},{
-			type: "",title: "远程原因",name: "reason",
-			tHead:{style: {width: "20%"},customFunc: function (data, row, i) {return ""}},
-			tBody:{style: {width: "20%"},customFunc: function (data, row, i) {return "<span class='filePath' style='width:180px' title="+safeStr(pathtitle(data))+">"+safeStr(data)+"</span>"; }}
-		}]
-	var tabstr = new createTable(columns,[] ,$('.tableContainer .table'));
-	return tabstr;
-}
-var tabListstr = columnsDataListFun();
 function accEvnetParam(start){
 	var begintime=getBeginTimes($("#txtBeginDate").val());
     var endtime=getEndTimes($("#txtEndDate").val());
@@ -181,10 +149,20 @@ function accEvnetParam(start){
     var user_id=parseInt($("#types").val());
     var groupid=parseInt($("#groupSelect option:selected").attr("groupid"));
     dataa={"date":{"begin":begintime,"end":endtime},"filter":{"group_id":groupid,"user_id":user_id},"view":{"begin":start,"count":numperpage}};
-   	var type = $('.table th.th-ordery.th-ordery-current').attr('type');
-	var orderClass = $('.table th.th-ordery.th-ordery-current').attr('class');
-	
-    dataa = sortingDataFun(dataa,type,orderClass);
+   	var type = $('.tableth th.th-ordery.th-ordery-current').attr('type');
+	var orderClass = $('.tableth th.th-ordery.th-ordery-current').attr('class');
+	var ordery;
+	var order = {};
+	dataa.order = [];
+	if(orderClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		ordery = 'desc';
+	}else if(orderClass == 'th-ordery th-ordery-current th-ordery-up'){
+		ordery = 'asc';
+	}
+	if(type){
+		order[type] = ordery;
+		dataa.order.push(order);
+	}
 	return dataa;
 }
 accEvent();
@@ -194,23 +172,74 @@ function accEvent(start){
         ajaxtable.abort();
     }
     var dataa = accEvnetParam(start);
-   $(".table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
+   $(".table").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
     ajaxtable=
     $.ajax({
         url:'/mgr/remote/_history',
         data:JSON.stringify(dataa),
         type:'POST',
         contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
+        	}else{
+        		
         	}
+            
         },
         success:function(data){
             var list=data.data.list;
+            var table="";
             var total=Math.ceil(data.data.view.total/numperpage);
-            tabListstr.setData(list);
-            tbodyAddHeight();
+
+            if(list!==null){
+                table+="<table>";
+                table+="<tr id='tableAlign'>";
+                table+="<td width='8%'>管理员</td>";
+                table+="<td width='10%'>IP</td>";
+                table+="<td width='13%'>开始时间</td>";
+                table+="<td width='18%'>远程终端</td>";
+                table+="<td width='12%'>终端分组</td>";
+                table+="<td width='8%'>远程方式</td>";
+                table+="<td width='20%'>远程原因</td>";
+                table+="</tr>";
+                for(i=0;i<list.length;i++){
+                    var time=list[i].start_time;
+                    time=getLocalTime(time);
+                    table+="<tr clientid='" + list[i].client_id + "'>";
+                    table+="<td>"+safeStr(list[i].user_name)+"</td>"; 
+                    table+="<td>"+safeStr(list[i].ip)+"</td>";
+                    table+="<td>"+safeStr(time)+"</td>";
+                    table+="<td><span class='filePath cursor detailPopBtn' onclick='detailPop(this)' index='"+i+"' style='width:180px' title="+safeStr(pathtitle(list[i].hostname))+">"+safeStr(list[i].hostname)+"</span></td>";
+                    if(list[i].groupname==""){
+                        table+="<td>(已删除终端)</td>"; 
+                    }else{
+                        table+="<td>"+safeStr(list[i].groupname)+"</td>";
+                    }
+                    
+                    if(list[i].viewOnly == true){
+                    	table+="<td>远程查看</td>";
+                    }else if(list[i].viewOnly == false){
+                    	table+="<td>远程控制</td>";
+                    }else{
+                    	table+="<td></td>";
+                    }
+                    
+                    table+="<td><span class='filePath' style='width:180px' title="+safeStr(pathtitle(list[i].reason))+">"+safeStr(list[i].reason)+"</span></td>";
+                    table+="</tr>";
+                }
+                table+="</table>";
+            }
+            
+            
+            $(".table table").hide();
+            $(".table").html(table);
+            $(".table table").show();
+            
+			var thIndex=$('.main .tableth').attr('index');
+			var thCls=$('.main .tableth').attr('indexCls');
+			$('.main .tableth th').eq(thIndex).addClass(thCls);
 			
             $(".clearfloat").remove();
             $(".tcdPageCode").remove();
@@ -222,24 +251,69 @@ function accEvent(start){
                 pageCount:total,
                 current:parseInt(current),
                 backFn:function(pageIndex){
+                    $(".table table").html("");
+
                     start=(pageIndex-1)*numperpage;
                     dataa.view.begin = start;
-                    $(".table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
+                    $(".table").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
                     ajaxtable=
                     $.ajax({
                         url:'/mgr/remote/_history',
                         data:JSON.stringify(dataa),
                         type:'POST',
                         contentType:'text/plain',
+                        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
                         error:function(xhr,textStatus,errorThrown){
 				        	if(xhr.status==401){
 				        	    parent.window.location.href='/';
+				        	}else{
+				        		
 				        	}
+				            
 				        },
                         success:function(data){
                             var list=data.data.list;
-                            tabListstr.setData(list);
-                            tbodyAddHeight();
+                            var table="";
+
+                            table+="<table>";
+                            table+="<tr id='tableAlign'>";
+                            table+="<td width='12%'>管理员</td>";
+			                table+="<td width='12%'>IP</td>";
+			                table+="<td width='16%'>开始时间</td>";
+			                table+="<td width='12%'>远程终端</td>";
+			                table+="<td width='12%'>终端分组</td>";
+			                table+="<td width='12%'>远程方式</td>";
+			                table+="<td width='20%'>远程原因</td>";
+                            table+="</tr>";
+                            for(i=0;i<list.length;i++){
+                                var time=list[i].start_time;
+			                    time=getLocalTime(time);
+			                    table+="<tr clientid='" + list[i].client_id + "'>";
+                                table+="<td>"+safeStr(list[i].user_name)+"</td>"; 
+                                table+="<td>"+safeStr(list[i].ip)+"</td>";
+                                table+="<td>"+safeStr(time)+"</td>";
+                                table+="<td><span class='filePath cursor detailPopBtn' onclick='detailPop(this)' index='"+i+"' style='width:180px' title="+safeStr(pathtitle(list[i].hostname))+">"+safeStr(list[i].hostname)+"</span></td>";
+                                if(list[i].groupname==""){
+                                    table+="<td>(已删除终端)</td>"; 
+                                }else{
+                                    table+="<td>"+safeStr(list[i].groupname)+"</td>";
+                                }
+                                
+                                if(list[i].viewOnly == true){
+                                    table+="<td>远程查看</td>";
+                                }else if(list[i].viewOnly == false){
+                                    table+="<td>远程控制</td>";
+                                }else{
+                                    table+="<td></td>";
+                                }
+                                
+                                table+="<td><span class='filePath' style='width:180px' title="+safeStr(pathtitle(list[i].reason))+">"+safeStr(list[i].reason)+"</span></td>";
+                                table+="</tr>";
+                            }
+                            table+="</table>";
+                            $(".table table").hide();
+                            $(".table").html(table);
+                            $(".table table").show();
                             
                         }
                     });
@@ -251,14 +325,15 @@ function accEvent(start){
 
 }
 
-tbodyAddHeight();
 
 //调整页面内元素高度
-function tbodyAddHeight(){
+var mainlefth=parent.$("#iframe #mainFrame").height();
+
+$(".main .table").css({height:mainlefth-298});
+
+window.onresize = function(){
     var mainlefth=parent.$("#iframe #mainFrame").height();
 
-    $(".main .table tbody").css({height:mainlefth-298});
-}
-window.onresize = function(){
-    tbodyAddHeight();
+    $(".main .table").css({height:mainlefth-298});
+
 }

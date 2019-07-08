@@ -3189,7 +3189,7 @@
             headers: {},
             sendAsBinary: false
         };
-                   
+    
         $.extend( Transport.prototype, {
     
             // 添加Blob, 只能添加一次，最后一次有效。
@@ -6767,20 +6767,16 @@
                     binary = blob.getSource();
                 } else {
                     formData = new FormData();
-                    //为了避免插件里合并的参数
-                    $.each( owner._formData.formData, function( k, v ) {
-                        //自定义添加参数
-                    	if(k != "fileVal"){
-                    		if(k == "name1"){
-                                formData.append( 'name', v );
-                            }else{
-                                formData.append( k, v );
-                            }
+                    $.each( owner._formData, function( k, v ) {
+                    	if(k == "remark"){
+                    		formData.append( k, v );
                     	}
-                    	
+                    	if(k == "name1"){
+                    		formData.append( 'name', v );
+                    	}
                     });
-                   
-                    formData.append( owner._formData.formData.fileVal,  blob.getSource(),
+    
+                    formData.append( 'data', blob.getSource(),
                             opts.filename || owner._formData.name || '' );
                 }
     
@@ -7824,29 +7820,20 @@
     
                     binary = blob.uid;
                 } else {
-
-                    //为了避免插件里合并的参数
-                    $.each( owner._formData.formData, function( k, v ) {
-                        if(k != "fileVal"){
-                            if(k == "name1"){
-                                xhr.exec( 'append', 'name', v );
-                            }else{
-                                xhr.exec( 'append', k, v );
-                            }
-                        }
-                    	// if(k == "remark"){
-                        //     xhr.exec( 'append', k, v );
-                    	// }
-                    	// if(k == "name1"){
-                    	// 	xhr.exec( 'append', 'name', v );
-                    	// }
+                	
+                    $.each( owner._formData, function( k, v ) {
+                    	if(k == "remark"){
+                    		xhr.exec( 'append', k, v );
+                    	}
+                    	if(k == "name1"){
+                    		xhr.exec( 'append', 'name', v );
+                    	}
                     });
                             
 //                  $.each( owner._formData, function( k, v ) {
 //                      xhr.exec( 'append', k, v );
 //                  });
-            
-                    xhr.exec( 'appendBlob', owner._formData.formData.fileVal, blob.uid,
+                    xhr.exec( 'appendBlob', 'data', blob.uid,
                             opts.filename || owner._formData.name || '' );
                 }
     

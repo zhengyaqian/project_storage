@@ -144,6 +144,7 @@ select{color: #6c6c6c}
 .modifyPwPop .mainBlock{padding-top: 26px;}
 .modifyPwPop .mainBlock p{margin-bottom: 32px;}
 .modifyPwPop .mainBlock p span{font-size: 14px;color: #676a6c;padding-left: 46px;display: inline-block;width: 76px}
+.modifyPwPop .mainBlock p span.placeholder{position: absolute;font-size: 12px;color: rgb(161, 161, 161);left: 90px; width: auto; top: 7px;}
 .modifyPwPop .mainBlock p input{width: 320px;padding-left: 12px;height: 30px;line-height: 30px;border: 1px solid rgb(229,230,231)}
 .modifyPwPop .mainBlock p font{font-size: 12px;color: #f37e00;top: 40px;left: 130px;display: none;}
 
@@ -187,30 +188,30 @@ select{color: #6c6c6c}
 .updatePop .closeW:hover{background-position: -24px;}
 .updatePop .disabledPop{width: 100%;height: 100%;z-index: 99;display: none;}
 /*授权弹层*/
-.emPop{display: none;width: 500px;height: 330px;position: fixed;top: 50%;left:50%;margin-left: -255px;margin-top: -166px;z-index: 999;background: #ffffff;}
+.emPop{display: none;width: 500px;height: 386px;position: fixed;top: 50%;left:50%;margin-left: -255px;margin-top: -193px;z-index: 999;background: #ffffff;}
 .emPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
 .emPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
 .emPop .title .closeW:hover{background-position: -20px}
-.emPop .left{left: 0px;color: #6c6c6c;width: 178px;border-right: 2px solid rgb(249,249,249);top: 36px;padding-bottom: 50px;}
-.emPop .left img{text-align: center;margin: 0 auto;display: block;}
+.emPop .left{left: 0px;color: #6c6c6c;width: 178px;border-right: 2px solid rgb(249,249,249);top: 36px;height: 256px;}
+.emPop .left img{text-align: center;margin: 0 auto;display: block;margin-top: 30px;}
 .emPop .left p{padding-top: 34px;text-align: center;font-size: 14px;}
-.emPop .right{left: 200px; font-size: 12px;color: #6c6c6c;top: 30px;}
+.emPop .right{left: 200px; font-size: 12px;color: #6c6c6c;top: 30px;height: 256px;}
 .emPop .right p{line-height: 32px;height: 32px;}
 .emPop .right div{line-height: 40px;height: 40px;}
-.emPop .right .emStatus1{display: inline-block;color: rgb(201, 147, 61);width: 70px;line-height: 24px;height: 24px;}
-.emPop .right .emStatus0{display: inline-block;background: #ffffff;width: 68px;line-height: 22px;height: 22px;color:#808080;}
+.emPop .right .emStatus1{display: inline-block;color: rgb(201, 147, 61);line-height: 24px;height: 24px;}
+.emPop .right .emStatus0{display: inline-block;background: #ffffff;line-height: 22px;height: 22px;color:#808080;}
 .emPop .right .emStatus1 span{background: url(../images/em1.png);display: inline-block;width: 20px;height: 20px;}
 .emPop .right .emStatus0 span{background: url(../images/em0.png);display: inline-block;width: 20px;height: 20px;}
 .emPop .right .emStatus2 span{background: url(../images/em2.png);display: inline-block;width: 20px;height: 20px;}
 .emPop .right .updateEm{display: inline-block;background: #fda929;width: 70px;text-align: center;line-height: 24px;height: 24px;color:#ffffff;border-radius: 2px;margin-left: 4px;}
 .emPop .right .updateEm:hover{background: #ff9600}
 .emPop input[type=file]{width: 174px;line-height: 24px;height: 24px;}
-.emPop .emCom{width: 218px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: top;#vertical-align: middle;}
-.emPop .right .emhint{width: 14px;height: 14px;display: block;background: url(../images/emhint.png);right: 10px;bottom: 44px;}
+.emPop .emCom{width: 218px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: top;vertical-align: middle;}
+.emPop .right .emhint{width: 14px;height: 14px;display: block;background: url(../images/emhint.png);right: 10px;bottom: 36px;}
 .emPop .right .emhint:hover{background-position: -14px;}
-.emPop .right .emhintfloat{opacity: 0.6;filter:alpha(opacity:60);padding: 10px;color: #ffffff;font-size: 10px;display: none;background: rgb(0,0,0);height: auto;right: -43px;bottom: 70px;border-radius: 2px;padding-right: 40px;}
+.emPop .right .emhintfloat{opacity: 0.6;filter:alpha(opacity=60);padding: 10px;color: #ffffff;font-size: 10px;display: none;background: rgb(0,0,0);height: auto;right: -43px;bottom: 62px;border-radius: 2px;padding-right: 40px;}
 .emPop .right .emhintfloat p{height: 16px;line-height: 16px;}
-.emPop .right .smalltriangle{right: 22px;bottom: 63px;display: none;}
+.emPop .right .smalltriangle{right: 22px;bottom: 55px;display: none;}
 /*修改密码密码强度检测*/
 .vali_pass_progress {display: none;margin-top: 10px;background-color: #efefef;height: 10px;border-radius: 1px;margin-bottom: 12px;width: 50px;top: 122px;left: 126px;}
 .vali_pass_progressw{left: 126}
@@ -222,62 +223,51 @@ select{color: #6c6c6c}
 .vali_bg {background-color: #f8ac59;}
 
 /*排序样式*/
-.table th{line-height: 38px;font-size: 12px;font-weight: bold;color: #676a6c;text-align: left;padding-left: 22px;position: relative;}
-/*.tableth th.th-ordery::after{content: "\f0dc";float: right;cursor:pointer;font-family: fontawesome;color: rgba(50,50,50,.5);}
-.tableth th.th-ordery-up::after{content: "\f0de";} 
-.tableth th.th-ordery-down::after{content: "\f0dd";} 
-.terminallist p.th-ordery i{margin-left: 20px;}*/
+.tableth th{line-height: 38px;font-size: 12px;font-weight: bold;color: #676a6c;text-align: left;padding-left: 22px;position: relative;}
 .th-ordery img{position: absolute;right: 0;top: 10px;width: 16px;height: 16px;}
 
-/* 列表表格样式 */
-.tableContainer .table th{
-    line-height: 38px;
+
+/* 模拟placeholder */
+.placeholder{
+    position: absolute;
     font-size: 12px;
-    font-weight: bold;
-    color: rgb(103, 106, 108);
-    text-align: left;
-    padding-left: 22px;
-    position: relative;
-}
-.tableContainer .table{
-    overflow: hidden;
-}
-table tbody{
-    overflow-y: scroll;
-    overflow-x: hidden;
-    border-bottom: 1px solid rgb(231,234,236);
-    position: relative;
-    display: block;
-    height: 315px;
-}
-table thead{
-    display: block;
-    padding-right: 17px;
-}
-table thead tr, tbody tr {
-    display:table;
-    width:100%;
-    table-layout:fixed;
-}
-.pop thead{
-    background: rgb(240,240,240);
-}
-.pop th {
-    color: #676a6c;
-    text-align: left;
-    background: rgb(240,240,240);
-    line-height: 34px;
-    padding-left: 10px;
-    font-weight: normal;
-    position: relative;
-    font-size: 12px;
-}
-.pop td{
-    line-height: 35px;
-    padding-left: 10px;
-    font-weight: normal;
-    color: rgb(108, 108, 108);
-    font-size: 12px;
-    padding-left: 10px;
+    color: rgb(161, 161, 161);
 }
 
+
+/*终端详情弹层*/
+.detailPop{display: none;width:845px;height:520px;background: #ffffff;z-index: 999;position: fixed;top: 50%;left:50%;margin-left: -423px;margin-top: -300px;}
+.detailPop .title{position: relative;padding-top: 20px;padding-bottom: 34px;font-size: 14px;color: #676a6c;padding-left: 20px}
+.detailPop .title .closeW{cursor: pointer;position: absolute;top:20px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png)}
+.detailPop .title .closeW:hover{background-position: -20px}
+.detailPop .left{width:200px;float: left;}
+.detailPop .left .detailcom{text-align: center;}
+.detailPop .left .terminalstatus{font-size: 16px;color: #6c6c6c;font-weight: bold;}
+.detailPop .left .terminalname{font-size: 16px;color:#676a6c;padding-top: 10px;}
+.detailPop .left .terminalname .editTNIcon{display: inline-block;width: 18px;height: 18px;background: url(../images/group_edit.png);vertical-align: middle;}
+.detailPop .left .terminalname .editTNIcon:hover{background-position: -18px;cursor: pointer;}
+.detailPop .left .isgroup{font-size: 14px;color:#676a6c;padding-bottom: 180px;padding-top: 5px}
+.detailPop .left p{text-align: center;}
+.detailPop .left a{display: block;padding-left: 45px;font-size: 14px;line-height: 46px;cursor: pointer;}
+.detailPop .left a img{vertical-align: middle;}
+.detailPop .left a span{vertical-align: middle;padding-left: 28px;color: #6c6c6c;}
+.detailPop .left .general span{color: #5fc47f}
+.detailPop .left .versionnum,.detailPop .left .dbversion{font-size: 12px;color: #595959;text-align: left;padding-left: 20px}
+
+
+.detailPop .right{float: right;width: 645px;background: url(../images/lockbg.png) no-repeat right 20px;}
+.detailPop .right h1{font-size: 30px;color: #595959;font-weight: normal;padding-bottom: 20px}
+.detailPop .right h1 span{font-size: 12px;font-weight: normal;}
+.detailPop .right p{font-size: 12px;color: #595959;letter-spacing: 1px}
+.informationB .heading{padding-bottom: 20px}
+.informationB .heading img{vertical-align: middle;}
+.informationB .heading span{vertical-align: middle;padding-left: 14px;font-size: 14px;color: #595959}
+.fontGreen{color: #5fc47f;text-decoration: none;}
+.informationB p{padding-left: 32px;}
+.detailPop .right .informationB p{color: #6c6c6c;line-height: 18px;word-break:break-all;min-height: 18px;}
+.informationBL{float: left;}
+.informationBR{float:right;width: 334px}
+.informationBD .heading{padding-top: 32px;clear: both;}
+
+.detailPop .right .stopSK{position: absolute;display: block;width: 100px;height: 30px;line-height: 30px;text-align: center;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;right: 30px;top:-10px;cursor: pointer;}
+.detailPop .right .table{padding-right: 30px}

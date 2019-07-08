@@ -4,36 +4,15 @@
     <title>火绒终端安全控制中心</title>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11" />
 		<link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.css" />
-    <link href="css/common.css" rel="stylesheet">
+	<link href="css/common.css" rel="stylesheet">
     <link href="css/terminalArrange.css" rel="stylesheet">
     <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/json3.js"></script>
-    <script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/json3.js"></script>
+	<script src="js/jquery.page.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+	
     <link href="css/lyz.calendar.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="js/zUI.js"></script>
-    <style>
-    .bgContainer .zUIpanelScrollBox,.bgContainer .zUIpanelScrollBar{
-                width:10px;
-                top:4px;
-                border-radius:5px;
-            }
-    .bgContainer .zUIpanelScrollBox{
-        background:black;
-        opacity:0;
-        filter:alpha(opacity=0);
-    }
-    .bgContainer .zUIpanelScrollBar{
-        background:#fff;
-        opacity:0;
-        filter:alpha(opacity=0);
-    }
-	table tbody{
-		height: auto;
-		overflow: hidden;
-		border: 0;
-		display: inline;
-	}
-    </style>
+
 </head>
 <body>
     <div class="main">
@@ -137,6 +116,22 @@
                         </td>
                         <td>
                                 <a class="button cursor offlineButton" href="/tools/HROffline.exe">工具下载</a>
+
+                        </td>
+
+                    </tr>
+				</table> 
+				<table style="margin-top:10px;">
+                    <tr>
+                        <td class="relative" width="980">
+                            <img src='images/linux.png'>
+                            <div class="absoluteTxt fieldA">
+                                <h3>Linux版</h3>
+                                <p>适用于Linux操作系统的客户端。</p>
+                            </div>
+                        </td>
+                        <td>
+                                <a class="button cursor offlineButton" href="/tools/linux-inst.sh">软件下载</a>
 
                         </td>
 
@@ -488,9 +483,11 @@
         //后退到当前页面将父页面选项卡置为当前位置
         parent.$(".nav .container a[name='terminalArrange.html']").addClass("current");
         parent.$(".nav .container a[name='terminalArrange.html']").siblings().removeClass("current");
-        parent.$(".footer").show();
+		parent.$(".footer").show();
 
         document.cookie='page=terminalArrange.html';
+
+		var detailnumperpage = 9;
 
         $("#cleanLogDate").val(GetDateStr(-6));
         //清理日志日期选择input
@@ -557,7 +554,8 @@
                 url:'/mgr/sysconf/_deploy',
                 data:{},
                 type:'GET',
-                contentType:'text/plain',
+				contentType:'text/plain',
+				headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
                 success:function(data){
                     $("#noticeTitle").val(data.data.title);
                     $("#noticeContent").val(data.data.content);
@@ -569,7 +567,8 @@
                 url:'/mgr/sysconf/_iplist',
                 data:{},
                 type:'GET',
-                contentType:'text/plain',
+				contentType:'text/plain',
+				headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
                 success:function(data){
                     var list=data.data.list;
                     var iplist="";
@@ -617,7 +616,8 @@
                 url:'/mgr/deploy/_update',
                 data:JSON.stringify(dataa),
                 type:'POST',
-                contentType:'text/plain',
+				contentType:'text/plain',
+				headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
                 success:function(data){
                     hideButton(a);
                     tAAjax();
@@ -643,7 +643,8 @@
                 url:'/mgr/cleanlog/_query',
                 data:{},
                 type:'GET',
-                contentType:'text/plain',
+				contentType:'text/plain',
+				headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
                 error:function(xhr,textStatus,errorThrown){
 		        	if(xhr.status==401){
 		        	    parent.window.location.href='/';
@@ -714,7 +715,8 @@
                     url:'/mgr/cleanlog/_create',
                     data:JSON.stringify(dataa),
                     type:'POST',
-                    contentType:'text/plain',
+					contentType:'text/plain',
+					headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
                     error:function(xhr,textStatus,errorThrown){
 						if(xhr.status==401){
 			        	    parent.window.location.href='/';
@@ -750,7 +752,8 @@
                 url:'/mgr/cleanlog/_cancel',
                 data:{},
                 type:'GET',
-                contentType:'text/plain',
+				contentType:'text/plain',
+				headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
                 error:function(xhr,textStatus,errorThrown){
 					if(xhr.status==401){
 		        	    parent.window.location.href='/';
@@ -790,7 +793,8 @@
             url:'/mgr/log/_stat',
             data:{},
             type:'GET',
-            contentType:'text/plain',
+			contentType:'text/plain',
+			headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
             success:function(data){
                 if(data.data.log_size<1048576){
                   $("#lognum").html(round(data.data.log_size/1024,1)+"K");  
@@ -829,7 +833,8 @@
             url:'/mgr/group/_dict',
             data:{},
             type:'GET',
-            contentType:'text/plain',
+			contentType:'text/plain',
+			headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
             success:function(data){
             	var list=data.data.list;
             	var select="";
@@ -851,6 +856,7 @@
 				data:{},
 				type:'GET',
 				contentType:'text/plain',
+				headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 				success:function(data){
 
 					var data=data.data.data;
@@ -893,6 +899,7 @@
 				data:{},
 				type:'GET',
 				contentType:'text/plain',
+				headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 				success:function(data){
 
 					var data=data.data.data;
@@ -954,14 +961,20 @@
 				}
 	        });
         })
-        function taskAjax(){
+        function taskAjax(start){
+			
+			var begin = arguments[0] ? arguments[0] : 0;
+			var dataa = {"view":{"begin":begin,"count":detailnumperpage}};
         	$.ajax({
 	            url:'/mgr/schedule/_list',
-	            data:JSON.stringify({"view":{"begin":0,"count":100}}),
+	            data:JSON.stringify(dataa),
 	            type:'POST',
-	            contentType:'text/plain',
+				contentType:'text/plain',
+				headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 	            success:function(data){
-	            	var list=data.data.list;
+					var list=data.data.list;
+					var totalnum = data.data.view.total;
+					var pages = Math.ceil(totalnum / detailnumperpage);
 	            	var table="";
 	            	table+="<tr id='tableAlign'>";
     				table+="<td width='5%'><input type='checkbox' name='' value=''></td>";
@@ -1072,7 +1085,8 @@
 	    					table+="<td>0"+list[i].time_hour+":";
 	    				}else{
 	    					table+="<td>"+list[i].time_hour+":";
-	    				}
+						}
+						
 	    				if(list[i].time_minute.toString().length==1){
 	    					table+="0"+list[i].time_minute+"</td>";
 	    				}else{
@@ -1081,9 +1095,19 @@
 	    				table+="<td><a class='blackfont underline blackfont cursor' onclick='deleteTask(this)'>删除</a></td>";
 	    			    table+="</tr>";
     			    }
-    			    $(".tTTable table").html(table);
-    			    
-	            }
+					$(".tTTable table").html(table);
+					$('.tTPop .pageBox').remove();
+					$(".tTPop").append("<div class='pageBox'><a style='font-size:12px;color:#6a6c6e;line-height:54px;padding-left:20px;float:left;' class='totalPages'>共 " + totalnum + " 条记录</a><div class='tcdPageCode' style='font-size:12px;float:right;padding-top:14px;padding-bottom:14px;padding-right:20px;'></div><div class='clear clearfloat'></div></div>");
+					var current = (dataa.view.begin/dataa.view.count) + 1;
+					$(".tTPop .tcdPageCode").createPage({
+						pageCount: pages,
+						current: parseInt(current),
+						backFn: function(pageIndex) {
+							start = (pageIndex - 1) * detailnumperpage;
+							taskAjax(start); 
+						}
+					})
+				}
 	        });
         }
         // 任务类型select显示隐藏设置按钮
@@ -1372,9 +1396,10 @@
         		var cycle_value=parseInt($("select[name='week']").val());
         	}else{
         		var cycle_value=parseInt($("select[name='month']").val());
-        	}
-        	var time_hour=parseInt($("input[name='hour']").val());
-        	var time_minute=parseInt($("input[name='minute']").val());
+			}
+			
+        	var time_hour=parseInt($("input[name='hour']").val(), 10);
+        	var time_minute=parseInt($("input[name='minute']").val(), 10);
         	var request_param={"group_id":group_id,"task_type":task_type,"task_param":task_param,"cycle_type":cycle_type,"cycle_value":cycle_value,"time_hour":time_hour,"time_minute":time_minute};
         	
         	$.ajax({
@@ -1382,6 +1407,7 @@
 				data:JSON.stringify(request_param),
 				type:'POST',
 				contentType:'text/plain',
+				headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 				error:function(xhr,textStatus,errorThrown){
 					if(xhr.status==401){
 		        	    parent.window.location.href='/';
@@ -1418,6 +1444,7 @@
 				data:JSON.stringify(request_param),
 				type:'POST',
 				contentType:'text/plain',
+				headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 				success:function(data){
 					taskAjax();// 刷新任务列表
 					$(".tTTableTh input").prop("checked",false);
@@ -1428,18 +1455,18 @@
         //调整页面内元素高度
         var mainlefth=parent.$("#iframe #mainFrame").height();
 
-        $(".main .bgContainer").css({height:mainlefth-174});
+		$(".main .table").css({height:mainlefth});
 
         window.onresize = function(){
             var mainlefth=parent.$("#iframe #mainFrame").height();
 
-            $(".main .bgContainer").css({height:mainlefth-174});
+            $(".main .table").css({height:mainlefth});
 
         }
-        //隐藏左边滚动条   
-        $(function(){
-            $(".bgContainer").panel({iWheelStep:32});
-        }); 
+        // 隐藏左边滚动条   
+        // $(function(){
+        //     $(".bgContainer").panel({iWheelStep:32});
+        // }); 
         // 保留一位小数
         function round(v,e){
             var t=1;

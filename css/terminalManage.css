@@ -76,7 +76,7 @@
 /**/
 .mainRight .table,.mainRight .tableth{font-size: 12px;margin: 0 20px;}
 .mainRight .tableth{padding-right: 18px;}
-.mainRight .table{overflow-x:hidden;border-bottom: 1px solid rgb(231,234,236)}
+.mainRight .table{overflow-y:scroll;overflow-x:hidden;border-bottom: 1px solid rgb(231,234,236)}
 .mainRight .table table,.mainRight .tableth table{width: 100%;border-collapse:collapse;}
 .mainRight .table table tr,.mainRight .tableth table tr{border-bottom: 1px solid rgb(231,234,236)}
 .mainRight .table table tr:nth-child(even){background:rgb(249,249,249);}
@@ -224,7 +224,7 @@
 .fastSKPop .tableth table,.fastSKPop .table table,.fastSKPop .tableCon table,.overallSKPop .tableth table,.overallSKPop .table table,.overallSKPop .tableCon table,.terminalUpPop .tableth table,.terminalUpPop .table ,.terminalUpPop .tableCon table{border-collapse: collapse;}
 .fastSKPop .tableth th,.fastSKPop .table td,.fastSKPop .tableCon td,.overallSKPop .tableth th,.overallSKPop .table td,.overallSKPop .tableCon td,.terminalUpPop .tableth th,.terminalUpPop .table td,.terminalUpPop .tableCon td{line-height: 35px;padding-left: 10px;font-weight: normal;}
 .fastSKPop .tableth th,.overallSKPop .tableth th,.terminalUpPop .tableth th{color: #676a6c;text-align: left;}
-/* .fastSKPop .table,.fastSKPop .tableCon,.overallSKPop .table,.overallSKPop .tableCon,.terminalUpPop .table,.terminalUpPop .tableCon{height: 246px;overflow-y:scroll;overflow-x:hidden } */
+.fastSKPop .table,.fastSKPop .tableCon,.overallSKPop .table,.overallSKPop .tableCon,.terminalUpPop .table,.terminalUpPop .tableCon{height: 246px;overflow-y:scroll;overflow-x:hidden }
 .fastSKPop .table table,.overallSKPop .table table,.terminalUpPop .table table,.fastSKPop .tableCon table,.overallSKPop .tableCon table,.terminalUpPop .tableCon table{border:0;}
 .fastSKPop .table tr:hover,.overallSKPop .table tr:hover,.terminalUpPop .table tr:hover,.fastSKPop .tableCon tr:hover,.overallSKPop .tableCon tr:hover,.terminalUpPop .tableCon tr:hover{background: rgb(249,249,249)}
 .fastSKPop .buttons,.overallSKPop .buttons,.terminalUpPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
@@ -263,7 +263,7 @@
 .DPSPop .tableth tr{background: rgb(240,240,240);}
 .DPSPop .tableth th,.DPSPop .tableCon td{line-height: 35px;padding-left: 10px;font-weight: normal;}
 .DPSPop .tableth th{color: #676a6c;text-align: left;}
-/* .DPSPop .table,.DPSPop .tableCon{height: 246px;overflow-y:scroll;overflow-x:hidden } */
+.DPSPop .table,.DPSPop .tableCon{height: 246px;overflow-y:scroll;overflow-x:hidden }
 .DPSPop .table table{border:0;}
 .DPSPop .table tr:hover{background: rgb(249,249,249)}
 .DPSPop .buttons{border-top: 1px solid rgb(231,234,236);margin:0 22px;padding-top: 12px;}
@@ -323,7 +323,7 @@
 .moveGPop .tableth tr{background: rgb(240,240,240);}
 .moveGPop .tableth th,.moveGPop .table td,.moveGPop .tableCon td{line-height: 35px;padding-left: 10px;font-weight: normal;}
 .moveGPop .tableth th{color: #676a6c;text-align: left;}
-/* .moveGPop .table,.moveGPop .tableCon{height: 246px;overflow-y:scroll;overflow-x:hidden;border-bottom: 1px solid rgb(231,234,236) } */
+.moveGPop .table,.moveGPop .tableCon{height: 246px;overflow-y:scroll;overflow-x:hidden;border-bottom: 1px solid rgb(231,234,236) }
 .moveGPop .table table,.moveGPop .tableCon table{border:0;}
 .moveGPop .table tr:hover,.moveGPop .tableCon tr:hover{background: rgb(249,249,249)}
 .moveGPop .sureButton{cursor: pointer;font-size: 12px;width: 100px;text-align: center;line-height: 22px;height: 22px;display: inline-block;background: rgb(101,197,129);color: #ffffff;border-radius: 3px;float: right;margin-top: 12px;margin-right: 20px; }
@@ -346,7 +346,7 @@
 .sendMPop .tableth tr{background: rgb(240,240,240);}
 .sendMPop .tableth th,.sendMPop .table td,.sendMPop .tableCon td{line-height: 35px;padding-left: 10px;font-weight: normal;}
 .sendMPop .tableth th{color: #676a6c;text-align: left;}
-/* .sendMPop .table,.sendMPop .tableCon{height: 176px;overflow-y:scroll;overflow-x:hidden;border-bottom: 1px solid rgb(231,234,236) } */
+.sendMPop .table,.sendMPop .tableCon{height: 176px;overflow-y:scroll;overflow-x:hidden;border-bottom: 1px solid rgb(231,234,236) }
 .sendMPop .table table,.sendMPop .tableCon table{border:0;}
 .sendMPop .table tr:hover,.sendMPop .tableCon tr:hover{background: rgb(249,249,249)}
 /*导出终端信息弹层*/
@@ -378,6 +378,3 @@
 
 /*终端名称限制*/
 .fastSKPop .filePath,.overallSKPop .filePath,.sendMPop .filePath,.moveGPop .filePath,.terminalUpPop .filePath,.DPSPop .filePath{width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: top;vertical-align: middle;}
-
-/* 表格样式 */
-.tableCon table tbody{height: 246px;}

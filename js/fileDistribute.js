@@ -5,15 +5,17 @@ parent.$(".nav .container a[name='softwareStatistics.html']").siblings().removeC
 parent.$(".footer").show();
 document.cookie='page=fileDistribute.html';
 //调整页面内元素高度
-tbodyAddHeight();
-function tbodyAddHeight(){
-    var mainlefth=parent.$("#iframe #mainFrame").height();
-    $(".main .table tbody").css({height:mainlefth-347});
-    $(".fDTableTabContainer").css({height:mainlefth-260});
-}
+var mainlefth=parent.$("#iframe #mainFrame").height();
+
+$(".main .table").css({height:mainlefth-347});
+$(".fDTableTabContainer").css({height:mainlefth-260});
 
 window.onresize = function(){
-    tbodyAddHeight();
+    var mainlefth=parent.$("#iframe #mainFrame").height();
+
+    $(".main .table").css({height:mainlefth-347});
+    $(".fDTableTabContainer").css({height:mainlefth-260});
+
 }
 // 点击文件类型刷新文件列表
 $(".fDTableTab a").click(function(){
@@ -35,8 +37,35 @@ $("#searchKey").keyup(function(){
 $(".fileDistributeTContainer").on("click","input[name=filename]",function(){
 
     var filename=$(this).next().html();
-    $(".functionButtonsBlock a").eq(2).attr("href","/distr/"+filename);
+    var isExist = isImageExist("/distr/"+filename);
+    if(isExist){
+        $(".functionButtonsBlock a").eq(2).attr("href","/distr/"+filename);
+    }else{
+        $(".delayHide").show();
+        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 文件不存在！");
+        setTimeout(function(){$(".delayHide").hide()},2000);
+    }
+   
 })
+//判断图片是否存在
+function isImageExist(url){
+    if(url.length==0){
+        return false;
+    }
+    var isExist=true;
+    $.ajax(url, {
+         type: 'head',
+         async:false,//取消ajax的异步实现
+         timeout: 1000,
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
+         success: function() {
+         },
+         error: function() {
+            isExist = false;  
+         }
+    });
+    return isExist;
+}
 //分发文件终端选择改变时全选input的变化
 $("body .providePop .terminallist").on("change",".td input[type=checkbox]",function(){
 
@@ -62,8 +91,14 @@ $(".uploadPop input[type='file']").change(function(){
 $(".downloadB").click(function(){
     if($(".fileDistributeTContainer input[name=filename]:checked").length==0){
         $(this).removeAttr("href");
-        delayHide('请选择文件');
+        $(".delayHide").show();
+        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择文件");
+        setTimeout(function(){$(".delayHide").hide()},2000);
+    }else{
+        // var filename=$(".fileDistributeTContainer input[name=filename]:checked").next().html();
+        // window.open('/distr/'+filename);
     }
+    
 })
 // 确认删除文件
 function sureDeleteButton(a){
@@ -73,6 +108,7 @@ function sureDeleteButton(a){
         data:{},
         type:'GET',
         contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
@@ -85,7 +121,9 @@ function sureDeleteButton(a){
             $(".deleteFPop .buttons a").eq(0).click();
             softlist();
             // 添加成功提示
-            delayHideS("操作成功");
+            $(".delayHideS").show();
+            $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
+            setTimeout(function(){$(".delayHideS").hide()},2000);
         }
     }); 
 }
@@ -105,89 +143,59 @@ $("body").on("blur","#numperpageinput",function(){
 })
 //排序
 
-$(document).on('click','.fileDistributeTContainer .table th.th-ordery',function(){
+$(document).on('click','.fileDistributeTContainer .tableth th.th-ordery',function(){
 	var toggleClass = $(this).attr('class');
-	var _this = $(this);
-    sortingFun(_this,toggleClass);
-    var currentPage = $(this).parents('.fileDistributeTContainer').find('.tcdPageCode span.current').text();
-	var currentNum = $(this).parents('.fileDistributeTContainer').find('#numperpageinput').val();
-    var start = (parseInt(currentPage) - 1) * parseInt(currentNum);
-	softlist(start);
-})
-//列表信息
-function columnsDataListFun (){
-	var columns = [
-		{
-			type: "name",title: "文件名称",name: "name",
-			tHead:{style:{width: "33%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style:{width: "33%"},customFunc: function (data, row, i) {
-				return "<input type='radio' name='filename' class='verticalMiddle'>&nbsp;&nbsp;&nbsp;&nbsp;<span class='verticalTop nameWidth' title="+safeStr(pathtitle(data))+">"+safeStr(data)+"</span>";
-			}},
-		},
-		{
-			type: "remark",title: "备注",name: "remark",
-			tHead:{style:{width: "25%"},customFunc: function (data, row, i) {return ""}},
-			tBody:{style:{width: "25%"},customFunc: function (data, row, i) {
-                if(trim(data)==""){
-                    return "(无)";
-                }else{
-                    return "<span class='nameWidth verticalTop' title="+pathtitle(safeStr(data))+">"+safeStr(data)+"</span>";
-                }
-            }},
-		},
-		{
-			type: "size",title: "文件大小",name: "size",
-			tHead:{style:{width: "13%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style:{width: "13%"},customFunc: function (data, row, i) {
-                if(data<1048576){
-                    return round(data/1024,1)+"K";
-                }else if(data>=1048576 && data<1073741824){
-                    return round(data/1048576,1)+"M";
-                }else if(data>=1073741824 && data<1099511627776){
-                    return round(data/1073741824,1)+"G";
-                }else if(data>=1099511627776){
-                    return round(data/1073741824,1)+"T";
-                }
-            }},
-		},
-		{
-			type: "upts",title: "上传时间",name: "upts",
-			tHead:{style:{width: "19%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style:{width: "19%"},customFunc: function (data, row, i) {return getLocalTime(data)}},
-		}
-	]
+	$(this).siblings('th.th-ordery').removeClass().addClass('th-ordery');
+	$(this).siblings('th.th-ordery').find('img').attr('src','images/th-ordery.png');
+	if(toggleClass == 'th-ordery'){
+		$(this).find('img').attr('src','images/th-ordery-up.png');
+		$(this).addClass('th-ordery-current th-ordery-up');
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up'){
+		$(this).find('img').attr('src','images/th-ordery-down.png');
+		$(this).addClass('th-ordery-current th-ordery-down');
+		
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		$(this).find('img').attr('src','images/th-ordery.png');
+		$(this).removeClass('th-ordery-current th-ordery-down th-ordery-up');
+	}
 	
-	var tabstr = new createTable(columns,[] ,$('.fileDistributeTContainer .table'));
-	return tabstr;
-}
-var tabListstr =columnsDataListFun();
+	softlist();
+})
 // 软件列表
 softlist();
 var ajaxtable=null;
-function softlist(start){
+function softlist(){
     if(ajaxtable){
     ajaxtable.abort();  
     }
-    if(start){
-        start = start;
-    }else{
-        start=0;
-    }
-    
+    var start=0;
 	var type=$(".fDTableTab .current").attr("type");
 	var filtername=trim($("#searchKey").val());
-	var dataa={"type":type,"filter":{"filename":filtername},"view":{"begin":start,"count":numperpage}};
-	var type1 = $('.fileDistributeTContainer .table th.th-ordery.th-ordery-current').attr('type');
-	var orderClass = $('.fileDistributeTContainer .table th.th-ordery.th-ordery-current').attr('class');
-    dataa = sortingDataFun(dataa,type1,orderClass);
-    
-    $(".fileDistributeTContainer .table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
+	var dataa={"type":type,"filter":{"filename":filtername},"view":{"begin":0,"count":numperpage}};
+	
+
+	var type1 = $('.fileDistributeTContainer .tableth th.th-ordery.th-ordery-current').attr('type');
+	var orderClass = $('.fileDistributeTContainer .tableth th.th-ordery.th-ordery-current').attr('class');
+	var ordery;
+	var order = {};
+	dataa.order = [];
+	if(orderClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		ordery = 'desc';
+	}else if(orderClass == 'th-ordery th-ordery-current th-ordery-up'){
+		ordery = 'asc';
+	}
+	if(type1){
+		order[type1] = ordery;
+		dataa.order.push(order);
+	}
+    $(".fileDistributeTContainer .table").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
      ajaxtable=
 	$.ajax({
 		url:'/mgr/distr/_list',
 		data:JSON.stringify(dataa),
 		type:'POST',
-		contentType:'text/plain',
+        contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 		error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
@@ -198,58 +206,105 @@ function softlist(start){
         },
 		success:function(data){
 			var list=data.data.list;
+            
+			var table="";
             var wholenum=0;
             var total=Math.ceil(data.data.view.total/numperpage);
             if(data.data.typeclass!==null){
-                var numlist=data.data.typeclass;
-                var nameMap={};
-                //遍历list，将name和对应count值添加都nameMap中
+               var numlist=data.data.typeclass;
+               var namearr=[];
                 for (var i = 0; i < numlist.length; i++) {
                     wholenum+=numlist[i].count;
-                    var name = numlist[i].name;
-                    var count = numlist[i].count;
-                    nameMap[name] = count;
-                };
-                //遍历name数组，判断nameMap对象中是否存在
-                var namearr = ["exe","doc","pk","unknow"];
-                for(var i=0;i<namearr.length;i++){
-                    if(!nameMap.hasOwnProperty(namearr[i])){
-                        $(".fDTableTab font").eq(i+1).html("(0)");  
-                    }else{
-                        $(".fDTableTab font").eq(i+1).html("("+nameMap[namearr[i]]+")"); 
+                    namearr.push(numlist[i].name);
+                    if(numlist[i].name=="exe"){
+                       $(".fDTableTab font").eq(1).html("("+numlist[i].count+")"); 
+                    }else if(numlist[i].name=="doc"){
+                        $(".fDTableTab font").eq(2).html("("+numlist[i].count+")"); 
+                    }else if(numlist[i].name=="pk"){
+                        $(".fDTableTab font").eq(3).html("("+numlist[i].count+")"); 
+                    }else if(numlist[i].name=="unknow"){
+                        $(".fDTableTab font").eq(4).html("("+numlist[i].count+")"); 
                     }
+                    
+                };
+                if(isInArray(namearr,"exe")==false){
+                   $(".fDTableTab font").eq(1).html("(0)");  
+                }
+                if(isInArray(namearr,"doc")==false){
+                   $(".fDTableTab font").eq(2).html("(0)");  
+                }
+                if(isInArray(namearr,"pk")==false){
+                   $(".fDTableTab font").eq(3).html("(0)");  
+                }
+                if(isInArray(namearr,"unknow")==false){
+                   $(".fDTableTab font").eq(4).html("(0)");  
                 }
                 $(".fDTableTab font").eq(0).html("("+wholenum+")");  
             }else{
-            	$(".fDTableTab font").html("0"); 
+            	$(".fDTableTab font").eq(0).html("0"); 
+            	$(".fDTableTab font").eq(1).html("0"); 
+            	$(".fDTableTab font").eq(2).html("0"); 
+            	$(".fDTableTab font").eq(3).html("0"); 
+            	$(".fDTableTab font").eq(4).html("0"); 
             }
-           
+            
+
+            table+="<table>";
+			table+="<tr id='tableAlign'>";
+            table+="<td width='33%'>文件名称</td>";
+            table+="<td width='29%'>备注</td>";
+            table+="<td width='9%'>文件大小</td>";
+            table+="<td width='19%'>上传时间</td>";
+            table+="</tr>";
+            for (var i = 0; i < list.length; i++) {
+            	table+="<tr fileid="+list[i].id+">";
+	            table+="<td><input type='radio' name='filename' class='verticalMiddle'>&nbsp;&nbsp;&nbsp;&nbsp;<span class='verticalTop nameWidth' title="+safeStr(pathtitle(list[i].name))+">"+safeStr(list[i].name)+"</span></td>";
+                if(trim(list[i].remark)==""){
+                    table+="<td>(无)</td>";
+                }else{
+                    table+="<td><span class='nameWidth verticalTop' title="+pathtitle(safeStr(list[i].remark))+">"+safeStr(list[i].remark)+"</span></td>";
+                }
+	            if(list[i].size<1048576){
+                    table+="<td>"+round(list[i].size/1024,1)+"K</td>";
+                }else if(list[i].size>=1048576 && list[i].size<1073741824){
+                    table+="<td>"+round(list[i].size/1048576,1)+"M</td>";
+                }else if(list[i].size>=1073741824 && list[i].size<1099511627776){
+                    table+="<td>"+round(list[i].size/1073741824,1)+"G</td>";
+                }else if(list[i].size>=1099511627776){
+                    table+="<td>"+round(list[i].size/1073741824,1)+"T</td>";
+                }
+	            
+	            table+="<td>"+getLocalTime(list[i].upts)+"</td>";
+	            table+="</tr>";
+            };
+            table+="</table>";
             if(list.length==0){
-            	$(".fileDistributeTContainer .table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;font-size:12px'><img src='images/notable.png'><p style='padding-top:24px'>暂无数据内容</p></div>");
+            	$(".fileDistributeTContainer .table").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;font-size:12px'><img src='images/notable.png'><p style='padding-top:24px'>暂无数据内容</p></div>");
             }else{
-                tabListstr.setData(list);
+            	$(".fileDistributeTContainer .table").html(table);
             }
-            tbodyAddHeight();
+            
 
             $(".clearfloat").remove();
             $(".tcdPageCode").remove();
             $(".totalPages").remove();
             $(".numperpage").remove();
-            var current = (dataa.view.begin/dataa.view.count) + 1;
             $(".fileDistributeTContainer").append("<a style='font-size:12px;color:#6a6c6e;line-height:54px;padding-left:20px;float:left' class='totalPages'>共 "+data.data.view.total+" 条记录</a><div class='tcdPageCode' style='font-size:12px;float:right;padding-top:14px;padding-bottom:14px;padding-right:20px;'></div><a style='font-size:12px;float:right;line-height:54px;padding-right:20px;color:#6a6c6e' class='numperpage'>每页<input type='text' id='numperpageinput' value="+numperpage+" style='font-size:12px;width:40px;height:24px;margin:0 4px;vertical-align:middle;padding:0 10px;'>条</a><div class='clear clearfloat'></div>");
             $(".fileDistributeTContainer .tcdPageCode").createPage({
                 pageCount:total,
-                current:parseInt(current),
+                current:1,
                 backFn:function(pageIndex){
+                    $(".table table").html("");
                     start=(pageIndex-1)*numperpage;
-                    dataa.view.begin=start;
-                    $("fileDistributeTContainer .table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
+                    dataa={"type":type,"filter":{"filename":filtername},"view":{"begin":start,"count":numperpage}};
+                    $("fileDistributeTContainer .table").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
                     ajaxtable=
                     $.ajax({
                         url:'/mgr/distr/_list',
                         data:JSON.stringify(dataa),
                         type:'POST',
                         contentType:'text/plain',
+                        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
                         error:function(xhr,textStatus,errorThrown){
 				        	if(xhr.status==401){
 				        	    parent.window.location.href='/';
@@ -260,8 +315,39 @@ function softlist(start){
 				        },
                         success:function(data){
                             var list=data.data.list;
-                            tabListstr.setData(list);
-                            tbodyAddHeight();
+                            var table="";
+                            table+="<table>";
+                            table+="<tr id='tableAlign'>";
+                            table+="<td width='33%'>文件名称</td>";
+                            table+="<td width='29%'>备注</td>";
+                            table+="<td width='9%'>文件大小</td>";
+                            table+="<td width='19%'>上传时间</td>";
+                            table+="</tr>";
+                            for (var i = 0; i < list.length; i++) {
+                                table+="<tr fileid="+list[i].id+">";
+                                table+="<td><input type='radio' name='filename' class='verticalMiddle'>&nbsp;&nbsp;&nbsp;&nbsp;<span class='verticalTop nameWidth' title="+safeStr(pathtitle(list[i].name))+">"+safeStr(list[i].name)+"</span></td>";
+                                if(trim(list[i].remark)==""){
+                                    table+="<td>(无)</td>";
+                                }else{
+                                    table+="<td><span class='nameWidth verticalTop' title="+pathtitle(safeStr(list[i].remark))+">"+safeStr(list[i].remark)+"</span></td>";
+                                }
+                                if(list[i].size<1048576){
+                                    table+="<td>"+round(list[i].size/1024,1)+"K</td>";
+                                }else if(list[i].size>=1048576 && list[i].size<1073741824){
+                                    table+="<td>"+round(list[i].size/1048576,1)+"M</td>";
+                                }else if(list[i].size>=1073741824 && list[i].size<1099511627776){
+                                    table+="<td>"+round(list[i].size/1073741824,1)+"G</td>";
+                                }else if(list[i].size>=1099511627776){
+                                    table+="<td>"+round(list[i].size/1073741824,1)+"T</td>";
+                                }
+                                
+                                table+="<td>"+safeStr(getLocalTime(list[i].upts))+"</td>";
+                                table+="</tr>";
+                            };
+                            table+="</table>";
+
+                            $(".fileDistributeTContainer .table").html(table);
+
 
                         }
                     })
@@ -280,8 +366,7 @@ function round(v,e){
 }
 // 近期任务
 $(".uninstallMB").click(function(){
-    $(".recentTaskPop").show();
-    shade();
+	$(".recentTaskPop").show();
 	recentTaskAjax();
 })
 //近期任务弹层列表悬浮效果
@@ -298,6 +383,7 @@ function recentTaskAjax(){
         data:{},
         type:'GET',
         contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
@@ -324,7 +410,15 @@ function recentTaskAjax(){
                 html+="<a onclick='showTaskTer(this)' class='showTaskTerIcon verticalMiddle cursor'></a>";
                 html+="</div>";
                 html+="<div class='table'>";
-               
+                html+="<table>";
+                html+="<tr class='th'>";
+                html+="<th width='120'>终端分组</th>";
+                html+="<th width='100'>终端名称</th>";
+                html+="<th width='120'>IP地址</th>";
+                html+="<th width='120'>任务状态</th>";
+                html+="<th width='200'>备注</th>";
+                html+="</tr>";
+                html+="</table>";
                 html+="</div>";
 
                 
@@ -352,13 +446,18 @@ function showTaskTer(a){
                 data:JSON.stringify(dataa),
                 type:'POST',
                 contentType:'text/plain',
+                headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
                 error:function(xhr,textStatus,errorThrown){
 		        	if(xhr.status==401){
 		        	    parent.window.location.href='/';
+		        	}else{
+		        		
 		        	}
+		            
 		        },
                 success:function(data){
                     var html="";
+                    var finsh_text = "";
                     var list=data.data.list;
                     html+="<table>";
                     html+="<tr>";
@@ -379,24 +478,39 @@ function showTaskTer(a){
                     for (var i = 0; i < list.length; i++) {
                         html+="<tr>";
                         if(list[i].groupname==""){
-                            html+="<td width='28%'>(已删除终端)</td>";
+                            html+="<td>(已删除终端)</td>";
                         }else{
-                            html+="<td width='28%'>"+safeStr(list[i].groupname)+"</td>";
+                            html+="<td>"+safeStr(list[i].groupname)+"</td>";
                         }
                         
-                        html+="<td width='28%'>"+safeStr(list[i].hostname)+"</td>";
+                        html+="<td>"+safeStr(list[i].hostname)+"</td>";
                         if(list[i].status==0){
-                            html+="<td width='16%'>未响应</td>";
-                            html+="<td width='28%'>任务尚未被接受</td>";
+                            html+="<td>未响应</td>";
+                            html+="<td>任务尚未被接受</td>";
                         }else if(list[i].status==1){
-                            html+="<td width='16%'>已接受</td>";
-                            html+="<td width='28%'>任务已经接受</td>";
+                            html+="<td>正在执行</td>";
+                            html+="<td>任务正在执行</td>";
                         }else if(list[i].status==2){
-                            html+="<td width='16%'>已拒绝</td>";
-                            html+="<td width='28%'>终端任务繁忙</td>";
+                            if(list[i].message == 'completed'){
+                                finsh_text = '任务完成'
+                            }else if(list[i].message == 'conflict'){
+                                finsh_text = '任务冲突'
+                            }else if(list[i].message == 'timeout'){
+                                finsh_text = '任务超时'
+                            }else if(list[i].message == 'unsupported'){
+                                finsh_text = '终端不支持'
+                            }else if(list[i].message == 'failed'){
+                                finsh_text = '执行失败'
+                            }else if(list[i].message == 'refused'){
+                                finsh_text = '用户拒绝'
+                            }else{
+                                finsh_text = list[i].message
+                            }
+                            html+="<td>任务完成</td>";
+                            html+="<td>" + finsh_text + "</td>";
                         }else{
-                            html+="<td width='16%'>终端异常</td>";
-                            html+="<td width='28%'>终端服务异常，无法接受任务</td>";
+                            html+="<td>终端异常</td>";
+                            html+="<td>终端服务异常，无法接受任务</td>";
                         }
                         html+="</tr>";
                     };
@@ -429,7 +543,7 @@ $(document).on('click','.uploadB',function(){
 	uploader =new WebUploader.Uploader({
 	
 	    // swf文件路径
-	    swf: '/js/webuploader-0.1.5/Uploader.swf',
+	    swf: 'js/webuploader-0.1.5/Uploader.swf',
 	    // 文件接收服务端。
         server: '/mgr/distr/_create',
         //文件数量
@@ -440,8 +554,11 @@ $(document).on('click','.uploadB',function(){
 	    pick: '#picker',
 	
 	    // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
-	    resize: false
+	    resize: false,
     });
+    //兼容ie8无法上传的问题
+    uploader.options.headers = {'Accept' : 'application/x-ms-application, image/jpeg, application/xaml+xml, image/gif, image/pjpeg, application/x-ms-xbap, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, */*', "HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')};
+   
     var $list = $('#thelist');
 	var $name = $('.uploadPop input[name=name]');
     //当文件被添加之前操作
@@ -454,10 +571,13 @@ $(document).on('click','.uploadB',function(){
 	// 当有文件被添加进队列的时候
 	
 	uploader.on( 'fileQueued', function( file ) {
-		
 		if(file.name.length > 30){
-            delayHide("文件名称不能超过30个字符！");
+			$(".delayHide").show();
             $(".delayHide").css('width','auto');
+            $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 文件名称不能超过30个字符！");
+            setTimeout(function(){$(".delayHide").hide()},2000);
+            
+            return false;
 		}
 	    $list.append( '<div id="' + file.id + '" class="item">' +
 	        '<a class="info">' + file.name + '</a>' +
@@ -467,17 +587,21 @@ $(document).on('click','.uploadB',function(){
 	    $name.siblings('.placeholder').hide();
 	    $name.val(file.name);
 	    $('fileValue').val(file.name);
-	})
+    })
+
 	/**
      * 验证文件格式以及文件大小
      */
 	uploader.on("error", function (type) {
         if (type == "Q_TYPE_DENIED") {
-           delayHide("文件不能为空！");
+            $(".delayHide").show();
+            $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 文件不能为空！");
+            setTimeout(function(){$(".delayHide").hide()},2000);
         }else if (type == "F_EXCEED_SIZE") {
-            delayHide("文件大小不能超过2G！");
+            $(".delayHide").show();
             $(".delayHide").css('width','auto');
-
+            $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 文件大小不能超过2G！");
+            setTimeout(function(){$(".delayHide").hide()},2000);
         }
     });
     
@@ -487,19 +611,22 @@ $(document).on('click','.uploadB',function(){
 
 $("#ctlBtn").on('click', function() { 
 		if(uploader.getFiles().length == 0){
-           delayHide("没有选择文件！");
+			$(".delayHide").show();
+            $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'>没有选择文件！");
+            setTimeout(function(){$(".delayHide").hide()},2000);
 		}else if(trim($(".uploadPop form input[name=name]").val())==""){
-           delayHide("名称不能为空！");
+            $(".delayHide").show();
+            $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'>名称不能为空！");
+            setTimeout(function(){$(".delayHide").hide()},2000);
             
 		}else{
-			uploader.options.formData={"remark":$('.uploadPop .remark').val(),"name1" : $('.uploadPop input[name=name]').val()}; 
+			uploader.options.formData={ formData: { "fileVal": 'data',"remark": $('.uploadPop .remark').val(), "name1": $('.uploadPop input[name=name]').val() }}; 
         	uploader.upload(); 
          	var $li = $( '.progress' ),
 		        $percent = $li.find('.percent');
 		        $bar = $li.find('.bar');
 	        // 文件上传过程中创建进度条实时显示。
 			uploader.on( 'uploadProgress', function( file, percentage ) {
-			   
 			    var percentVal = Math.ceil(percentage * 100) + '%';
                 $bar.width(percentVal)
                 $percent.html(percentVal);
@@ -515,18 +642,24 @@ $("#ctlBtn").on('click', function() {
                     $percent.html(percentVal);
                     
 	            // 添加成功提示
-	            delayHideS("添加成功");
-	            softlist();
-	            $(".uploadPop .buttons a").eq(0).click();
+	             $(".delayHideS").show();
+	             $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 添加成功</span>");
+	             setTimeout(function(){$(".delayHideS").hide()},2000);
+	             softlist();
+	             $(".uploadPop .buttons a").eq(0).click();
 	             
 	         });							
 	         
 	         uploader.on( 'uploadError', function( file,reason ) {
+	         	
 	         	if(reason == 'http'){
 	         		parent.window.location.href='/';
 	         	}else{
-	             	delayHide("操作失败");
+	         		$(".delayHideS").show();
+	             	$(".delayHideS .p1").html("<img src='images/unusualw.png' class='verticalMiddle'><span class='verticalMiddle'> 操作失败</span>");
+	             	setTimeout(function(){$(".delayHideS").hide()},2000);
 	         	}
+	             
 	         });
 	        uploader.on("uploadFinished",function() {
 				$('.uploading').fadeOut();
@@ -576,6 +709,7 @@ $("#ctlBtn").on('click', function() {
 //      data:{},
 //      type:'GET',
 //      contentType:'text/plain',
+// headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 //      error:function(xhr,textStatus,errorThrown){
 //      	if(xhr.status==401){
 //      	    parent.window.location.href='/';
@@ -644,13 +778,13 @@ $("#ctlBtn").on('click', function() {
 $(document).on('click','.terminallist p.th-ordery a i',function(){
 	var toggleClass = $(this).parents('p').attr('class');
 	if(toggleClass == 'th-ordery'){
-		$(this).parents('p').addClass('th-ordery-up th-ordery-current');
+		$(this).parents('p').addClass('th-ordery-current th-ordery-up');
 		$(this).attr('class','fa fa-sort-asc');
-	}else if(toggleClass == 'th-ordery th-ordery-up th-ordery-current'){
-		$(this).attr('class','th-ordery th-ordery-down th-ordery-current');
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up'){
+		$(this).parents('p').addClass('th-ordery-current th-ordery-down');
 		$(this).attr('class','fa fa-sort-desc');
-	}else if(toggleClass == 'th-ordery th-ordery-down th-ordery-current'){
-		$(this).attr('class','th-ordery');
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		$(this).parents('p').removeClass('th-ordery-current th-ordery-down th-ordery-up');
 		$(this).attr('class','fa fa-sort');
 	}
 	
@@ -658,21 +792,28 @@ $(document).on('click','.terminallist p.th-ordery a i',function(){
 })
 //分发文件弹层
 var terminalidarr=[];
+var terminalidName = [];
 // 终端列表中的多选框监听改变分发所选的终端
 $(".providePop .terminallist .container").on("change","input[type=checkbox]",function(){
     var terminalid=parseInt($(this).parent().attr("terminalid"));
+    var terminalname = $(this).siblings('span.verticalMiddle').text();
     if($(this).is(":checked")){
+        
         terminalidarr.push(terminalid);    
+        terminalidName.push(terminalname);
     }else{
         terminalidarr.splice(jQuery.inArray(terminalid,terminalidarr),1);
+        terminalidName.splice(jQuery.inArray(terminalname,terminalidName),1);
     }
 })
 $(".providePop .terminallist .th").on("change","input[type=checkbox]",function(){
     if($(this).is(":checked")){
        $(".providePop .terminallist .container .td").each(function(){
             var terminalid=parseInt($(this).attr("terminalid"));
+            var terminalname = $(this).find('span.verticalMiddle').text();
             if(isInArray(terminalidarr,terminalid)==false){
                 terminalidarr.push(terminalid);
+                terminalidName.push(terminalname);
             }
        }) 
     }else{
@@ -680,6 +821,7 @@ $(".providePop .terminallist .th").on("change","input[type=checkbox]",function()
             var terminalid=parseInt($(this).attr("terminalid"));
             if(isInArray(terminalidarr,terminalid)==true){
                 terminalidarr.splice(jQuery.inArray(terminalid,terminalidarr),1);
+                terminalidName.splice(jQuery.inArray(terminalname,terminalidName),1);
             }
         }) 
     }
@@ -687,11 +829,14 @@ $(".providePop .terminallist .th").on("change","input[type=checkbox]",function()
 $(".provideB").click(function(){
     if($(".fileDistributeTContainer input[name=filename]:checked").length==0){
         $(this).removeAttr("href");
-        delayHide("请选择文件");
+        $(".delayHide").show();
+        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择文件");
+        setTimeout(function(){$(".delayHide").hide()},2000);
     }else{
         $(".providePop input[type=checkbox]").prop("checked",true);
         $(".provideNPop .textarea textarea").val("管理员正在进行分发任务，请配合管理员完成相关文件的阅读或者文件的下载安装操作。");
         terminalidarr=[];
+        terminalidName = [];
         shade();
         $(".providePop").show();
         $("#searchKeyT").val("");
@@ -701,6 +846,7 @@ $(".provideB").click(function(){
             dataType:'json',
             data:{},
             type:'GET',
+            headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
             error:function(xhr,textStatus,errorThrown){
 	        	if(xhr.status==401){
 	        	    parent.window.location.href='/';
@@ -718,7 +864,9 @@ $(".provideB").click(function(){
                     html+="<a class='td block cursor' groupid="+list[i].group_id+" clientnum="+list[i].clients+">"+safeStr(list[i].group_name)+"</a>";
                 };
                 $(".providePop .grouplist .container").html(html);
+
                 terminallist();
+                
             }
         });  
     }
@@ -735,21 +883,34 @@ $("#searchKeyT").keyup(function(){
 })
 function terminallist(){
 	var filtername=$("#searchKeyT").val();
-    var count=parseInt($(".providePop .grouplist .container .current").attr("clientnum"));
-    var dataa={"view": {"begin": 0,"count": count},"filter":{"name":filtername}};
-	if($(".providePop .grouplist .container .current").index()!=0){
-	    var groupid=parseInt($(".providePop .grouplist .container .current").attr("groupid"));
-		dataa.group_id=groupid;
+	var count=parseInt($(".providePop .grouplist .container .current").attr("clientnum"));
+	if($(".providePop .grouplist .container .current").index()==0){
+	    var dataa={"view": {"begin": 0,"count": count},"filter":{"name":filtername}};	
+	}else{
+		var groupid=parseInt($(".providePop .grouplist .container .current").attr("groupid"));
+		var dataa={"group_id":groupid,"view": {"begin": 0,"count": count},"filter":{"name":filtername}};
 	}
+	
 	var type = $('.terminallist p.th-ordery.th-ordery-current').attr('type');
 	var orderClass = $('.terminallist p.th-ordery.th-ordery-current').attr('class');
-    dataa = sortingDataFun(dataa,type,orderClass);
-
+	var ordery;
+	var order = {};
+	dataa.order = [];
+	if(orderClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		ordery = 'desc';
+	}else if(orderClass == 'th-ordery th-ordery-current th-ordery-up'){
+		ordery = 'asc';
+	}
+	if(type){
+		order[type] = ordery;
+		dataa.order.push(order);
+	}
 	$.ajax({
 		url:'/mgr/clnt/_list',
 		data:JSON.stringify(dataa),
 		type:'POST',
-		contentType:'text/plain',
+        contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 		error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
@@ -760,24 +921,22 @@ function terminallist(){
         },
 		success:function(data){
 			var list=data.data.list;
-            var html="";
-            var checked;
+			var html="";
             var checkednum=0;
 			for (var i = 0; i < list.length; i++) {
                 if(isInArray(terminalidarr,list[i].client_id)==true){
                     checkednum++;
-                    checked = 'checked';
+                    html+="<a class='td block' terminalid="+list[i].client_id+"><input type='checkbox' class='verticalMiddle select' checked> <span class='verticalMiddle'> "+safeStr(list[i].hostname)+"</span></a>"; 
                 }else{
-                    checked = '';
+                    html+="<a class='td block' terminalid="+list[i].client_id+"><input type='checkbox' class='verticalMiddle select'> <span class='verticalMiddle'> "+safeStr(list[i].hostname)+"</span></a>";
                 }
-                html+="<a class='td block' terminalid="+list[i].client_id+"><input type='checkbox' class='verticalMiddle select' "+checked+"> <span class='verticalMiddle'> "+safeStr(list[i].hostname)+"</span></a>"; 
+				
 			};
             if(checkednum==list.length && list.length>0){
-                checked = true;
+                $(".providePop .terminallist .th input[type=checkbox]").prop("checked",true); 
             }else{
-                checked = false;
+                $(".providePop .terminallist .th input[type=checkbox]").prop("checked",false);
             }
-            $(".providePop .terminallist .th input[type=checkbox]").prop("checked",checked); 
 			$(".providePop .terminallist .container").html(html);
 			
 		}
@@ -788,11 +947,23 @@ function terminallist(){
 // 分发文件下一步按钮
 function provideNButton(a){
     if(terminalidarr==""){
-        delayHide("请选择终端");
+        $(".delayHide").show();
+        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择终端");
+        setTimeout(function(){$(".delayHide").hide()},2000);
     }else{
+        var ter_name = terminalidName[terminalidName.length-1];
+    
+        var ter_num = terminalidarr.length;
+        
         $(a).parents(".pop").hide();
         $(".provideNPop").show();
+        var name_num = ter_name + '的终端等' + ter_num + '台';
+        $(".provideNPop .ter_name span").html(name_num);
         $("#effTime").val(GetDateStr(1));
+        $('#providePosition option').eq(0).prop('selected','selected');
+        $('input[name=exeMethod]').eq(0).prop('checked','checked');
+        terSH(1);
+        $('#runPara').val('');
     }
 	
 }
@@ -802,23 +973,50 @@ function providePButton(a){
 	$(".providePop").show();
 }
 $("input[name=exeMethod]").click(function(){
-    if($(this).index()==1){
-        $("#runPara").prop("disabled",false);
-    }else{
-        $("#runPara").prop("disabled",true);
-    }
+    var index = $(this).index();
+    terSH(index);
 })
-$("input[name=terminalHint]").click(function(){
-    if($(this).index()==1){
-        $(".textarea textarea").prop("disabled",false);
-    }else{
+function terSH(index){
+    
+
+    if(index == 5){
+        $('#providePosition option[value=1]').prop('selected','selected');
+        $('#providePosition').prop("disabled",true);
+        $('.tipsUser').prop("checked",false);
+        $('.tipsUser').prop("disabled",true);
         $(".textarea textarea").prop("disabled",true);
+    }else{
+        $('.tipsUser').prop("checked",true);
+        var check = $('.tipsUser').prop('checked');
+
+        if(index == 3){
+            $('.runParaP').hide();
+        }else{
+            $('.runParaP').show();
+        }
+        if(check == true){
+            $('.textarea textarea').prop("disabled",false);
+        }else{
+            $('.textarea textarea').prop("disabled",true);
+        }
+        $('.tipsUser').prop("disabled",false);
+        $('#providePosition').prop("disabled",false);
+    }
+}
+$(document).on('click','.tipsUser',function(){
+    var check = $(this).prop('checked');
+    if(check == true){
+        $('.textarea textarea').prop("disabled",false);
+    }else{
+        $('.textarea textarea').prop("disabled",true);
     }
 })
 // 确认分发分发文件按钮
 function distributeFButton(a){
     var text=$(".provideNPop .textarea textarea").val();
-    if($("input[name=terminalHint]:checked").index()==1){
+    var tipsUser = $(".tipsUser").prop('checked');
+    var exe_index = $("input[name=exeMethod]:checked").index();
+    if(tipsUser == true){
         var show=true;
     }else{
         var show=false;
@@ -827,21 +1025,29 @@ function distributeFButton(a){
         var saveto="%DESKTOP%";
     }else if($("#providePosition").val()==1){
         var saveto="%TEMP%";
+    }else if($("#providePosition").val()==2){
+        var saveto="%SYSROOT%";
     }
-    if($("input[name=exeMethod]:checked").index()==1){
+    if(exe_index==1){
+        var launch=true;
+    }else if(exe_index==3){
+        var launch=false;
+    }else if(exe_index==5){
+        var background=true;
         var launch=true;
     }else{
-        var launch=false;
+        var background=false;
     }
     var name=$(".fileDistributeTContainer input[name=filename]:checked").next().html();
     var cmdline=$("#runPara").val();
-    var expire=getBeginTimes($("#effTime").val());
-    var dataa={"type":"msg_distrfile","clients":terminalidarr,"param":{"text":text,"name":name,"show":show,"save.to":saveto,"launch":launch,"cmdline":cmdline,"expire":expire}};
+    var effTime=getBeginTimes($("#effTime").val());
+    var dataa={"type":"msg_distrfile","clients":terminalidarr,"param":{"text":text,"name":name,"show":show,"save.to":saveto,"launch":launch,"cmdline":cmdline,"effTime":effTime,"background":background}};
     $.ajax({
         url:'/mgr/distr/_distr',
         data:JSON.stringify(dataa),
         type:'POST',
         contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
@@ -852,11 +1058,18 @@ function distributeFButton(a){
         },
         success:function(data){
         	if(data.errno == 0){
-	           delayHide("操作成功");
+        		
+	            $(".delayHideS").show();
+	            $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
+	            setTimeout(function(){$(".delayHideS").hide()},2000);
         	}else if(data.errno == -1){
-	           delayHide("操作失败");
+        		$(".delayHideS").show();
+	            $(".delayHideS .p1").html("<img src='images/unusualw.png' class='verticalMiddle'><span class='verticalMiddle'> 操作失败</span>");
+	            setTimeout(function(){$(".delayHideS").hide()},2000);
         	}else if(data.errno == -2){
-	           delayHide("文件不存在");
+        		$(".delayHideS").show();
+	            $(".delayHideS .p1").html("<img src='images/unusualw.png' class='verticalMiddle'><span class='verticalMiddle'> 文件不存在</span>");
+	            setTimeout(function(){$(".delayHideS").hide()},2000);
         	}
             $(a).parents(".pop").hide();
             $(".shade").hide();
@@ -868,7 +1081,9 @@ function distributeFButton(a){
 // 删除文件按钮
 $(".deleteB").click(function(){
     if($(".fileDistributeTContainer input[name=filename]:checked").length==0){
-        delayHide("请选择文件");
+        $(".delayHide").show();
+        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择文件");
+        setTimeout(function(){$(".delayHide").hide()},2000);
     }else{
         var filename=$(".fileDistributeTContainer input[name=filename]:checked").next().html();
         shade();
@@ -880,7 +1095,12 @@ $(".deleteB").click(function(){
 })
 //关闭弹层
 $(".closeW").click(function(){
-	hideButton($(this));
+	$(".shade").hide();
+	parent.$(".topshade").hide();
+    $(this).parent().parent().hide();
+    $('#picker').remove();
+	$('.btns').append('<div id="picker">选择文件</div>');
+//  uploader.destroy();
 });
 function hideButton(a){
 	$(".shade").hide();
@@ -896,8 +1116,8 @@ $(".closeWW").click(function(){
 });
 
 //卸载管理弹层
-// $(".uninstallMB").click(function(){
-// 	shade();
-// 	$(".uninstallMPop").show();
-// })
+$(".uninstallMB").click(function(){
+	shade();
+	$(".uninstallMPop").show();
+})
 

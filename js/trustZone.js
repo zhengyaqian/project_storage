@@ -21,71 +21,28 @@ $("body").on("blur","#numperpageinput",function(){
 })
 //排序
 
-$(document).on('click','.table th.th-ordery',function(){
+$(document).on('click','.tableth th.th-ordery',function(){
 	var toggleClass = $(this).attr('class');
-	var _this = $(this);
-    sortingFun(_this,toggleClass);
-
+	$(this).siblings('th.th-ordery').removeClass().addClass('th-ordery');
+	$(this).siblings('th.th-ordery').find('img').attr('src','images/th-ordery.png');
+	if(toggleClass == 'th-ordery'){
+		$(this).find('img').attr('src','images/th-ordery-up.png');
+		$(this).addClass('th-ordery-current th-ordery-up');
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up'){
+		$(this).find('img').attr('src','images/th-ordery-down.png');
+		$(this).addClass('th-ordery-current th-ordery-down');
+		
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		$(this).find('img').attr('src','images/th-ordery.png');
+		$(this).removeClass('th-ordery-current th-ordery-down th-ordery-up');
+	}
+	
 	var currentPage = $(this).parents('.bgContainer').find('.tcdPageCode span.current').text();
 	var currentNum = $(this).parents('.bgContainer').find('#numperpageinput').val();
 
 	var start = (parseInt(currentPage) - 1) * parseInt(currentNum);
 	trustZone(start);
 })
-//列表信息
-function columnsDataListFun (){
-	var columns = [
-		{
-			type: "value",title: "信任的项目",name: "value",
-			tHead:{style: {width: "30%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "30%"},customFunc: function (data, row, i) {
-				return "<span class='projectNameW'  title='"+safeStr(row['data.value'])+"'>"+safeStr(row['data.value'])+"</span>";
-			}},
-		},
-		{
-			type: "remark",title: "备注",name: "remark",
-			tHead:{style: {width: "30%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "30%"},customFunc: function (data, row, i) {
-                if(!("remark" in row)){
-                    return "<span class='projectNameW'>(无)</span>";
-                }else{
-                    return "<span class='projectNameW' title='"+safeStr(data)+"'>"+safeStr(data)+"</span>";
-                }
-            }},
-		},
-		{
-			type: "type",title: "项目类型",name: "type",
-			tHead:{style: {width: "13%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "13%"},customFunc: function (data, row, i) {
-                if(row["data.type"]=="path"){
-                    return "文件路径";
-                }else{
-                    return "文件校验和";
-                }
-            }},
-		},
-		{
-			type: "action",title: "信任文件动作",name: "action",
-			tHead:{style: {width: "15%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "15%"},customFunc: function (data, row, i) {
-                if(data==true){
-                    return "<input type='checkbox' class='verticalMiddle' onclick='updateTrustP(this)' checked>";
-                }else{
-                    return "<input type='checkbox' class='verticalMiddle' onclick='updateTrustP(this)'>";
-                }
-            }},
-		},
-		{
-            title: "操作",name: "",
-            tHead:{style: {width: "12%"}},
-			tBody:{style: {width: "12%"},customFunc: function (data, row, i) {return "<a onclick='deleteTP(this)' value='"+data+"' class='cursor underline blackfont'>删除</a>"}},
-		}
-	]
-	
-	var tabstr = new createTable(columns,[] ,$('.bgContainer .table'));
-	return tabstr;
-}
-var tabListstr =columnsDataListFun();
 // loading执行
 trustZone();
 // 信任区
@@ -96,31 +53,79 @@ function trustZone(start){
 		start = start;
 	}
     var dataa={"view":{"begin":start,"count":numperpage}};
-    var type = $('.bgContainer .table th.th-ordery.th-ordery-current').attr('type');
-	var orderClass = $('.bgContainer .table th.th-ordery.th-ordery-current').attr('class');
-    dataa = sortingDataFun(dataa,type,orderClass);
-    
-    $(".table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
+    var type = $('.bgContainer .tableth th.th-ordery.th-ordery-current').attr('type');
+	var orderClass = $('.bgContainer .tableth th.th-ordery.th-ordery-current').attr('class');
+	var ordery;
+	var order = {};
+	dataa.order = [];
+	if(orderClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		ordery = 'desc';
+	}else if(orderClass == 'th-ordery th-ordery-current th-ordery-up'){
+		ordery = 'asc';
+	}
+	if(type){
+		order[type] = ordery;
+		dataa.order.push(order);
+	}
+
+    $(".table table").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
   
     $.ajax({
         url:'/mgr/whitelist/_list',
         data:JSON.stringify(dataa),
         type:'POST',
         contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
+        	}else{
+        		
         	}
+            
         },
         success:function(data){
             var list=data.data.list;
+            var table="";
             var total=Math.ceil(data.data.view.total/numperpage);
-            if(list.length==0){
-                $(".bgContainer .table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;font-size:12px'><img src='images/notable.png'><p style='padding-top:24px'>暂无数据内容</p></div>"); 
-            }else{
-                tabListstr.setData(list);
+            table+="<table>";
+            table+="<tr id='tableAlign'>";
+            table+="<td width='30%'>信任的项目</td>";
+            table+="<td width='30%'>备注</td>";
+            table+="<td width='13%'>项目类型</td>";
+            table+="<td width='15%'>信任文件动作</td>";
+            table+="<td width='12%'>删除</td>";
+            table+="</tr>";
+
+            for(i=0;i<list.length;i++){
+                table+="<tr id='"+list[i].id+"'>";
+                table+="<td><span class='projectNameW'  title='"+safeStr(list[i]["data.value"])+"'>"+safeStr(list[i]["data.value"])+"</span></td>";
+                if(!("remark" in list[i])){
+                    table+="<td><span class='projectNameW'>(无)</span></td>";
+                }else{
+                    table+="<td><span class='projectNameW' title='"+safeStr(list[i].remark)+"'>"+safeStr(list[i].remark)+"</span></td>";
+                }
+                if(list[i]["data.type"]=="path"){
+                    table+="<td>文件路径</td>";
+                }else{
+                    table+="<td>文件校验和</td>";
+                }
+
+                if(list[i].action==true){
+                    table+="<td><input type='checkbox' class='verticalMiddle' onclick='updateTrustP(this)' checked></td>";
+                }else{
+                    table+="<td><input type='checkbox' class='verticalMiddle' onclick='updateTrustP(this)'></td>";
+                }
+                table+="<td><a onclick='deleteTP(this)' class='cursor underline blackfont'>删除</a></td>";
+                table+="</tr>";
             }
-            tbodyAddHeight();
+            table+="</table>";
+            if(list.length==0){
+                $(".bgContainer .table").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;font-size:12px'><img src='images/notable.png'><p style='padding-top:24px'>暂无数据内容</p></div>"); 
+            }else{
+                $(".bgContainer .table").html(table);
+            }
+            
 
             $(".clearfloat").remove();
             $(".tcdPageCode").remove();
@@ -135,21 +140,56 @@ function trustZone(start){
                 backFn:function(pageIndex){
                     $(".table table").html("");
                     dataa.view.begin = (pageIndex - 1) * numperpage;
-                    $(".table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:340px;'><img src='images/loading.gif'></div>");
+                    $(".table table").html("<div style='text-align:center;color:#6a6c6e;padding-top:340px;'><img src='images/loading.gif'></div>");
                     $.ajax({
                         url:'/mgr/whitelist/_list',
                         data:JSON.stringify(dataa),
                         type:'POST',
                         contentType:'text/plain',
+                        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
                         error:function(xhr,textStatus,errorThrown){
 				        	if(xhr.status==401){
 				        	    parent.window.location.href='/';
+				        	}else{
+				        		
 				        	}
+				            
 				        },
                         success:function(data){
                             var list=data.data.list;
-                            tabListstr.setData(list);
-                            tbodyAddHeight();
+                            var table="";
+                            table="<table>";
+                            table+="<tr id='tableAlign'>";
+                            table+="<td width='30%'>信任的项目</td>";
+                            table+="<td width='30%'>备注</td>";
+                            table+="<td width='13%'>项目类型</td>";
+                            table+="<td width='15%'>信任文件动作</td>";
+                            table+="<td width='12%'>删除</td>";
+                            table+="</tr>";
+                            for(i=0;i<list.length;i++){
+                                table+="<tr id='"+list[i].id+"'>";
+                                table+="<td><span class='projectNameW'  title='"+safeStr(list[i]["data.value"])+"'>"+safeStr(list[i]["data.value"])+"</span></td>";
+                                if(!("remark" in list[i])){
+                                    table+="<td><span class='projectNameW'>(无)</span></td>";
+                                }else{
+                                    table+="<td><span class='projectNameW'  title='"+safeStr(list[i].remark)+"'>"+safeStr(list[i].remark)+"</span></td>";
+                                }
+                                if(list[i]["data.type"]=="path"){
+                                    table+="<td>文件路径</td>";
+                                }else{
+                                    table+="<td>文件校验和</td>";
+                                }
+
+                                if(list[i].action==true){
+                                    table+="<td><input type='checkbox' class='verticalMiddle' onclick='updateTrustP(this)' checked></td>";
+                                }else{
+                                    table+="<td><input type='checkbox' class='verticalMiddle' onclick='updateTrustP(this)'></td>";
+                                }
+                                table+="<td onclick='deleteTP(this)' class='cursor'>删除</td>";
+                                table+="</tr>";
+                            }
+                            table+="</table>"; 	
+                            $(".bgContainer .table").html(table);
                         }
                     })
                 }
@@ -171,6 +211,7 @@ $("input[name='data.type']").change(function(){
         $("input[name='remark']").eq(0).prop("disabled",false);
         $(this).parents(".setBlockk").siblings(".setBlockk").eq(0).show();
         $(this).parents(".setBlockk").siblings(".setBlockk").eq(1).hide();
+        
     }else{
         $("input[name='data.value']").eq(0).prop("disabled",true);
         $("input[name='remark']").eq(0).prop("disabled",true);
@@ -178,7 +219,7 @@ $("input[name='data.type']").change(function(){
         $("input[name='remark']").eq(1).prop("disabled",false);
         $(this).parents(".setBlockk").siblings(".setBlockk").eq(0).hide();
         $(this).parents(".setBlockk").siblings(".setBlockk").eq(1).show();
-
+        uploadFiles();
     }
 })
 
@@ -195,10 +236,14 @@ function updateTrustP(a){
         data:JSON.stringify(dataa),
         type:'POST',
         contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
+        	}else{
+        		
         	}
+            
         },
         success:function(data){
 
@@ -248,17 +293,140 @@ $(".newTrustPPop input[type='file']").change(function(){
 
 //提交新建信任项目
 function submitTP(a){
-    var filename=document.getElementById('file');  
     if($("input[value='path']").is(":checked") && trim($("input[name='data.value'][type=text]").val())==""){
-       delayHide("请填写名称!");
+        $(".delayHide").show();
+        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请填写名称!");
+        setTimeout(function(){$(".delayHide").hide()},2000);
     }else if($("input[value='sha1']").is(":checked") && $("input[name='data.value'][type=file]").val()==""){
-       delayHide("请选择文件!");
+        $(".delayHide").show();
+        $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 请选择文件!");
+        setTimeout(function(){$(".delayHide").hide()},2000);
     }else{
-    	$("#form").submit();
-        $(".uploadingShade").show();
-        $(".uploading").show();
+            var action = $('#form input[name=action]').is(':checked');
+            var checked;
+            if(action){
+                checked = 'checked';
+            }else{
+                checked = '';
+            }
+            uploader.options.formData = { formData: { "fileVal": 'data.value', "data.type": 'sha1', "remark": $('#form input[name=remark]').val(),"action":  checked}}; 
+            
+        	uploader.upload(); 
+         	var $li = $( '.progress' ),
+		        $percent = $li.find('.percent');
+		        $bar = $li.find('.bar');
+	        // 文件上传过程中创建进度条实时显示。
+			uploader.on( 'uploadProgress', function( file, percentage ) {
+			    var percentVal = Math.ceil(percentage * 100) + '%';
+                $bar.width(percentVal)
+                $percent.html(percentVal);
+                $('.uploading').show();
+                $(".uploadingShade").show();
+
+			});
+		
+	   
+	        uploader.on( 'uploadSuccess', function( file ) {
+	        	var percentVal = '100%';
+                    $bar.width(percentVal)
+                    $percent.html(percentVal);
+                    
+	            // 添加成功提示
+	             $(".delayHideS").show();
+	             $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 添加成功</span>");
+	             setTimeout(function(){$(".delayHideS").hide()},2000);
+                 trustZone();
+                 $(".newTrustPPop .buttons a").eq(1).click();
+	             
+	         });							
+	         
+	         uploader.on( 'uploadError', function( file,reason ) {
+	         	
+	         	if(reason == 'http'){
+	         		parent.window.location.href='/';
+	         	}else{
+	         		$(".delayHideS").show();
+	             	$(".delayHideS .p1").html("<img src='images/unusualw.png' class='verticalMiddle'><span class='verticalMiddle'> 操作失败</span>");
+	             	setTimeout(function(){$(".delayHideS").hide()},2000);
+	         	}
+	             
+	         });
+	        uploader.on("uploadFinished",function() {
+				$('.uploading').fadeOut();
+				$(".uploadingShade").hide();
+	             $('#picker').remove();
+	             $('.btns').append('<div id="picker">选择文件</div>');
+	        	 uploader.reset();
+	             
+	        });
     }
     
+}
+
+//添加信任条目--信任文件校验和--上传文件
+var uploader;
+function uploadFiles(){
+    uploader =new WebUploader.Uploader({
+	
+	    // swf文件路径
+	    swf: 'js/webuploader-0.1.5/Uploader.swf',
+	    // 文件接收服务端。
+        server: '/mgr/whitelist/_create',
+        //文件数量
+        fileNumLimit:1,
+        fileSingleSizeLimit:2147483648,
+	    // 选择文件的按钮。可选。
+	    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+	    pick: '#picker',
+	    // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+	    resize: false,
+    });
+    //兼容ie8无法上传的问题
+    uploader.options.headers = {'Accept' : 'application/x-ms-application, image/jpeg, application/xaml+xml, image/gif, image/pjpeg, application/x-ms-xbap, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, */*', "HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')};
+
+    var $list = $('#thelist');
+	var $name = $('.newTrustPPop input[name=remark]');
+    //当文件被添加之前操作
+    uploader.on( 'beforeFileQueued', function( file ){
+        $list.empty();
+        $name.empty();
+        uploader.reset();
+    });
+
+    // 当有文件被添加进队列的时候
+    uploader.on( 'fileQueued', function( file ) {
+        if(file.name.length > 30){
+            $(".delayHide").show();
+            $(".delayHide").css('width','auto');
+            $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 文件名称不能超过30个字符！");
+            setTimeout(function(){$(".delayHide").hide()},2000);
+            
+            return false;
+        }
+        $list.append( '<div id="' + file.id + '" class="item">' +
+            '<a class="info">' + file.name + '</a>' +
+        '</div>' );
+        
+        $list.siblings('.placeholder').hide();
+        $name.siblings('.placeholder').hide();
+        $name.val(file.name);
+        $('fileValue').val(file.name);
+    })
+	/**
+     * 验证文件格式以及文件大小
+     */
+	uploader.on("error", function (type) {
+        if (type == "Q_TYPE_DENIED") {
+            $(".delayHide").show();
+            $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 文件不能为空！");
+            setTimeout(function(){$(".delayHide").hide()},2000);
+        }else if (type == "F_EXCEED_SIZE") {
+            $(".delayHide").show();
+            $(".delayHide").css('width','auto');
+            $(".delayHide .p1").html("<img src='images/unusualw.png' class='verticalMiddle'> 文件大小不能超过2G！");
+            setTimeout(function(){$(".delayHide").hide()},2000);
+        }
+    });
 }
 
 //弹出删除
@@ -279,10 +447,14 @@ function sureDeleteButton(a){
             data:{},
             type:'GET',
             contentType:'text/plain',
+            headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
             error:function(xhr,textStatus,errorThrown){
 	        	if(xhr.status==401){
 	        	    parent.window.location.href='/';
+	        	}else{
+	        		
 	        	}
+	            
 	        },
             success:function(data){
                 trustZone();
@@ -290,15 +462,17 @@ function sureDeleteButton(a){
             }
         });  
 }
-tbodyAddHeight();
-function tbodyAddHeight(){
+
+
+
+
 //调整页面内元素高度
 var mainlefth=parent.$("#iframe #mainFrame").height();
 
-$(".main .trustTable tbody").css({height:mainlefth-336});
-}
-
+$(".main .trustTable").css({height:mainlefth-336});
 window.onresize = function(){
-    tbodyAddHeight();
+    var mainlefth=parent.$("#iframe #mainFrame").height();
+
+    $(".main .trustTable").css({height:mainlefth-336});
 }
 

@@ -39,7 +39,8 @@
         <p class="mainbody textIndent">
             为了更好的保障内网安全，决定从即日起全面安装部署火绒终端安全管理系统。您可以通过下面的按钮进行下载并安装，安装后无需任何设置可以立即使用
         </p>
-        <a class="downloadButton cursor" href="/deploy/installer.exe">下载客户端</a>
+        <a class="downloadButton cursor" href="/deploy/installer.exe">下载Windows版本</a>
+        <a class="downloadButton cursor" href="/tools/linux-inst.sh" style="margin-left:20px;">下载Linux版本</a>
     </div>
     <div class="clear">
     </div>
@@ -77,7 +78,7 @@
 </div>
 <div class="bottom">
 	<div class="container">
-		 <a href="http://www.huorong.cn/" target="_blank">Copyright 2017-2018 北京火绒网络科技有限公司</a>
+		 <a href="http://www.huorong.cn/" target="_blank">Copyright 2017-2019 北京火绒网络科技有限公司</a>
     </div>
 </div>
 <div class="delayHide">
@@ -90,12 +91,12 @@
 	<div class="left"><img src="images/fpw.png"></div>
 	<div class="right">
         <p class="stitle">忘记admin账号密码</p>
-		<p class="describe">请运行配置工具（开始菜单-所有程序-火绒企</p>
-		<p class="describe">业安全软件-火绒企业安全软件配置工具），不</p>
+		<p class="describe">请运行配置工具（开始菜单-所有程序-火绒终</p>
+		<p class="describe">端安全管理系统-火绒终端安全控制中心设置），不</p>
 		<p class="describe">改变IP和端口，重新设置密码即可。</p>
 
         <p class="stitle">忘记其他非admin账号密码</p>
-        <p class="describe">请联系火绒企业管理中心admin账号管理员,请</p>
+        <p class="describe">请联系火绒终端安全管理系统admin账号管理员,请</p>
         <p class="describe">管理员在【账号管理】中为您重新设置密码。</p>
 	</div>
 	<div class="clear"></div>
@@ -178,7 +179,8 @@
 			$.ajax({
 				url:'/auth/_login',
 				data:JSON.stringify({"username":username,"password":hex_sha1(password),remember:remeber}),
-				type:'POST',
+                type:'POST',
+                headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 				success:function(data){
                     // data.errno=-2;
 					if(data.errno==0){
@@ -271,6 +273,29 @@
     $("body").on("blur","input[type=text],input[type=password]",function(){
         $(this).css({border:"1px solid #e5e6e7",transition:0.5})
     })
+
+    function getCookie(cookie_name)
+{
+    var allcookies = document.cookie;
+    var cookie_pos = allcookies.indexOf(cookie_name);   //索引的长度
+  
+    // 如果找到了索引，就代表cookie存在，
+    // 反之，就说明不存在。
+    if (cookie_pos != -1)
+    {
+        // 把cookie_pos放在值的开始，只要给值加1即可。
+        cookie_pos += cookie_name.length + 1;      //这里容易出问题，所以请大家参考的时候自己好好研究一下
+        var cookie_end = allcookies.indexOf(";", cookie_pos);
+  
+        if (cookie_end == -1)
+        {
+            cookie_end = allcookies.length;
+        }
+  
+        var value = unescape(allcookies.substring(cookie_pos, cookie_end));         //这里就可以得到你想要的cookie的值了。。。
+    }
+    return value;
+}
 </script>
 </body>
 </html>

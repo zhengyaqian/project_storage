@@ -27,102 +27,29 @@ $("body").on("blur", "#numperpageinput", function() {
 	nodesListFun();
 })
 //排序
-$(document).on('click','.tableContainer .table th.th-ordery',function(){
+
+
+$(document).on('click','.tableContainer .tableth th.th-ordery',function(){
 	var toggleClass = $(this).attr('class');
-	var _this = $(this);
-    sortingFun(_this,toggleClass);
+	$(this).siblings('th.th-ordery').removeClass().addClass('th-ordery');
+	$(this).siblings('th.th-ordery').find('img').attr('src','images/th-ordery.png');
+	if(toggleClass == 'th-ordery'){
+		$(this).find('img').attr('src','images/th-ordery-up.png');
+		$(this).addClass('th-ordery-current th-ordery-up');
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up'){
+		$(this).find('img').attr('src','images/th-ordery-down.png');
+		$(this).addClass('th-ordery-current th-ordery-down');
+		
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		$(this).find('img').attr('src','images/th-ordery.png');
+		$(this).removeClass('th-ordery-current th-ordery-down th-ordery-up');
+	}
+	
 	var currentPage = $(this).parents('.tableContainer').find('.tcdPageCode span.current').text();
 	var currentNum = $(this).parents('.tableContainer').find('#numperpageinput').val();
 	var start = (parseInt(currentPage) - 1) * parseInt(currentNum);
 	nodesListFun(start);
 })
-//列表信息
-function columnsDataListFun (){
-	var columns = [
-		{
-			type: "hostname",title: "中心名称",name: "hostname",
-			tHead:{style: {width: "15%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "15%"},class:"hostnameTd",customFunc: function (data, row, i) {return "<span taskid ='"+row.server_id+"'>" +safeStr(data)+ "<i class='fa fa-pencil'></i></span>"}},
-		},{
-			type: "ip",title: "IP",name: "ip",
-			tHead:{style: {width: "10%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "10%"},customFunc: function (data, row, i) {return safeStr(data)}},
-		},{
-			type: "client_count",title: "终端部署",name: "client_count",
-			tHead:{style: {width: "7%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png' style='right: -10px;'/>"}},
-			tBody:{style: {width: "7%"},customFunc: function (data, row, i) {
-				if(data > 99999999){return "><span>" + data.toString().slice(0,1) + "亿+</span>";
-				}else{return "<span>" + data + "</span>";}
-			}}
-		},{
-			type: "online_count",title: "在线终端",name: "online_count",
-			tHead:{style: {width: "7%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png' style='right: -10px;'/>"}},
-			tBody:{style: {width: "7%"},customFunc: function (data, row, i) {
-				if(data > 99999999){return "><span>" + data.toString().slice(0,1) + "亿+</span>";
-				}else{return "<span>" + data + "</span>";}
-			}}
-		},{
-			type: "virus_count",title: "病毒防护",name: "virus_count",
-			tHead:{style: {width: "7%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png' style='right: -10px;'/>"}},
-			tBody:{style: {width: "7%"},customFunc: function (data, row, i) {
-				if(data > 99999999){return "><span>" + data.toString().slice(0,1) + "亿+</span>";
-				}else{return "<span>" + data + "</span>";}
-			}},
-		},{
-			type: "sysprot_count",title: "系统防护",name: "sysprot_count",
-			tHead:{style: {width: "7%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png' style='right: -10px;'/>"}},
-			tBody:{style: {width: "7%"},customFunc: function (data, row, i) {
-				if(data > 99999999){return "><span>" + data.toString().slice(0,1) + "亿+</span>";
-				}else{return "<span>" + data + "</span>";}
-			}},
-		},{
-			type: "netprot_count",title: "网络防护",name: "netprot_count",
-			tHead:{style: {width: "7%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png' style='right: -10px;'/>"}},
-			tBody:{style: {width: "7%"},customFunc: function (data, row, i) {
-				if(data > 99999999){return "><span>" + data.toString().slice(0,1) + "亿+</span>";
-				}else{return "<span>" + data + "</span>";}
-			}},
-		},{
-			type: "heartbeat",title: "最近通讯时间",name: "heartbeat",
-			tHead:{style: {width: "13%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "13%"},customFunc: function (data, row, i) {
-                    return "<span>" + safeStr(getLocalTime(data)) + "</span>";
-            }},
-		},{
-			type: "lic_quota_type",title: "分配授权",name: "lic_quota_type",
-			tHead:{style: {width: "10%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "10%",position:"relative"},class:"lic_quota",customFunc: function (data, row, i) {
-				var select = "<ul class='lic_quota_type none'><li type='0' taskid ='"+row.server_id+"'>独立授权</li><li type='1'  taskid ='"+row.server_id+"'>动态分配</li><li type='2' taskid ='"+row.server_id+"'>自定义分配</li></ul>";
-				if(data == 0){
-					return "<span class='lic_quota_type_span'>独立授权</span><input type='text' min='0' class='lic_quota_type_inp'/><i class='fa fa-sort-desc select-desc'></i>" + select;
-				}else if(data == 1){
-					return "<span class='lic_quota_type_span'>动态分配</span><input type='text' min='0' class='lic_quota_type_inp'/><i class='fa fa-sort-desc select-desc'></i>" + select;
-				}else if(data == 2){
-					return "<span class='lic_quota_type_span' style='display:none;'>自定义分配</span><input type='text' min='0' class='lic_quota_type_inp' value='"+row.lic_quota_alloc+"' defaultValue = '"+row.lic_quota_alloc+"' style='display:block;'/>" + select + "</td>";
-				}else{
-					return "--";
-				}
-            }},
-		},{
-			type: "status",title: "状态",name: "status",
-			tHead:{style: {width: "10%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "10%"},customFunc: function (data, row, i) {
-				if(data == 0){
-					return "正常";
-				}else{
-					return "<span class='orange'>"+fieldHandle(licenseStatusField,data)+"</span>";
-				}
-			}}
-		},{
-			type: "",title: "操作",name: "",
-			tHead:{style: {width: "8%"},customFunc: function (data, row, i) {return ""}},
-			tBody:{style: {width: "8%"},customFunc: function (data, row, i) {
-				return "<a class='cursor underline blackfont' href='/mgr/nodes/_connect?id="+row.server_id+"' target='_blank'>登录</a>"; }}
-		}]
-	var tabstr = new createTable(columns,[] ,$('.tableContainer .table'));
-	return tabstr;
-}
-var tabListstr = columnsDataListFun();
 //多级中心列表
 var ajaxtable = null;
 nodesListFun();
@@ -141,31 +68,127 @@ function nodesListFun(start) {
 			"count": numperpage
 		}
 	};
-	var type = $('.tableContainer .table th.th-ordery.th-ordery-current').attr('type');
-	var orderClass = $('.tableContainer .table th.th-ordery.th-ordery-current').attr('class');
-	dataa = sortingDataFun(dataa,type,orderClass);
-	$(".table tbody").append("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
+	var type = $('.tableContainer .tableth th.th-ordery.th-ordery-current').attr('type');
+	var orderClass = $('.tableContainer .tableth th.th-ordery.th-ordery-current').attr('class');
+	var ordery;
+	var order = {};
+	dataa.order = [];
+	if(orderClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		ordery = 'desc';
+	}else if(orderClass == 'th-ordery th-ordery-current th-ordery-up'){
+		ordery = 'asc';
+	}
+	if(type){
+		order[type] = ordery;
+		dataa.order.push(order);
+	}
+	$(".table table #tableAlign").siblings('tr').html('');
+	$(".table table").append("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
 	ajaxtable =
 		$.ajax({
 			url: '/mgr/nodes/_list',
 			type: 'POST',
 			data:JSON.stringify(dataa),
 			contentType: 'text/plain',
+			headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 			error: function(xhr, textStatus, errorThrown) {
 				if(xhr.status == 401) {
 					parent.window.location.href = '/';
+				} else {
+
 				}
 			},
 			success: function(data) {
 				if(data.errno == 0){
 					var list = data.data.list;
-					var pages = Math.ceil(data.data.view.total / numperpage);
-						if(list.length == 0) {
-							$(".table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;font-size:12px'><img src='images/notable.png'><p style='padding-top:24px'>暂无数据内容</p></div>");
-						}else{
-							tabListstr.setData(list);
+				var pages = Math.ceil(data.data.view.total / numperpage);
+					
+					var tableth = "";
+						tableth += "<tr id='tableAlign'>"
+	            		tableth += "<td width='15%'>中心名称</td>"
+	            		tableth += "<td width='10%'>IP</td>"
+	            		tableth += "<td width='7%'>终端部署</td>"
+	            		tableth += "<td width='7%'>在线终端</td>"
+	                	tableth += "<td width='7%'>病毒防护</td>"
+	                	tableth += "<td width='7%'>系统防护</td>"
+	                	tableth += "<td width='7%'>网络防护</td>"
+	            		tableth += "<td width='13%'>最近通讯时间</td>"
+	            		tableth += "<td width='8%'>分配授权</td>"
+	            		tableth += "<td width='8%'>状态</td>"
+	            		tableth += "<td width='10%'>操作</td>"
+	                	
+	                    tableth += "</tr>"
+						$(".table table").html(tableth);
+						for(i = 0; i < list.length; i++) {
+							var table = "";
+							table += "<tr taskid='" + list[i].server_id + "'>";
+							table += "<td class='hostnameTd'><span>" +safeStr(list[i].hostname)+ "<i class='fa fa-pencil'></i></span></td>";
+							table += "<td><span>" + safeStr(list[i].ip) + "</span></td>";
+							if(list[i].client_count > 99999999){
+								table += "<td><span>" + list[i].client_count.toString().slice(0,1) + "亿+</span></td>";
+							}else{
+								table += "<td><span>" + list[i].client_count + "</span></td>";
+							}
+							if(list[i].online_count > 99999999){
+								table += "<td><span>" + list[i].online_count.toString().slice(0,1) + "亿+</span></td>";
+							}else{
+								table += "<td><span>" + list[i].online_count + "</span></td>";
+							}
+							if(list[i].virus_count > 99999999){
+								table += "<td><span>" + list[i].virus_count.toString().slice(0,1) + "亿+</span></td>";
+							}else{
+								table += "<td><span>" + list[i].virus_count + "</span></td>";
+							}
+							if(list[i].sysprot_count > 99999999){
+								table += "<td><span>" + list[i].sysprot_count.toString().slice(0,1) + "亿+</span></td>";
+							}else{
+								table += "<td><span>" + list[i].sysprot_count + "</span></td>";
+							}
+							if(list[i].netprot_count > 99999999){
+								table += "<td><span>" + list[i].netprot_count.toString().slice(0,1) + "亿+</span></td>";
+							}else{
+								table += "<td><span>" + list[i].netprot_count + "</span></td>";
+							}
+							
+							
+							table += "<td><span>" + safeStr(getLocalTime(list[i].heartbeat)) + "</span></td>";
+	
+							if(list[i].lic_quota_type == 0){
+								table += "<td>独立授权</td>";
+							}else if(list[i].lic_quota_type == 1){
+								table += "<td>动态分配</td>";
+							}else if(list[i].lic_quota_type == 2){
+								table += "<td>自定义分配</td>";
+							}else{
+								table += "<td></td>";
+							}
+							
+							if(list[i].status == 0){
+								table += "<td>正常</td>";
+							}else if(list[i].status == 1){
+								table += "<td class='orange'>未授权</td>";
+							}else if(list[i].status == 2){
+								table += "<td class='orange'>授权已满</td>";
+							}else if(list[i].status == 3){
+								table += "<td class='orange'>授权到期</td>";
+							}else if(list[i].status == 4){
+								table += "<td class='orange'>需要升级</td>";
+							}else{
+								table += "<td></td>";
+							}
+		
+							table += "<td><a class='cursor underline blackfont '  href='/mgr/nodes/_connect?id="+list[i].server_id+"' target='_blank'>登录</a><a class=' cursor underline blackfont editQuota' quota_type='"+ list[i].lic_quota_type +"' quota_alloc='"+ list[i].lic_quota_alloc +"' >编辑授权</a></td>";
+							
+							table += "</tr>";
+							
+		
+							$(".table table").append(table);
+							$("tr[taskid="+list[i].server_id+"] select option[type="+list[i].lic_quota_type+"]").attr("selected",true);
+							
 						}
-						tbodyAddHeight();
+						if(list.length == 0) {
+							$(".table table").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;font-size:12px'><img src='images/notable.png'><p style='padding-top:24px'>暂无数据内容</p></div>");
+						}
 						$(".tableContainer .clearfloat").remove();
 						$(".tableContainer .tcdPageCode").remove();
 						$(".tableContainer .totalPages").remove();
@@ -176,19 +199,88 @@ function nodesListFun(start) {
 							pageCount: pages,
 							current: parseInt(current),
 							backFn: function(pageIndex) {
+							$(".table table").html("");
+	
 							start = (pageIndex - 1) * numperpage;
 							dataa.view.begin = start;
-							$(".table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
+							$(".table").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
 							ajaxtable =
 								$.ajax({
 									url: '/mgr/nodes/_list',
 									data: JSON.stringify(dataa),
 									type: 'POST',
 									contentType: 'text/plain',
+									headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 									success: function(data) {
 										var list = data.data.list;
-					                    tabListstr.setData(list);
-                            			tbodyAddHeight();
+										for(i = 0; i < list.length; i++) {
+											var table = "";
+											table += "<tr taskid='" + list[i].server_id + "'>";
+											table += "<td class='hostnameTd'><span>" +safeStr(list[i].hostname)+ "<i class='fa fa-pencil'></i></span></td>";
+											table += "<td><span>" + safeStr(list[i].ip) + "</span></td>";
+											if(list[i].client_count > 99999999){
+												table += "<td><span>" + list[i].client_count.toString().slice(0,1) + "亿+</span></td>";
+											}else{
+												table += "<td><span>" + list[i].client_count + "</span></td>";
+											}
+											if(list[i].online_count > 99999999){
+												table += "<td><span>" + list[i].online_count.toString().slice(0,1) + "亿+</span></td>";
+											}else{
+												table += "<td><span>" + list[i].online_count + "</span></td>";
+											}
+											if(list[i].virus_count > 99999999){
+												table += "<td><span>" + list[i].virus_count.toString().slice(0,1) + "亿+</span></td>";
+											}else{
+												table += "<td><span>" + list[i].virus_count + "</span></td>";
+											}
+											if(list[i].sysprot_count > 99999999){
+												table += "<td><span>" + list[i].sysprot_count.toString().slice(0,1) + "亿+</span></td>";
+											}else{
+												table += "<td><span>" + list[i].sysprot_count + "</span></td>";
+											}
+											if(list[i].netprot_count > 99999999){
+												table += "<td><span>" + list[i].netprot_count.toString().slice(0,1) + "亿+</span></td>";
+											}else{
+												table += "<td><span>" + list[i].netprot_count + "</span></td>";
+											}
+											
+											
+											table += "<td><span>" + safeStr(getLocalTime(list[i].heartbeat)) + "</span></td>";
+											if(list[i].lic_quota_type == 0){
+												table += "<td>独立授权</td>";
+											}else if(list[i].lic_quota_type == 1){
+												table += "<td>动态分配</td>";
+											}else if(list[i].lic_quota_type == 2){
+												table += "<td>自定义分配</td>";
+											}else{
+												table += "<td></td>";
+											}
+					
+											
+											if(list[i].status == 0){
+												table += "<td>正常</td>";
+											}else if(list[i].status == 1){
+												table += "<td class='orange'>未授权</td>";
+											}else if(list[i].status == 2){
+												table += "<td class='orange'>授权已满</td>";
+											}else if(list[i].status == 3){
+												table += "<td class='orange'>授权到期</td>";
+											}else if(list[i].status == 4){
+												table += "<td class='orange'>需要升级</td>";
+											}else{
+												table += "<td></td>";
+											}
+						
+											table += "<td><a class='cursor underline blackfont'  href='/mgr/nodes/_connect?id="+list[i].server_id+"' target='_blank'>登录</a><a class=' cursor underline blackfont editQuota' quota_type='"+ list[i].lic_quota_type +"' quota_alloc='"+ list[i].lic_quota_alloc +"' >编辑授权</a></td>";
+											
+											table += "</tr>";
+											
+						
+											$(".table table").append(table);
+											$("tr[taskid="+list[i].server_id+"] select option[type="+list[i].lic_quota_type+"]").attr("selected",true);
+											
+										}
+	
 									}
 								});
 	
@@ -196,7 +288,11 @@ function nodesListFun(start) {
 					})
 						
 				}else{	
-					delayHide("获取失败");
+					$(".delayHideS").show();
+					$(".delayHideS .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>获取失败</span>");
+					setTimeout(function() {
+						$(".delayHideS").hide()
+					}, 2000);
 				}
 			}
 		})
@@ -211,17 +307,22 @@ function nodesStatus(){
 			type: 'GET',
 			data:{},
 			contentType: 'text/plain',
+			headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 			error: function(xhr, textStatus, errorThrown) {
 				if(xhr.status == 401) {
 					parent.window.location.href = '/';
+				} else {
+
 				}
 			},
 			success: function(data) {
 				if(data.errno == 0){
 					if(data.data.heartbeat == 0){
 						$('.topTips').html('<a>与上级中心最近通讯时间:<span>未通讯</span></a>');
+						
 					}else{
 						$('.topTips').html('<a>与上级中心最近通讯时间:<span>' + getLocalTime(data.data.heartbeat) + '</span></a>');
+						
 					}
 
 				}
@@ -240,86 +341,6 @@ $(document).on('keyup',".lic_quota_type_inp",function(){
 })           
 
 
-//分配授权控制下拉列表显示隐藏
-$(document).on('click','.lic_quota_type_span,.select-desc,.lic_quota_type_inp,.select-desc',function(){
-	$(this).siblings('ul').toggleClass('none');
-	$(this).parents('tr').siblings('tr').find('ul').addClass('none');
-})
-//分配授权控制li模拟下拉列表
-$(document).on('click','.lic_quota_type li',function(){
-	var value = $(this).text();
-	var type = $(this).attr('type');
-	var id = $(this).attr('taskid');
-	var _this = $(this).parent('ul.lic_quota_type').siblings('.lic_quota_type_span');
-	$(this).parents('ul.lic_quota_type').siblings('.lic_quota_type_inp').removeAttr('defaultValue');
-	$(this).parent('ul.lic_quota_type').siblings('.lic_quota_type_inp').val('');
-	$(this).parent('ul.lic_quota_type').siblings('.lic_quota_type_inp').hide();
-	if(type == 2){
-		_this.hide();
-		$(this).parent('ul.lic_quota_type').siblings('.select-desc').hide();
-		$(this).parent('ul.lic_quota_type').siblings('.lic_quota_type_inp').attr('taskid',id);
-		$(this).parent('ul.lic_quota_type').siblings('.lic_quota_type_inp').show().val('');
-		$(this).parent('ul.lic_quota_type').siblings('.lic_quota_type_inp').focus();
-	}else{
-		
-		$(this).parent('ul.lic_quota_type').siblings('.select-desc').show();
-		_this.show();
-
-		if(value != _this.text()){
-			licTypeUpdate(type,id,'','');
-			
-		}
-		_this.html(value);
-
-	}
-	
-	$(this).parent('ul.lic_quota_type').addClass('none');
-	
-	
-});
-//自定义分配确定
-$(document).on('click','.licBtn',function(){
-	var index = $(this).attr('index');
-	var _this = $('.table table tr').eq(parseInt(index)).find('.lic_quota');
-	_this.find('.lic_quota_type_span').hide();
-	_this.find('.lic_quota_type_inp').show();
-	_this.find('.select-desc').hide();
-	_this.find('.lic_quota_type_inp').focus();
-	
-	$(this).parents('.licQuotaTypePop').hide();
-	$('.shade').hide();
-
-})
-//自定义分配修改
-$(document).on('blur','.lic_quota_type_inp',function(){
-	var id = $(this).attr('taskid');
-	var value = $(this).val();
-	var defaultValue = $(this).attr('defaultValue');
-	var _this = $(this);
-	
-	setTimeout(function(){
-	if(_this.parents('.lic_quota').find('.lic_quota_type_span').css('display') == 'inline-block'){
-		return false;
-	}
-    //val存在，且与原始val不同，发送请求
-    if(value && value != defaultValue){
-		_this.attr('defaultValue',value);
-		licTypeUpdate('2',id,value,'');
-	}
-    //val不存在，原始val不存在，展示原始独立或者动态状态
-	if(!value && !defaultValue ){
-		_this.parents('.lic_quota').find('.lic_quota_type_span').show();
-		_this.parents('.lic_quota').find('.lic_quota_type_inp').removeAttr('defaultValue');
-		_this.parents('.lic_quota').find('.select-desc').show();
-		_this.hide();
-	}
-	//val不存在，原始val存在，val赋值为原始val（此时为input原来有值，但未被修改状态）
-	if(!value && defaultValue|| value == defaultValue){
-		 _this.val(defaultValue);
-	}
-	_this.siblings('ul.lic_quota_type').addClass('none');
-	}, 300);
-});
 //回车事件    自定义分配修改、中心名称修改
 $(document).on('keydown','.lic_quota_type_inp,.hostnameInp',function(e){
 	if (!e) e = window.event;
@@ -331,8 +352,7 @@ $(document).on('keydown','.lic_quota_type_inp,.hostnameInp',function(e){
 $(document).on('click','.hostnameTd i',function(){
 	var spanText = $(this).parent('span').text();
 	var thisIndex = $(this).parents('tr').index();
-	var taskid = $(this).parents('span').attr('taskid');
-	$(this).parents('.hostnameTd').html("<input type='text' taskid='"+taskid+"' value='"+safeStr(spanText)+"' class='hostnameInp' defaultValue = '"+safeStr(spanText)+"' maxlength='20'/>");
+	$(this).parents('.hostnameTd').html("<input type='text' value='"+safeStr(spanText)+"' class='hostnameInp' defaultValue = '"+safeStr(spanText)+"' maxlength='20'/>");
 	$('.table tr').eq(parseInt(thisIndex)).find('.hostnameInp').focus();
 })
 
@@ -340,9 +360,10 @@ $(document).on('click','.hostnameTd i',function(){
 $(document).on('blur','.hostnameInp',function(){
 	var defaultValue = $(this).attr('defaultValue');
 	var aliasname = $(this).val();
-	var id = $(this).attr('taskid');
+	var id = $(this).parents('tr').attr('taskid');
 	if(aliasname != defaultValue){
-		licTypeUpdate('',id,'',aliasname);
+		
+		licTypeUpdate('', id, '', '', aliasname);
 	}
 	$(this).parents('.hostnameTd').html("<span>" +safeStr(aliasname)+ "<i class='fa fa-pencil'></i></span>");
 	
@@ -364,7 +385,7 @@ $('body').click(function(e) {
 
 //自定义分配修改
 
-function licTypeUpdate(type,id,alloc,aliasname){	
+function licTypeUpdate(type, id, w_alloc, l_alloc, aliasname){	
 	
 	var data = {
 		"server_id" : parseInt(id),
@@ -378,16 +399,27 @@ function licTypeUpdate(type,id,alloc,aliasname){
 			dataType : 'json',
 			data: JSON.stringify(data),
 			contentType: 'text/plain',
+			headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 			error: function(xhr, textStatus, errorThrown) {
 				if(xhr.status == 401) {
 					parent.window.location.href = '/';
+				} else {
+
 				}
 			},
 			success: function(data) {
 				if(data.errno == 0){
-					delayHideS("操作成功");
+					$(".delayHideS").show();
+					$(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
+					setTimeout(function() {
+						$(".delayHideS").hide()
+					}, 2000);
 				}else{
-					delayHide("操作失败");
+					$(".delayHide").show();
+					$(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>操作失败</span>");
+					setTimeout(function() {
+						$(".delayHide").hide()
+					}, 2000);
 				}
 			}
 		})
@@ -404,6 +436,7 @@ $(document).on('click','.topCenter',function(){
 			type: 'GET',
 			data:{},
 			contentType: 'text/plain',
+			headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 			error: function(xhr, textStatus, errorThrown) {
 				if(xhr.status == 401) {
 					parent.window.location.href = '/';
@@ -454,7 +487,11 @@ $(document).on('click','.topCenter',function(){
 					}
 					
 				}else{
-					delayHide("操作失败");
+					$(".delayHide").show();
+					$(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>操作失败</span>");
+					setTimeout(function() {
+						$(".delayHide").hide()
+					}, 2000);
 				}
 
 			}
@@ -488,15 +525,30 @@ function saveNodes(){
 	var leakrepair = $(".nodesPop input[name=leakrepair]").prop("checked");
 	
 	if(!addr && enabled == true){
-		delayHide("请输入上级控制中心地址");		
+		$(".delayHide").show();
+		$(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>请输入上级控制中心地址</span>");
+		setTimeout(function() {
+			$(".delayHide").hide()
+		}, 2000);
+		
 		return false;
 	}
 	if(addr.substring(0,4) != 'http' && addr.substring(0,5) != 'https' && enabled == true){
-		delayHide("中心地址格式输入不正确");
+		$(".delayHide").show();
+		$(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>中心地址格式输入不正确</span>");
+		setTimeout(function() {
+			$(".delayHide").hide()
+		}, 2000);
+		
 		return false;
 	}
 	if(!token && enabled == true){
-		delayHide("请输入上级控制中心秘钥");
+		$(".delayHide").show();
+		$(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>请输入上级控制中心秘钥</span>");
+		setTimeout(function() {
+			$(".delayHide").hide()
+		}, 2000);
+		
 		return false;
 	}
 
@@ -517,6 +569,7 @@ function saveNodes(){
 			type: 'POST',
 			data: JSON.stringify(data),
 			contentType: 'text/plain',
+			headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
 			error: function(xhr, textStatus, errorThrown) {
 				if(xhr.status == 401) {
 					parent.window.location.href = '/';
@@ -526,11 +579,19 @@ function saveNodes(){
 			},
 			success: function(data) {
 				if(data.errno == 0){
-					delayHideS("操作成功");
+					$(".delayHideS").show();
+					$(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
+					setTimeout(function() {
+						$(".delayHideS").hide()
+					}, 2000);
 					$('.nodesPop').hide();
 					$('.shade').hide();
 				}else{
-					delayHide("操作失败");
+					$(".delayHide").show();
+					$(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'>操作失败</span>");
+					setTimeout(function() {
+						$(".delayHide").hide()
+					}, 2000);
 				}
 
 			}
@@ -549,12 +610,62 @@ $('.closePop').click(function(){
 	$(".nodesPop input[name=nodesSwitch]").next().removeClass("lcs_off");
 })
 
+//编辑授权弹窗
+$(document).on('click', '.editQuota', function(){
+	$('.quotaPop').show().attr('taskid',$(this).attr('taskid'));
+	shade();
+	$('.quotaPop input').val('');
+
+	var quota_type = $(this).attr('quota_type');
+	if(quota_type == '2'){
+		$('.quotaPop .custom_distr').removeClass('custom_distr_style');
+		$('.quotaPop .custom_distr input').attr('disabled', false);
+	}else{
+		$('.quotaPop .custom_distr').addClass('custom_distr_style');
+		$('.quotaPop .custom_distr input').attr('disabled', true);
+	}
+
+	$('.quotaPop .author_type').val(quota_type);
+})
+
+// 编辑授权--改变授权
+$(document).on('change', '.quotaPop .author_type', function(){
+	var val = $(this).val();
+	if(val == '2'){
+		$('.quotaPop .custom_distr').removeClass('custom_distr_style');
+		$('.quotaPop .custom_distr input').attr('disabled', false);
+	}else{
+		$('.quotaPop .custom_distr').addClass('custom_distr_style');
+		$('.quotaPop .custom_distr input').attr('disabled', true);
+	}
+})
+
+function sureAuthorButton(){
+	var w_alloc, l_alloc, 
+		type = $('.author_type').val(),
+		id = $('.quotaPop').attr('taskid');
+	
+	if(type == '2'){
+		w_alloc = $('input[name=windows]').val();
+		l_alloc = $('input[name=linux]').val();
+	}else{
+		w_alloc = '';
+		l_alloc = '';
+	}
+	licTypeUpdate(type,id,w_alloc,l_alloc,'');
+}
 //调整页面内元素高度
-function tbodyAddHeight(){
+var mainlefth = parent.$("#iframe #mainFrame").height();
+
+$(".main .table").css({
+	height: mainlefth - 230
+});
+
+window.onresize = function() {
 	var mainlefth = parent.$("#iframe #mainFrame").height();
 
-	$(".main .table tbody").css({height: mainlefth - 240});
-}
-window.onresize = function() {
-	tbodyAddHeight();
+	$(".main .table").css({
+		height: mainlefth - 230
+	});
+
 }

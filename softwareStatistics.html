@@ -35,20 +35,45 @@
                         <div class='clear'></div>
                     </div>
                     <div class="tableContainer">
-                        <div class="table softwareSTable">
-                              
+                        <div class="tableth">
+                                <table>
+                                <tr>
+                                    <th width='25%' class='th-ordery' type='name'>软件名称 <img src="images/th-ordery.png"/></th>
+                                    <th width='25%' class='th-ordery' type='publisher'>发布者 <img src="images/th-ordery.png"/></th>
+                                    <th width='20%' class='th-ordery' type='version'>版本号 <img src="images/th-ordery.png"/></th>
+                                    <th width='10%' class='th-ordery' type='installed'>已安装 <img src="images/th-ordery.png"/></th>
+                                    <th width='10%' class='th-ordery' type='rate'>安装率 <img src="images/th-ordery.png"/></th>
+                                    <th width='10%'>操作</th>
+                                </tr>                                       
+                                </table>
                         </div>
-                        <!-- <a style='font-size:12px;color:#6a6c6e;line-height:54px;padding-left:20px;float:left' class='totalPages'>总共 0 页</a>
-                        <div class='tcdPageCode' style='font-size:12px;float:right;padding-top:14px;padding-bottom:14px;padding-right:20px;'></div>
-                        <div class='clear clearfloat'></div> -->
+                        <div class="table softwareSTable">
+                                <table>
+                                                                        
+                                </table>
+                        </div>
+                        <a style='font-size:12px;color:#6a6c6e;line-height:54px;padding-left:20px;float:left' class='totalPages'>总共 0 页</a><div class='tcdPageCode' style='font-size:12px;float:right;padding-top:14px;padding-bottom:14px;padding-right:20px;'></div><div class='clear clearfloat'></div>
                     </div>        
             </div>
             <div class="shade"></div>
             <div class="taskDetailPop pop softSDetailPop">
                 <div class="title"><font></font><span class="closeW"></span></div>
                 <div class="describe"></div>
-                <div class="taskDetailTable taskDetailTableSS" style="height:279px;">
-                   
+                <div class="tableth">
+                    <table width="100%">
+                        <tr>
+                            <th width="220"></th>
+                            <th width="220"></th>
+                            <th width="110"></th>
+                            <th width="110"></th>
+                        </tr>
+                    </table>
+
+                </div>
+                <div class="taskDetailTable taskDetailTableSS">
+                    <table>
+                        
+                    </table>
                 </div>
             </div>
 
@@ -68,7 +93,7 @@
                         </div>
                     </div>
                     <div class="terminallist floatR" style="width:60%;">
-                        <p class="th-ordery" type="hostname"><a class='th block'><input type='checkbox' class='verticalMiddle' onclick='selectAll(this)'> <span class='verticalMiddle'>终端名称</span><i class="fa fa-sort" style="margin-left: 20px;"></i></a></p>
+                        <p class="th-ordery" type="hostname"><a class='th block'><input type='checkbox' class='verticalMiddle' onclick='selectAll(this)'> <span class='verticalMiddle'>终端名称</span><i class="fa fa-sort"></i></a></p>
                         <div class="container">
                             <a class="td block"><input type='checkbox' class='verticalMiddle'> <span class='verticalMiddle'>分组名称</span></a>
                         </div>
@@ -210,7 +235,6 @@
             </div>
             <!-- 卸载管理弹层 end -->
             <script type="text/javascript" src="js/jquery.min.js"></script>
-		    <script src="js/dataTable/jquery-datatable.js"></script>
             <script type="text/javascript" src="js/common.js"></script>
             <script src="js/jquery.page.js" type="text/javascript"></script>
             <script src="js/softwareStatistics.js" type="text/javascript"></script>

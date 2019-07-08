@@ -6,22 +6,20 @@ parent.$(".footer").show();
 
 document.cookie='page=softwareStatistics.html';
 //调整页面内元素高度
-tbodyAddHeight();
-function tbodyAddHeight(){
-    var mainlefth=parent.$("#iframe #mainFrame").height();
+var mainlefth=parent.$("#iframe #mainFrame").height();
 
-    $(".main .table tbody").css({height:mainlefth-347});
-}
-
+$(".main .table").css({height:mainlefth-347});
 
 window.onresize = function(){
-    tbodyAddHeight();
-}
-// 搜索按钮触发
-function searchList(){
-	accEvent();
-}
+    var mainlefth=parent.$("#iframe #mainFrame").height();
 
+    $(".main .table").css({height:mainlefth-347});
+
+}
+//卸载全选终端
+function selectAllT(checkbox) {
+    $('.selectT').prop('checked', $(checkbox).prop('checked'));
+}
 $(".uninstallSPop .terminallist").on("click",".td input[type=checkbox]",function(){
     if($(".td input[type=checkbox]:checked").length==($(".td input[type=checkbox]").length)){
         $(".uninstallSPop .terminallist .th-ordery input[type=checkbox]").prop("checked",true)
@@ -29,7 +27,18 @@ $(".uninstallSPop .terminallist").on("click",".td input[type=checkbox]",function
         $(".uninstallSPop .terminallist .th-ordery input[type=checkbox]").prop("checked",false)
     }
 })
+//按钮样式
 
+$(".bu").click(function(){
+	$(this).siblings(".bu").removeClass("current");
+	$(this).addClass("current");
+	
+	$('.tableth th.th-ordery').removeClass().addClass('th-ordery');
+	$('.main .tableth').removeAttr('index');
+	$('.main .tableth').removeAttr('indexCls');
+//	$('.main .tableth th.th-ordery.th-ordery-current').removeAttr('type');
+	accEvent();
+});
 //卸载软件弹层
 var uninstallSN="";
 var uninstallSP="";
@@ -40,6 +49,7 @@ var terminalidarr=[];
 $(".uninstallSPop .terminallist .container").on("change","input[type=checkbox]",function(){
     var terminalid=parseInt($(this).attr("clientid"));
     if($(this).is(":checked")){
+        
         terminalidarr.push(terminalid);    
     }else{
         terminalidarr.splice(jQuery.inArray(terminalid,terminalidarr),1);
@@ -63,7 +73,6 @@ $(".uninstallSPop .terminallist .th").on("change","input[type=checkbox]",functio
     }
 })
 function uninstallSPop(a){
-	terminalidarr = [];
 	$('.terminallist p.th-ordery').removeClass().addClass('th-ordery');
 	$('.terminallist p.th-ordery').find('i').attr('class','fa fa-sort');
     $(".uninstallSPop textarea").next().hide();
@@ -71,21 +80,25 @@ function uninstallSPop(a){
     uninstallSP=$(a).parents("tr").find("td").eq(1).find("span").html();
     uninstallSV=$(a).parents("tr").find("td").eq(2).html();
     $(".uninstallSPop .searchTerminal font").html(uninstallSN);
-    $(".uninstallSPop").show();
+	$(".uninstallSPop").show();
     $(".uninstallSPop .textarea textarea").val("你的电脑存在不符合公司安全规范的软件，请尽快卸载");
 	shade();
     
-    uninstallswid=parseInt($(a).attr("swid"));
-    uninstallshostnum=parseInt($(a).attr('installed'));
+    uninstallswid=parseInt($(a).parents("tr").attr("swid"));
+    uninstallshostnum=parseInt($(a).parents("tr").find("td").eq(3).find("a").html());
     $.ajax({
             url:'/mgr/group/_list',
             dataType:'json',
             data:{},
             type:'GET',
+            headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
             error:function(xhr,textStatus,errorThrown){
 	        	if(xhr.status==401){
 	        	    parent.window.location.href='/';
+	        	}else{
+	        		
 	        	}
+	            
 	        },
             success:function(data){
                 var list=data.data.list;
@@ -103,31 +116,58 @@ function uninstallSPop(a){
    
 }
 
+
 //卸载软件排序
+
+
 $(document).on('click','.terminallist p.th-ordery a .fa',function(){
+
 	var toggleClass = $(this).parents('p').attr('class');
-	var _this = $(this);
-    sortingFun(_this,toggleClass);
+	if(toggleClass == 'th-ordery'){
+		$(this).parents('p').addClass('th-ordery-current th-ordery-up');
+		$(this).attr('class','fa fa-sort-asc');
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up'){
+		$(this).parents('p').addClass('th-ordery-current th-ordery-down');
+		$(this).attr('class','fa fa-sort-desc');
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		$(this).parents('p').removeClass('th-ordery-current th-ordery-down th-ordery-up');
+		$(this).attr('class','fa fa-sort');
+	}
 	uninstallSTAjax();
 })
 // 卸载软件相关终端列表ajax
 function uninstallSTAjax(){
     var filter=trim($(".uninstallSPop #searchKeyT").val());
     var group_id = parseInt($('.grouplist .td.current').attr('groupid'));
-
+    
     var dataa={"groupby":"hostname","swid":uninstallswid,"group_id":group_id,"filter":{"hostname":filter},"view":{"begin":0,"count":uninstallshostnum}};
     var type = $('.terminallist p.th-ordery.th-ordery-current').attr('type');
 	var orderClass = $('.terminallist p.th-ordery.th-ordery-current').attr('class');
-    dataa = sortingDataFun(dataa,type,orderClass);
+	var ordery;
+	var order = {};
+	dataa.order = [];
+	if(orderClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		ordery = 'desc';
+	}else if(orderClass == 'th-ordery th-ordery-current th-ordery-up'){
+		ordery = 'asc';
+	}
+	if(type){
+		order[type] = ordery;
+		dataa.order.push(order);
+	}
     $.ajax({
         url:'/mgr/swinfo/_search',
         data:JSON.stringify(dataa),
         type:'POST',
         contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
+        	}else{
+        		
         	}
+            
         },
         success:function(data){
             var list=data.data.list;
@@ -138,7 +178,7 @@ function uninstallSTAjax(){
 				for (var i = 0; i < list.length; i++) {
 	                if(isInArray(terminalidarr,list[i].client_id)==true){
 	                    checkednum++;
-	                    table+="<a class='td block'><input type='checkbox' class='verticalMiddle select' clientid="+list[i].client_id+" checked> <span class='verticalMiddle filePath' style='width:310px;' title='"+safeStr(list[i].hostname)+"'> "+safeStr(list[i].hostname)+"</span></a>"; 
+	                    table+="<a class='td block' ><input type='checkbox' class='verticalMiddle select' clientid="+list[i].client_id+" checked> <span class='verticalMiddle filePath' style='width:310px;' title='"+safeStr(list[i].hostname)+"'> "+safeStr(list[i].hostname)+"</span></a>"; 
 	                }else{
 	                    table+="<a class='td block'><input type='checkbox' class='verticalMiddle select' clientid="+list[i].client_id+"> <span class='verticalMiddle filePath' style='width:310px;'  title='"+safeStr(list[i].hostname)+"'> "+safeStr(list[i].hostname)+"</span></a>";
 	                }
@@ -171,7 +211,9 @@ $(".uninstallSPop").on("click",".grouplist .td",function(){
 })
 function sureUSButton(a){
     if($(".uninstallSPop .terminallist .container .select:checked").length==0){
-       delayHide("请选择终端");
+        $(".delayHide").show();
+        $(".delayHide .p1").html("<img src='images/unusual.png' class='verticalMiddle'><span class='verticalMiddle'> 请选择终端</span>");
+        setTimeout(function(){$(".delayHide").hide()},2000);
     }else{
         var terminalarr=[];
         $(".uninstallSPop .terminallist .container .select:checked").each(function(){
@@ -184,9 +226,12 @@ function sureUSButton(a){
             data:JSON.stringify(dataa),
             type:'POST',
             contentType:'text/plain',
+            headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
             error:function(xhr,textStatus,errorThrown){
 	        	if(xhr.status==401){
 	        	    parent.window.location.href='/';
+	        	}else{
+	        		
 	        	}
 	            
 	        },
@@ -194,7 +239,9 @@ function sureUSButton(a){
                 $(a).parents(".pop").hide();
                 $(".shade").hide();
                 parent.$(".topshade").hide();
-                delayHideS("操作成功");
+                $(".delayHideS").show();
+                $(".delayHideS .p1").html("<img src='images/success.png' class='verticalMiddle'><span class='verticalMiddle'> 操作成功</span>");
+                setTimeout(function(){$(".delayHideS").hide()},2000);
             }
         }) 
     }
@@ -238,10 +285,14 @@ function recentTaskAjax(){
         data:{},
         type:'GET',
         contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
+        	}else{
+        		
         	}
+            
         },
         success:function(data){
             var list=data.data.list;
@@ -260,23 +311,15 @@ function recentTaskAjax(){
                 }
                 html+="<a onclick='showTaskTer(this)' class='showTaskTerIcon verticalMiddle cursor'></a>";
                 html+="</div>";
-                html+="<div class='table'>";
-                html+="<table>";
-                html+="<tr class='th'>";
-                html+="<th width='120'>终端分组</th>";
-                html+="<th width='100'>终端名称</th>";
-                html+="<th width='120'>IP地址</th>";
-                html+="<th width='120'>任务状态</th>";
-                html+="<th width='200'>备注</th>";
-                html+="</tr>";
-                html+="</table>";
-                html+="</div>";
+                html+="<div class='table'></div>";
             };
             if(list.length==0){
                 $(".recentTaskPop .content .container").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;font-size:12px'><img src='images/notable.png'><p style='padding-top:24px'>暂无数据内容</p></div>"); 
             }else{
                 $(".recentTaskPop .content .container").html(html);
             }
+            
+
         }
     });
 }
@@ -293,13 +336,18 @@ function showTaskTer(a){
                 data:JSON.stringify(dataa),
                 type:'POST',
                 contentType:'text/plain',
+                headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
                 error:function(xhr,textStatus,errorThrown){
 		        	if(xhr.status==401){
 		        	    parent.window.location.href='/';
+		        	}else{
+		        		
 		        	}
+		            
 		        },
                 success:function(data){
                     var html="";
+                    var finsh_text = "";
                     var list=data.data.list;
                     html+="<table>";
                     html+="<tr>";
@@ -327,11 +375,26 @@ function showTaskTer(a){
                             html+="<td>未响应</td>";
                             html+="<td>任务尚未被接受</td>";
                         }else if(list[i].status==1){
-                            html+="<td>已接受</td>";
-                            html+="<td>任务已经接受</td>";
+                            html+="<td>正在执行</td>";
+                            html+="<td>任务正在执行</td>";
                         }else if(list[i].status==2){
-                            html+="<td>已拒绝</td>";
-                            html+="<td>终端任务繁忙</td>";
+                            if(list[i].message == 'completed'){
+                                finsh_text = '任务完成'
+                            }else if(list[i].message == 'conflict'){
+                                finsh_text = '任务冲突'
+                            }else if(list[i].message == 'timeout'){
+                                finsh_text = '任务超时'
+                            }else if(list[i].message == 'unsupported'){
+                                finsh_text = '终端不支持'
+                            }else if(list[i].message == 'failed'){
+                                finsh_text = '执行失败'
+                            }else if(list[i].message == 'refused'){
+                                finsh_text = '用户拒绝'
+                            }else{
+                                finsh_text = list[i].message
+                            }
+                            html+="<td>任务完成</td>";
+                            html+="<td>" + finsh_text + "</td>";
                         }else{
                             html+="<td>终端异常</td>";
                             html+="<td>终端服务异常，无法接受任务</td>";
@@ -366,101 +429,40 @@ $("body").on("blur","#numperpageinput",function(){
 })
 //排序
 
-$(document).on('click','.tableContainer .table th.th-ordery',function(){
+$(document).on('click','.tableContainer .tableth th.th-ordery',function(){
 	var toggleClass = $(this).attr('class');
-	var _this = $(this);
-    sortingFun(_this,toggleClass);
+	$(this).siblings('th.th-ordery').removeClass().addClass('th-ordery');
+	$(this).siblings('th.th-ordery').find('img').attr('src','images/th-ordery.png');
+	if(toggleClass == 'th-ordery'){
+		$(this).find('img').attr('src','images/th-ordery-up.png');
+		$(this).addClass('th-ordery-current th-ordery-up');
+		$(this).parents('.tableth').attr('indexCls','th-ordery th-ordery-current th-ordery-up');
+		$(this).parents('.tableth').attr('index',$(this).index());
+		
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up'){
+		$(this).find('img').attr('src','images/th-ordery-down.png');
+		$(this).addClass('th-ordery-current th-ordery-down');
+		$(this).parents('.tableth').attr('indexCls','th-ordery th-ordery-current th-ordery-up th-ordery-down');
+		$(this).parents('.tableth').attr('index',$(this).index());
+		
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		$(this).find('img').attr('src','images/th-ordery.png');
+		$(this).removeClass('th-ordery-current th-ordery-down th-ordery-up');
+		$(this).parents('.tableth').attr('indexCls','th-ordery');
+		$(this).parents('.tableth').attr('index',$(this).index());
+	}
 	var currentPage = $(this).parents('.tableContainer').find('.tcdPageCode span.current').text();
 	var currentNum = $(this).parents('.tableContainer').find('#numperpageinput').val();
 	var start = (parseInt(currentPage) - 1) * parseInt(currentNum);
 	accEvent(start);
 })
-//软件列表信息
-function columnsDataSoftListFun (){
-	var columns = [
-		{
-			type: "name",title: "软件名称",name: "name",
-			tHead:{style: {width: "30%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "30%"},customFunc: function (data, row, i) {
-				return "<span class='filePath' title="+safeStr(pathtitle(data))+">"+safeStr(data)+"</span>";
-			}},
-		},
-		{
-			type: "publisher",title: "发布者",name: "publisher",
-			tHead:{style: {width: "30%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "30%"},customFunc: function (data, row, i) {return "<span class='filePath' title="+safeStr(pathtitle(data))+">"+safeStr(data)+"</span>";}},
-		},
-		{
-			type: "version",title: "版本号",name: "version",
-			tHead:{style: {width: "16%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "16%"},customFunc: function (data, row, i) {return safeStr(data)}},
-		},
-		{
-			type: "installed",title: "已安装",name: "installed",
-			tHead:{style: {width: "8%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "8%"},customFunc: function (data, row, i) {return "<a  class='underline cursor blackfont seeDetail' swid='"+row.swid+"'>"+data+"</a>"}},
-		},
-		{
-			type: "rate",title: "安装率",name: "rate",
-			tHead:{style: {width: "8%"},class: "th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "8%"},customFunc: function (data, row, i) {return data + "%"}},
-		},
-		{
-            type: "",title: "操作",name: "",
-            tHead:{},
-			tBody:{style: {width: "8%"},customFunc: function (data, row, i) {return "<a class='blackfont underline cursor' onclick='uninstallSPop(this)' swid='"+row.swid+"' installed='"+row.installed+"'>卸载</a>"}},
-		}
-	]
-	
-	var tabstr = new createTable(columns,[] ,$('.softwareSTable'));
-	return tabstr;
-}
-var tabListstr = columnsDataSoftListFun();
-
-//终端列表信息
-function columnsDataTerminalListFun (){
-	var columns = [
-		{
-			type: "hostname",title: "终端名称",name: "hostname",
-			tHead:{style: {width: "40%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "40%"},customFunc: function (data, row, i) {
-				return "<span style='width:400px;' title='"+safeStr(data)+"' class='filePath'>"+safeStr(data)+"</span>";
-			}},
-		},
-		{
-			type: "group_name",title: "终端分组",name: "group_name",
-			tHead:{style: {width: "40%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "40%"},customFunc: function (data, row, i) {return safeStr(data);}},
-		},
-		{
-			type: "count",title: "软件安装总数",name: "count",
-			tHead:{style: {width: "20%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "20%"},customFunc: function (data, row, i) {return "<a  class='underline cursor blackfont seeDetail' client='"+row.client_id+"'>"+data+"</a>"}},
-		}
-	]
-	
-	var tabstr = new createTable(columns,[] ,$('.softwareSTable'));
-	return tabstr;
-}
-
 accEvent();
 var ajaxtable=null;
-//判断加载哪个列表
-$(document).on('click','#functionBlock .bu',function(){
-    $(this).siblings(".bu").removeClass("current");
-	$(this).addClass("current");
-    $('.softwareSTable').html('');
-    if($("#functionBlock .current").index()==1){
-        tabListstr = columnsDataSoftListFun();
-    }else if($("#functionBlock .current").index()==2){
-        tabListstr = columnsDataTerminalListFun();
-    }
-    accEvent();
-})
 function accEvent(start){
     if(ajaxtable){
-        ajaxtable.abort();  
+    ajaxtable.abort();  
     }
+
     var sta="";
     var dataa="";
     var groupby="";
@@ -469,37 +471,132 @@ function accEvent(start){
 		start = 0;
 	}else{
 		start = start;
-    }
+	}
     if($("#functionBlock .current").index()==1){
         groupby="software";
         filter=trim($("#searchKey").val());
         dataa={"groupby":groupby,filter:{"software":filter},"view":{"begin":start,"count":numperpage}};
+
     }else if($("#functionBlock .current").index()==2){
         groupby="hostname";
         filter=trim($("#searchKey").val());
         dataa={"groupby":groupby,filter:{"hostname":filter},"view":{"begin":start,"count":numperpage}};
     }
-    var type = $('.table th.th-ordery.th-ordery-current').attr('type');
-	var orderClass = $('.table th.th-ordery.th-ordery-current').attr('class');
-	
-    dataa = sortingDataFun(dataa,type,orderClass);
-    $(".table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div></div>");
+ 	var type = $('.tableth th.th-ordery.th-ordery-current').attr('type');
+	var orderClass = $('.tableth th.th-ordery.th-ordery-current').attr('class');
+	var ordery;
+	var order = {};
+	dataa.order = [];
+	if(orderClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		ordery = 'desc';
+	}else if(orderClass == 'th-ordery th-ordery-current th-ordery-up'){
+		ordery = 'asc';
+	}
+	if(type){
+		order[type] = ordery;
+		dataa.order.push(order);
+	}
+    $(".table").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
     ajaxtable=
     $.ajax({
         url:'/mgr/swinfo/_search',
         data:JSON.stringify(dataa),
         type:'POST',
         contentType:'text/plain',
+        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
+        	}else{
+        		
         	}
+            
         },
         success:function(data){
             var list=data.data.list;
+            var tableth="";
+            var table="";
             var total=Math.ceil(data.data.view.total/numperpage);
-            tabListstr.setData(list);
-            tbodyAddHeight();
+            
+            table+="<table>";
+            if($("#functionBlock .current").index()==1 && list!==null){
+                tableth+="<tr>";
+                tableth+="<th width='30%' class='th-ordery' type='name'>软件名称<img src='images/th-ordery.png'/></th>";
+                tableth+="<th width='30%' class='th-ordery' type='publisher'>发布者<img src='images/th-ordery.png'/></th>";
+                tableth+="<th width='16%' class='th-ordery' type='version'>版本号<img src='images/th-ordery.png'/></th>";
+                tableth+="<th width='8%' class='th-ordery' type='installed'>已安装<img src='images/th-ordery.png'/></th>";
+                tableth+="<th width='8%' class='th-ordery' type='rate'>安装率<img src='images/th-ordery.png'/></th>";
+                tableth+="<th width='8%'>操作</th>";
+                tableth+="</tr>";
+                table+="<tr id='tableAlign'>";
+                table+="<td width='30%'>软件名称</td>";
+                table+="<td width='30%'>发布者</td>";
+                table+="<td width='16%'>版本号</td>";
+                table+="<td width='8%'>已安装</td>";
+                table+="<td width='8%'>安装率</td>";
+                table+="<td width='8%'>操作</td>";
+                table+="</tr>";
+                for(i=0;i<list.length;i++){
+                    table+="<tr swid="+list[i].swid+">";
+                    table+="<td><span class='filePath' title="+safeStr(pathtitle(list[i].name))+">"+safeStr(list[i].name)+"</span></td>";
+                    table+="<td><span class='filePath' title="+safeStr(pathtitle(list[i].publisher))+">"+safeStr(list[i].publisher)+"</span></td>";
+                    table+="<td>"+safeStr(list[i].version)+"</td>";
+                    table+="<td><a  class='underline cursor blackfont seeDetail'>"+list[i].installed+"</a></td>";
+                    table+="<td>"+list[i].rate+"%</td>";
+                    table+="<td><a class='blackfont underline cursor' onclick='uninstallSPop(this)'>卸载</a></td>";
+                    table+="</tr>";
+                }
+
+            }else if($("#functionBlock .current").index()==1 && list==null){
+                tableth+="<tr>";
+               tableth+="<th width='30%' class='th-ordery' type='name'>软件名称<img src='images/th-ordery.png'/></th>";
+                tableth+="<th width='30%' class='th-ordery' type='publisher'>发布者<img src='images/th-ordery.png'/></th>";
+                tableth+="<th width='16%' class='th-ordery' type='version'>版本号<img src='images/th-ordery.png'/></th>";
+                tableth+="<th width='8%' class='th-ordery' type='installed'>已安装<img src='images/th-ordery.png'/></th>";
+                tableth+="<th width='8%' class='th-ordery' type='rate'>安装率<img src='images/th-ordery.png'/></th>";
+                tableth+="<th width='8%' >操作</th>";
+                tableth+="</tr>";
+                
+
+            }else if($("#functionBlock .current").index()==2 && list!==null){
+                tableth+="<tr>";
+                tableth+="<th width='40%' class='th-ordery' type='hostname'>终端名称<img src='images/th-ordery.png'/></th>";
+                tableth+="<th width='40%' class='th-ordery' type='group_name'>终端分组<img src='images/th-ordery.png'/></th>";
+                tableth+="<th width='20%' class='th-ordery' type='count'>软件安装总数<img src='images/th-ordery.png'/></th>";
+                tableth+="</tr>";
+                table+="<tr id='tableAlign'>";
+                table+="<td width='40%'>终端名称</td>";
+                table+="<td width='40%'>终端分组</td>";
+                table+="<td width='20%'>软件安装总数</td>";
+                table+="</tr>";
+                for(i=0;i<list.length;i++){
+                    table+="<tr client="+list[i].client_id+">";
+                    table+="<td><span style='width:400px;' title='"+safeStr(list[i].hostname)+"' class='filePath'>"+safeStr(list[i].hostname)+"</span></td>";
+                    table+="<td>"+safeStr(list[i].group_name)+"</td>";
+                    table+="<td><a  class='underline cursor blackfont seeDetail'>"+list[i].count+"</a></td>";  
+                    table+="</tr>";
+                }
+
+            }else if($("#functionBlock .current").index()==2 && list==null){
+                tableth+="<tr>";
+               	tableth+="<th width='40%' class='th-ordery' type='hostname'>终端名称<img src='images/th-ordery.png'/></th>";
+                tableth+="<th width='40%' class='th-ordery' type='group_name'>终端分组<img src='images/th-ordery.png'/></th>";
+                tableth+="<th width='20%' class='th-ordery' type='count'>软件安装总数<img src='images/th-ordery.png'/></th>";
+                tableth+="</tr>";
+
+            }
+            
+            table+="</table>";
+            $(".table table").hide();
+            $(".main .tableth table").html(tableth);
+            $(".table").html(table);
+            $(".table table").show();
+         
+			var thIndex=$('.main .tableth').attr('index');
+			var thCls=$('.main .tableth').attr('indexCls');
+			$('.main .tableth th').eq(thIndex).addClass(thCls);
+			
+			imgOrderyFun(thIndex,thCls);
             $(".clearfloat").remove();
             $(".tcdPageCode").remove();
             $(".totalPages").remove();
@@ -510,170 +607,223 @@ function accEvent(start){
                 pageCount:total,
                 current:parseInt(current),
                 backFn:function(pageIndex){
+                    $(".table table").html("");
                     start=(pageIndex-1)*numperpage;
+
 					dataa.view.begin = start;
-                    $(".table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
+                    $(".table").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
                     ajaxtable=
                     $.ajax({
                         url:'/mgr/swinfo/_search',
                         data:JSON.stringify(dataa),
                         type:'POST',
                         contentType:'text/plain',
+                        headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
                         error:function(xhr,textStatus,errorThrown){
 				        	if(xhr.status==401){
 				        	    parent.window.location.href='/';
+				        	}else{
+				        		
 				        	}
+				            
 				        },
                         success:function(data){
                             var list=data.data.list;
-                            tabListstr.setData(list);
-                            tbodyAddHeight();
+                            var table="";
+                            table+="<table>";
+                            if($("#functionBlock .current").index()==1){
+                                
+                                table+="<tr id='tableAlign'>";
+				                table+="<td width='30%'>软件名称</td>";
+				                table+="<td width='30%'>发布者</td>";
+				                table+="<td width='16%'>版本号</td>";
+				                table+="<td width='8%'>已安装</td>";
+				                table+="<td width='8%'>安装率</td>";
+				                table+="<td width='8%'>操作</td>";
+				                table+="</tr>";
+				                for(i=0;i<list.length;i++){
+				                    table+="<tr swid="+list[i].swid+">";
+				                    table+="<td><span class='filePath' title="+safeStr(pathtitle(list[i].name))+">"+safeStr(list[i].name)+"</span></td>";
+				                    table+="<td><span class='filePath' title="+safeStr(pathtitle(list[i].publisher))+">"+safeStr(list[i].publisher)+"</span></td>";
+				                    table+="<td>"+safeStr(list[i].version)+"</td>";
+				                    table+="<td><a class='underline cursor blackfont seeDetail'>"+list[i].installed+"</a></td>";
+				                    table+="<td>"+list[i].rate+"%</td>";
+				                    table+="<td><a class='blackfont underline cursor' onclick='uninstallSPop(this)'>卸载</a></td>";
+				                    table+="</tr>";
+				                }
+
+                            }else if($("#functionBlock .current").index()==2){
+                                tableth+="<tr>";
+			                	tableth+="<th width='40%' class='th-ordery' type='hostname'>终端名称</th>";
+				                tableth+="<th width='40%' class='th-ordery' type='group_name'>终端分组</th>";
+				                tableth+="<th width='20%' class='th-ordery' type='count'>软件安装总数</th>";
+				                tableth+="</tr>";
+				                table+="<tr id='tableAlign'>";
+				                table+="<td width='40%'>终端名称</td>";
+				                table+="<td width='40%'>终端分组</td>";
+				                table+="<td width='20%'>软件安装总数</td>";
+				                table+="</tr>";
+				                for(i=0;i<list.length;i++){
+				                    table+="<tr client="+list[i].client_id+">";
+				                    table+="<td><span style='width:400px;' title='"+safeStr(list[i].hostname)+"' class='filePath'>"+safeStr(list[i].hostname)+"</span></td>";
+				                    table+="<td>"+safeStr(list[i].group_name)+"</td>";
+				                    table+="<td><a  class='underline cursor blackfont seeDetail'>"+list[i].count+"</a></td>";  
+				                    table+="</tr>";
+				                }
+
+                            }
+
+                            table+="</table>";
+                            $(".table table").hide();
+                            $(".table").html(table);
+                            $(".table table").show();
+                          
+
+
                         }
                     })
 
                 }
-            });
+            })
         }
-        
     });
-    
+
 	
 }
-
+// 搜索按钮触发
+function searchList(){
+	accEvent();
+}
 //软件终端详情排序
-$(document).on('click','.softSDetailPop .taskDetailTableSS th.th-ordery',function(){
-    var toggleClass = $(this).attr('class');
-    var _this = $(this);
-    sortingFun(_this,toggleClass);
-
-    var currentPage = $(this).parents('.taskDetailPop').find('.tcdPageCode span.current').text();
+$(document).on('click','.softSDetailPop .tableth th.th-ordery',function(){
+	var toggleClass = $(this).attr('class');
+	$(this).siblings('th.th-ordery').removeClass().addClass('th-ordery');
+	$(this).siblings('th.th-ordery').find('img').attr('src','images/th-ordery.png');
+	
+	if(toggleClass == 'th-ordery'){
+		$(this).addClass('th-ordery-current th-ordery-up');
+		$(this).parents('.tableth').attr('indexCls','th-ordery th-ordery-current th-ordery-up');
+		$(this).parents('.tableth').attr('index',$(this).index());
+		
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up'){
+		$(this).addClass('th-ordery-current th-ordery-down');
+		$(this).parents('.tableth').attr('indexCls','th-ordery th-ordery-current th-ordery-up th-ordery-down');
+		$(this).parents('.tableth').attr('index',$(this).index());
+		
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		$(this).removeClass('th-ordery-current th-ordery-down th-ordery-up');
+		$(this).parents('.tableth').attr('indexCls','th-ordery');
+		$(this).parents('.tableth').attr('index',$(this).index());
+	}
+	var currentPage = $(this).parents('.taskDetailPop').find('.tcdPageCode span.current').text();
 	var start = (parseInt(currentPage) - 1) * 7;
 	seeDetailPop(start);
 })
-//软件已安装列表详情
-function columnsDataSoftPopFun (){
-	var columns = [
-		{
-			type: "hostname",title: "终端名称",name: "hostname",
-			tHead:{style: {width: "50%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "50%"},customFunc: function (data, row, i) {
-				return "<span class='filePath' title="+safeStr(pathtitle(data))+">"+safeStr(data)+"</span>";
-			}},
-		},
-		{
-			type: "group_name",title: "终端分组",name: "group_name",
-			tHead:{style: {width: "50%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "50%"},customFunc: function (data, row, i) {return "<span class='filePath' title="+safeStr(pathtitle(data))+">"+safeStr(data)+"</span>";}},
-		}
-	]
-	
-	var tabstr = new createTable(columns,[] ,$('.taskDetailTableSS'));
-	return tabstr;
-}
-//终端安装总数列表详情
-function columnsDataTerminalPopFun (){
-	var columns = [
-		{
-			type: "name",title: "软件名称",name: "name",
-			tHead:{style: {width: "40%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "40%"},customFunc: function (data, row, i) {
-				return "<span class='filePath' title="+safeStr(pathtitle(data))+">"+safeStr(data)+"</span>";
-			}},
-		},
-		{
-			type: "publisher",title: "发布者",name: "publisher",
-			tHead:{style: {width: "40%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "40%"},customFunc: function (data, row, i) {return "<span class='filePath' title="+safeStr(pathtitle(data))+">"+safeStr(data)+"</span>";}},
-		},
-		{
-			type: "version",title: "版本号",name: "version",
-			tHead:{style: {width: "20%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "20%"},customFunc: function (data, row, i) {return "<span class='filePath' title="+safeStr(pathtitle(data))+">"+safeStr(data)+"</span>";}},
-		}
-	]
-	
-	var tabstr = new createTable(columns,[] ,$('.taskDetailTableSS'));
-	return tabstr;
-}
 //弹出详情
-var tabListPopstr;
 $(document).on('click','.tableContainer .seeDetail',function(){
-	$('.taskDetailPop .table th.th-ordery').removeClass().addClass('th-ordery');
+	$('.taskDetailPop .tableth th.th-ordery').removeClass().addClass('th-ordery');
+	$('.taskDetailPop .tableth').removeAttr('indexCls');
     $(".taskDetailPop").attr('trIndex',$(this).parents('tr').index());
     $(".taskDetailPop").attr('tdIndex',$(this).parent('td').index());
-    $(".taskDetailPop").attr('swid',$(this).attr('swid'));
-    $(".taskDetailPop").attr('client',$(this).attr('client'));
     $(".taskDetailPop").show();
-    $('.taskDetailTableSS').html('');
-    if($("#functionBlock .current").index()==1){
-        tabListPopstr = columnsDataSoftPopFun();
-    }else if($("#functionBlock .current").index()==2){
-        tabListPopstr = columnsDataTerminalPopFun();
-    }
     shade();
     seeDetailPop();
 })
-
+var swid="";
+var totalnum="";
+var ajaxdetailtable=null;
+var client="";
 function seeDetailPop(start){
-    var totalnum="";
-    var ajaxdetailtable=null;
-    var dataa="";
+
 	var trIndex = $(".taskDetailPop").attr('trIndex');
     var tdIndex=$(".taskDetailPop").attr('tdIndex');
     if(ajaxdetailtable){
         ajaxdetailtable.abort();
     }
+
     if(start == undefined) {
 		start = 0;
 	}else{
 		start = start;
-    }
+	}
+    $(".taskDetailPop").children(":not(:first)").hide();
+    $(".taskDetailPop").append("<div style='text-align:center;color:#6a6c6e;padding-top:201px;' class='detailLoading'><img src='images/loading.gif'></div>");
     if($("#functionBlock .current").index()==1){
-        var softname=$('.tableContainer table tbody tr').eq(trIndex).children("td").eq(0).find("span").html();
-        $(".taskDetailPop .describe").html("软件名称 : "+softname);
-        $(".taskDetailPop .title font").html("软件终端详情");
-
-    	var swid=parseInt($('.taskDetailPop').attr("swid"));
-        dataa={"groupby":"hostname","swid":swid,"view":{"begin":start,"count":7}};
-       
-    }else if($("#functionBlock .current").index()==2){
-    	var hostname=$('.tableContainer table tbody tr').eq(trIndex).children("td").eq(0).find('span').html();
-        var groupname=$('.tableContainer table tbody tr').eq(trIndex).children("td").eq(1).html();
-        $(".taskDetailPop .title font").html("终端软件详情");
-        $(".taskDetailPop .describe").html("终端名称 : <a style='max-width:110px;width:auto;' title='"+safeStr(hostname)+"' class='filePath'>"+safeStr(hostname)+",</a>  终端分组 : "+groupname);
+    	swid=parseInt($('.tableContainer .table tr').eq(trIndex).attr("swid"));
+        var softname=$('.tableContainer .table tr').eq(trIndex).children("td").eq(0).find("span").html();
+        var installnum=$('.tableContainer .table tr').eq(trIndex).children("td").eq(3).find("a").html();
+        var dataa={"groupby":"hostname","swid":swid,"view":{"begin":start,"count":7}};
         
-        var client=parseInt($('.taskDetailPop').attr("client"));
-        dataa={"groupby":"software","client_id":client,"view":{"begin":start,"count":7}};
-    }
-    var type = $('.taskDetailPop table .th-ordery-current').attr('type');
-    var orderClass = $('.taskDetailPop table .th-ordery-current').attr('class');
-    dataa = sortingDataFun(dataa,type,orderClass);
-
-    $(".taskDetailPop table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
-
-    ajaxdetailtable=
+        var type = $('.taskDetailPop .tableth th.th-ordery.th-ordery-current').attr('type');
+		var orderClass = $('.taskDetailPop .tableth th.th-ordery.th-ordery-current').attr('class');
+		var ordery;
+		var order = {};
+		dataa.order = [];
+		if(orderClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+			ordery = 'desc';
+		}else if(orderClass == 'th-ordery th-ordery-current th-ordery-up'){
+			ordery = 'asc';
+		}
+		if(type){
+			order[type] = ordery;
+			dataa.order.push(order);
+		}
+        $(".taskDetailPop .title font").html("软件终端详情");
+        ajaxdetailtable=
         $.ajax({
             url:'/mgr/swinfo/_search',
             data:JSON.stringify(dataa),
             type:'POST',
             contentType:'text/plain',
+            headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
             error:function(xhr,textStatus,errorThrown){
 	        	if(xhr.status==401){
 	        	    parent.window.location.href='/';
+	        	}else{
+	        		
 	        	}
+	            
 	        },
             success:function(data){
                 var list=data.data.list;
+                var th="";
+                var table="";
                 totalnum=data.data.view.total;
                 var total=Math.ceil(totalnum/7);
-                tabListPopstr.setData(list);
                 
+                $(".taskDetailPop .describe").html("软件名称 : "+softname);
+                th+="<tr>"
+                th+="<th width='50%' class='th-ordery' type='hostname'>终端名称<img src='images/th-ordery.png'/></th>";
+                th+="<th width='50%' class='th-ordery' type='group_name'>终端分组<img src='images/th-ordery.png'/></th>";
+                th+="</tr>"
+
+                $(".taskDetailPop .tableth table").html(th);
+                
+                table+="<tr id='tableAlign'>";
+                table+="<td width='50%'>终端名称</td>";
+                table+="<td width='50%'>终端分组</td>";
+                table+="</tr>";
+                for (var i = 0; i < list.length; i++) {
+                    table+="<tr>";
+                    table+="<td><span style='width:270px;' title='"+safeStr(list[i].hostname)+"' class='filePath'>"+safeStr(list[i].hostname)+"</span></td>";
+                    table+="<td>"+safeStr(list[i].group_name)+"</td>";
+                    table+="</tr>";
+                };
+                $(".taskDetailTable table").html(table);
+                $(".taskDetailPop").children().show();
+                
+                var thIndex=$('.taskDetailPop .tableth').attr('index');
+				var thCls=$('.taskDetailPop .tableth').attr('indexCls');
+				$('.taskDetailPop .tableth th').eq(thIndex).addClass(thCls);
+				imgOrderyFun1(thIndex,thCls);
+                
+                $(".taskDetailPop").children(".detailLoading").remove();
                 // 分页
                 $(".taskDetailPop .clearfloat").remove();
                 $(".taskDetailPop .tcdPageCode").remove();
                 $(".taskDetailPop .totalPages").remove();
                 $(".taskDetailPop").append("<a style='font-size:12px;color:#6a6c6e;line-height:54px;padding-left:20px;float:left;' class='totalPages'>共 "+totalnum+" 条记录</a><div class='tcdPageCode' style='font-size:12px;float:right;padding-top:14px;padding-bottom:14px;padding-right:20px;'></div><div class='clear clearfloat'></div>");
-                var current = (dataa.view.begin/dataa.view.count) + 1;
+               var current = (dataa.view.begin/dataa.view.count) + 1;
                 $(".taskDetailPop .tcdPageCode").createPage({
                     pageCount:total,
                     current:parseInt(current),
@@ -686,14 +836,32 @@ function seeDetailPop(start){
                             data:JSON.stringify(dataa),
                             type:'POST',
                             contentType:'text/plain',
+                            headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
                             error:function(xhr,textStatus,errorThrown){
 					        	if(xhr.status==401){
 					        	    parent.window.location.href='/';
+					        	}else{
+					        		
 					        	}
+					            
 					        },
                             success:function(data){
                                 var list=data.data.list;
-                                tabListPopstr.setData(list);
+                                var table="";
+                                
+                                table+="<tr id='tableAlign'>";
+                                table+="<td width='50%'>终端名称</td>";
+                                table+="<td width='50%'>终端分组</td>";
+                                table+="</tr>";
+                                for (var i = 0; i < list.length; i++) {
+                                    table+="<tr>";
+                                    table+="<td><span style='width:270px;' title='"+safeStr(list[i].hostname)+"' class='filePath'>"+safeStr(list[i].hostname)+"</span></td>";
+                                    table+="<td>"+safeStr(list[i].group_name)+"</td>";
+                                    table+="</tr>";
+                                };
+                                $(".taskDetailTable table").html(table);
+                                $(".taskDetailPop").children().show();
+                                $(".taskDetailPop").children(".detailLoading").remove();
                             }
                         })
 
@@ -703,5 +871,131 @@ function seeDetailPop(start){
 
             }
         })
+    }else if($("#functionBlock .current").index()==2){
+    	var hostname=$('.tableContainer .table tr').eq(trIndex).children("td").eq(0).find('span').html();
+    	var groupname=$('.tableContainer .table tr').eq(trIndex).children("td").eq(1).html();
+    	var softnum=$('.tableContainer .table tr').eq(trIndex).children("td").eq(2).find("a").html();
+        client=parseInt($('.tableContainer .table tr').eq(trIndex).attr("client"));
+        var classandname=$('.tableContainer .table tr').eq(trIndex).children("td").eq(tdIndex).find('a').html();
+        var dataa={"groupby":"software","client_id":client,"view":{"begin":start,"count":7}};
+        
+        var type = $('.taskDetailPop .tableth th.th-ordery.th-ordery-current').attr('type');
+		var orderClass = $('.taskDetailPop .tableth th.th-ordery.th-ordery-current').attr('class');
+		var ordery;
+		var order = {};
+		dataa.order = [];
+		if(orderClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+			ordery = 'desc';
+		}else if(orderClass == 'th-ordery th-ordery-current th-ordery-up'){
+			ordery = 'asc';
+		}
+		if(type){
+			order[type] = ordery;
+			dataa.order.push(order);
+		}
+        
+        $(".taskDetailPop .title font").html("终端软件详情");
+        ajaxdetailtable=
+        $.ajax({
+            url:'/mgr/swinfo/_search',
+            data:JSON.stringify(dataa),
+            type:'POST',
+            contentType:'text/plain',
+            headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
+            error:function(xhr,textStatus,errorThrown){
+	        	if(xhr.status==401){
+	        	    parent.window.location.href='/';
+	        	}else{
+	        		
+	        	}
+	            
+	        },
+            success:function(data){
+                var list=data.data.list;
+                var th="";
+                var table="";
+                totalnum=data.data.view.total;
+                var total=Math.ceil(totalnum/7);
+                
+                $(".taskDetailPop .describe").html("终端名称 : <a style='max-width:110px;width:auto;' title='"+safeStr(hostname)+"' class='filePath'>"+safeStr(hostname)+",</a>  终端分组 : "+groupname);
+                th+="<tr>"
+                th+="<th width='40%' class='th-ordery' type='name'>软件名称<img src='images/th-ordery.png'/></th>";
+                th+="<th width='40%' class='th-ordery' type='publisher'>发布者<img src='images/th-ordery.png'/></th>";
+                th+="<th width='20%' class='th-ordery' type='version'>版本号<img src='images/th-ordery.png'/></th>";
+                th+="</tr>"
+                $(".taskDetailPop .tableth table").html(th);
+
+                table+="<tr id='tableAlign'>";
+                table+="<td width='40%'>软件名称</td>";
+                table+="<td width='40%'>发布者</td>";
+                table+="<td width='20%'>版本号</td>";
+                table+="</tr>";
+                for (var i = 0; i < list.length; i++) {
+                    table+="<tr>";
+                    table+="<td><span class='filePath'>"+safeStr(list[i].name)+"</span></td>";
+                    table+="<td><span class='filePath'>"+safeStr(list[i].publisher)+"</span></td>";
+                    table+="<td>"+safeStr(list[i].version)+"</td>";
+                    table+="</tr>";
+                };
+                $(".taskDetailTable table").html(table);
+                $(".taskDetailPop").children().show();
+                
+                var thIndex=$('.taskDetailPop .tableth').attr('index');
+				var thCls=$('.taskDetailPop .tableth').attr('indexCls');
+				$('.taskDetailPop .tableth th').eq(thIndex).addClass(thCls);
+                imgOrderyFun1(thIndex,thCls);
+                $(".taskDetailPop").children(".detailLoading").remove();
+                // 分页
+                $(".taskDetailPop .clearfloat").remove();
+                $(".taskDetailPop .tcdPageCode").remove();
+                $(".taskDetailPop .totalPages").remove();
+                $(".taskDetailPop").append("<a style='font-size:12px;color:#6a6c6e;line-height:54px;padding-left:20px;float:left;' class='totalPages'>共 "+totalnum+" 条记录</a><div class='tcdPageCode' style='font-size:12px;float:right;padding-top:14px;padding-bottom:14px;padding-right:20px;'></div><div class='clear clearfloat'></div>");
+               var current = (dataa.view.begin/dataa.view.count) + 1;
+               $(".taskDetailPop .tcdPageCode").createPage({
+                    pageCount:total,
+                    current:parseInt(current),
+                    backFn:function(pageIndex){
+                        dataa.view.begin = (pageIndex - 1) * 7;
+                        ajaxdetailtable=
+                        $.ajax({
+                            url:'/mgr/swinfo/_search',
+                            data:JSON.stringify(dataa),
+                            type:'POST',
+                            contentType:'text/plain',
+                            headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
+                            error:function(xhr,textStatus,errorThrown){
+					        	if(xhr.status==401){
+					        	    parent.window.location.href='/';
+					        	}else{
+					        		
+					        	}
+					            
+					        },
+                            success:function(data){
+                                var list=data.data.list;
+                                var table="";
+
+                                table+="<tr id='tableAlign'>";
+                                table+="<td width='40%'>软件名称</td>";
+                                table+="<td width='40%'>发布者</td>";
+                                table+="<td width='20%'>版本号</td>";
+                                table+="</tr>";
+                                for (var i = 0; i < list.length; i++) {
+                                    table+="<tr>";
+                                    table+="<td><span class='filePath'>"+safeStr(list[i].name)+"</span></td>";
+                                    table+="<td><span class='filePath'>"+safeStr(list[i].publisher)+"</span></td>";
+                                    table+="<td>"+safeStr(list[i].version)+"</td>";
+                                    table+="</tr>";
+                                };
+                                $(".taskDetailTable table").html(table);
+                                $(".taskDetailPop").children().show();
+                                $(".taskDetailPop").children(".detailLoading").remove();
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    }
 
 }

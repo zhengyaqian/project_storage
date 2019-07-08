@@ -1,5 +1,6 @@
 
 /**/
+table{border-collapse: collapse;}
 .main .topHint{position: relative;background-color: #ffffff;letter-spacing: 1px;color: #676a6c;padding: 10px 130px;font-size: 12px; }
 .topHint p{line-height: 20px;}
 .topHint img{position: absolute;left: 50px;top:8px;}
@@ -112,7 +113,7 @@
 .unSetRulePop .buttons .sure{background: #ffffff;color: #63c380}
 .unSetRulePop .name{max-width: 150px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;display: inline-block;vertical-align: middle;font-size: 14px}
 /*定时任务弹层*/
-.tTPop{display: none;width: 750px;height: 504px;position: fixed;top: 50%;left:50%;margin-left: -375px;margin-top: -252px;z-index: 999;background: #ffffff;}
+.tTPop{display: none;width: 750px;height: 530px;position: fixed;top: 50%;left:50%;margin-left: -375px;margin-top: -252px;z-index: 999;background: #ffffff;}
 .tTPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
 .tTPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
 .tTPop .title .closeW:hover{background-position: -20px;}
@@ -130,12 +131,13 @@ select[name='week'],select[name='month']{width: 94px;}
 .tTPop .operateButtons .addTB{padding-right: 34px;}
 
 .tTPop .tTTableTh,.tTPop .tTTable{margin:0 22px;}
-.tTPop .tTTableTh{padding-right: 18px;#padding-right: 0px;border-bottom: 1px solid rgb(231,234,236);background: rgb(249,249,249)}
-.tTPop .tTTable{height: 270px;overflow-y: scroll;}
+.tTPop .tTTableTh{padding-right: 17px;  border-bottom: 1px solid 1px solid rgb(231,234,236);  border-top: 1px solid 1px solid rgb(231,234,236);background: rgb(240,240,240)}
+.tTPop .tTTable{height: 270px;overflow: hidden;overflow-y: scroll;border-bottom: 1px solid rgb(231,234,236);}
 .tTPop .tTTable table{border-collapse: collapse;}
-.tTPop .tTTable table tr{border-bottom: 1px solid rgb(231,234,236)}
-.tTPop .tTTableTh th{line-height: 38px;font-size: 12px;font-weight: bold;color: #676a6c;text-align: left;padding-left: 11px}
-.tTPop .tTTable td{color:#6c6c6c;font-size: 12px;line-height: 39px;padding-left: 11px;white-space: nowrap;}
+/* .tTPop .tTTable table tr{border-bottom: 1px solid rgb(231,234,236)} */
+.tTPop .tTTable table tr:hover {background: rgb(249,249,249);}
+.tTPop .tTTableTh th{line-height: 34px;font-size: 12px;font-weight: normal;color: rgb(103, 106, 108);text-align: left;padding-left: 10px; background: rgb(240,240,240);}
+.tTPop .tTTable td{color:#6c6c6c;font-size: 12px;line-height: 35px;padding-left: 10px;white-space: nowrap;}
 .tTPop .tTTable td font{font-size: 12px;}
 
 .tTPop .windowShade{z-index: 9}
@@ -169,3 +171,11 @@ select[name='week'],select[name='month']{width: 94px;}
 .delayHideS .p1{font-size: 14px;line-height: 44px}
 .delayHideS .p2{font-size: 12px;margin-top: 6px;}
 .delayHideS .p2 font{color:rgb(101,197,129);}
+
+
+/*分页样式*/
+.table .tcdPageCode{padding: 15px 20px;text-align: left;color: #ccc;font-size: 12px}  
+.tcdPageCode a{display: inline-block;color: #6a6c6e;display: inline-block;height: 25px;line-height: 25px; padding: 0 10px;border: 1px solid rgb(221,221,221);margin: 0 2px;border-radius: 4px;vertical-align: middle;}  
+.tcdPageCode a:hover{text-decoration: none;background: rgb(244,244,244)}  
+.tcdPageCode span.current{display: inline-block;height: 25px;line-height: 25px;padding: 0 10px;margin: 0 2px;color: #fff;background-color: rgb(101,197,129);    border: 1px solid rgb(101,197,129);border-radius: 4px;vertical-align: middle;}  
+.tcdPageCode span.disabled{    display: inline-block;height: 25px;line-height: 25px;padding: 0 10px; margin: 0 2px;color: #bfbfbf;background: #f2f2f2;border: 1px solid #bfbfbf;border-radius: 4px;vertical-align: middle;}

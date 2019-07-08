@@ -27,7 +27,7 @@ body{background: url(../images/topbgg.png);font-family: 微软雅黑;#font-famil
 .downloadBlock .smalltitle{font-size: 16px;color: #d7d7d7;margin-top: 70px;}
 .downloadBlock .appe{color: #d7d7d7;font-size: 14px;margin-top: 16px;}
 .downloadBlock .mainbody{color: #d7d7d7;font-size: 14px;height: 140px;line-height: 24px;}
-.downloadBlock .downloadButton{width: 140px;height: 36px;line-height: 36px;display: inline-block;text-align: center;background: rgb(101,197,129);color: #ffffff;font-size: 14px;border-radius: 2px;text-decoration: none;}
+.downloadBlock .downloadButton{width: 152px;height: 36px;line-height: 36px;display: inline-block;text-align: center;background: rgb(101,197,129);color: #ffffff;font-size: 14px;border-radius: 2px;text-decoration: none;}
 .downloadBlock .downloadButton:hover{background: rgb(71,172,117)}
 .downloadBlock .floatL{width: 402px;padding-left: 30px;}
 .loginBlock{width: 888px;height: 62px;margin-left: -444px;margin: 0 auto;margin-top: 110px;margin-bottom: 100px;}

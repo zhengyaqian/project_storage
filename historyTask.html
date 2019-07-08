@@ -12,46 +12,6 @@
         <script src="js/jquery.page.js"></script>      
 		<script type="text/javascript" src="js/zUI.js"></script>
     </head>
-    <style>
-.whole .zUIpanelScrollBox,.whole .zUIpanelScrollBar{
-			width:10px;
-			top:4px;
-			border-radius:5px;
-		}
-.whole .zUIpanelScrollBox{
-	background:black;
-	opacity:0;
-	filter:alpha(opacity=0);
-}
-.whole .zUIpanelScrollBar{
-	background:#fff;
-	opacity:0;
-	filter:alpha(opacity=0);
-}
-
-.whole .wcontainer{width: 100%}
-.footerFP {
-    line-height: 40px;
-    background: rgb(49,67,82);
-    color: rgb(182, 182, 182);
-    text-align: center;
-    font-size: 12px;
-    width: 100%;
-    margin-top: 10px;
-}
-.footerFP .container {
-    width: 1200px;
-    margin: 0 auto;
-    background-color: rgb(49,67,82);
-}
-.footerFP .container a {
-    text-decoration: none;
-    color: rgb(182, 182, 182);
-}
-.taskDetailPop .taskDetailTable{
-    height: auto;
-}
-</style>
     <body>
     	<div class="whole">
 	        <div class="wcontainer">
@@ -101,14 +61,16 @@
 		            </div>
 		           
 		            <div class="tableContainer hTTableContainer">
+		                <div class="tableth">
+		                        <table>                                       
+		                        </table>
+		                </div>
 		                <div class="table">
-		                      
+		                        <table>                                       
+		                        </table>
 		                </div>
 		            </div>
 		        </div>
-		        <div class="footerFP">
-					<div class="container">Copyright 2017-2018 北京火绒网络科技有限公司</div>
-				</div>
 			</div>
 		</div>
                 
@@ -123,9 +85,21 @@
             <div class="messageTxt">
                 
             </div>
-           
+            <div class="tableth">
+                <table width="100%">
+                    <tr>
+                        <th width="25%" class='th-ordery' type='groupname'>终端分组 <img src="images/th-ordery.png"/></th>
+                        <th width="25%" class='th-ordery' type='hostname'>终端名称 <img src="images/th-ordery.png"/></th>
+                        <th width="25%" class='th-ordery' type='status'>任务状态 <img src="images/th-ordery.png"/></th>
+                        <th width="25%">备注</th>
+                    </tr>
+                </table>
+
+            </div>
             <div class="taskDetailTable">
-              
+                <table>
+                    
+                </table>
             </div>
             
         </div>
@@ -230,28 +204,9 @@
             </div>
         </div>
         <div class="shade"></div>
-        <script src="js/dataTable/jquery-datatable.js"></script>
         <script type="text/javascript" src="js/common.js"></script>
         <script src="js/lyz.calendar.min.js" type="text/javascript"></script>
         
         <script src="js/historyTask.js" type="text/javascript"></script>
-        <script>
-            //调整页面内元素高度
-            var wholeh=parent.$("#iframe").height();
-            $(".whole").css({height:wholeh});
-       
-
-            window.onresize = function(){
-                var wholeh=parent.$("#iframe #mainFrame").height();
-
-                $(".whole").css({height:wholeh});
-            }
-
-        //隐藏左边滚动条	
-		$(function(){
-			$(".whole").panel({iWheelStep:32});
-		}); 
-        </script>
-
     </body>
 </html>

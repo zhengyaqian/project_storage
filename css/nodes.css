@@ -1,4 +1,3 @@
-/*列表*/
 .hostnameTd{
 	cursor: pointer;
 }
@@ -117,7 +116,6 @@
 	color: rgb(204, 204, 204);
 }
 
-/*分配授权*/
 
 .lic_quota_type_inp,.lic_quota_type_span{
 	width: 90%;
@@ -171,7 +169,6 @@ input[type="number"]{
 }
 
 
-/*配置上级中心弹窗提示*/
 
 .switchTipPop .right{
 	float: none;
@@ -181,7 +178,7 @@ input[type="number"]{
     padding-top: 35px;
     padding-right: 16px;
 }
-/*placeholder颜色*/
+/*placeholder棰滆壊*/
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color:rgb(204, 204, 204);
 }
@@ -193,4 +190,54 @@ input[type="number"]{
 }
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
    color:rgb(204, 204, 204);
+}
+
+/* 编辑授权弹窗 */
+.editQuota{
+    margin-left: 5px;
+}
+.quotaPop{
+    width: 400px;
+    height: 260px;
+    margin-left: -200px;
+    margin-top: -150px;
+}
+.quotaPop .content{
+    height: 150px;
+    padding: 0 25px;
+}
+.quotaPop form .p{
+   margin: 15px 0; 
+}
+.quotaPop .content .hr{
+    height: 1px;
+    background:rgb(229,230,231);
+}
+.quotaPop form label{
+    width: 100px;
+    text-align: left;
+}
+.quotaPop form select,.quotaPop form input[type=text]{
+    padding: 0;
+    margin: 0;
+}
+.quotaPop form input[type=text]{
+    width: 80px;
+    height: 20px;
+}
+.quotaPop .custom_distr{
+    color: rgb(108, 108, 108);
+}
+.quotaPop .custom_distr_style{
+    color: #ccc;
+}
+.quotaPop .custom_distr_style label{
+    color: #ccc;
+}
+.quotaPop .termial-type{
+    display: inline-block;
+    font-size: 13px;
+}
+.quotaPop .termial-type input:disabled{
+    background-color: #fff;
 }

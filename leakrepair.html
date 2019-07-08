@@ -9,8 +9,6 @@
 		<link href="css/eventLog.css" rel="stylesheet">
 		<link href="css/lyz.calendar.css" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="js/jquery.min.js"></script>
-		<script src="js/dataTable/jquery-datatable.js"></script>
-
 		<script type="text/javascript" src="js/json3.js"></script>
 		<script src="js/jquery.page.js"></script>
 
@@ -52,8 +50,29 @@
 				<div class='clear'></div>
 			</div>
 			<div class="tableContainer">
+				<div class="tableth">
+					<table cellpadding="0" cellspacing="0">
+						<tr>
+							<th width='4%'><input type='checkbox' class='verticalMiddle selectAll-repair' onclick='selectAll(this)' /></th>
+							<th width='18%' class='th-ordery' type='hostname'>终端名称 <img src="images/th-ordery.png"/></th>
+							<th width='15%' class='th-ordery' type='group_name'>终端分组 <img src="images/th-ordery.png"/></th>
+							<th width='15%' class='th-ordery' type='l0_cnt'>高危漏洞 <img src="images/th-ordery.png"/></th>
+							<th width='15%' class='th-ordery' type='l1_cnt'>功能漏洞 <img src="images/th-ordery.png"/></th>
+							<th width='15%' class='th-ordery' type='ex_cnt'>已忽略 <img src="images/th-ordery.png"/></th>
+						</tr>
+					</table>
+				</div>
 				<div class="table">
-					
+					<table>
+						<tr id='tableAlign'>
+							<td width='4%'><input type='checkbox' class='verticalMiddle'/></td>
+							<td width='18%'>终端名称</td>
+							<td width='15%'>终端分组</td>
+							<td width='15%'>高危漏洞</td>
+							<td width='15%'>功能漏洞</td>
+							<td width='15%'>已忽略</td>
+						</tr>
+					</table>
 				</div>
 			</div>
 
@@ -85,7 +104,20 @@
 			<div class="describe">以下终端已被忽略，火绒将不再对这些终端进行漏洞扫描及修复
 				<a class='charaButton floatR greenfont underline cursor' onclick="cancelIgnorePopFun()">取消忽略</a>
 			</div>
-			<div class="ignoredTTable">
+			<div class="tableth">
+				<table width="100%">
+					<tr>
+						<th width="10%"><input type="checkbox" name="" value="" class="topCheckbox selectAll-repair-pop" onclick='selectAllpop(this)'></th>
+						<th width="50%">终端名称</th>
+						<th width="40%">终端分组</th>
+					</tr>
+				</table>
+
+			</div>
+			<div class="ignoredTTable"  style="overflow-y: scroll;">
+				<table>
+
+				</table>
 			</div>
 
 		</div>
@@ -93,9 +125,24 @@
 		<div class="taskDetailPop pop">
 			<div class="title"><span class="taskInf">任务详情</span><span class="closeW"></span></div>
 			<div class="describe"></div>
-			<div class="taskDetailTable">
-			
+			<div class="tableth" >
+				<table width="100%">
+					<tr>
+						<th width="5%"><input type="checkbox" name="detail" value="" class="topCheckbox selectAll-repair-pop"  onclick="selectAllDetailspop(this)"></th>
+						<th width="20%" class='th-ordery' type='kbid'>补丁编号 <img src="images/th-ordery.png"/></th>
+						<th width="40%" class='th-ordery' type='desc'>补丁描述 <img src="images/th-ordery.png"/></th>
+						<th width="12%" class='th-ordery' type='level'>补丁类型 <img src="images/th-ordery.png"/></th>
+						<th width="20%" class='th-ordery' type='pub_time'>发布时间<img src="images/th-ordery.png"/></th>
+					</tr>
+				</table>
+
 			</div>
+			<div class="taskDetailTable">
+				<table>
+
+				</table>
+			</div>
+
 		</div>
 		<!-- 漏洞修复设置弹层 -->
 		<div class="loopholeRSPop windowPop pop">
@@ -146,18 +193,19 @@
 		<div class="repairLoopPop pop">
 			<div class="title">修复漏洞<span class="closeW"></span></div>
 			<div class="describe">将对下列终端下发漏洞修复任务，请确认</div>
-			<div class="tableCon" style="height:300px;">
+			<div class="tableth">
 				<table width="100%">
-					<thead>
-						<tr>
-							<th width="40%">终端名称</th>
-							<th width="40%">终端分组</th>
-							<th width="20%">状态</th>
-						</tr>
-					</thead>
-					<tbody style="height:266px;">
+					<tr>
+						<th width="40%">终端名称</th>
+						<th width="40%">终端分组</th>
+						<th width="20%">状态</th>
+					</tr>
+				</table>
 
-					</tbody>
+			</div>
+			<div class="tableCon" style="overflow-y: scroll;">
+				<table width="100%">
+					
 				</table>
 			</div>
 			<div class="buttons">

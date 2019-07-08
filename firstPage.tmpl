@@ -6,8 +6,6 @@
 		<link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.css" />
 <link href="css/firstPage.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/dataTable/jquery-datatable.js"></script>
-
 <script type="text/javascript" src="js/highcharts.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script type="text/javascript" src="js/zUI.js"></script>
@@ -126,7 +124,18 @@
 									<div class="clear"></div>
 								</div>
 								<div class="table taskTable">
-									
+									<table>
+										<tr>
+											
+											<th width='20%'>任务</th>
+											<th width='25%'>时间</th>
+											<th width='20%'>执行/下发</th>
+											<th width='20%'>状态</th>
+											<th width='15%'>详情</th>
+										</tr>
+										
+										
+									</table>
 								</div>
 							</div>
 							<div class="clear"></div>
@@ -172,7 +181,7 @@
 					</div>
 			    </div>
 			    <div class="footerFP">
-					<div class="container"><a onclick="javascript:parent.window.open('http://www.huorong.cn/')" class="cursor">Copyright 2017-2018 北京火绒网络科技有限公司</a></div>
+					<div class="container"><a onclick="javascript:parent.window.open('http://www.huorong.cn/')" class="cursor">Copyright 2017-2019 北京火绒网络科技有限公司</a></div>
 				</div>
 				<div class="taskDetailPop pop">
 		            <div class="title">任务详情<span class="closeW"></span></div>
@@ -183,8 +192,21 @@
 	                <div class="messageTxt">
 	                
 	                </div>
+		            <div class="tableth">
+		                <table width="100%">
+		                    <tr>
+		                        <th width="25%">终端分组</th>
+		                        <th width="25%">终端名称</th>
+		                        <th width="25%">任务状态</th>
+		                        <th width="25%">备注</th>
+		                    </tr>
+		                </table>
+
+		            </div>
 		            <div class="taskDetailTable">
-		              
+		                <table>
+		                    
+		                </table>
 		            </div>
 		           
 		        </div>
@@ -330,7 +352,6 @@
 		$(function(){
 			$(".whole").panel({iWheelStep:32});
 		}); 
-		
 		</script>
 	</body>
 </html>

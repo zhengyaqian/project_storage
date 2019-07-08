@@ -17,17 +17,16 @@
 .bgContainer .tacticsDescribeTxt{font-size: 12px;color: #6c6c6c;margin-left:20px;line-height: 24px;height: 24px;}
 .main .tableth{background: rgb(249,249,249);}
 .tableth{background: rgb(249,249,249);padding-right: 18px;border-bottom: 1px solid rgb(231,234,236);border-top: 1px solid rgb(231,234,236);}
-/* .table{overflow-y:scroll;overflow-x:hidden;} */
-.table table tr td,.table table tr th{line-height: 60px;}
+.table{overflow-y:scroll;overflow-x:hidden;}
+.table table tr td,.tableth table tr th{line-height: 60px;}
 .table tr{border-bottom: 1px solid rgb(231,234,236)}
-.table tbody tr:nth-child(even){background:rgb(249,249,249);}
-.table table tbody tr:nth-child(odd){background:none;}
+.table tr:nth-child(odd){background:rgb(249,249,249);}
+.table table tr:nth-child(even){background:none;}
+.table .th,.tableth .th{line-height: 40px;background-color: rgb(249,249,249)}
 
-.table .th,.table .th{line-height: 40px;background-color: rgb(249,249,249)}
-
-.table table,.table table th{border-collapse: collapse;width:100%;}
-.table th{font-weight: normal;color: #676a6c;text-align: left;padding-left: 30px;font-weight: bold;position: relative;}
-.table td{color: #6c6c6c;padding-left: 30px;}
+.table table,.tableth table{border-collapse: collapse;width:100%;}
+.table th,.tableth th{font-weight: normal;color: #676a6c;text-align: left;padding-left: 30px;font-weight: bold;#padding-left: 12px;}
+.table td{color: #6c6c6c;padding-left: 30px;#padding-left: 10px;}
 .table td img{vertical-align: middle;margin-right: 26px;}
 .table td span{vertical-align: middle;}
 .table select{border: 1px solid rgb(231,234,236);color: #6c6c6c;width: 120px;text-overflow:ellipsis;overflow: hidden;white-space: nowrap;}
@@ -46,7 +45,7 @@
 
 .newTacticsPop{display: none;width: 482px;height: 252px;position: fixed;top: 50%;left:50%;margin-left: -241px;margin-top: -236px;z-index: 999;background: #ffffff;}
 .newTacticsPop .title{position: relative;font-size: 14px;color: #676a6c;padding-left: 20px;border-bottom: 1px solid rgb(231,234,236);line-height: 50px;}
-.newTacticsPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);top:2px;}
+.newTacticsPop .title .closeW{cursor: pointer;position: absolute;top:16px;right: 26px;display: block;width: 20px;height: 20px;background: url(../images/closeW.png);*top:2px;}
 .newTacticsPop .title .closeW:hover{background-position: -20px}
 .newTacticsPop .left{float: left;padding-left: 34px;padding-top: 44px}
 .newTacticsPop .right{float: left;position: relative;padding-top: 26px;padding-left: 20px;}

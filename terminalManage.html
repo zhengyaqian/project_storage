@@ -10,8 +10,6 @@
 		<link href="css/terminalManage.css" rel="stylesheet">
 		<link href="css/groupingManage.css" rel="stylesheet">
 		<script type="text/javascript" src="js/jquery.min.js"></script>
-		<script src="js/dataTable/jquery-datatable.js"></script>
-
 		<script type="text/javascript" src="js/common.js"></script>
 		<script type="text/javascript" src="js/jquery.fileDownload.js"></script>
 
@@ -39,12 +37,6 @@
 				background: #fff;
 				opacity: 0;
 				filter: alpha(opacity=0);
-			}
-			.tableContainer .table th{
-				padding-left: 10px;
-			}
-			.insertRTable table tbody{
-				height: 246px;
 			}
 		</style>
 	</head>
@@ -134,12 +126,23 @@
 				    	
 				    	
 				    </div>
-					
-					<div class="tableContainer">
+					<!-- 终端列表表头 -->
+					<div class="tableth">
+						<table>
+							<tr>
+								<th class='firstth' width='2%'><input type='checkbox' onclick='selectAll(this)' class='selectAll'></th>
+								<th class='th-ordery' type='hostname' width='21%'>终端名称 <img src="images/th-ordery.png"/></th>
+								<th width='21%' class='th-ordery' type='groupname'>终端分组 <img src="images/th-ordery.png"/></th>
+								<th width='13%' class='th-ordery' type='ip'>IP <img src="images/th-ordery.png"/></th>
+								<th class='th-ordery' type='mac' width='17%'>MAC <img src="images/th-ordery.png"/></th>
+								<th class='th-ordery' type='dbver' width='17%'>病毒库版本 <img src="images/th-ordery.png"/></th>
+								<th width='10%' class='th-ordery' type='version'>终端版本 <img src="images/th-ordery.png"/></th>
+							</tr>
+						</table>
+					</div>
 					<!-- 终端列表表格 -->
-						<div class="table">
+					<div class="table">
 
-						</div>
 					</div>
 				</div>
 			</div>
@@ -149,156 +152,22 @@
 		<div class="shade"></div>
 		<div class="shadee"></div>
 		<!-- 终端详情弹层 start -->
-		<div class="detailPop">
+		<!-- <div class="detailPop">
 			<div class="title">终端详情<span class="closeW"></span></div>
 			<div class="left">
 				<div class="detailcom"><img src="images/detailcom.png"></div>
 				<p class="terminalstatus">服务异常</p>
 				<p class="terminalname">【终端名称】</p>
 				<p class="isgroup">【所在分组】</p>
-				<!-- <p class="versionnum"></p>
-				<p class="dbversion"></p> -->
-				<!-- <a class="general pageTab"><img src="images/general2.png"><span>终端概览</span></a>
-				<a class="tactics pageTab"><img src="images/tactics1.png"><span>防护策略</span></a>
-				<a class="log pageTab"><img src="images/log1.png"><span>事件日志</span></a> -->
-
 			</div>
 			<div class="right" style="height: 374px;overflow-y: scroll;">
 				<div class="terOverview">
 
 				</div>
-				<!-- <div class="defendTactics">
-			    	<div class="tacticsSwitch relative">
-			    		<p>
-                            <input type="radio" name="tacticsSelect" value="0" class="verticalMiddle"><span class="verticalMiddle">分组策略</span>
-                        </p>
-                        <p>
-                            <input type="radio" name="tacticsSelect" value="1" class="verticalMiddle"><span class="verticalMiddle">独立策略</span>
-                        </p>
-                        <select class="absolute">
-                		    <option>市场部专用策略</option>
-                	    </select>
-                    </div>
-			    </div> -->
-				<!-- <div class="eventLog">
-			    	<div class="selectCondition">
-			    		<span>时间</span>
-			    		<select>
-			    			<option>今天</option>
-			    			<option>最近一个月</option>
-			    			<option>最近三天</option>
-			    			<option>最近七天</option>
-			    		</select>
-			    		<span>类别</span>
-			    		<select>
-			    			<option>全部</option>
-			    			<option>病毒防御</option>
-			    			<option>系统防御</option>
-			    			<option>网络防御</option>
-			    			<option>其他</option>
-			    		</select>
-			    		<span>时间</span>
-			    		<select>
-			    			<option>文件实时监控</option>
-			    			<option></option>
-			    			<option></option>
-			    			<option></option>
-			    		</select>
-			    		<span>概要</span>
-			    	</div>
-			    	<div class="eventTable">
-			    		<table>
-			    			<tr class="cursor">
-			    				<td width="300">2016-6-29 21:12:22</td>
-			    				<td width="350">病毒防御</td>
-			    				<td width="350">病毒查杀</td>
-			    				<td width="450">手动升级成功，版本号:4.0.12.3</td>
-			    			</tr>
-			    			<tr class="cursor">
-			    				<td width="300">2016-6-29 21:12:22</td>
-			    				<td width="350">病毒防御</td>
-			    				<td width="350">病毒查杀</td>
-			    				<td width="450">手动升级成功，版本号:4.0.12.3</td>
-			    			</tr>
-			    			<tr class="cursor">
-			    				<td width="300">2016-6-29 21:12:22</td>
-			    				<td width="350">病毒防御</td>
-			    				<td width="350">病毒查杀</td>
-			    				<td width="450">手动升级成功，版本号:4.0.12.3</td>
-			    			</tr>
-			    			<tr class="cursor">
-			    				<td width="300">2016-6-29 21:12:22</td>
-			    				<td width="350">病毒防御</td>
-			    				<td width="350">病毒查杀</td>
-			    				<td width="450">手动升级成功，版本号:4.0.12.3</td>
-			    			</tr>
-			    			<tr class="cursor">
-			    				<td width="300">2016-6-29 21:12:22</td>
-			    				<td width="350">病毒防御</td>
-			    				<td width="350">病毒查杀</td>
-			    				<td width="450">手动升级成功，版本号:4.0.12.3</td>
-			    			</tr>
-			    			<tr class="cursor">
-			    				<td width="300">2016-6-29 21:12:22</td>
-			    				<td width="350">病毒防御</td>
-			    				<td width="350">病毒查杀</td>
-			    				<td width="450">手动升级成功，版本号:4.0.12.3</td>
-			    			</tr>
-
-			    			
-			    		</table>
-			    	</div>
-			    	<div class="eventDetail">
-			    		<h2>事情详情</h2>
-			    		<p>病毒库号:2016/10/25 17:32</p>
-			    		<p>病毒库号:2016/10/25 17:32</p>
-			    		<p>病毒库号:2016/10/25 17:32</p>
-			    		<p>病毒库号:2016/10/25 17:32</p>
-			    		<p>病毒库号:2016/10/25 17:32</p>
-			    		<p>病毒库号:2016/10/25 17:32</p>
-			    		<p>病毒库号:2016/10/25 17:32</p>
-			    		<p>病毒库号:2016/10/25 17:32</p>
-			    		<p>病毒库号:2016/10/25 17:32</p>
-			    	</div>
-			    	<div class="buttons"><a class="cursor">刷新</a></div>
-			    </div> -->
 			</div>
-		</div>
+		</div> -->
 
 		<!-- 终端详情弹层 end -->
-
-		<!-- 近期任务弹层 start -->
-
-		<div class="recentTaskPop pop">
-			<div class="title">近期任务<span class="closeW"></span></div>
-			<div class="content">
-				<div class="taskType">任务类型:
-					<select>
-						<option value="0">全部任务</option>
-						<option value="1">快速查杀任务</option>
-						<option value="2">全盘查杀任务</option>
-						<option value="3">升级任务</option>
-						<option value="4">下发通知</option>
-					</select>
-					<a><span class="refurbishRTL cursor"></span></a>
-				</div>
-				<div class="containerTh">
-					<span class="firstth">任务</span><span>时间</span><span>执行/下发</span><span class="lastth">状态</span>
-
-				</div>
-				<div class="container">
-
-				</div>
-
-			</div>
-			<div class="bottom">
-				<span>历史任务请在"事件日志"中查询</span>
-				<a onclick="hideButton(this)">关闭</a>
-			</div>
-
-		</div>
-
-		<!-- 近期任务弹层 end -->
 
 		<!-- 新建分组弹层 -->
 
@@ -320,16 +189,19 @@
 		<div class="fastSKPop pop">
 			<div class="title">快速查杀<span class="closeW"></span></div>
 			<div class="describe">将对下列终端下发查杀任务，请确认<span class="fastSKCB"></span></div>
+			<div class="tableth">
+				<table width="100%">
+					<tr>
+						<th width="40%">终端名称</th>
+						<th width="40%">终端分组</th>
+						<th width="20%">状态</th>
+					</tr>
+				</table>
+
+			</div>
 			<div class="tableCon">
 				<table width="100%">
-					<thead>
-						<tr>
-							<th width="40%">终端名称</th>
-							<th width="40%">终端分组</th>
-							<th width="20%">状态</th>
-						</tr>
-					</thead>
-					<tbody style="height:246px;"></tbody>
+
 				</table>
 			</div>
 			<div class="buttons">
@@ -396,20 +268,17 @@
 			<div class="describe">将对下列终端下发查杀任务，请确认<span class="overallSKCB"></span></div>
 			<div class="tableth">
 				<table width="100%">
-					
+					<tr>
+						<th width="40%">终端名称</th>
+						<th width="40%">终端分组</th>
+						<th width="20%">状态</th>
+					</tr>
 				</table>
 
 			</div>
 			<div class="tableCon">
 				<table width="100%">
-					<thead>
-						<tr>
-							<th width="40%">终端名称</th>
-							<th width="40%">终端分组</th>
-							<th width="20%">状态</th>
-						</tr>
-					</thead>
-					<tbody style="height:246px;"></tbody>
+
 				</table>
 			</div>
 			<div class="buttons">
@@ -488,17 +357,20 @@
 		<div class=" terminalUpPop pop">
 			<div class="title">终端升级<span class="closeW"></span></div>
 			<div class="describe">将对下列终端下发升级任务，请确认</div>
+			<div class="tableth">
+				<table width="100%">
+					<tr>
+						<th width="35%">终端名称</th>
+						<th width="35%">终端分组</th>
+						<th width="15%">终端版本</th>
+						<th width="15%">状态</th>
+					</tr>
+				</table>
+
+			</div>
 			<div class="tableCon">
 				<table width="100%">
-					<thead>
-						<tr>
-							<th width="35%">终端名称</th>
-							<th width="35%">终端分组</th>
-							<th width="15%">终端版本</th>
-							<th width="15%">状态</th>
-						</tr>
-					</thead>
-					<tbody></tbody>
+
 				</table>
 			</div>
 			<div class="buttons">
@@ -525,21 +397,6 @@
 				<a onclick="sureMGNButton(this)">确定</a>
 			</div>
 		</div>
-		<!-- 修改终端名称 -->
-		<div class="editTNPop pop">
-			<div class="title">修改终端名称<span class="closeW"></span></div>
-			<div class="left"><img src="images/modify.png"></div>
-			<div class="right">
-				<p class="describe">请输入新的终端名称</p>
-				<p class="input"><input type="text" id="editTNText"></p>
-
-			</div>
-			<div class="clear"></div>
-			<div class="buttons">
-				<a onclick="hideButton(this)">取消</a>
-				<a onclick="sureETNButton(this)">确定</a>
-			</div>
-		</div>
 		<!-- 删除分组 -->
 		<div class="deleteGPop pop">
 			<div class="title">删除分组<span class="closeW"></span></div>
@@ -563,17 +420,19 @@
 			<div class="describe relative"><span>当前已选择8台在线终端,请需要移动的目标分组:</span>
 				<select class="absolute groupsSelect"></select>
 			</div>
-			
+			<div class="tableth">
+				<table width="100%">
+					<tr>
+						<th width="40%">终端名称</th>
+						<th width="40%">终端分组</th>
+						<th width="20%">状态</th>
+					</tr>
+				</table>
+
+			</div>
 			<div class="tableCon">
 				<table width="100%">
-					<thead>
-						<tr>
-							<th width="40%">终端名称</th>
-							<th width="40%">终端分组</th>
-							<th width="20%">状态</th>
-						</tr>
-					</thead>
-					<tbody></tbody>
+
 				</table>
 			</div>
 			<a class="sureButton" onclick="sureMGButton(this)">立即移动</a>
@@ -583,16 +442,17 @@
 		<div class="sendMPop pop">
 			<div class="title">发送通知<span class="closeW"></span></div>
 			<div class="describe">当前已选择 8 台在线终端，请输入需要发送的消息内容：</div>
+			<div class="tableth">
+				<table width="100%">
+					<tr>
+						<th width="40%">终端名称</th>
+						<th width="40%">终端分组</th>
+						<th width="20%">状态</th>
+					</tr>
+				</table>
+			</div>
 			<div class="tableCon">
 				<table width="100%">
-					<thead>
-						<tr>
-							<th width="40%">终端名称</th>
-							<th width="40%">终端分组</th>
-							<th width="20%">状态</th>
-						</tr>
-					</thead>
-					<tbody style="height:176px;"></tbody>
 				</table>
 			</div>
         	<div class="textarea">
@@ -605,17 +465,19 @@
         <div class=" DPSPop pop">
 			<div class="title"><font>删除终端</font><span class="closeW"></span></div>
 			<div class="describe">是否删除下列终端，同时删除与终端相关的事件日志</div>
-			
+			<div class="tableth">
+				<table width="100%">
+					<tr>
+						<th width="40%">终端名称</th>
+						<th width="40%">终端分组</th>
+						<th width="20%">状态</th>
+					</tr>
+				</table>
+
+			</div>
 			<div class="tableCon">
 				<table width="100%">
-					<thead>
-						<tr>
-							<th width="40%">终端名称</th>
-							<th width="40%">终端分组</th>
-							<th width="20%">状态</th>
-						</tr>
-					</thead>
-					<tbody></tbody>
+
 				</table>
 			</div>
 			<div class="buttons">
@@ -671,17 +533,23 @@
 							</div>
 							<div class="clear"></div>
 						</div>
-						
+						<div class="tableth">
+							<table>
+								<tr>
+									<th width="45%">接入规则</th>
+									<th width="36%">分组名称</th>
+									<th width="13%">操作</th>
+								</tr>
+							</table>
+						</div>
 						<div class="table insertRTable">
 							<table>
-								<thead>
-									<tr>
-										<td width='40%'>接入规则</td>
-										<td width='30%'>分组名称</td>
-										<td width='30%'>操作</td>
-									</tr>
-								</thead>
-								<tbody></tbody>
+								<tr id="tableAlign">
+									<td width='40%'>接入规则</td>
+									<td width='30%'>分组名称</td>
+									<td width='30%'>操作</td>
+								</tr>
+
 							</table>
 						</div>
 

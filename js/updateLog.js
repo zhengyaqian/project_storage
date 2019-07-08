@@ -14,31 +14,25 @@ document.cookie='page=updateLog.html';
 
 //选择时间
 $("#specialTime select").change(function(){
-    var optionVal = $(this).find("option:selected").val();
-    var begintime = 0;
-    switch(parseInt(optionVal)){
-        case 0:
-            begintime = -6;
-            break;
-        case 1:
-            begintime = -29;
-            break;
-        case 2:
-            begintime = -89;
-            break;
-        case 3:
-            begintime = -364;
-            break;
-        default:
-            $(".filterBlock .middle").show(200);
-            break;
-    }
-    if(optionVal != 4){
-        if(begintime != 0){
-            $("#txtBeginDate").val(GetDateStr(begintime));
-        }
+
+    if($(this).find("option:selected").val()==0){
+        $("#txtBeginDate").val(GetDateStr(-6));
         $("#txtEndDate").val(GetDateStr(0));
         $(".filterBlock .middle").hide(200);
+    }else if($(this).find("option:selected").val()==1){
+        $("#txtBeginDate").val(GetDateStr(-29));
+        $("#txtEndDate").val(GetDateStr(0));
+        $(".filterBlock .middle").hide(200);
+    }else if($(this).find("option:selected").val()==2){
+        $("#txtBeginDate").val(GetDateStr(-89));
+        $("#txtEndDate").val(GetDateStr(0));
+        $(".filterBlock .middle").hide(200);
+    }else if($(this).find("option:selected").val()==3){
+        $("#txtBeginDate").val(GetDateStr(-364));
+        $("#txtEndDate").val(GetDateStr(0));
+        $(".filterBlock .middle").hide(200);
+    }else if($(this).find("option:selected").val()==4){
+        $(".filterBlock .middle").show(200);
     }
     accEvent();
 })
@@ -55,46 +49,24 @@ $(document).on('click','.exportLog',function(){
 })
 //排序
 
-$(document).on('click','.table th.th-ordery',function(){
+$(document).on('click','.tableth th.th-ordery',function(){
 	var toggleClass = $(this).attr('class');
-	var _this = $(this);
-    sortingFun(_this,toggleClass);
+	$(this).siblings('th.th-ordery').removeClass().addClass('th-ordery');
+	$(this).siblings('th.th-ordery').find('img').attr('src','images/th-ordery.png');
+	if(toggleClass == 'th-ordery'){
+		$(this).find('img').attr('src','images/th-ordery-up.png');
+		$(this).addClass('th-ordery-current th-ordery-up');
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up'){
+		$(this).find('img').attr('src','images/th-ordery-down.png');
+		$(this).addClass('th-ordery-current th-ordery-down');
+		
+	}else if(toggleClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		$(this).find('img').attr('src','images/th-ordery.png');
+		$(this).removeClass('th-ordery-current th-ordery-down th-ordery-up');
+	}
+	
 	accEvent();
 })
-//列表信息
-function columnsDataListFun (){
-	var columns = [
-		{
-			type: "time",title: "时间",name: "time",
-			tHead:{style: {width: "16%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "16%"},customFunc: function (data, row, i) {return safeStr(getLocalTime(data));}},
-		},{
-			type: "product",title: "任务类型",name: "product",
-			tHead:{style: {width: "16%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "16%"},customFunc: function (data, row, i) {
-				return fieldHandle(productField,data);
-            }}
-		},{
-			type: "orgver",title: "升级前版本",name: "orgver",
-			tHead:{style: {width: "16%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "16%"},customFunc: function (data, row, i) {
-				return safeStr(data);
-            }},
-		},{
-			type: "newver",title: "升级后版本",name: "newver",
-			tHead:{style: {width: "16%"},class:"th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "16%"},customFunc: function (data, row, i) {return safeStr(data);}},
-		},{
-            type: "result",title: "状态",name: "result",
-            tHead:{style: {width: "16%"},class: "th-ordery",customFunc: function (data, row, i) {return "<img src='images/th-ordery.png'/>"}},
-			tBody:{style: {width: "16%"},customFunc: function (data, row, i) {
-				return fieldHandle(result_Field,data);
-            }}
-		}]
-	var tabstr = new createTable(columns,[] ,$('.tableContainer .table'));
-	return tabstr;
-}
-var tabListstr = columnsDataListFun();
 //请求参数
 function accEvnetParam(){
 	var begintime=getBeginTimes($("#txtBeginDate").val());
@@ -105,11 +77,22 @@ function accEvnetParam(){
     var dataa="";
     var start=0;
 
-    dataa={"date":{"begin":begintime,"end":endtime},"filter":{"product":module},"view":{"begin":start,"count":20}}
+    dataa={"date":{"begin":begintime,"end":endtime},"filter":{"product":module},"view":{"begin":start,"count":numperpage}}
 
-	var type = $('.table th.th-ordery.th-ordery-current').attr('type');
-	var orderClass = $('.table th.th-ordery.th-ordery-current').attr('class');
-	dataa = sortingDataFun(dataa,type,orderClass);
+	var type = $('.tableth th.th-ordery.th-ordery-current').attr('type');
+	var orderClass = $('.tableth th.th-ordery.th-ordery-current').attr('class');
+	var ordery;
+	var order = {};
+	dataa.order = [];
+	if(orderClass == 'th-ordery th-ordery-current th-ordery-up th-ordery-down'){
+		ordery = 'desc';
+	}else if(orderClass == 'th-ordery th-ordery-current th-ordery-up'){
+		ordery = 'asc';
+	}
+	if(type){
+		order[type] = ordery;
+		dataa.order.push(order);
+	}
 	return dataa;
 }
 var ajaxtable=null;
@@ -118,55 +101,164 @@ function accEvent(){
         ajaxtable.abort();
     }
     var dataa = accEvnetParam();
-    $(".table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
+    $(".table").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
     ajaxtable=
     $.ajax({
         url:'/mgr/upgrade/_history',
         data:JSON.stringify(dataa),
         type:'POST',
-        contentType:'text/plain',
+		contentType:'text/plain',
+		headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
         error:function(xhr,textStatus,errorThrown){
         	if(xhr.status==401){
         	    parent.window.location.href='/';
+        	}else{
+        		
         	}
+            
         },
         success:function(data){
             var list=data.data.list;
-            var total=Math.ceil(data.data.view.total/20);
-			if(list.length==0 || list==null){
-				$(".table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;font-size:12px'><img src='images/notable.png'><p style='padding-top:24px'>暂无数据内容</p></div>"); 
+            var table="";
+            var total=Math.ceil(data.data.view.total/numperpage);
+            table+="<table>";
+            table+="<tr id='tableAlign'>";
+            table+="<td width='16%'>时间</td>";
+            table+="<td width='16%'>升级模块</td>";
+            table+="<td width='16%'>升级前版本</td>";
+            table+="<td width='16%'>升级后版本</td>";
+            table+="<td width='16%'>状态</td>";
+            table+="</tr>";
+            if(list!=null){
+				
+	            for(i=0;i<list.length;i++){
+	                var time=list[i].time;
+	                time=getLocalTime(time);
+	                
+	                table+="<tr taskid='"+list[i].task_id+"'>";
+	                table+="<td>"+time+"</td>";
+				
+	                if(list[i].product == 'client.windows'){
+						table+="<td>windows终端升级</td>";
+					}else if(list[i].product == 'client.linux'){
+						table+="<td>linux终端升级</td>";
+					}else if(list[i].product == 'virdb.windows'){
+						table+="<td>windows病毒库升级</td>";
+					}else if(list[i].product == 'virdb.linux'){
+						table+="<td>linux病毒库升级</td>";
+					}else if(list[i].product == 'center.windows'){
+						table+="<td>windows中心升级</td>";
+					}else if(list[i].product == 'center.linux'){
+						table+="<td>linux中心升级</td>";
+					}else{
+						table+="<td></td>";
+					}
+	                table+="<td>"+list[i].orgver+"</td>";
+	                table+="<td>"+list[i].newver+"</td>";
+	                if(list[i].result=="success"){
+	                    table+="<td>升级成功</td>"; 
+	                }else if(list[i].result=="connect failed"){
+	                    table+="<td>连接失败</td>"; 
+	                }else if(list[i].result=="fetch failed"){
+	                    table+="<td>下载失败</td>";
+	                }else if(list[i].result=="merge failed"){
+	                    table+="<td>更新失败</td>";
+	                }else{
+	                	table+="<td></td>";
+	                }
+	                table+="</tr>";
+	            }
+	            table+="</table>";
+	            $(".table table").hide();	           
+	            $(".table table").fadeIn();
+	            if(list.length==0){
+					$(".table").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;font-size:12px'><img src='images/notable.png'><p style='padding-top:24px'>暂无数据内容</p></div>"); 
+				}else{
+					$(".table").html(table);
+				}
 			}else{
-				tabListstr.setData(list);
+				$(".table").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;font-size:12px'><img src='images/notable.png'><p style='padding-top:24px'>暂无数据内容</p></div>"); 
 			}
-			tbodyAddHeight();
-			
 
-            $(".clearfloat").remove();
-            $(".tcdPageCode").remove();
-            $(".totalPages").remove();
-            $(".tableContainer").append("<a style='font-size:12px;color:#6a6c6e;line-height:54px;padding-left:20px;float:left;' class='totalPages'>总共 "+total+" 页</a><div class='tcdPageCode' style='font-size:12px;float:right;padding-top:14px;padding-bottom:14px;padding-right:20px;'></div><div class='clear clearfloat'></div>");
-            $(".tcdPageCode").createPage({
+            $(".tableContainer .pageBox").remove();
+           
+            $(".tableContainer").append("<div class='pageBox'><a style='font-size:12px;color:#6a6c6e;line-height:54px;padding-left:20px;float:left;' class='totalPages'>共 "+data.data.view.total+" 条记录</a><div class='tcdPageCode' style='font-size:12px;float:right;padding-top:14px;padding-bottom:14px;padding-right:20px;'></div><a style='font-size:12px;float:right;line-height:54px;padding-right:20px;color:#6a6c6e' class='numperpage'>每页<input type='text' id='numperpageinput' value="+numperpage+" style='font-size:12px;width:40px;height:24px;margin:0 4px;vertical-align:middle;padding:0 10px;'>条</a><div class='clear clearfloat'></div></div>");
+            $(".tableContainer .tcdPageCode").createPage({
                 pageCount:total,
                 current:1,
                 backFn:function(pageIndex){
-                    start=(pageIndex-1)*20;
+                    $(".table table").html("");
+                    start=(pageIndex-1)*numperpage;
  					dataa.view.begin = start;
-                    $(".table tbody").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
+             
+                    $(".table").html("<div style='text-align:center;color:#6a6c6e;padding-top:100px;'><img src='images/loading.gif'></div>");
                     ajaxtable=
                     $.ajax({
                         url:'/mgr/upgrade/_history',
                         data:JSON.stringify(dataa),
                         type:'POST',
-                        contentType:'text/plain',
+						contentType:'text/plain',
+						headers: {"HTTP_CSRF_TOKEN": getCookie('HRESSCSRF')},
                         error:function(xhr,textStatus,errorThrown){
 				        	if(xhr.status==401){
 				        	    parent.window.location.href='/';
+				        	}else{
+				        		
 				        	}
+				            
 				        },
                         success:function(data){
                             var list=data.data.list;
-                            tabListstr.setData(list);
-                            tbodyAddHeight();
+                            var table="";
+                            table+="<table>";
+				 			table+="<tr id='tableAlign'>";
+				            table+="<td width='16%'>时间</td>";
+				            table+="<td width='16%'>升级模块</td>";
+				            table+="<td width='16%'>升级前版本</td>";
+				            table+="<td width='16%'>升级后版本</td>";
+				            table+="<td width='16%'>状态</td>";
+				            table+="</tr>";
+                            for(i=0;i<list.length;i++){
+                                var time=list[i].time;
+				                time=getLocalTime(time);
+				                table+="<tr taskid='"+list[i].task_id+"'>";
+				                table+="<td>"+time+"</td>";
+								
+								if(list[i].product == 'client.windows'){
+									table+="<td>windows终端升级</td>";
+								}else if(list[i].product == 'client.linux'){
+									table+="<td>linux终端升级</td>";
+								}else if(list[i].product == 'virdb.windows'){
+									table+="<td>windows病毒库升级</td>";
+								}else if(list[i].product == 'virdb.linux'){
+									table+="<td>linux病毒库升级</td>";
+								}else if(list[i].product == 'center.windows'){
+									table+="<td>windows中心升级</td>";
+								}else if(list[i].product == 'center.linux'){
+									table+="<td>linux中心升级</td>";
+								}else{
+									table+="<td></td>";
+								}
+				                
+				                table+="<td>"+list[i].orgver+"</td>";
+				                table+="<td>"+list[i].newver+"</td>";
+				                if(list[i].result=="success"){
+				                    table+="<td>升级成功</td>"; 
+				                }else if(list[i].result=="connect failed"){
+				                    table+="<td>连接失败</td>"; 
+				                }else if(list[i].result=="fetch failed"){
+				                    table+="<td>更新失败</td>";
+				                }else if(list[i].result=="merge failed"){
+				                    table+="<td>下载失败</td>";
+				                }else{
+				                	table+="<td></td>";
+				                }
+				                table+="</tr>";
+                            }
+                            table+="</table>";
+                            $(".table table").hide();
+                            $(".table").html(table);
+                            $(".table table").fadeIn(500);
                               
                         }
                     });
@@ -178,14 +270,28 @@ function accEvent(){
 
 }
 
-tbodyAddHeight();
+
 //调整页面内元素高度
-function tbodyAddHeight(){
-	var mainlefth=parent.$("#iframe #mainFrame").height();
+var mainlefth=parent.$("#iframe #mainFrame").height();
 
-	$(".main .table tbody").css({height:mainlefth-288});
-}
+$(".main .table").css({height:mainlefth-288});
+
 window.onresize = function(){
-    tbodyAddHeight();
+    var mainlefth=parent.$("#iframe #mainFrame").height();
+
+    $(".main .table").css({height:mainlefth-288});
+
 }
 
+// 改变每页多少数据
+$("body").on("blur", "#numperpageinput", function() {
+	if($(this).val() == "" || parseInt($(this).val()) < 10) {
+		numperpage = 10;
+	} else if(parseInt($(this).val()) > 1000) {
+		numperpage = 1000;
+	} else {
+		numperpage = parseInt($("#numperpageinput").val());
+	}
+	localStorage.setItem('numperpage',numperpage);
+	accEvent();
+})
